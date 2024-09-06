@@ -42,4 +42,8 @@
 TBD after integration day
 
 ## Rewards
+### Fufill integratoin day goals
+- Get good food as a team (food TBD)
+### Fufill end goals
+- Get better food as a team (food TBD)
 
