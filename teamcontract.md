@@ -1,7 +1,14 @@
 # Team Controact
 
-## Git etiquitte
+## Communication and Meetings
+- All project communication must be through the discord server
+- You may not mute pings from the discord
+- Let the group know ASAP if you cannot make a meeting
+- Make a considerable effort to attend meetings
+- If ONE person cannot make in person meeting online can be facilitated
+- Additional online meetings can be scheduled if required
 
+## Git etiquitte
 - Don't push to main without communication
 - Don't force push without communication
 - Work in your own branches and make PRs for them
@@ -9,15 +16,15 @@
 - no big files e.g. 4k recordings
 - KISS
 
-## Goals
- - 
-
 ## Work
 
-## Communication
+## Managing of problems
+- When giving feedback keep it constructive
+- Bring up the issue(s) immediately
+- Don't be afraid to ask for help
+- Don't be afraid to ask for a second opinion
 
-## meetings
-
-## Handeling of problems
+## Goals
+- 
 
 ## Rewards
