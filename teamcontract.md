@@ -17,6 +17,11 @@
 - KISS
 
 ## Work
+- Doing app in swing
+- Using Google style
+- JavaDocs for everything that is public
+- Well commented code 
+- Use `TODO` comments
 
 ## Managing of problems
 - When giving feedback keep it constructive
