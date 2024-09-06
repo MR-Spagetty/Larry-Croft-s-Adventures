@@ -22,6 +22,7 @@
 - JavaDocs for everything that is public
 - Well commented code 
 - Use `TODO` comments
+- Modularise stuff
 
 ## Managing of problems
 - When giving feedback keep it constructive
@@ -30,6 +31,15 @@
 - Don't be afraid to ask for a second opinion
 
 ## Goals
-- 
+### By integration day
+- Compiles
+- Basics movement of the Larry
+- Sprites should be visable
+- Basics of gui present and functional
+- Persistancy module mostly complete
+- Atleast example map
+### By end
+TBD after integration day
 
 ## Rewards
+
