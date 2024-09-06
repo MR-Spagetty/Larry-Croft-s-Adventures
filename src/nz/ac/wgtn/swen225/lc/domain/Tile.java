@@ -3,7 +3,7 @@ package nz.ac.wgtn.swen225.lc.domain;
 import java.util.Optional;
 
 /** Represents a tile in the game world. */
-public interface Tile {
+public interface Tile extends Comparable<Tile> {
 
   /**
    * Returns the location of this tile in the game world.
@@ -35,5 +35,20 @@ public interface Tile {
    */
   default Optional<Entity> getOccupant() {
     return Optional.empty();
+  }
+
+  /**
+   * Compares this tile with the specified tile for order.
+   *
+   * <p>This method is used for sorting tiles in a game world. It compares the locations of the
+   * tiles, using the natural ordering of {@link Point}.
+   *
+   * @param other the tile to be compared with this tile
+   * @return an integer representing the ordering of the tiles
+   * @see Point#compareTo(Point)
+   */
+  @Override
+  default int compareTo(Tile other) {
+    return getLocation().compareTo(other.getLocation());
   }
 }
