@@ -62,6 +62,10 @@ class GameOver
   Timer timeTillReset;
 }
 
+class ChipsChallenge
+{
+}
+
 //$?[End_of_model]$?
 
 namespace -;
@@ -79,15 +83,20 @@ class KeyStrokes
 
 class StartMenu
 {
-  position 19 134 216.40625 146.359375;
+  position 346 129 216.40625 163.359375;
 }
 
 class CurrentGame
 {
-  position 249 134 326.484375 231.359375;
+  position 9 128 326.484375 248.359375;
 }
 
 class GameOver
 {
-  position 19 310 109 78.359375;
+  position 347 303 157.734375 95.359375;
+}
+
+class ChipsChallenge
+{
+  position 9 389 109 61.359375;
 }
