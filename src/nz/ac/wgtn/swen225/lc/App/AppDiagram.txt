@@ -1,0 +1,93 @@
+class Main
+{
+  public static void main(String[] args){
+	System.out.println("Hello World");
+}
+}
+
+class KeyStrokes{
+	public void setAction(int keyCode, Runnable pressed, Runnable released){
+
+	}
+public void keyPressed(KeyEvent event){
+
+}
+public void keyReleased(KeyEvent event){
+
+}
+}
+
+class StartMenu
+{
+  JButton startNew;
+  Label instructions;
+  JButton startExisting;
+  Runnable createNewGame;
+  Runnable loadExistingGame;
+public void runGame(){
+
+}
+}
+
+class CurrentGame
+{
+  JButton help;
+  JButton save;
+  JButton load;
+  JButton pause;
+int countdown;
+public Level setLevel(){
+
+}
+public ActionListener saveCurrentGameMethod(){
+
+}
+public void quitGame(){
+
+}
+public boolean isGameOver(){
+  
+}
+public int getLevelsCompleted(){
+
+}
+public int getChipsCount(){
+
+}
+}
+
+class GameOver
+{
+  Label text;
+  Timer timeTillReset;
+}
+
+//$?[End_of_model]$?
+
+namespace -;
+
+
+class Main
+{
+  position 11 8 109 78.359375;
+}
+
+class KeyStrokes
+{
+  position 197 7 303.109375 112.359375;
+}
+
+class StartMenu
+{
+  position 19 134 216.40625 146.359375;
+}
+
+class CurrentGame
+{
+  position 249 134 326.484375 231.359375;
+}
+
+class GameOver
+{
+  position 19 310 109 78.359375;
+}
