@@ -1,55 +1,45 @@
 package app;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.SwingUtilities;
+import java.util.Queue;
+import java.util.ArrayDeque;
+import java.lang.Error;
 
 /**
  * Stores all of the keystrokes that associate with an action that is executed when
  * a key is pressed.
- *
- * NB: Action will be in the form of a Consumer, not Runnable.
  */
 
-// TODO make an action only be executed per tick, not just at anytimee.
-// TODO make a method that goes from a character to a keyevent.
-class KeyStrokes implements KeyListener {
-    private final Map<Integer, Runnable> actionsPressed= new HashMap<>();
-    private final Map<Integer, Runnable> actionsReleased= new HashMap<>();
+// TODO make the direction emus
+class KeyStrokes {
+    Direction active = null;
+
+    private final <Integer, Direction> keyStrokes = new HashMap<>();
+    private Queue<Integer> pendingKeyStrokes = new ArrayDeque<>();
 
     /**
-     * Binds a keycode to actions that are executed when the key is pressed and released.
+     * Binds a keycode to a direction in which the character can move.
      *
-     * todo Change the Maps so the key is ... and the value is ....
-     *
-     * @param keyCode The keycode of the key that will be associated with the action(s).
-     * @param onPressed The action to be performed when the key is pressed.
-     * @param onReleased The action to be performed when the key is released.
+     * @param keyCode The keycode of the key that will be associated with the direction.
+     * @param direction The direction in which the character will move.
      */
-    public void setAction(int keyCode, Runnable onPressed, Runnable onReleased){
-        actionsPressed.put(keyCode, onPressed);
-        actionsReleased.put(keyCode, onReleased);
-    }
-
-    public void keyTyped(KeyEvent e){}
+    public void assignKeyCode(int keyCode, Direction direction){ keyStrokes.put(keyCode, direction); }
 
     /**
-     * When a key is pressed, the...
-     *
-     * TODO Add in code that checks to see when a tick is finished!
+     * todo
      */
-    public void keyPressed(KeyEvent e){
-        assert SwingUtilities.isEventDispatchThread();
-        actionsPressed.getOrDefault(e.getKeyCode(), ()->{}).run();
+    public Direction getDirection(int keyCode){
+        if (!keyStrokes.contains(keyCode)) throw new Error();
+        return keyStrokes.get(keyCode);
     }
 
     /**
-     * TODO Add in code that checks to see when a tick is finished!
+     * todo
      */
-    public void keyReleased(KeyEvent e){
-        assert SwingUtilities.isEventDispatchThread();
-        actionsReleased.getOrDefault(e.getKeyCode(), ()->{}).run();
+    public void tick(){
+        active = null;
+        if (!pendingKeyStrokes.isEmpty()) active = getDirection(pendingKeyStrokes.poll())
+        pendingKeyStrokes.clear();
     }
 }
