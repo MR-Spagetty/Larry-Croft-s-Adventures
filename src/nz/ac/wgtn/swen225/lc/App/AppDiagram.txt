@@ -5,16 +5,18 @@ class Main
 }
 }
 
+//NB: Direction class is being created by MR-Spagetty. Take note!
 class KeyStrokes{
-	public void setAction(int keyCode, Runnable pressed, Runnable released){
-
+	int curKeyStroke;
+	Map keyStrokes;
+  
+	public void assignKeyCode(int keyCode, Direction direction){
+	keyStrokes.put(keyCode, direction);
 	}
-public void keyPressed(KeyEvent event){
-
-}
-public void keyReleased(KeyEvent event){
-
-}
+  
+	public void getDirection(int keyCode){
+    	
+    }
 }
 
 class StartMenu
@@ -60,43 +62,32 @@ class GameOver
 {
   Label text;
   Timer timeTillReset;
-}
-
-class ChipsChallenge
-{
-}
-
-//$?[End_of_model]$?
+}//$?[End_of_model]$?
 
 namespace -;
 
 
 class Main
 {
-  position 11 8 109 78.359375;
+  position 274 283 175.3125 78.359375;
 }
 
 class KeyStrokes
 {
-  position 197 7 303.109375 112.359375;
+  position 2 249 303.109375 129.359375;
 }
 
 class StartMenu
 {
-  position 346 129 216.40625 163.359375;
+  position 486 0 216.40625 163.359375;
 }
 
 class CurrentGame
 {
-  position 9 128 326.484375 248.359375;
+  position 1 0 326.484375 248.359375;
 }
 
 class GameOver
 {
-  position 347 303 157.734375 95.359375;
-}
-
-class ChipsChallenge
-{
-  position 9 389 109 61.359375;
+  position 327 0 157.734375 95.359375;
 }
