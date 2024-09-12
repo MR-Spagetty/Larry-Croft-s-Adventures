@@ -1,4 +1,4 @@
-package App;
+package nz.ac.wgtn.swen225.lc.App;
 
 import java.util.HashMap;
 import java.util.Map;
