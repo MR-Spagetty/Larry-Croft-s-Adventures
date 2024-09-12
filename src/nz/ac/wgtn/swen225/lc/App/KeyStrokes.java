@@ -16,27 +16,43 @@ class KeyStrokes <V extends Direction, Runnable> {
     private Queue<Integer> pendingKeyStrokes = new ArrayDeque<>();
 
     /**
-     * Binds a keycode to a direction in which the character can move, or an action that can be initiated on the
+     * Binds a key stroke to a direction in which the character can move, or an action that can be initiated on the
      * game's UI during gameplay.
      *
-     * @param keyCode The keycode of the key
+     * @param keyStroke The key stroke of the key
      * @param elem A direction or an action that will be assiocated with the key.
      */
-    public void assignKeyStroke(int keyCode, V elem){
-        strokes.put(keyCode, elem);
+    public void assignKeyStroke(int keyStroke, V elem){
+        strokes.put(keyStroke, elem);
     }
 
     /**
      * Gets the direction or the action that is associated with the given key code.
      * The return value cannot be null.
      *
-     * @param keyCode The keycode of the key that will be associated with the action.
-     * @return A direction or an action associcated with the keycode.
+     * @param keyStroke The key stroke of the key that will be associated with the action.
+     * @return A direction or an action associcated with the key stroke.
      */
-    public V getKeyStroke(int keyCode){
-        V returnValue = strokes.get(keyCode);
+    public V getKeyStroke(int keyStroke){
+        V returnValue = strokes.get(keyStroke);
         assert returnValue != null; /** are assertions enabled? */
         return returnValue;
+    }
+
+    /**
+     * From a given key code, a Direction is retrieved or a Runnable action is run.
+     *
+     * @param keyStroke The key stroke of the key that will be associated with the action.
+     * @return If the retrived element is a direction, it will be returned. Otherwise, the
+     *         runnable action will be run and "null" is returned.
+     */
+    public Direction performKeyStrokeAction(int keyStroke){
+        V selElem = getKeyStroke(keyStroke);
+
+        if (selElem instanceof Direction d) return d;
+
+        (Runnable)selElem.run();
+        return null;
     }
 
     /**
