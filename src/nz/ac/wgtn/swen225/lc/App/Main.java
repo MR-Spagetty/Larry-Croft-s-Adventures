@@ -2,7 +2,7 @@ package App;
 
 //import javax.swing.SwingUtilities;
 
-class Main {
+public class Main {
     /**
      * Method which starts up the "Chip's Challenge" game.
      *
