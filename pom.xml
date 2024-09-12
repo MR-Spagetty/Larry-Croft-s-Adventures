@@ -30,8 +30,8 @@
   </dependencies>
 
   <build>
-    <sourceDirectory>src/nz</sourceDirectory>
-    <testSourceDirectory>src/test</testSourceDirectory>
+    <sourceDirectory>src/main</sourceDirectory>
+    <testSourceDirectory>src/tests</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
