@@ -8,31 +8,20 @@ class Main
 //NB: Direction class is being created by MR-Spagetty. Take note!
 class KeyStrokes{
 	Direction active = null;
-	Map keyStrokes;
+	Map> keyStrokes;
   	Queue pendingKeyStrokes;
   
-	public void assignKeyCode(int keyCode, Direction direction){
-		keyStrokes.put(keyCode, direction);
+	public void assignKeyStroke(int keyCode, V elem){
+		keyStrokes.put(keyCode, elem);
 	}
   
-	public Direction getDirection(int keyCode){
-      	if (!keyStrokes.contains(keyCode))
-        	throw new Error();
-          
-    	return keyStrokes.get(keyCode);
-    }
-
-  	public void tick(){
-    	active = null;
-      	if (!pendingKeyStrokes.isEmpty()){
-        	active = getDirection(pendingKeyStrokes.poll())
-        }
-      	pendingKeyStrokes.clear();
-    }
+	public Direction getKeyStroke(int keyCode){}
+  	public void tick(){}
 }
 
 class StartMenu
 {
+  JPanel buttons;
   JButton startNew;
   Label instructions;
   JButton startExisting;
@@ -45,6 +34,7 @@ public void runGame(){
 
 class CurrentGame
 {
+  JPanel buttonPanel;
   JButton help;
   JButton save;
   JButton load;
