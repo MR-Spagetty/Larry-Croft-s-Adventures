@@ -9,7 +9,7 @@ import java.util.ArrayDeque;
  * Stores all of the keystrokes that associate with an action that is executed (or a direction that is set)
  * when a key is pressed.
  */
-class KeyStrokes <V extends Direction, Runnable> {
+public class KeyStrokes <V extends Direction, Runnable> {
     V active = null;
 
     private final <Integer, V> strokes = new HashMap<>();
