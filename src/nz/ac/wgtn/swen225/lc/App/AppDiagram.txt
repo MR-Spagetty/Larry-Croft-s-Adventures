@@ -1,0 +1,95 @@
+class Main
+{
+  public static void main(String[] args){
+	System.out.println("Hello World");
+}
+}
+
+//NB: Direction class is being created by MR-Spagetty. Take note!
+class KeyStrokes{
+	Direction active = null;
+	Map> keyStrokes;
+  	Queue pendingKeyStrokes;
+  
+	public void assignKeyStroke(int keyCode, V elem){
+		keyStrokes.put(keyCode, elem);
+	}
+  
+	public Direction getKeyStroke(int keyCode){}
+  	public void tick(){}
+}
+
+class StartMenu
+{
+  JPanel buttons;
+  JButton startNew;
+  Label instructions;
+  JButton startExisting;
+  Runnable createNewGame;
+  Runnable loadExistingGame;
+public void runGame(){
+
+}
+}
+
+class CurrentGame
+{
+  JPanel buttonPanel;
+  JButton help;
+  JButton save;
+  JButton load;
+  JButton pause;
+int countdown;
+public Level setLevel(){
+
+}
+public ActionListener saveCurrentGameMethod(){
+
+}
+public void quitGame(){
+
+}
+public boolean isGameOver(){
+  
+}
+public int getLevelsCompleted(){
+
+}
+public int getChipsCount(){
+
+}
+}
+
+class GameOver
+{
+  Label text;
+  Timer timeTillReset;
+}//$?[End_of_model]$?
+
+namespace -;
+
+
+class Main
+{
+  position 543 0 175.3125 78.359375;
+}
+
+class KeyStrokes
+{
+  position 1 248 272.390625 129.359375;
+}
+
+class StartMenu
+{
+  position 328 0 216.40625 163.359375;
+}
+
+class CurrentGame
+{
+  position 1 0 326.484375 248.359375;
+}
+
+class GameOver
+{
+  position 545 78 157.734375 95.359375;
+}
