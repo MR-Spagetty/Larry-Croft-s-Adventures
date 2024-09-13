@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.App;
+package main.nz.ac.wgtn.swen225.lc.App;
 
 //import javax.swing.SwingUtilities;
 
