@@ -1,5 +1,10 @@
 package nz.ac.wgtn.swen225.lc.App;
 
+import javax.swing.*;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class StartMenu
 {
     /** The below code is dependent on whether a new game is being made from a .JSON file. */

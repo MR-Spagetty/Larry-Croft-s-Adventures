@@ -1,7 +1,9 @@
 package nz.ac.wgtn.swen225.lc.App;
 
-public class StartMenu{
-    public StartMenu(){
+import javax.swing.SwingUtilities;
+
+public class GameGUI{
+    public GameGUI(){
         assert SwingUtilities.isEventDispatchThread();
     }
 }
