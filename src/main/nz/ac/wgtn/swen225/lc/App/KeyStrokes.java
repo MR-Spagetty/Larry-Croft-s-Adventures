@@ -8,56 +8,58 @@ import java.util.ArrayDeque;
 class Direction{} //JUST A MOCK CLASS!
 
 /**
- * Stores the keystrokes that associate with an action that is executed (or a direction that is set)
+ * Stores the keystrokes that associate with an action that is executed, and a direction that is set
  * when a key is pressed.
  */
-public class KeyStrokes <V extends Direction, Runnable> {
-    V active = null;
+public class KeyStrokes {
+    Direction active = null;
+    private final Map<Integer, Direction> strokeToDirection = new HashMap<>();
 
-    private final Map<Integer, V> strokes = new HashMap<>();
+    private final Map<Integer, Runnable> strokeToUIAction = new HashMap<>();
+
     private final Queue<Integer> pendingKeyStrokes = new ArrayDeque<>();
 
     /**
-     * Binds a keystroke to a direction in which the character can move, or an action that can be
-     * initiated on the game's UI during gameplay.
+     * Binds a keystroke to a direction in which the character can move.
      *
      * @param keyStroke The keystroke of the key
-     * @param elem A direction or an action that will be associated with the key.
+     * @param direction A direction that will be associated with the key.
      */
-    public void assignKeyStroke(int keyStroke, V elem){
-        strokes.put(keyStroke, elem);
+    public void assignKeyToDirection(int keyStroke, Direction direction){
+        strokeToDirection.put(keyStroke, direction);
     }
 
     /**
-     * Gets the direction or the action that is associated with the given key code.
-     * The return value cannot be null.
+     * Binds a keystroke to a direction in which the character can move.
+     *
+     * @param keyStroke The keystroke of the key
+     * @param action Thr action that will be associated with the keystroke.
+     */
+    public void assignKeyToAction(int keyStroke, Runnable action){
+        strokeToUIAction.put(keyStroke, action);
+    }
+
+    /**
+     * Gets the direction that is associated with the given key code. The direction cannot be null.
      *
      * @param keyStroke The keystroke of the key that will be associated with the action.
-     * @return A direction or an action associated with the keystroke.
+     * @return The direction associated with the keystroke.
      */
-    public V getKeyStroke(int keyStroke){
-        V returnValue = strokes.get(keyStroke);
+    public Direction getDirection(int keyStroke){
+        Direction returnValue = strokeToDirection.get(keyStroke);
         assert returnValue != null;
         return returnValue;
     }
 
     /**
-     * From a given key code, a Direction is retrieved or a Runnable action is run.
+     * From a given keystroke, a Runnable action is run. This is different to the "getDirection" method which
+     * returns a direction associated with a keystroke.
      *
      * @param keyStroke The keystroke of the key that will be associated with the action.
-     * @return If the retried element is a direction, it will be returned. Otherwise, the
-     *         runnable action will be run and "null" is returned.
      */
-    public Direction performKeyStrokeAction(int keyStroke){
-        V selElem = getKeyStroke(keyStroke);
-
-        if (selElem instanceof Direction d) return d;
-
-        /*
-        Runnable r = (Runnable)selElem;
-        r.run();
-        */
-        return null;
+    public void performAction(int keyStroke){
+        Runnable runAction = strokeToUIAction.get(keyStroke);
+        runAction.run();
     }
 
     /**
@@ -66,7 +68,7 @@ public class KeyStrokes <V extends Direction, Runnable> {
      */
     public void tick(){
         active = null;
-        if (!pendingKeyStrokes.isEmpty()) active = getKeyStroke(pendingKeyStrokes.poll());
+        if (!pendingKeyStrokes.isEmpty()) active = getDirection(pendingKeyStrokes.poll());
         pendingKeyStrokes.clear();
     }
 }
