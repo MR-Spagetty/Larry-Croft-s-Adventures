@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
+class Direction{} //JUST A MOCK CLASS!
+
 /**
  * Stores the keystrokes that associate with an action that is executed (or a direction that is set)
  * when a key is pressed.
