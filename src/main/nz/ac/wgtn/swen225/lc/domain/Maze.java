@@ -14,6 +14,9 @@ public class Maze {
    * @param maxTicks the time limit in ticks
    */
   public Maze(long maxTicks) {
+    if (maxTicks < 0) {
+      throw new IllegalArgumentException("maxTicks may not be negative");
+    }
     this.maxTicks = maxTicks;
   }
 
@@ -37,7 +40,7 @@ public class Maze {
    * @param toAdd the entity to add
    * @throws IllegalArgumentException if there is no tile at the coordinates of the given entity
    */
-  void addEntity(Entity toAdd) {
+  public void addEntity(Entity toAdd) {
     Tile reqTile =
         getTile(toAdd.getLocation())
             .orElseThrow(
@@ -52,7 +55,7 @@ public class Maze {
    * @throws IllegalArgumentException if there is already a tile at the coordinates of the given
    *     tile
    */
-  void addTile(Tile tile) {
+  public void addTile(Tile tile) {
     if (getTile(tile.getLocation()).isPresent()) {
       throw new IllegalArgumentException("Tile at those coordinates already exists");
     }
@@ -66,7 +69,7 @@ public class Maze {
    * @return an {@link Optional} containing the tile at the requested location, or an empty {@link
    *     Optional} if there is no such tile
    */
-  Optional<Tile> getTile(Point at) {
+  public Optional<Tile> getTile(Point at) {
     tiles.sort(Tile::compareTo);
     return tiles.parallelStream().filter(t -> t.getLocation().equals(at)).findAny();
   }
@@ -78,7 +81,7 @@ public class Maze {
    * @param range the range (inclusive ±) the region occupies in a square around around
    * @return the tiles within that region
    */
-  List<Tile> getTiles(Point around, long range) {
+  public List<Tile> getTiles(Point around, long range) {
     tiles.sort(Tile::compareTo);
     return tiles.parallelStream()
         .filter(
@@ -100,7 +103,7 @@ public class Maze {
    * @return an {@link Optional} containing the entity currently at the requested location, or an
    *     empty {@link Optional} if there is no such entity
    */
-  Optional<Entity> getEntity(Point at) {
+  public Optional<Entity> getEntity(Point at) {
     return getTile(at).flatMap(Tile::getOccupant);
   }
 
@@ -109,7 +112,7 @@ public class Maze {
    *
    * @return the entities in the maze
    */
-  List<Entity> getEntities() {
+  public List<Entity> getEntities() {
     return tiles.stream()
         .map(Tile::getOccupant)
         .filter(Optional::isPresent)
@@ -124,7 +127,7 @@ public class Maze {
    * @param range the range (inclusive ±) the region occupies in a square around around
    * @return the entities within that region
    */
-  List<Entity> getEntities(Point around, long range) {
+  public List<Entity> getEntities(Point around, long range) {
     return getTiles(around, range).stream()
         .map(Tile::getOccupant)
         .filter(Optional::isPresent)
