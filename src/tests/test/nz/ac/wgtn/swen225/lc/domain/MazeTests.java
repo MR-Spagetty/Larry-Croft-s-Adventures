@@ -50,15 +50,7 @@ public class MazeTests {
   void badTileOnly() {
     Maze maze = new Maze(0);
     area3x3(maze, Shorthands::et, 0, 0);
-    assertThrows(IAE, () -> maze.addTile(et(-1, -1)));
-    assertThrows(IAE, () -> maze.addTile(et(-1, 0)));
-    assertThrows(IAE, () -> maze.addTile(et(-1, 1)));
-    assertThrows(IAE, () -> maze.addTile(et(0, -1)));
-    assertThrows(IAE, () -> maze.addTile(et(0, 0)));
-    assertThrows(IAE, () -> maze.addTile(et(0, 1)));
-    assertThrows(IAE, () -> maze.addTile(et(1, -1)));
-    assertThrows(IAE, () -> maze.addTile(et(1, 0)));
-    assertThrows(IAE, () -> maze.addTile(et(1, 1)));
+    area3x3(Shorthands::et, 0, 0).forEach(t -> assertThrows(IAE, () -> maze.addTile(t)));
   }
 
   @Test
@@ -67,8 +59,31 @@ public class MazeTests {
     maze.addTile(et(0, 0));
     maze.addEntity(e(0, 0));
   }
-  @Test void badEntity() {
+
+  @Test
+  void badEntity() {
     Maze maze = new Maze(0);
     assertThrows(IAE, () -> maze.addEntity(e(0, 0)));
+  }
+
+  @Test
+  void goodFullConst1() {
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), List.of());
+    area3x3(Shorthands::et, 0, 0).forEach(t -> assertThrows(IAE, () -> maze.addTile(t)));
+  }
+
+  @Test
+  void goodFullConst2() {
+    Maze maze = new Maze(0, List.of(et(0, 0)), List.of(e(0, 0)));
+  }
+
+  @Test
+  void badFullConst1() {
+    assertThrows(IAE, () -> new Maze(0, List.of(et(0, 0), et(0, 0)), List.of()));
+  }
+
+  @Test
+  void badFullConst2() {
+    assertThrows(IAE, () -> new Maze(0, List.of(), List.of(e(0, 0))));
   }
 }
