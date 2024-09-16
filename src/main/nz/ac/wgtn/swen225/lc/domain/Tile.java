@@ -28,6 +28,13 @@ public interface Tile extends Comparable<Tile> {
   void enter(Entity enteree);
 
   /**
+   * similar to {@link #enter(Entity)} but does not execute any additional actions
+   *
+   * @param enteree the entity to put in this tiles
+   */
+  void put(Entity enteree);
+
+  /**
    * Returns the entity currently occupying this tile, if any.
    *
    * @return an {@link Optional} containing the entity currently occupying this tile, or an empty
