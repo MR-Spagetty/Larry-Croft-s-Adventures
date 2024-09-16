@@ -30,7 +30,7 @@ public class Maze {
   public Maze(long maxTicks, List<Tile> tiles, List<Entity> entities) {
     this(maxTicks);
     tiles.forEach(this::addTile);
-    tiles.sort(Tile::compareTo);
+    this.tiles.sort(Tile::compareTo);
     entities.forEach(this::addEntity);
   }
 
