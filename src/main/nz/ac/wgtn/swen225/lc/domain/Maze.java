@@ -9,10 +9,26 @@ public class Maze {
   public final long maxTicks;
 
   /**
-   * @param maxTicks
+   * Creates a new empty maze with the given time limit
+   *
+   * @param maxTicks the time limit in ticks
    */
   public Maze(long maxTicks) {
     this.maxTicks = maxTicks;
+  }
+
+  /**
+   * Creates a new maze with the given time limit, tiles, and entities
+   *
+   * @param maxTicks the time limit in ticks
+   * @param tiles the tiles to fill teh maze with
+   * @param entities the entities to populate the maze with
+   */
+  public Maze(long maxTicks, List<Tile> tiles, List<Entity> entities) {
+    this(maxTicks);
+    tiles.forEach(this::addTile);
+    tiles.sort(Tile::compareTo);
+    entities.forEach(this::addEntity);
   }
 
   /**
