@@ -24,6 +24,7 @@ public interface Tile extends Comparable<Tile> {
    * Allows the specified entity to enter this tile.
    *
    * @param enteree the entity to enter this tile
+   * @throws IllegalStateException if the tile may not be occupied by the entity
    */
   void enter(Entity enteree);
 
@@ -31,6 +32,7 @@ public interface Tile extends Comparable<Tile> {
    * similar to {@link #enter(Entity)} but does not execute any additional actions
    *
    * @param enteree the entity to put in this tiles
+   * @throws IllegalStateException if the tile may not be occupied by the entity
    */
   void put(Entity enteree);
 
