@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 public class MazeTests {
   Class<IllegalArgumentException> IAE = IllegalArgumentException.class;
+  Class<UnsupportedOperationException> UOE = UnsupportedOperationException.class;
 
   List<Tile> area3x3(Function<Point, Tile> tile, long cX, long cY) {
     Point cPoint = new Point(cX, cY);
@@ -162,5 +163,62 @@ public class MazeTests {
     Maze maze = new Maze(0, List.of(et(0, 0)), List.of());
     Optional<Entity> found = maze.getEntity(p(0, 0));
     assert found.isEmpty();
+  }
+
+  @Test
+  void getAllEntities() {
+    Entity exp = e(0, 0);
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), List.of(exp));
+    List<Entity> out = maze.getEntities();
+    assertEquals(1, out.size());
+    assertEquals(exp, out.getFirst());
+    assert exp == out.getFirst();
+    assertThrows(UOE, () -> out.clear());
+  }
+
+  @Test
+  void getEntities1() {
+    List<Entity> expected =
+        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), expected);
+    List<Entity> out = maze.getEntities(p(0, 0), 1);
+    assertEquals(expected, out);
+  }
+
+  @Test
+  void getEntities2() {
+    List<Entity> expected =
+        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), expected);
+    List<Entity> out = maze.getEntities(p(0, 0), 1);
+    assertEquals(expected, out);
+  }
+
+  @Test
+  void getEntities3() {
+    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+    Entity expected = in.get(4);
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), in);
+    List<Entity> out = maze.getEntities(p(0, 0), 0);
+    assertEquals(1, out.size());
+    assertEquals(expected, out.getFirst());
+    assert expected == out.getFirst();
+  }
+
+  @Test
+  void getEntities4() {
+    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+    Entity expected = in.get(0);
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), in);
+    List<Entity> out = maze.getEntities(p(-2, -2), 1);
+    assertEquals(1, out.size());
+    assertEquals(expected, out.getFirst());
+    assert expected == out.getFirst();
+  }
+
+  @Test
+  void getEntities5() {
+    Maze maze = new Maze(0, area3x3(Shorthands::et, 0, 0), List.of(e(p(0, 0))));
+    assertEquals(0, maze.getEntities(p(2, 0), 1).size());
   }
 }
