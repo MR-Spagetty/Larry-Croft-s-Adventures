@@ -39,19 +39,21 @@ public interface Entity {
    * @param by the amount to move this entity
    * @param in the maze in which to move this entity
    */
-  default void move(Point by, Maze in) {
+  default void move(Point by) {
     Tile oldLoc =
-        in.getTile(getLocation())
+        getMaze().getTile(getLocation())
             .orElseThrow(
                 () ->
                     new IllegalArgumentException(
                         "Given maze does not contain tile this entity occupies"));
     Tile newLoc =
-        in.getTile(getLocation().add(by))
+        getMaze().getTile(getLocation().add(by))
             .orElseThrow(
                 () -> new IllegalArgumentException("requested tile does not exist in maze"));
     newLoc.enter(this);
     setLocation(getLocation().add(by));
     oldLoc.leave(this);
   }
+
+  Maze getMaze();
 }
