@@ -40,6 +40,12 @@ public interface Entity {
    */
   Point getLocation();
 
+  /**
+   * Sets the current location of this entity in the game world.
+   *
+   * @param newLocation the new location
+   * @throws IllegalArgumentException if the location is invalid
+   */
   void setLocation(Point newLocation);
 
   /**

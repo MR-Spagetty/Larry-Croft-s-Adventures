@@ -7,31 +7,44 @@ import java.util.Optional;
 public class Maze {
   private List<Tile> tiles = new ArrayList<>();
   public final long maxTicks;
+  final String ID;
 
   /**
    * Creates a new empty maze with the given time limit
    *
    * @param maxTicks the time limit in ticks
+   * @param ID the ID of the level
    */
-  public Maze(long maxTicks) {
+  public Maze(long maxTicks, String ID) {
     if (maxTicks < 0) {
       throw new IllegalArgumentException("maxTicks may not be negative");
     }
     this.maxTicks = maxTicks;
+    this.ID = "";
   }
 
   /**
    * Creates a new maze with the given time limit, tiles, and entities
    *
    * @param maxTicks the time limit in ticks
+   * @param ID the id of the level
    * @param tiles the tiles to fill teh maze with
    * @param entities the entities to populate the maze with
    */
-  public Maze(long maxTicks, List<Tile> tiles, List<Entity> entities) {
-    this(maxTicks);
+  public Maze(long maxTicks, String ID, List<Tile> tiles, List<Entity> entities) {
+    this(maxTicks, ID);
     tiles.forEach(this::addTile);
     this.tiles.sort(Tile::compareTo);
     entities.forEach(this::addEntity);
+  }
+
+  long longID(){
+    long longID = 0;
+    for(char c: this.ID.toCharArray()){
+      longID <<= 1;
+      longID |= c;
+    }
+    return longID;
   }
 
   /**
