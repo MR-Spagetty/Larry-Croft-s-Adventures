@@ -1,0 +1,9 @@
+{
+    "levelName" : "Level ID",
+    "inputs" : [
+        "up",
+        "down",
+        "left",
+        "right"
+    ]
+}
