@@ -9,6 +9,8 @@ public class ControlKeys extends KeyStrokes{
     private final Queue<Integer> pendingKeyStrokes = new ArrayDeque<>();
 
     /**
+     * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes.
+     * However, none will be binded to the directions.
      * TODO Create actions for each key!
      */
     public ControlKeys(){
@@ -22,15 +24,25 @@ public class ControlKeys extends KeyStrokes{
         assignKeyToAction(KeyEvent.VK_ESCAPE, () -> {});
     }
 
+    /**
+     * When you press a key, you could either be making the player move, or perforDeveloper 4 <dev4@example.internal> an action on the GUI.
+     * We will first check to see if CTRL is being held down, as this will indicate whether to perform an action
+     * that required the CTRL key to be held down. We then check to see if the key pressed is an action, or a
+     * direction.
+     * Take note for a direction, we add it to the list of pending keystrokes, as one player action is only executed
+     * per tick.
+     *
+     * @param e The key that was pressed in the form of a "KeyEvent".
+     */
     public void keyPressed(KeyEvent e) {
         int keystroke = e.getKeyCode();
 
-        if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0){
+        if (((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) || strokeGoesToAction(keystroke)){
             performAction(keystroke);
             return;
         }
 
-        if (active != null) pendingKeyStrokes.add(keystroke);
+        pendingKeyStrokes.add(keystroke);
     }
 
     /**

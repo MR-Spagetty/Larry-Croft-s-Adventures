@@ -13,6 +13,10 @@ public class KeyStrokes {
     private final Map<Integer, Direction> strokeToDirection = new HashMap<>();
     private final Map<Integer, Runnable> strokeToUIAction = new HashMap<>();
 
+    public boolean strokeGoesToAction(int keyStroke){
+        return strokeToUIAction.containsKey(keyStroke);
+    }
+
     /**
      * Binds a keystroke to a direction in which the character can move.
      *
