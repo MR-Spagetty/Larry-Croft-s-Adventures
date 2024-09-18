@@ -25,7 +25,7 @@ public class ControlKeys extends KeyStrokes{
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> {});
+        assignKeyToAction(KeyEvent.VK_SPACE, () -> { new PauseScreen(); });
         assignKeyToAction(KeyEvent.VK_ESCAPE, () -> {});
     }
 
