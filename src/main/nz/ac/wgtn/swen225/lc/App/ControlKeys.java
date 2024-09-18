@@ -11,11 +11,7 @@ enum PlayerAction { Up(), Down(), Left(), Right(), None(); }
 
 
 public class ControlKeys extends KeyStrokes{
-    /** TODO Change default value from "null" to "PlayerAction.None"*/
     PlayerAction active = PlayerAction.None; //Current player action that the player is moving in a tick.
-
-    /** TODO Consider moving this into the GameGUI class, as it doesn't suit being in this file.*/
-    PauseScreen ps = new PauseScreen(200);
 
     /**
      * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
@@ -27,7 +23,7 @@ public class ControlKeys extends KeyStrokes{
 
     /**
      * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes.
-     * However, none will be binded to the directions.
+     * However, none will be bound to the directions.
      * TODO Create actions for each key!
      */
     public ControlKeys(){
@@ -37,8 +33,8 @@ public class ControlKeys extends KeyStrokes{
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> ps.showScreen());
-        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> ps.hideScreen());
+        assignKeyToAction(KeyEvent.VK_SPACE, () -> GameGUI.ps.showScreen());
+        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameGUI.ps.hideScreen());
     }
 
     /**
@@ -67,7 +63,7 @@ public class ControlKeys extends KeyStrokes{
      * character is moving stops moving, and the next action/direction is performed.
      */
     public void setPlayerActionAtTick(){
-        active = PlayerAction.None; /** TODO Change default value from "null" to "PlayerAction.None" */
+        active = PlayerAction.None;
         if (pendingKeyStroke != INVALID_KEY_STROKE) {
             active = getPlayerAction(pendingKeyStroke);
             pendingKeyStroke = INVALID_KEY_STROKE;

@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.App;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -16,6 +17,11 @@ public class GameGUI extends JFrame{
     Runnable closeGame= ()->{};
 
     /**
+     * The Screen that will be displayed when the game is paused.
+     */
+    static PauseScreen ps = new PauseScreen(200);
+
+    /**
      * Constructor for the Game GUI.
      */
     public GameGUI(){
@@ -25,6 +31,8 @@ public class GameGUI extends JFrame{
         addWindowListener(new WindowAdapter(){
             public void windowClosed(WindowEvent e){ closeGame.run(); }
         });
+
+        ControlKeys keys = new ControlKeys();
     }
 
     public void createGameInfo(){
@@ -35,11 +43,23 @@ public class GameGUI extends JFrame{
     }
 
     public void createGameButtons(){
+        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen());
         JButton exitGame = new JButton();
         JButton saveGame = new JButton();
+
         JButton displayHelp = new JButton();
 
         JPanel gameButtons = new JPanel();
-        gameButtons.add(exitGame);
+        gameButtons.add(pauseGame);
+    }
+
+    /**
+     * Small helper method which creates a new button and adds an action to it.
+     */
+    private JButton createButtonWithAction(ActionListener al){
+        JButton newButton = new JButton();
+        newButton.addActionListener(al);
+
+        return newButton;
     }
 }
