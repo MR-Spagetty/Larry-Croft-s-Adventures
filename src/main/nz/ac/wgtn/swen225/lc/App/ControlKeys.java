@@ -6,7 +6,14 @@ import java.util.Queue;
 
 public class ControlKeys extends KeyStrokes{
     Direction active = null; //Current Direction that the player is moving in a tick.
-    private final Queue<Integer> pendingKeyStrokes = new ArrayDeque<>();
+
+    /**
+     * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
+     * mid-tick, the key will be taken note of, and executed in the next tick.
+     * Take note that the first key pressed is only taken note of; the rest are discarded.
+     */
+    private final int INVALID_KEY_STROKE = -1;
+    private int pendingKeyStroke = INVALID_KEY_STROKE;
 
     /**
      * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes.
@@ -29,8 +36,8 @@ public class ControlKeys extends KeyStrokes{
      * We will first check to see if CTRL is being held down, as this will indicate whether to perform an action
      * that required the CTRL key to be held down. We then check to see if the key pressed is an action, or a
      * direction.
-     * Take note for a direction, we add it to the list of pending keystrokes, as one player action is only executed
-     * per tick.
+     * Take note for a direction, as one player action is only executed per tick, we will cache the keystroke for the
+     * first key pressed.
      *
      * @param e The key that was pressed in the form of a "KeyEvent".
      */
@@ -42,16 +49,18 @@ public class ControlKeys extends KeyStrokes{
             return;
         }
 
-        pendingKeyStrokes.add(keystroke);
+        if (pendingKeyStroke == INVALID_KEY_STROKE) pendingKeyStroke = keystroke;
     }
 
     /**
      * Every time a tick occurs, the action that is being performed or the direction in which the
-     * character is moving stops moving, and the next action/direction is selected.
+     * character is moving stops moving, and the next action/direction is performed.
      */
     public void tick(){
         active = null;
-        if (!pendingKeyStrokes.isEmpty()) active = getDirection(pendingKeyStrokes.poll());
-        pendingKeyStrokes.clear();
+        if (pendingKeyStroke != INVALID_KEY_STROKE) {
+            active = getDirection(pendingKeyStroke);
+            pendingKeyStroke = INVALID_KEY_STROKE;
+        }
     }
 }
