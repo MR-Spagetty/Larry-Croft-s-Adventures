@@ -2,8 +2,20 @@ package nz.ac.wgtn.swen225.lc.App;
 
 import java.awt.event.KeyEvent;
 
+/**
+ * A MOCK OBJECT BASED ON "PLAYERACTION" CLASS!
+ *
+ * TODO Remove this class when integrating this module with Domain
+ */
+enum PlayerAction { Up(), Down(), Left(), Right(), None(); }
+
+
 public class ControlKeys extends KeyStrokes{
-    Direction active = null; //Current Direction that the player is moving in a tick.
+    /** TODO Change default value from "null" to "PlayerAction.None"*/
+    PlayerAction active = PlayerAction.None; //Current player action that the player is moving in a tick.
+
+    /** TODO Consider moving this into the GameGUI class, as it doesn't suit being in this file.*/
+    PauseScreen ps = new PauseScreen(200);
 
     /**
      * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
@@ -25,8 +37,8 @@ public class ControlKeys extends KeyStrokes{
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> { new PauseScreen(); });
-        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> {});
+        assignKeyToAction(KeyEvent.VK_SPACE, () -> ps.showScreen());
+        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> ps.hideScreen());
     }
 
     /**
@@ -54,10 +66,10 @@ public class ControlKeys extends KeyStrokes{
      * Every time a tick occurs, the action that is being performed or the direction in which the
      * character is moving stops moving, and the next action/direction is performed.
      */
-    public void tick(){
-        active = null;
+    public void setPlayerActionAtTick(){
+        active = PlayerAction.None; /** TODO Change default value from "null" to "PlayerAction.None" */
         if (pendingKeyStroke != INVALID_KEY_STROKE) {
-            active = getDirection(pendingKeyStroke);
+            active = getPlayerAction(pendingKeyStroke);
             pendingKeyStroke = INVALID_KEY_STROKE;
         }
     }
