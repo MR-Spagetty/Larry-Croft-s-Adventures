@@ -1,8 +1,6 @@
 package nz.ac.wgtn.swen225.lc.App;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayDeque;
-import java.util.Queue;
 
 public class ControlKeys extends KeyStrokes{
     Direction active = null; //Current Direction that the player is moving in a tick.
