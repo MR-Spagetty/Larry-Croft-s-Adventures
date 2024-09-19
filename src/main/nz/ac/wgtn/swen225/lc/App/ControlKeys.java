@@ -1,14 +1,7 @@
 package nz.ac.wgtn.swen225.lc.App;
 
 import java.awt.event.KeyEvent;
-
-/**
- * A MOCK OBJECT BASED ON "PLAYERACTION" CLASS!
- *
- * TODO Remove this class when integrating this module with Domain
- */
-enum PlayerAction { Up(), Down(), Left(), Right(), None(); }
-
+import nz.ac.wgtn.swen225.lc.domain.*;
 
 public class ControlKeys extends KeyStrokes{
     PlayerAction active = PlayerAction.None; //Current player action that the player is moving in a tick.

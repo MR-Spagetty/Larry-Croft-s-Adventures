@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.App;
 
 import java.util.HashMap;
 import java.util.Map;
+import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
  * Stores the keystrokes that associate with an action that is executed, and a direction that is set
