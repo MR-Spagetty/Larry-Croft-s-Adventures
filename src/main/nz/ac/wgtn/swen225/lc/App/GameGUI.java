@@ -5,20 +5,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
+/**
+ * @author Developer 1 <dev1@example.internal>
+ */
 public class GameGUI extends JFrame{
-    /*
-    * Action to be executed when the user closes the Game GUI with the 'X' button.
-    * This action will be mostly similar to quitting the current game playing, as you will also be
-    * asked whether you want to save the game before quitting.
-    *
-    * TODO Finish work on "closeGame" action.
-    */
+    /**
+     * Action to be executed when the user closes the Game GUI with the 'X' button.
+     * This action will be mostly similar to quitting the current game playing, as you will also be
+     * asked whether you want to save the game before quitting.
+     *
+     * TODO Finish work on "closeGame" action.
+     */
     Runnable closeGame= ()->{};
 
-    /**
-     * The Screen that will be displayed when the game is paused.
-     */
+    //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
 
     /**

@@ -2,7 +2,14 @@ package nz.ac.wgtn.swen225.lc.App;
 
 import java.awt.event.KeyEvent;
 import nz.ac.wgtn.swen225.lc.domain.*;
+//import nz.ac.wgtn.swen225.lc.recorder.*;
 
+/**
+ * An extension of the class "KeyStrokes", which is responsible for actually controlling key events, rather than
+ * mapping and storing them.
+ *
+ * @author Developer 1 <dev1@example.internal>
+ */
 public class ControlKeys extends KeyStrokes{
     PlayerAction active = PlayerAction.None; //Current player action that the player is moving in a tick.
 
@@ -15,11 +22,24 @@ public class ControlKeys extends KeyStrokes{
     private int pendingKeyStroke = INVALID_KEY_STROKE;
 
     /**
-     * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes.
-     * However, none will be bound to the directions.
+     * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes,
+     * and the directions will also be bound to their keystrokes.
+     * This is done in two separate methods to separate the two different stages of key assignments.
      * TODO Create actions for each key!
      */
     public ControlKeys(){
+        assignKeysToDirections();
+        assignKeysToActions();
+    }
+
+    public void assignKeysToDirections(){
+        assignKeyToPlayerAction(KeyEvent.VK_KP_UP, PlayerAction.Up);
+        assignKeyToPlayerAction(KeyEvent.VK_KP_DOWN, PlayerAction.Down);
+        assignKeyToPlayerAction(KeyEvent.VK_KP_LEFT, PlayerAction.Left);
+        assignKeyToPlayerAction(KeyEvent.VK_KP_RIGHT, PlayerAction.Right);
+    }
+
+    public void assignKeysToActions(){
         assignKeyToAction(KeyEvent.VK_X, () -> {});
         assignKeyToAction(KeyEvent.VK_S, () -> {});
         assignKeyToAction(KeyEvent.VK_R, () -> {});
@@ -54,12 +74,18 @@ public class ControlKeys extends KeyStrokes{
     /**
      * Every time a tick occurs, the action that is being performed or the direction in which the
      * character is moving stops moving, and the next action/direction is performed.
+     * Also, the new Player Action will be passed to the recorder for recording.
      */
     public void setPlayerActionAtTick(){
+        //We first need to set the current player action back to no value, so the player stops moving.
         active = PlayerAction.None;
+
+        //If there is a player action that is pending to be executed, this will be executed for this tick.
         if (pendingKeyStroke != INVALID_KEY_STROKE) {
             active = getPlayerAction(pendingKeyStroke);
             pendingKeyStroke = INVALID_KEY_STROKE;
         }
+
+        /** TODO add in code to return PlayerAction to the Recorder. Will need to access this in a static way. */
     }
 }

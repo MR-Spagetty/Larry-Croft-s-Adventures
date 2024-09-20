@@ -22,10 +22,6 @@ public class StartScreen extends JFrame{
 
         createStartMenu();
 
-        addWindowListener(new WindowAdapter(){
-            public void windowClosed(WindowEvent e){ closeGame.run(); }
-        });
-
         setPreferredSize(new Dimension(800, 400));
         pack();
         setVisible(true);
@@ -37,6 +33,10 @@ public class StartScreen extends JFrame{
     private void createStartMenu(){
         add(BorderLayout.NORTH, new JLabel("Instructions go here!"));
         add(BorderLayout.CENTER, createButtonsSection());
+
+        addWindowListener(new WindowAdapter(){
+            public void windowClosed(WindowEvent e){ closeGame.run(); }
+        });
     }
 
     /**
