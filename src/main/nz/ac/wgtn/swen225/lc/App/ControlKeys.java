@@ -1,6 +1,8 @@
 package nz.ac.wgtn.swen225.lc.App;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import nz.ac.wgtn.swen225.lc.domain.*;
 //import nz.ac.wgtn.swen225.lc.recorder.*;
 
@@ -10,7 +12,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  *
  * @author Developer 1 <dev1@example.internal>
  */
-public class ControlKeys extends KeyStrokes{
+public class ControlKeys extends KeyStrokes implements KeyListener{
 
     //Current player action that the player is moving in a tick.
     private static PlayerAction active = PlayerAction.None;
@@ -74,6 +76,20 @@ public class ControlKeys extends KeyStrokes{
 
         if (pendingKeyStroke == INVALID_KEY_STROKE) pendingKeyStroke = keystroke;
     }
+
+    /**
+     * By default, nothing will happen when a key is simply "typed".
+     *
+     * @param e The key that was typed in the form of a "KeyEvent".
+     */
+    public void keyTyped(KeyEvent e){}
+
+    /**
+     * By default, nothing will happen when a key is released after being pressed.
+     *
+     * @param e The key that was released in the form of a "KeyEvent".
+     */
+    public void keyReleased(KeyEvent e){}
 
     /**
      * Every time a tick occurs, the action that is being performed or the direction in which the
