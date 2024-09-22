@@ -45,10 +45,13 @@ public class KeyStrokes {
      * @return The direction associated with the keystroke.
      */
     public PlayerAction getPlayerAction(int keyStroke){
+        if (strokeToUIAction.get(keyStroke) != null)
+            throw new IllegalCallerException("Given keystroke maps to a runnable Action!");
+
         PlayerAction returnValue = strokeToPlayerAction.get(keyStroke);
 
         if (returnValue == null)
-            throw new IllegalArgumentException("Given keystroke does not map to a direction!");
+            throw new NullPointerException("Given keystroke does not map to a direction!");
 
         return returnValue;
     }
@@ -61,12 +64,12 @@ public class KeyStrokes {
      */
     public void performAction(int keyStroke){
         if (strokeToPlayerAction.get(keyStroke) != null)
-            throw new IllegalCallerException("Given keystroke maps to a Player Action !");
+            throw new IllegalCallerException("Given keystroke maps to a Player Action!");
 
         Runnable runAction = strokeToUIAction.get(keyStroke);
 
         if (runAction == null)
-            throw new IllegalArgumentException("Given keystroke does not map to a runnable action!");
+            throw new NullPointerException("Given keystroke does not map to a runnable action!");
 
         runAction.run();
     }
