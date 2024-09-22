@@ -25,7 +25,6 @@ public class ControlKeys extends KeyStrokes{
      * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes,
      * and the directions will also be bound to their keystrokes.
      * This is done in two separate methods to separate the two different stages of key assignments.
-     * TODO Create actions for each key!
      */
     public ControlKeys(){
         assignKeysToDirections();
@@ -39,6 +38,9 @@ public class ControlKeys extends KeyStrokes{
         assignKeyToPlayerAction(KeyEvent.VK_KP_RIGHT, PlayerAction.Right);
     }
 
+    /**
+     * TODO Create actions for each key!
+     */
     public void assignKeysToActions(){
         assignKeyToAction(KeyEvent.VK_X, () -> {});
         assignKeyToAction(KeyEvent.VK_S, () -> {});
