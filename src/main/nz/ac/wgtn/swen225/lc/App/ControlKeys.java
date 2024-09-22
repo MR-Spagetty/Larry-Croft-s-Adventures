@@ -11,7 +11,9 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes{
-    PlayerAction active = PlayerAction.None; //Current player action that the player is moving in a tick.
+
+    //Current player action that the player is moving in a tick.
+    private static PlayerAction active = PlayerAction.None;
 
     /**
      * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
@@ -87,7 +89,12 @@ public class ControlKeys extends KeyStrokes{
             active = getPlayerAction(pendingKeyStroke);
             pendingKeyStroke = INVALID_KEY_STROKE;
         }
-
-        /** TODO add in code to return PlayerAction to the Recorder. Will need to access this in a static way. */
     }
+
+    /**
+     * Returns the action that is player is currently carrying out in a tick.
+     * This method is static to allow for the Recorder to access this method without needing to create an instance
+     * of this class first.
+     */
+    public static PlayerAction getActivePlayerAction(){ return active; }
 }
