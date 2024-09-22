@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
-//import nz.ac.wgtn.swen225.lc.recorder.*;
+import nz.ac.wgtn.swen225.lc.recorder.*;
 
 /**
  * An extension of the class "KeyStrokes", which is responsible for actually controlling key events, rather than
@@ -63,6 +63,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * direction.
      * Take note for a direction, as one player action is only executed per tick, we will cache the keystroke for the
      * first key pressed.
+     * REFERENCE: https://stackoverflow.com/questions/11659801/java-check-if-control-key-is-being-pressed
      *
      * @param e The key that was pressed in the form of a "KeyEvent".
      */
@@ -74,6 +75,14 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
             return;
         }
 
+        setNextKeyStroke(keystroke);
+    }
+
+    /**
+     * Helper method to "keyPressed" which sets the next keystroke (for the player action )that will be
+     * used in the next tick.
+     */
+    public void setNextKeyStroke(int keystroke){
         if (pendingKeyStroke == INVALID_KEY_STROKE) pendingKeyStroke = keystroke;
     }
 
