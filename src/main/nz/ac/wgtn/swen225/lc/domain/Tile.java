@@ -34,7 +34,9 @@ public interface Tile extends Comparable<Tile> {
    * @param enteree the entity to put in this tiles
    * @throws IllegalStateException if the tile may not be occupied by the entity
    */
-  void put(Entity enteree);
+  default void put(Entity enteree) {
+    throw new IllegalStateException("This tile may not be occupied");
+  }
 
   /**
    * Returns the entity currently occupying this tile, if any.
@@ -45,6 +47,17 @@ public interface Tile extends Comparable<Tile> {
   default Optional<Entity> getOccupant() {
     return Optional.empty();
   }
+
+  /**
+   * Allows the specified entity to leave this tile.
+   *
+   * <p>This method removes the entity from the tile if the entity was the occupant of this tile,
+   * indicating that the entity has moved to another tile in the game world. If the entity is not
+   * currently occupying this tile, this method does nothing.
+   *
+   * @param exitee the entity to leave this tile
+   */
+  void leave(Entity exitee);
 
   /**
    * Compares this tile with the specified tile for order.
