@@ -1,13 +1,15 @@
 package test.nz.ac.wgtn.swen225.lc.App;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import main.nz.ac.wgtn.swen225.lc.App.ControlKeys;
+import main.nz.ac.wgtn.swen225.lc.domain.*;
 
-import nz.ac.wgtn.swen225.lc.App.ControlKeys;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.awt.event.KeyEvent;
 
 public class KeystrokeTests{
     ControlKeys keys = new ControlKeys();
-    Class<IllegalArgumentException> iae = IllegalArgumentException.class;
     Class<NullPointerException> npe = NullPointerException.class;
     Class<IllegalCallerException> ice = IllegalCallerException.class;
 
@@ -23,5 +25,11 @@ public class KeystrokeTests{
     @Test void strokeMapsToUIAction(){
         keys.setNextKeyStroke(KeyEvent.VK_1); //"1" is mapped to a Runnable action, not a Player action.
         Assertions.assertThrows(ice, setPlayerActionAtTick());
+    }
+
+    @Test void strokeCorrectlyMaps1(){
+        keys.setNextKeyStroke(KeyEvent.VK_KP_UP); //"UP" is mapped to the Player action for going up.
+        setPlayerActionAtTick();
+        Assertions.assertEquals(getActivePlayerAction(), PlayerAction.Up);
     }
 }
