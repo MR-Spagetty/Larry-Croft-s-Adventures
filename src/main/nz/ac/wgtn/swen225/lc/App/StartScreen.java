@@ -22,7 +22,7 @@ public class StartScreen extends JFrame{
 
         createStartMenu();
 
-        setPreferredSize(new Dimension(800, 400));
+        setPreferredSize(new Dimension(1200, 600));
         pack();
         setVisible(true);
     }
