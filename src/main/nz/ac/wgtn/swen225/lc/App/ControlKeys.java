@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.App;
+package nz.ac.wgtn.swen225.lc.app;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
