@@ -44,4 +44,10 @@ public class KeystrokeTests{
         setPlayerActionAtTick();
         Assertions.assertEquals(getActivePlayerAction(), PlayerAction.Right);
     }
+
+    @Test void strokeCorrectlyMaps4(){
+        keys.setNextKeyStroke(KeyEvent.VK_KP_DOWN);
+        setPlayerActionAtTick();
+        Assertions.assertEquals(getActivePlayerAction(), PlayerAction.Down);
+    }
 }
