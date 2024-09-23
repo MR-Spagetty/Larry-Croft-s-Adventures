@@ -1,10 +1,24 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public final class GameState {
   // TODO extend whatever JSONable interface is created for persistency
   private long tick = 0;
+  private static GameState inst = new GameState();
+
+  public static GameState getGameState() {
+    return inst;
+  }
+
+  private String levelID = null;
+  private Path levelPath = null;
+  private Maze levelMaze = null;
+
+  private GameState() {}
 
   /**
    * Returns the ID of the current level.
@@ -12,8 +26,8 @@ public final class GameState {
    * @return A string representing the ID of the current level.
    */
   String getLevelID() {
-    // TODO
-    throw new UnsupportedOperationException("Level ID NYI");
+    Objects.requireNonNull(this.levelID, "level not initialised");
+    return this.levelID;
   }
 
   /**
@@ -22,8 +36,8 @@ public final class GameState {
    * @return A Path object representing the path to the current level.
    */
   Path getLevelPath() {
-    // TODO
-    throw new UnsupportedOperationException("Level path NYI");
+    Objects.requireNonNull(this.levelPath, "level not initialized");
+    return this.levelPath;
   }
 
   /**
@@ -42,8 +56,10 @@ public final class GameState {
    * @return void - This method does not return any value.
    */
   void tick() {
+    getLevelID();
     // TODO tick game objects
     this.tick++;
+    this.levelMaze.getEntities().forEach(e -> e.tick(getTick()));
   }
 
   /**
@@ -64,5 +80,15 @@ public final class GameState {
    */
   boolean setLevel(Path levelPath) {
     throw new UnsupportedOperationException("set level by path NYI");
+  }
+
+  static Maze setupLevel(Object TBD) {
+
+    List<Entity> entities = null;
+    List<Tile> tiles = null;
+    long maxTicks = -1;
+    Maze maze = new Maze(maxTicks, tiles, entities);
+
+    throw new UnsupportedOperationException("NYI");
   }
 }
