@@ -32,4 +32,10 @@ public class KeystrokeTests{
         setPlayerActionAtTick();
         Assertions.assertEquals(getActivePlayerAction(), PlayerAction.Up);
     }
+
+    @Test void strokeCorrectlyMaps2(){
+        keys.setNextKeyStroke(KeyEvent.VK_KP_LEFT); //"UP" is mapped to the Player action for going up.
+        setPlayerActionAtTick();
+        Assertions.assertEquals(getActivePlayerAction(), PlayerAction.Left);
+    }
 }
