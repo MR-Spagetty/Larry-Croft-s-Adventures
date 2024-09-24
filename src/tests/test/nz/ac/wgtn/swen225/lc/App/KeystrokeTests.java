@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 
 public class KeystrokeTests{
     ControlKeys keys = new ControlKeys();
-    Class<NullPointerException> npe = NullPointerException.class;
     Class<IllegalCallerException> ice = IllegalCallerException.class;
 
     @Test void assertionsEnabled(){
@@ -18,8 +17,10 @@ public class KeystrokeTests{
     }
 
     @Test void strokeDoesntMapAnywhere(){
+        Assertions.assertEquals(getActivePlayerAction(), PlayerAction.None);
         keys.setNextKeyStroke(KeyEvent.VK_G); //"G" is not assigned to a Player action in the game.
-        Assertions.assertThrows(npe, setPlayerActionAtTick());
+        setPlayerActionAtTick();
+        Assertions.assertEquals(getActivePlayerAction(), PlayerAction.None);
     }
 
     @Test void strokeMapsToUIAction(){
