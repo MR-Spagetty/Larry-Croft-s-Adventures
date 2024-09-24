@@ -39,7 +39,8 @@ public class KeyStrokes {
     }
 
     /**
-     * Gets the direction that is associated with the given key code. The direction cannot be null.
+     * Gets the direction that is associated with the given key code. No action will be performed if the given
+     * keycode doesn't map to a direction.
      *
      * @param keyStroke The keystroke of the key that will be associated with the action.
      * @return The direction associated with the keystroke.
@@ -48,12 +49,7 @@ public class KeyStrokes {
         if (strokeToUIAction.get(keyStroke) != null)
             throw new IllegalCallerException("Given keystroke maps to a runnable Action!");
 
-        PlayerAction returnValue = strokeToPlayerAction.get(keyStroke);
-
-        if (returnValue == null)
-            throw new NullPointerException("Given keystroke does not map to a direction!");
-
-        return returnValue;
+        return strokeToPlayerAction.getOrDefault(keyStroke, PlayerAction.None);
     }
 
     /**
@@ -66,11 +62,7 @@ public class KeyStrokes {
         if (strokeToPlayerAction.get(keyStroke) != null)
             throw new IllegalCallerException("Given keystroke maps to a Player Action!");
 
-        Runnable runAction = strokeToUIAction.get(keyStroke);
-
-        if (runAction == null)
-            throw new NullPointerException("Given keystroke does not map to a runnable action!");
-
+        Runnable runAction = strokeToUIAction.getOrDefault(keyStroke, () -> {});
         runAction.run();
     }
 }
