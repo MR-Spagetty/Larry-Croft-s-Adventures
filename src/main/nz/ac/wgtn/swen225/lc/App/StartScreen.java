@@ -59,7 +59,11 @@ public class StartScreen extends JFrame{
     }
 
     private void runGame(){
+<<<<<<< HEAD
         /** TODO Create new game file and then run game, if specified game file is blank! */
+=======
+        /** todo: Create new game file and then run game, if specified game file is blank! */
+>>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
         System.out.println("Test");
     }
 
@@ -67,6 +71,10 @@ public class StartScreen extends JFrame{
      * Loads an existing game from a ".json" file.
      */
     private void loadGame(){
+<<<<<<< HEAD
         /** TODO If neccesary, create a file chooser for selecting a game file. */
+=======
+        /** todo: If neccesary, create a file chooser for selecting a game file. */
+>>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
     }
 }

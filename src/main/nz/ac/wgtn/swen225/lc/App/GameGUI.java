@@ -11,7 +11,11 @@ public class GameGUI extends JFrame{
     * This action will be mostly similar to quitting the current game playing, as you will also be
     * asked whether you want to save the game before quitting.
     *
+<<<<<<< HEAD
     * TODO Finish work on "closeGame" action.
+=======
+    * todo: Finish work on "closeGame" action.
+>>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
     */
     Runnable closeGame= ()->{};
 
@@ -28,10 +32,17 @@ public class GameGUI extends JFrame{
     }
 
     public void createGameInfo(){
+<<<<<<< HEAD
         JPanel GameInfo = new JPanel();
         /** TODO Display the number of levels here */
         /** TODO Display the number of chips left to collect */
         /** TODO Display the time remaining */
+=======
+        MyJPanel GameInfo = new MyJPanel();
+        /** todo Display the number of levels here */
+        /** todo Display the number of chips left to collect */
+        /** todo Display the time remaining */
+>>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
     }
 
     public void createGameButtons(){
