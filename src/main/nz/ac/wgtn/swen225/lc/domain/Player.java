@@ -36,19 +36,19 @@ public class Player implements Entity {
     if (tick <= lastTicked()) {
       logger.accept(new Point(0, 0));
     }
-    Point origin = getLocation();
+    Point origin = location();
     move(actionQueue.offset);
-    logger.accept(getLocation().sub(origin));
+    logger.accept(location().sub(origin));
     actionQueue = PlayerAction.None;
   }
 
   @Override
-  public Point getLocation() {
+  public Point location() {
     return this.location;
   }
 
   @Override
-  public void setLocation(Point newLocation) {
+  public void location(Point newLocation) {
     if (getMaze().getTile(newLocation).isEmpty()) {
       throw new IllegalArgumentException("Requested location is not valid in this maze");
     }

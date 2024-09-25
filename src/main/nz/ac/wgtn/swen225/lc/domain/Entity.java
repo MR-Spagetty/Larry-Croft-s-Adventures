@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+
 /**
  * Basic interface that all entities in the game must implement.
  *
@@ -38,7 +40,7 @@ public interface Entity {
    *
    * @return the current location of this entity
    */
-  Point getLocation();
+  Point location();
 
   /**
    * Sets the current location of this entity in the game world.
@@ -46,7 +48,7 @@ public interface Entity {
    * @param newLocation the new location
    * @throws IllegalArgumentException if the location is invalid
    */
-  void setLocation(Point newLocation);
+  void location(Point newLocation);
 
   /**
    * Moves this entity by the specified amount in the given maze.
@@ -57,12 +59,12 @@ public interface Entity {
   default void move(Point by) {
     Tile newLoc =
         getMaze()
-            .getTile(getLocation().add(by))
+            .getTile(location().add(by))
             .orElseThrow(
                 () -> new IllegalArgumentException("requested tile does not exist in maze"));
     Tile oldLoc =
         getMaze()
-            .getTile(getLocation())
+            .getTile(location())
             .orElseThrow(
                 () ->
                     new IllegalArgumentException(
