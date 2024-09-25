@@ -1,10 +1,12 @@
-package nz.ac.wgtn.swen225.lc.domain;
+package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
 
-import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 
 public class Player implements Entity {
 
