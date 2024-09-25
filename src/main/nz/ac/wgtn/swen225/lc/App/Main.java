@@ -13,13 +13,7 @@ public class Main {
      *             This is not used!
      */
     public static void main(String[] args){
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         System.out.println("Loading Game!");
->>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
-=======
->>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
         SwingUtilities.invokeLater(StartScreen::new);
     }
 }
