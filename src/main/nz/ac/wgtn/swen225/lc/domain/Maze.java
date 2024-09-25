@@ -41,7 +41,7 @@ public class Maze {
     entities.forEach(this::addEntity);
   }
 
-  long longID(){
+  public long longID(){
     long longID = 0;
     for(char c: this.ID.toCharArray()){
       longID <<= 1;

@@ -8,7 +8,7 @@ import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 
-public class Player implements Entity {
+public class Player implements AdvEntity {
 
   private PlayerAction actionQueue = PlayerAction.None;
 
@@ -81,5 +81,16 @@ public class Player implements Entity {
   @Override
   public long getUID() {
     return maze.longID() ^ individualID;
+  }
+
+  @Override
+  public boolean canTouch(Entity touchee) {
+    return touchee instanceof Enemy;
+  }
+
+  @Override
+  public void touch(Entity touchee) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'touch'");
   }
 }
