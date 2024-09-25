@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+
 /**
  * Basic interface that all entities in the game must implement.
  *
