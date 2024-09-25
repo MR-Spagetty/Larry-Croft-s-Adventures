@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import nz.ac.wgtn.swen225.lc.app.GameGUI;
+
 /**
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
  */
@@ -59,30 +61,17 @@ public class StartScreen extends JFrame{
     }
 
     private void runGame(){
-<<<<<<< HEAD
-<<<<<<< HEAD
         /** TODO Create new game file and then run game, if specified game file is blank! */
-=======
-        /** todo: Create new game file and then run game, if specified game file is blank! */
->>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
-=======
-        /** TODO Create new game file and then run game, if specified game file is blank! */
->>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
-        System.out.println("Test");
+
+        System.out.println("Created the Game GUI."); //TODO delete this!
+        new GameGUI(); //We will now initiate the main Graphical User Interface of the game!
     }
 
     /**
      * Loads an existing game from a ".json" file.
      */
     private void loadGame(){
-<<<<<<< HEAD
-<<<<<<< HEAD
         /** TODO If neccesary, create a file chooser for selecting a game file. */
-=======
-        /** todo: If neccesary, create a file chooser for selecting a game file. */
->>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
-=======
-        /** TODO If neccesary, create a file chooser for selecting a game file. */
->>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
+        System.out.println("Feature to load game has not been implemented yet.");
     }
 }

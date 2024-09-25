@@ -30,7 +30,7 @@ public class GameGUI extends JFrame{
             public void windowClosed(WindowEvent e){ closeGame.run(); }
         });
 
-        ControlKeys keys = new ControlKeys();
+        ControlKeys keys = new ControlKeys(); //Initialises the class specifically for controlling the
     }
 
     public void createGameInfo(){
