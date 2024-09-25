@@ -1,5 +1,7 @@
-package nz.ac.wgtn.swen225.lc.domain;
+package nz.ac.wgtn.swen225.lc.domain.entities;
 
+import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 /**

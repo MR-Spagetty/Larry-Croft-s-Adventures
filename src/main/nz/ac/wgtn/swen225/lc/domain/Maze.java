@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public class Maze {

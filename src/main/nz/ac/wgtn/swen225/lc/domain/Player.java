@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
 
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+
 public class Player implements Entity {
 
   private PlayerAction actionQueue = PlayerAction.None;
