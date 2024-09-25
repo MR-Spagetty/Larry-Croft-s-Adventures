@@ -1,9 +1,10 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
 import java.util.Optional;
-import nz.ac.wgtn.swen225.lc.domain.Entity;
+
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public interface Shorthands {

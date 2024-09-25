@@ -2,8 +2,8 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import java.util.Optional;
 
-import nz.ac.wgtn.swen225.lc.domain.Entity;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 
 /** Represents a tile in the game world. */
 public interface Tile extends Comparable<Tile> {
