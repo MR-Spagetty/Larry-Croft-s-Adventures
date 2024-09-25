@@ -9,27 +9,11 @@ import java.awt.event.WindowEvent;
  * @author Developer 1 <dev1@example.internal>
  */
 public class GameGUI extends JFrame{
-<<<<<<< HEAD
     /*
     * Action to be executed when the user closes the Game GUI with the 'X' button.
     * This action will be mostly similar to quitting the current game playing, as you will also be
     * asked whether you want to save the game before quitting.
-    *
-<<<<<<< HEAD
-    * TODO Finish work on "closeGame" action.
-=======
-    * todo: Finish work on "closeGame" action.
->>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
     */
-=======
-    /**
-     * Action to be executed when the user closes the Game GUI with the 'X' button.
-     * This action will be mostly similar to quitting the current game playing, as you will also be
-     * asked whether you want to save the game before quitting.
-     *
-     * TODO Finish work on "closeGame" action.
-     */
->>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
     Runnable closeGame= ()->{};
 
     //The Screen that will be displayed when the game is paused.
@@ -50,23 +34,10 @@ public class GameGUI extends JFrame{
     }
 
     public void createGameInfo(){
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
         JPanel GameInfo = new JPanel();
         /** TODO Display the number of levels here */
         /** TODO Display the number of chips left to collect */
         /** TODO Display the time remaining */
-<<<<<<< HEAD
-=======
-        MyJPanel GameInfo = new MyJPanel();
-        /** todo Display the number of levels here */
-        /** todo Display the number of chips left to collect */
-        /** todo Display the time remaining */
->>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
-=======
->>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
     }
 
     public void createGameButtons(){
