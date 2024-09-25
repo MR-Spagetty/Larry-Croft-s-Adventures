@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.App;
+package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,11 +22,7 @@ public class StartScreen extends JFrame{
 
         createStartMenu();
 
-        addWindowListener(new WindowAdapter(){
-            public void windowClosed(WindowEvent e){ closeGame.run(); }
-        });
-
-        setPreferredSize(new Dimension(800, 400));
+        setPreferredSize(new Dimension(1200, 600));
         pack();
         setVisible(true);
     }
@@ -37,6 +33,10 @@ public class StartScreen extends JFrame{
     private void createStartMenu(){
         add(BorderLayout.NORTH, new JLabel("Instructions go here!"));
         add(BorderLayout.CENTER, createButtonsSection());
+
+        addWindowListener(new WindowAdapter(){
+            public void windowClosed(WindowEvent e){ closeGame.run(); }
+        });
     }
 
     /**
@@ -60,10 +60,14 @@ public class StartScreen extends JFrame{
 
     private void runGame(){
 <<<<<<< HEAD
+<<<<<<< HEAD
         /** TODO Create new game file and then run game, if specified game file is blank! */
 =======
         /** todo: Create new game file and then run game, if specified game file is blank! */
 >>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
+=======
+        /** TODO Create new game file and then run game, if specified game file is blank! */
+>>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
         System.out.println("Test");
     }
 
@@ -72,9 +76,13 @@ public class StartScreen extends JFrame{
      */
     private void loadGame(){
 <<<<<<< HEAD
+<<<<<<< HEAD
         /** TODO If neccesary, create a file chooser for selecting a game file. */
 =======
         /** todo: If neccesary, create a file chooser for selecting a game file. */
 >>>>>>> 10e265a33b0dba697421c1efb5e9365dfbaf9dca
+=======
+        /** TODO If neccesary, create a file chooser for selecting a game file. */
+>>>>>>> cec60e477dee09da3a17fc3144292e517c8ed323
     }
 }
