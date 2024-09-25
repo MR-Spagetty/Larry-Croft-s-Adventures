@@ -13,7 +13,7 @@ public interface Tile extends Comparable<Tile> {
    *
    * @return the location of this tile
    */
-  Point getLocation();
+  Point location();
 
   /**
    * Determines whether the specified entity can enter this tile.
@@ -74,6 +74,6 @@ public interface Tile extends Comparable<Tile> {
    */
   @Override
   default int compareTo(Tile other) {
-    return getLocation().compareTo(other.getLocation());
+    return location().compareTo(other.location());
   }
 }

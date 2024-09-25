@@ -180,7 +180,7 @@ public class MazeTests {
   @Test
   void getEntities1() {
     List<Entity> expected =
-        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
     Maze maze = new Maze(0, "", area3x3(Shorthands::et, 0, 0), expected);
     List<Entity> out = maze.getEntities(p(0, 0), 1);
     assertEquals(expected, out);
@@ -189,7 +189,7 @@ public class MazeTests {
   @Test
   void getEntities2() {
     List<Entity> expected =
-        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
     Maze maze = new Maze(0, "", area3x3(Shorthands::et, 0, 0), expected);
     List<Entity> out = maze.getEntities(p(0, 0), 1);
     assertEquals(expected, out);
@@ -197,7 +197,7 @@ public class MazeTests {
 
   @Test
   void getEntities3() {
-    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
     Entity expected = in.get(4);
     Maze maze = new Maze(0, "", area3x3(Shorthands::et, 0, 0), in);
     List<Entity> out = maze.getEntities(p(0, 0), 0);
@@ -208,7 +208,7 @@ public class MazeTests {
 
   @Test
   void getEntities4() {
-    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.getLocation())).toList();
+    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
     Entity expected = in.get(0);
     Maze maze = new Maze(0, "", area3x3(Shorthands::et, 0, 0), in);
     List<Entity> out = maze.getEntities(p(-2, -2), 1);

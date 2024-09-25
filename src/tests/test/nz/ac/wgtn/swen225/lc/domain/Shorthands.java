@@ -20,7 +20,7 @@ public interface Shorthands {
       Optional<Entity> oc = Optional.empty();
 
       @Override
-      public Point getLocation() {
+      public Point location() {
         return loc;
       }
 
@@ -77,12 +77,12 @@ public interface Shorthands {
       }
 
       @Override
-      public Point getLocation() {
+      public Point location() {
         return l;
       }
 
       @Override
-      public void setLocation(Point newLocation) {
+      public void location(Point newLocation) {
         l = newLocation;
       }
 
