@@ -13,6 +13,8 @@ public class JSONObject implements JSONType {
   public void add(String key, Double value) { data.put(key, new JSONDouble(value)); }
   public void add(String key, Boolean value) { data.put(key, new JSONBool(value)); }
   public void add(String key) { data.put(key, null); } // Only accepts null
+  public void add(String key, JSONObject value) { data.put(key, value); }
+  public void add(String key, JSONList value) { data.put(key, value); }
 
   // Get a value by key
   public JSONType get(String key) { return data.get(key); }
