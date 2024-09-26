@@ -14,6 +14,6 @@ public class Main {
      */
     public static void main(String[] args){
         System.out.println("Loading Game!");
-        SwingUtilities.invokeLater(GameGUI::new);
+        SwingUtilities.invokeLater(MainScreen::new);
     }
 }

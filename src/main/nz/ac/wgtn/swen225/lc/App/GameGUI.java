@@ -30,10 +30,22 @@ public class GameGUI extends JFrame{
             public void windowClosed(WindowEvent e){ closeGame.run(); }
         });
 
-        new StartScreen(); //Calls constructor for the Start Screen.
+        createStartMenu();
 
         pack();
         setVisible(true);
+    }
+
+    /**
+     * Helper method that creates the "components" that will be in the Game GUI.
+     */
+    public void createStartMenu(){
+        add(BorderLayout.NORTH, StartScreen.instructions);
+
+        add(
+                BorderLayout.CENTER,
+                StartScreen.createButtonsSection((unused -> changeGUIStyles()), (unused -> {}))
+        );
     }
 
     /**
@@ -44,7 +56,5 @@ public class GameGUI extends JFrame{
         removeAll(); //Will remove all the Start Screen components, so we can add the other components in!
         validate();
         System.out.println("Created the Game GUI."); //TODO delete this!
-
-        new MainScreen();
     }
 }

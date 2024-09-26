@@ -15,6 +15,8 @@ class MainScreen extends GameGUI {
      * Constructor for the Game GUI.
      */
     public MainScreen(){
+        super();
+
         assert SwingUtilities.isEventDispatchThread();
 
         createGameInfo();

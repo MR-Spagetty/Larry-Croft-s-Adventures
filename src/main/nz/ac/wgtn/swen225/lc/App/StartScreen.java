@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -10,37 +11,15 @@ import nz.ac.wgtn.swen225.lc.app.GameGUI;
 /**
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
  */
-public class StartScreen extends GameGUI{
-    JLabel instructions = new JLabel("Instructions go here!");
-
-    /**
-     * Constructor for the "Start Menu", which involves setting up the frame and the buttons that will be inside the
-     * frame. It also makes sure that the JFrame is disposed when the user closes the window, and that the game will
-     * be running on the "Event Dispatch" thread.
-     */
-    public StartScreen(){
-        assert SwingUtilities.isEventDispatchThread();
-        createStartMenu();
-    }
-
-    /**
-     * Helper method that creates the "components" that will be in the Game GUI.
-     */
-    private void createStartMenu(){
-        add(BorderLayout.NORTH, instructions);
-        add(BorderLayout.CENTER, createButtonsSection());
-
-        addWindowListener(new WindowAdapter(){
-            public void windowClosed(WindowEvent e){ closeGame.run(); }
-        });
-    }
+public class StartScreen{
+    static JLabel instructions = new JLabel("Instructions go here!");
 
     /**
      * Creates a "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start the game
      * itself, and if a game has not been loaded (which is loaded by pressing the "Load" button), a new game will
      * be initiated.
      */
-    private JPanel createButtonsSection(){
+    public static JPanel createButtonsSection(ActionListener onStart, ActionListener onLoad){
         JPanel buttons = new JPanel();
         JButton start = new JButton("Start the Game!");
         JButton load = new JButton("Load existing game!");
@@ -48,19 +27,11 @@ public class StartScreen extends GameGUI{
         buttons.add(start);
         buttons.add(load);
 
-        start.addActionListener(unused -> runGame());
-        load.addActionListener(unused -> loadGame());
+        start.addActionListener(onStart);
+        load.addActionListener(onLoad);
 
         return buttons;
     }
-
-    private void runGame(){
-        /** TODO Create new game file and then run game, if specified game file is blank! */
-        /** TODO remove the buttons and all start screen stuff! */
-
-        super.changeGUIStyles();
-    }
-
 
     /**
      * Loads an existing game from a ".json" file.
