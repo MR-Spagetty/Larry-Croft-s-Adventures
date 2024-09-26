@@ -25,7 +25,7 @@ public class GameGUI extends JFrame{
      * the Game Menu itself.) Currently, the Runnable action does not do anything, as what is executed is dependent
      * on the components that are in the start menu (as these are removed).
      */
-    Runnable changeGUIStyles = ()->{};
+    Runnable startGame = ()->{};
 
     /*
      * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
@@ -58,13 +58,13 @@ public class GameGUI extends JFrame{
      */
     private void createStartMenu(){
         JLabel instructions = StartScreen.instructions;
-        JPanel buttons = StartScreen.createButtonsSection((unused -> changeGUIStyles.run()), (unused -> {}));
+        JPanel buttons = StartScreen.createButtonsSection((unused -> startGame.run()), (unused -> {}));
 
         /*
-         * "changeGUIStyles" will be changed so when executed, the contents on the Start Menu are removed.
+         * "startGame" will be changed so when executed, the contents on the Start Menu are removed.
          * This is because this action will be run when a game is started.
          */
-        changeGUIStyles = () -> {
+        startGame = () -> {
             remove(instructions); remove(buttons);
             SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
             createMainMenu();
@@ -90,6 +90,7 @@ public class GameGUI extends JFrame{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
         });
+        /** extent of todo */
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);
@@ -102,5 +103,5 @@ public class GameGUI extends JFrame{
     /**
      * A "tick()" method that the Recorder can use to allow for replay-back.
      */
-    public static void tick(){ GameState.getGameState().tick(); }
+    public static void tickOverride(){ GameState.getGameState().tick(); }
 }
