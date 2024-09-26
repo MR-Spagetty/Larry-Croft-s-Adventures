@@ -7,7 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 /** Handles the getting of level data and then rendering all components */
 public class Renderer {
   /** Gets data from the GameState, then renders all tiles and entities in that order */
-  void render() {
+  public void render() {
     GameState state = GameState.getGameState();
     Maze maze = state.getMaze();
     Player player = state.getPlayer();
