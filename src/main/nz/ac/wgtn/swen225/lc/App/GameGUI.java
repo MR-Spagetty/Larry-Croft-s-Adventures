@@ -67,6 +67,5 @@ public class GameGUI extends JFrame{
      */
     private void createMainMenu(){
         add(BorderLayout.NORTH, MainScreen.createGameButtons());
-        add(BorderLayout.SOUTH, StartScreen.instructions);
     }
 }

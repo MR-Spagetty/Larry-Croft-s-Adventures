@@ -11,6 +11,9 @@ public class MainScreen {
     //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
 
+    /**
+     * TODO add comments
+     */
     public static JPanel createGameInfo(){
         JPanel GameInfo = new JPanel();
         /** TODO Display the number of levels here */
@@ -20,15 +23,20 @@ public class MainScreen {
         return GameInfo;
     }
 
+    /**
+     * TODO add comments
+     */
     public static JPanel createGameButtons(){
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen());
-        JButton exitGame = new JButton();
-        JButton saveGame = new JButton();
-
-        JButton displayHelp = new JButton();
+        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
+        JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
+        JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
+        JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
         JPanel gameButtons = new JPanel();
         gameButtons.add(pauseGame);
+        gameButtons.add(exitGame);
+        gameButtons.add(saveGame);
+        gameButtons.add(displayHelp);
 
         return gameButtons;
     }
@@ -36,8 +44,8 @@ public class MainScreen {
     /**
      * Small helper method which creates a new button and adds an action to it.
      */
-    private static JButton createButtonWithAction(ActionListener al){
-        JButton newButton = new JButton();
+    private static JButton createButtonWithAction(ActionListener al, String text){
+        JButton newButton = new JButton(text);
         newButton.addActionListener(al);
 
         return newButton;
