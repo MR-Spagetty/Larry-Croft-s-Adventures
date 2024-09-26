@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.App;
+package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,11 +22,7 @@ public class StartScreen extends JFrame{
 
         createStartMenu();
 
-        addWindowListener(new WindowAdapter(){
-            public void windowClosed(WindowEvent e){ closeGame.run(); }
-        });
-
-        setPreferredSize(new Dimension(800, 400));
+        setPreferredSize(new Dimension(1200, 600));
         pack();
         setVisible(true);
     }
@@ -37,6 +33,10 @@ public class StartScreen extends JFrame{
     private void createStartMenu(){
         add(BorderLayout.NORTH, new JLabel("Instructions go here!"));
         add(BorderLayout.CENTER, createButtonsSection());
+
+        addWindowListener(new WindowAdapter(){
+            public void windowClosed(WindowEvent e){ closeGame.run(); }
+        });
     }
 
     /**
@@ -59,7 +59,7 @@ public class StartScreen extends JFrame{
     }
 
     private void runGame(){
-        /** todo: Create new game file and then run game, if specified game file is blank! */
+        /** TODO Create new game file and then run game, if specified game file is blank! */
         System.out.println("Test");
     }
 
@@ -67,6 +67,6 @@ public class StartScreen extends JFrame{
      * Loads an existing game from a ".json" file.
      */
     private void loadGame(){
-        /** todo: If neccesary, create a file chooser for selecting a game file. */
+        /** TODO If neccesary, create a file chooser for selecting a game file. */
     }
 }

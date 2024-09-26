@@ -1,6 +1,9 @@
-package nz.ac.wgtn.swen225.lc.domain;
+package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import java.util.Optional;
+
+import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 
 /** Represents a tile in the game world. */
 public interface Tile extends Comparable<Tile> {
@@ -10,7 +13,7 @@ public interface Tile extends Comparable<Tile> {
    *
    * @return the location of this tile
    */
-  Point getLocation();
+  Point location();
 
   /**
    * Determines whether the specified entity can enter this tile.
@@ -34,7 +37,9 @@ public interface Tile extends Comparable<Tile> {
    * @param enteree the entity to put in this tiles
    * @throws IllegalStateException if the tile may not be occupied by the entity
    */
-  void put(Entity enteree);
+  default void put(Entity enteree) {
+    throw new IllegalStateException("This tile may not be occupied");
+  }
 
   /**
    * Returns the entity currently occupying this tile, if any.
@@ -45,6 +50,17 @@ public interface Tile extends Comparable<Tile> {
   default Optional<Entity> getOccupant() {
     return Optional.empty();
   }
+
+  /**
+   * Allows the specified entity to leave this tile.
+   *
+   * <p>This method removes the entity from the tile if the entity was the occupant of this tile,
+   * indicating that the entity has moved to another tile in the game world. If the entity is not
+   * currently occupying this tile, this method does nothing.
+   *
+   * @param exitee the entity to leave this tile
+   */
+  void leave(Entity exitee);
 
   /**
    * Compares this tile with the specified tile for order.
@@ -58,6 +74,6 @@ public interface Tile extends Comparable<Tile> {
    */
   @Override
   default int compareTo(Tile other) {
-    return getLocation().compareTo(other.getLocation());
+    return location().compareTo(other.location());
   }
 }
