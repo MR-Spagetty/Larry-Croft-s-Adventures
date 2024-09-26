@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.Renderer;
+package nz.ac.wgtn.swen225.lc.renderer;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

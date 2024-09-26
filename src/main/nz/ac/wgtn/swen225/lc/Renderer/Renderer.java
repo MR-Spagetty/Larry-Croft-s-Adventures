@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.Renderer;
+package nz.ac.wgtn.swen225.lc.renderer;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
