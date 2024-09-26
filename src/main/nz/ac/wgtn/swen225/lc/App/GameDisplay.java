@@ -11,6 +11,6 @@ public class GameDisplay extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        r.ping();
+        r.render();
     }
 }
