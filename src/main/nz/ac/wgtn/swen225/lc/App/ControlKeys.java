@@ -68,8 +68,6 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * @param e The key that was pressed in the form of a "KeyEvent".
      */
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-
         int keystroke = e.getKeyCode();
 
         if (((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) || strokeGoesToAction(keystroke)){
