@@ -8,7 +8,7 @@ import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 
-public class Player implements AdvEntity {
+public class Player implements MoveableEntity {
 
   private PlayerAction actionQueue = PlayerAction.None;
 
