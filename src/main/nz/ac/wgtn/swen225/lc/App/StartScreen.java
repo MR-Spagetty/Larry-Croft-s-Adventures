@@ -12,6 +12,7 @@ import nz.ac.wgtn.swen225.lc.app.GameGUI;
  */
 public class StartScreen extends JFrame{
     Runnable closeGame= ()->{}; //Action to be executed when the user closes the Game GUI with the 'X' button.
+    JLabel instructions = new JLabel("Instructions go here!");
 
     /**
      * Constructor for the "Start Menu", which involves setting up the frame and the buttons that will be inside the
@@ -33,7 +34,7 @@ public class StartScreen extends JFrame{
      * Helper method that creates the "components" that will be in the Game GUI.
      */
     private void createStartMenu(){
-        add(BorderLayout.NORTH, new JLabel("Instructions go here!"));
+        add(BorderLayout.NORTH, instructions);
         add(BorderLayout.CENTER, createButtonsSection());
 
         addWindowListener(new WindowAdapter(){
@@ -55,17 +56,21 @@ public class StartScreen extends JFrame{
         buttons.add(load);
 
         start.addActionListener(unused -> runGame());
-        start.addActionListener(unused -> loadGame());
+        load.addActionListener(unused -> loadGame());
 
         return buttons;
     }
 
     private void runGame(){
         /** TODO Create new game file and then run game, if specified game file is blank! */
+        /** TODO remove the buttons and all start screen stuff! */
 
+        invalidate();
+        removeAll(); //Will remove all the Start Screen components, so we can add the other components in!
+        validate();
         System.out.println("Created the Game GUI."); //TODO delete this!
-        new GameGUI(); //We will now initiate the main Graphical User Interface of the game!
     }
+
 
     /**
      * Loads an existing game from a ".json" file.
