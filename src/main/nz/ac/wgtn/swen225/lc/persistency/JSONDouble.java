@@ -8,8 +8,9 @@ import java.util.Map;
 // This allows selective serialization of key-value pairs.
 // For e.g. only certain fields of a Player object might need to be saved to JSON.
 
-public class JSONDouble implements JsonSerializable {
+public class JSONDouble implements JsonSerializable <Double> {
   private static Map<String, Double> dataForObject = new HashMap<>();
+
   // Strings, booleans, int, longs etc.
   public void add(String key, Double value) {
     dataForObject.put(key, value);
@@ -21,12 +22,17 @@ public class JSONDouble implements JsonSerializable {
     return new Gson().toJson(dataForObject);
   }
 
+  // Convert a JSON string back into the Double object (not implemented yet)
   @Override
-  public void fromJson(String json) {
+  public Double fromJson(String json) {
 
+    Map<String, Double> map = new Gson().fromJson(json, Map.class);
+    // For trial purposes, we return the first Double in the map (just as an example)
+    return map.values().iterator().next();
   }
 
-  public Object get(String x) {
-    return x;
+  // Retrieve a value from the map
+  public Double get(String key) {
+    return dataForObject.get(key);
   }
 }
