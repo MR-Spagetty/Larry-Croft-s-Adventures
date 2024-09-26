@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.Renderer;
+package nz.ac.wgtn.swen225.lc.renderer;
 
 public class Sound {
     
