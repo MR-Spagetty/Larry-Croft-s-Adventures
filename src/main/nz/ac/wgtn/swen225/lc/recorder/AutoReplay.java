@@ -4,10 +4,13 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 public class AutoReplay implements Replay{
 
+    AutoReplay(){
+        //TODO: determin how to parse and get file after persistency is completed
+    }
+
     @Override
     public PlayerAction replay(int tick) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'replay'");
+        return actions.get(tick);
     }
     
 }
