@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import nz.ac.wgtn.swen225.lc.domain.*;
+
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
  *
@@ -80,4 +82,9 @@ public class GameGUI extends JFrame{
         pack();
         this.requestFocus();
     }
+
+    /**
+     * A "tick()" method that the Recorder can use to allow for replay-back.
+     */
+    public static void tick(){ GameState.getGameState().tick(); }
 }
