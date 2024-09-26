@@ -81,7 +81,7 @@ public final class GameState {
    *
    * @return void - This method does not return any value.
    */
-  void tick() {
+  public void tick() {
     getLevelID();
     this.tick++;
     this.levelMaze.getEntities().forEach(e -> e.tick(getTick()));
