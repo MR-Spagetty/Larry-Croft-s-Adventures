@@ -1,9 +1,9 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
 public final class GameState {
   // TODO extend whatever JSONable interface is created for persistency
@@ -26,8 +26,7 @@ public final class GameState {
    * @return A string representing the ID of the current level.
    */
   String getLevelID() {
-    Objects.requireNonNull(this.levelID, "level not initialised");
-    return this.levelID;
+    return Objects.requireNonNull(this.levelID, "level not initialised");
   }
 
   /**
@@ -36,8 +35,21 @@ public final class GameState {
    * @return A Path object representing the path to the current level.
    */
   Path getLevelPath() {
-    Objects.requireNonNull(this.levelPath, "level not initialized");
-    return this.levelPath;
+    return Objects.requireNonNull(this.levelPath, "level not initialized");
+  }
+
+  public Maze getMaze() {
+    return Objects.requireNonNull(this.levelMaze, "level not initialized");
+  }
+
+  public Player getPlayer() {
+    return getMaze().getEntities().stream()
+        .<Player>mapMulti(
+            (e, cons) -> {
+              if (e instanceof Player p) cons.accept(p);
+            })
+        .findAny()
+        .orElseThrow(() -> new IllegalStateException("Level does not contain a player"));
   }
 
   /**

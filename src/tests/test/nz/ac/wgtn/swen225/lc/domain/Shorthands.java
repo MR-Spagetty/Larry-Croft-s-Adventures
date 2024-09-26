@@ -1,10 +1,10 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
 import java.util.Optional;
-
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public interface Shorthands {
@@ -59,7 +59,7 @@ public interface Shorthands {
   }
 
   static Entity e(Point p) {
-    return new Entity() {
+    return new MoveableEntity() {
       Point l = p;
       long lastT = -1;
       Maze maze = null;
@@ -104,6 +104,14 @@ public interface Shorthands {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUID'");
       }
+
+      @Override
+      public boolean canTouch(Entity touchee) {
+        return false;
+      }
+
+      @Override
+      public void touch(Entity touchee) {}
     };
   }
 }
