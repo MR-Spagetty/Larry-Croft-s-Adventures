@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.persistency;
 
 public interface JSONType {
-  String toJson(); // Converts to a JSON string
-  
+  // Purpose of interface is to decide what object type
+  // Acts like a marker for valid JSON objects
+
 }
