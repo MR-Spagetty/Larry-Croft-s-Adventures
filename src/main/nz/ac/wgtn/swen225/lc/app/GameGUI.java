@@ -85,7 +85,7 @@ public class GameGUI extends JFrame{
         GameDisplay gameDisplay = new GameDisplay();
         add(BorderLayout.CENTER, gameDisplay);
 
-        timer = new Timer(GameState.getGameState().gettick(), unused->{
+        timer = new Timer(GameState.getGameState().getTick(), unused->{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
         });
