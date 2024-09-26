@@ -1,6 +1,9 @@
-package nz.ac.wgtn.swen225.lc.domain;
+package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import java.util.Optional;
+
+import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 
 /** Represents a tile in the game world. */
 public interface Tile extends Comparable<Tile> {
@@ -10,7 +13,7 @@ public interface Tile extends Comparable<Tile> {
    *
    * @return the location of this tile
    */
-  Point getLocation();
+  Point location();
 
   /**
    * Determines whether the specified entity can enter this tile.
@@ -71,6 +74,6 @@ public interface Tile extends Comparable<Tile> {
    */
   @Override
   default int compareTo(Tile other) {
-    return getLocation().compareTo(other.getLocation());
+    return location().compareTo(other.location());
   }
 }

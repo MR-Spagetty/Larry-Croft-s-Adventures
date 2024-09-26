@@ -1,10 +1,11 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
 import java.util.Optional;
-import nz.ac.wgtn.swen225.lc.domain.Entity;
+
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
-import nz.ac.wgtn.swen225.lc.domain.Tile;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public interface Shorthands {
   static Point p(long x, long y) {
@@ -20,7 +21,7 @@ public interface Shorthands {
       Optional<Entity> oc = Optional.empty();
 
       @Override
-      public Point getLocation() {
+      public Point location() {
         return loc;
       }
 
@@ -77,12 +78,12 @@ public interface Shorthands {
       }
 
       @Override
-      public Point getLocation() {
+      public Point location() {
         return l;
       }
 
       @Override
-      public void setLocation(Point newLocation) {
+      public void location(Point newLocation) {
         l = newLocation;
       }
 

@@ -1,4 +1,7 @@
-package nz.ac.wgtn.swen225.lc.domain;
+package nz.ac.wgtn.swen225.lc.domain.entities;
+
+import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 
 /**
  * Basic interface that all entities in the game must implement.
@@ -38,7 +41,7 @@ public interface Entity {
    *
    * @return the current location of this entity
    */
-  Point getLocation();
+  Point location();
 
   /**
    * Sets the current location of this entity in the game world.
@@ -46,33 +49,22 @@ public interface Entity {
    * @param newLocation the new location
    * @throws IllegalArgumentException if the location is invalid
    */
-  void setLocation(Point newLocation);
+  void location(Point newLocation);
 
   /**
-   * Moves this entity by the specified amount in the given maze.
+   * check if the given entity can touch this entity
    *
-   * @param by the amount to move this entity
-   * @param in the maze in which to move this entity
+   * @param touchee the entity to touch this entity
+   * @return whether this entity can be touched
    */
-  default void move(Point by) {
-    Tile newLoc =
-        getMaze()
-            .getTile(getLocation().add(by))
-            .orElseThrow(
-                () -> new IllegalArgumentException("requested tile does not exist in maze"));
-    Tile oldLoc =
-        getMaze()
-            .getTile(getLocation())
-            .orElseThrow(
-                () ->
-                    new IllegalArgumentException(
-                        "Maze does not contain tile this entity occupies"));
-    if (!newLoc.canEnter(this)) {
-      throw new IllegalArgumentException("Entity may not enter the requested tile");
-    }
-    oldLoc.leave(this);
-    newLoc.enter(this);
-  }
+  public boolean canTouch(Entity touchee);
+
+  /**
+   * touches this entity as the given entity
+   *
+   * @param touchee the entity to execute the touch as
+   */
+  public void touch(Entity touchee);
 
   /**
    * gets the maze that this Entity inhabits
