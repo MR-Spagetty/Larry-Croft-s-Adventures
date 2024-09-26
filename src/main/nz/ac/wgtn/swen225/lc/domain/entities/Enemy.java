@@ -1,6 +1,6 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
-public interface Enemy extends AdvEntity{
+public interface Enemy extends MoveableEntity{
   @Override
   default boolean canTouch(Entity touchee) {
     return touchee instanceof Player;
