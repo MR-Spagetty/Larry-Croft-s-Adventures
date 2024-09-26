@@ -27,6 +27,12 @@ public class GameGUI extends JFrame{
      */
     Runnable changeGUIStyles = ()->{};
 
+    /*
+     * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
+     * the Pause Screen can stop and start it to "technically" pause the game.
+     */
+    static Timer timer;
+
     /**
      * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
      * This involves defining the size of the GUI window, and putting the Start Menu components inside.
@@ -79,10 +85,17 @@ public class GameGUI extends JFrame{
         GameDisplay gameDisplay = new GameDisplay();
         add(BorderLayout.CENTER, gameDisplay);
 
+        timer = new Timer(GameState.getGameState().gettick(), unused->{
+            assert SwingUtilities.isEventDispatchThread();
+            gameDisplay.repaint();
+        });
+
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);
         pack();
         this.requestFocus();
+
+        timer.start();
     }
 
     /**
