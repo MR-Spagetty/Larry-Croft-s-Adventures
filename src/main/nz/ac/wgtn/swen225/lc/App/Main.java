@@ -12,8 +12,5 @@ public class Main {
      * @param args An Array of arguments that are passed through when the program is initiated.
      *             This is not used!
      */
-    public static void main(String[] args){
-        System.out.println("Loading Game!");
-        SwingUtilities.invokeLater(MainScreen::new);
-    }
+    public static void main(String[] args){ SwingUtilities.invokeLater(GameGUI::new); }
 }

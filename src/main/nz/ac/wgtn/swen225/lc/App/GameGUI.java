@@ -16,7 +16,12 @@ public class GameGUI extends JFrame{
      * This action will be mostly similar to quitting the current game playing, as you will also be
      * asked whether you want to save the game before quitting.
      */
-    Runnable closeGame= ()->{};
+    Runnable closeGame = ()->{};
+
+    /*
+     * TODO add comments
+     */
+    Runnable changeGUIStyles = ()->{};
 
     /**
      * TODO add comments
@@ -40,31 +45,27 @@ public class GameGUI extends JFrame{
      * Helper method that creates the "components" that will be in the Start Menu.
      */
     private void createStartMenu(){
-        add(BorderLayout.NORTH, StartScreen.instructions);
+        JLabel instructions = StartScreen.instructions;
+        JPanel buttons = StartScreen.createButtonsSection((unused -> changeGUIStyles.run()), (unused -> {}));
 
-        add(
-                BorderLayout.CENTER,
-                StartScreen.createButtonsSection((unused -> changeGUIStyles()), (unused -> {}))
-        );
+        changeGUIStyles = () -> {
+            remove(instructions);
+            remove(buttons);
+
+            System.out.println("Created the Game GUI."); //TODO delete this!
+
+            createMainMenu();
+        };
+
+        add(BorderLayout.NORTH, instructions);
+        add(BorderLayout.CENTER, buttons);
     }
 
     /**
      * TODO add comments
      */
     private void createMainMenu(){
-        add(BorderLayout.EAST, MainScreen.createGameButtons());
-
-        new ControlKeys(); //Initialises the class specifically for controlling the keys.
-    }
-
-    /**
-     * TODO add comments
-     */
-    private void changeGUIStyles(){
-        removeAll(); //Will remove all the Start Screen components, so we can add the other components in!
-        invalidate();
-        validate();
-
-        createMainMenu();
+        add(BorderLayout.NORTH, MainScreen.createGameButtons());
+        add(BorderLayout.SOUTH, StartScreen.instructions);
     }
 }
