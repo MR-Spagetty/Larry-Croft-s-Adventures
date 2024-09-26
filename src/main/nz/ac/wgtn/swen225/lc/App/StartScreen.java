@@ -10,8 +10,7 @@ import nz.ac.wgtn.swen225.lc.app.GameGUI;
 /**
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
  */
-public class StartScreen extends JFrame{
-    Runnable closeGame= ()->{}; //Action to be executed when the user closes the Game GUI with the 'X' button.
+public class StartScreen extends GameGUI{
     JLabel instructions = new JLabel("Instructions go here!");
 
     /**
@@ -21,13 +20,7 @@ public class StartScreen extends JFrame{
      */
     public StartScreen(){
         assert SwingUtilities.isEventDispatchThread();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
         createStartMenu();
-
-        setPreferredSize(new Dimension(1200, 600));
-        pack();
-        setVisible(true);
     }
 
     /**
@@ -65,10 +58,7 @@ public class StartScreen extends JFrame{
         /** TODO Create new game file and then run game, if specified game file is blank! */
         /** TODO remove the buttons and all start screen stuff! */
 
-        invalidate();
-        removeAll(); //Will remove all the Start Screen components, so we can add the other components in!
-        validate();
-        System.out.println("Created the Game GUI."); //TODO delete this!
+        super.changeGUIStyles();
     }
 
 

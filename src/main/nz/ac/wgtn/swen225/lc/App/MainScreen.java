@@ -3,6 +3,10 @@ package nz.ac.wgtn.swen225.lc.app;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
+
+/**
+ * TODO add comments
+ */
 class MainScreen extends GameGUI {
     //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
@@ -12,8 +16,10 @@ class MainScreen extends GameGUI {
      */
     public MainScreen(){
         assert SwingUtilities.isEventDispatchThread();
+
         createGameInfo();
         createGameButtons();
+
         new ControlKeys(); //Initialises the class specifically for controlling the keys.
     }
 
