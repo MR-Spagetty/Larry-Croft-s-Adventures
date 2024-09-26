@@ -38,7 +38,7 @@ public class Player implements MoveableEntity {
   @Override
   public void tick(long tick) {
     if (tick <= lastTicked()) {
-      logger.accept(new Point(0, 0));
+      return;
     }
     Point origin = location();
     move(actionQueue.offset);

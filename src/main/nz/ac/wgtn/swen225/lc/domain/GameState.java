@@ -3,9 +3,16 @@ package nz.ac.wgtn.swen225.lc.domain;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.tiles.*;
+import javax.swing.Timer;
 
 public final class GameState {
+
+  /** default tick rate of the game in milliseconds */
+  public static final int DEFAULT_TICK_RATE = 200;
+
   // TODO extend whatever JSONable interface is created for persistency
   private long tick = 0;
   private static GameState inst = new GameState();
@@ -14,9 +21,16 @@ public final class GameState {
     return inst;
   }
 
+
+
   private String levelID = null;
   private Path levelPath = null;
   private Maze levelMaze = null;
+
+  private Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
+  {
+    this.tickTimer.setRepeats(true);
+  }
 
   private GameState() {}
 
@@ -43,7 +57,7 @@ public final class GameState {
   }
 
   public Player getPlayer() {
-    return getMaze().getEntities().stream()
+    return getMaze().getEntities().parallelStream()
         .<Player>mapMulti(
             (e, cons) -> {
               if (e instanceof Player p) cons.accept(p);
@@ -69,7 +83,6 @@ public final class GameState {
    */
   void tick() {
     getLevelID();
-    // TODO tick game objects
     this.tick++;
     this.levelMaze.getEntities().forEach(e -> e.tick(getTick()));
   }
@@ -94,13 +107,24 @@ public final class GameState {
     throw new UnsupportedOperationException("set level by path NYI");
   }
 
-  static Maze setupLevel(Object TBD) {
+  void initLevel(Maze level) {
+    this.tickTimer.stop();
+    this.levelMaze = level;
+    this.tickTimer.restart();
+  }
 
-    List<Entity> entities = null;
-    List<Tile> tiles = null;
-    long maxTicks = -1;
-    Maze maze = new Maze(maxTicks, tiles, entities);
+  static Maze setupLevel() {
 
-    throw new UnsupportedOperationException("NYI");
+    List<Entity> entities = List.of(
+      new Player(new Point(0, 0), 0)
+    );
+    List<Tile> tiles = List.of(
+      new Empty(new Point(0, 0)),
+      new Empty(new Point(1, 0))
+    );
+    long maxTicks = 500;
+    Maze maze = new Maze(maxTicks, "example", tiles, entities);
+    entities.get(0).setMaze(maze);
+    return maze;
   }
 }
