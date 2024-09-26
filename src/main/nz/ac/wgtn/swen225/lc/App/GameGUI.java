@@ -2,7 +2,6 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -27,49 +26,5 @@ public class GameGUI extends JFrame{
 
         setPreferredSize(new Dimension(1200, 600));
         pack();
-    }
-}
-
-class GameScreen extends JFrame{
-    //The Screen that will be displayed when the game is paused.
-    static PauseScreen ps = new PauseScreen(200);
-
-    /**
-     * Constructor for the Game GUI.
-     */
-    public GameScreen(){
-        assert SwingUtilities.isEventDispatchThread();
-
-        setVisible(true);
-
-        new ControlKeys(); //Initialises the class specifically for controlling the keys.
-    }
-
-    public void createGameInfo(){
-        JPanel GameInfo = new JPanel();
-        /** TODO Display the number of levels here */
-        /** TODO Display the number of chips left to collect */
-        /** TODO Display the time remaining */
-    }
-
-    public void createGameButtons(){
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen());
-        JButton exitGame = new JButton();
-        JButton saveGame = new JButton();
-
-        JButton displayHelp = new JButton();
-
-        JPanel gameButtons = new JPanel();
-        gameButtons.add(pauseGame);
-    }
-
-    /**
-     * Small helper method which creates a new button and adds an action to it.
-     */
-    private JButton createButtonWithAction(ActionListener al){
-        JButton newButton = new JButton();
-        newButton.addActionListener(al);
-
-        return newButton;
     }
 }
