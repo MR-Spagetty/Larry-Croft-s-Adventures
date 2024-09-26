@@ -27,6 +27,13 @@ public class PauseScreen extends JFrame{
         pack();
     }
 
-    public void showScreen(){ setVisible(true); }
-    public void hideScreen(){ setVisible(false); }
+    public void showScreen(){
+        setVisible(true);
+        GameGUI.timer.stop();
+    }
+
+    public void hideScreen(){
+        setVisible(false);
+        GameGUI.timer.start();
+    }
 }

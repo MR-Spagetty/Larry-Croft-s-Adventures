@@ -1,65 +1,105 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import nz.ac.wgtn.swen225.lc.domain.*;
+
 /**
+ * Class which is responsible for handling the "Graphical User Interface" of the game.
+ *
  * @author Developer 1 <dev1@example.internal>
  */
 public class GameGUI extends JFrame{
-    /**
+    /*
      * Action to be executed when the user closes the Game GUI with the 'X' button.
      * This action will be mostly similar to quitting the current game playing, as you will also be
      * asked whether you want to save the game before quitting.
-     *
-     * TODO Finish work on "closeGame" action.
      */
-    Runnable closeGame= ()->{};
+    Runnable closeGame = ()->{};
 
-    //The Screen that will be displayed when the game is paused.
-    static PauseScreen ps = new PauseScreen(200);
+    /*
+     * Action to be executed when the user begins playing a game. (i.e.: When we switch from the Start Menu to
+     * the Game Menu itself.) Currently, the Runnable action does not do anything, as what is executed is dependent
+     * on the components that are in the start menu (as these are removed).
+     */
+    Runnable changeGUIStyles = ()->{};
+
+    /*
+     * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
+     * the Pause Screen can stop and start it to "technically" pause the game.
+     */
+    static Timer timer;
 
     /**
-     * Constructor for the Game GUI.
+     * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
+     * This involves defining the size of the GUI window, and putting the Start Menu components inside.
+     * TODO: make a more professional version of the Start Menu GUI.
      */
     public GameGUI(){
         assert SwingUtilities.isEventDispatchThread();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setPreferredSize(new Dimension(1200, 600));
 
-        setVisible(true);
         addWindowListener(new WindowAdapter(){
             public void windowClosed(WindowEvent e){ closeGame.run(); }
         });
 
-        ControlKeys keys = new ControlKeys();
-    }
+        createStartMenu();
 
-    public void createGameInfo(){
-        JPanel GameInfo = new JPanel();
-        /** TODO Display the number of levels here */
-        /** TODO Display the number of chips left to collect */
-        /** TODO Display the time remaining */
-    }
-
-    public void createGameButtons(){
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen());
-        JButton exitGame = new JButton();
-        JButton saveGame = new JButton();
-
-        JButton displayHelp = new JButton();
-
-        JPanel gameButtons = new JPanel();
-        gameButtons.add(pauseGame);
+        pack();
+        setVisible(true);
     }
 
     /**
-     * Small helper method which creates a new button and adds an action to it.
+     * Helper method that creates the "components" that will be in the Start Menu.
      */
-    private JButton createButtonWithAction(ActionListener al){
-        JButton newButton = new JButton();
-        newButton.addActionListener(al);
+    private void createStartMenu(){
+        JLabel instructions = StartScreen.instructions;
+        JPanel buttons = StartScreen.createButtonsSection((unused -> changeGUIStyles.run()), (unused -> {}));
 
-        return newButton;
+        /*
+         * "changeGUIStyles" will be changed so when executed, the contents on the Start Menu are removed.
+         * This is because this action will be run when a game is started.
+         */
+        changeGUIStyles = () -> {
+            remove(instructions); remove(buttons);
+            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
+            createMainMenu();
+        };
+
+        add(BorderLayout.NORTH, instructions);
+        add(BorderLayout.CENTER, buttons);
     }
+
+    /**
+     * Helper method which creates the components present in the Main menu. This also sets up the keys to be used
+     * in the game.
+     * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
+     */
+    private void createMainMenu(){
+        add(BorderLayout.NORTH, MainScreen.createGameButtons());
+
+        GameDisplay gameDisplay = new GameDisplay();
+        add(BorderLayout.CENTER, gameDisplay);
+
+        timer = new Timer(GameState.getGameState().gettick(), unused->{
+            assert SwingUtilities.isEventDispatchThread();
+            gameDisplay.repaint();
+        });
+
+        this.addKeyListener(new ControlKeys());
+        this.setFocusable(true);
+        pack();
+        this.requestFocus();
+
+        timer.start();
+    }
+
+    /**
+     * A "tick()" method that the Recorder can use to allow for replay-back.
+     */
+    public static void tick(){ GameState.getGameState().tick(); }
 }
