@@ -3,6 +3,7 @@ package nz.ac.wgtn.swen225.lc.app;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
+import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
  * TODO add comments
@@ -12,7 +13,7 @@ public class MainScreen {
     static PauseScreen ps = new PauseScreen(200);
 
     /**
-     * TODO add comments
+     * TODO add comments and take action on todos below.
      */
     public static JPanel createGameInfo(){
         JPanel GameInfo = new JPanel();
@@ -24,7 +25,7 @@ public class MainScreen {
     }
 
     /**
-     * TODO add comments
+     * TODO add comments and actions for "exit" "save" and "help".
      */
     public static JPanel createGameButtons(){
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");

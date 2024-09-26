@@ -75,7 +75,9 @@ public class GameGUI extends JFrame{
      */
     private void createMainMenu(){
         add(BorderLayout.NORTH, MainScreen.createGameButtons());
-        //add(BorderLayout.CENTER, MainScreen.createGameButtons());
+
+        GameDisplay gameDisplay = new GameDisplay();
+        add(BorderLayout.CENTER, gameDisplay);
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);
