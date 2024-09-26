@@ -1,12 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import nz.ac.wgtn.swen225.lc.app.GameGUI;
 
 /**
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
@@ -36,7 +31,7 @@ public class StartScreen{
     /**
      * Loads an existing game from a ".json" file.
      */
-    private void loadGame(){
+    public static void loadGame(){
         /** TODO If neccesary, create a file chooser for selecting a game file. */
         System.out.println("Feature to load game has not been implemented yet.");
     }

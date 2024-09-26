@@ -37,9 +37,9 @@ public class GameGUI extends JFrame{
     }
 
     /**
-     * Helper method that creates the "components" that will be in the Game GUI.
+     * Helper method that creates the "components" that will be in the Start Menu.
      */
-    public void createStartMenu(){
+    private void createStartMenu(){
         add(BorderLayout.NORTH, StartScreen.instructions);
 
         add(
@@ -51,10 +51,20 @@ public class GameGUI extends JFrame{
     /**
      * TODO add comments
      */
-    protected void changeGUIStyles(){
-        invalidate();
+    private void createMainMenu(){
+        add(BorderLayout.EAST, MainScreen.createGameButtons());
+
+        new ControlKeys(); //Initialises the class specifically for controlling the keys.
+    }
+
+    /**
+     * TODO add comments
+     */
+    private void changeGUIStyles(){
         removeAll(); //Will remove all the Start Screen components, so we can add the other components in!
+        invalidate();
         validate();
-        System.out.println("Created the Game GUI."); //TODO delete this!
+
+        createMainMenu();
     }
 }
