@@ -2,11 +2,14 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
-
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
 
 public class Player implements MoveableEntity {
 
@@ -17,6 +20,7 @@ public class Player implements MoveableEntity {
   private Point location;
   private Maze maze;
   private final long individualID;
+  private List<Item> inventory = new ArrayList<>();
 
   private long lastTick = -1;
 
@@ -81,6 +85,36 @@ public class Player implements MoveableEntity {
   @Override
   public long getUID() {
     return maze.longID() ^ individualID;
+  }
+
+  /**
+   * Pickup the given item
+   *
+   * @param toPickup the item to pickup
+   */
+  public void pickUp(Item toPickup) {
+    this.inventory.add(toPickup);
+  }
+
+  /**
+   * clear the player's inventory
+   *
+   * <p>primarily for use by the thief tile
+   */
+  public void clearInventory() {
+    this.inventory.clear();
+  }
+
+  /**
+   * Gets the players inventory
+   *
+   * <p>gets an unmodifiable view of the player's inventory primarily for use in displaying the
+   * inventory to the user
+   *
+   * @return the player's inventory
+   */
+  public List<Item> getInventory() {
+    return Collections.unmodifiableList(this.inventory);
   }
 
   @Override

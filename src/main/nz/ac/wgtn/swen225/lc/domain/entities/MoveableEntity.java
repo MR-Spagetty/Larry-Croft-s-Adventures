@@ -17,6 +17,9 @@ public interface MoveableEntity extends Entity {
             .getTile(location().add(by))
             .orElseThrow(
                 () -> new IllegalArgumentException("requested tile does not exist in maze"));
+    if (newLoc.getOccupant().map(e -> e.canTouch(this)).orElse(false)) {
+      newLoc.getOccupant().get().touch(this);
+    }
     Tile oldLoc =
         getMaze()
             .getTile(location())
