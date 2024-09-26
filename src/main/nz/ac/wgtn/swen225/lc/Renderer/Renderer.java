@@ -1,15 +1,19 @@
 package nz.ac.wgtn.swen225.lc.Renderer;
-import nz.ac.wgtn.swen225.lc.domain.tiles.*; // pretty sure its needed
+
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
-import nz.ac.wgtn.swen225.lc.domain.entities.Player; // replace new Point in ping with player getPos
-import nz.ac.wgtn.swen225.lc.domain.Point;
-import java.util.List;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
+/** Handles the getting of level data and then rendering all components */
 public class Renderer {
-    void ping() {
-        // store renderable images in list
-        List<Sprite> tiles = new Maze(1, "").getTiles(new Point(0, 0), 10).stream().map(t->new Sprite(t)).toList(); // TODO: get maze and player
-
-        tiles.forEach(t->t.draw());
-    }
+  /** Gets data from the GameState, then renders all tiles and entities in that order */
+  void render() {
+    GameState state = GameState.getGameState();
+    Maze maze = state.getMaze();
+    Player player = state.getPlayer();
+    // renders all tiles
+    maze.getTiles(player.location(), 10).stream().map(t -> new Sprite(t)).forEach(t -> t.draw());
+    // renders all entities
+    maze.getEntities(player.location(), 10).stream().map(s -> new Sprite(s)).forEach(s -> s.draw());
+  }
 }
