@@ -48,12 +48,13 @@ public class GameGUI extends JFrame{
         JLabel instructions = StartScreen.instructions;
         JPanel buttons = StartScreen.createButtonsSection((unused -> changeGUIStyles.run()), (unused -> {}));
 
+        /**
+         * "changeGUIStyles" will be changed so when executed, the contents on the Start Menu are removed.
+         * This is because this action will be run when a game is started.
+         */
         changeGUIStyles = () -> {
-            remove(instructions);
-            remove(buttons);
-
-            System.out.println("Created the Game GUI."); //TODO delete this!
-
+            remove(instructions); remove(buttons);
+            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
             createMainMenu();
         };
 
