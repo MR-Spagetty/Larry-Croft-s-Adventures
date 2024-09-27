@@ -10,7 +10,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * class also performs the updating of statistics related to the game, including the level of the game,
  * the number of chips left to collect, and the time remaining.
  */
-public class MainScreen {
+public class GameUI {
     //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
 
@@ -33,7 +33,7 @@ public class MainScreen {
      * @param gameDisplay The graphics display that will need to be refreshed by the timer.
      * @return The timer that will refresh the graphics display every few seconds.
      */
-    public static Timer createTimer(GameDisplay gameDisplay){
+    public static Timer createTimer(GraphicsPane gameDisplay){
         return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();

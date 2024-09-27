@@ -5,14 +5,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import nz.ac.wgtn.swen225.lc.domain.*;
-
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
  *
  * @author Developer 1 <dev1@example.internal>
  */
-public class GameGUI extends JFrame{
+public class UserInterface extends JFrame{
     /*
      * Action to be executed when the user closes the Game GUI with the 'X' button.
      * This action will be mostly similar to quitting the current game playing, as you will also be
@@ -38,7 +36,7 @@ public class GameGUI extends JFrame{
      * This involves defining the size of the GUI window, and putting the Start Menu components inside.
      * TODO: make a more professional version of the Start Menu GUI.
      */
-    public GameGUI(){
+    public UserInterface(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(1200, 600));
@@ -57,8 +55,8 @@ public class GameGUI extends JFrame{
      * Helper method that creates the "components" that will be in the Start Menu.
      */
     private void createStartMenu(){
-        JLabel instructions = StartScreen.instructions;
-        JPanel buttons = StartScreen.createButtonsSection((unused -> startGame.run()), (unused -> {}));
+        JLabel instructions = StartUI.instructions;
+        JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()), (unused -> {}));
 
         /*
          * "startGame" will be changed so when executed, the contents on the Start Menu are removed.
@@ -80,11 +78,11 @@ public class GameGUI extends JFrame{
      * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        add(BorderLayout.NORTH, MainScreen.createGameButtons());
+        add(BorderLayout.NORTH, GameUI.createGameButtons());
 
-        GameDisplay gameDisplay = new GameDisplay();
-        add(BorderLayout.CENTER, gameDisplay);
-        timer = MainScreen.createTimer(gameDisplay);
+        GraphicsPane pane = new GraphicsPane();
+        add(BorderLayout.CENTER, pane);
+        timer = GameUI.createTimer(pane);
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);

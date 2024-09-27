@@ -10,7 +10,7 @@ import javax.swing.*;
  * menu can be created
  */
 public class App{
-    public App(){ SwingUtilities.invokeLater(GameGUI::new); }
+    public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
     /**
      * A "tickOverride()" method that the Recorder can use to allow for replay-back.
