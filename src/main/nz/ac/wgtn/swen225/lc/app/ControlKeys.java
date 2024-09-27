@@ -53,8 +53,8 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> MainScreen.ps.showScreen());
-        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> MainScreen.ps.hideScreen());
+        assignKeyToAction(KeyEvent.VK_SPACE, () -> GameUI.ps.showScreen());
+        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameUI.ps.hideScreen());
     }
 
     /**
