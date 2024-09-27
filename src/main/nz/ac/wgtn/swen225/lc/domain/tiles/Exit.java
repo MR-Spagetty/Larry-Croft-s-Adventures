@@ -1,8 +1,8 @@
 package nz.ac.wgtn.swen225.lc.domain.tiles;
 
-import nz.ac.wgtn.swen225.lc.domain.Entity;
-import nz.ac.wgtn.swen225.lc.domain.Player;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
 public class Exit extends Empty {
 

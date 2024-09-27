@@ -1,10 +1,14 @@
-package nz.ac.wgtn.swen225.lc.domain;
+package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
 
-public class Player implements Entity {
+import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.domain.Point;
+
+public class Player implements MoveableEntity {
 
   private PlayerAction actionQueue = PlayerAction.None;
 
@@ -34,7 +38,7 @@ public class Player implements Entity {
   @Override
   public void tick(long tick) {
     if (tick <= lastTicked()) {
-      logger.accept(new Point(0, 0));
+      return;
     }
     Point origin = location();
     move(actionQueue.offset);
@@ -77,5 +81,16 @@ public class Player implements Entity {
   @Override
   public long getUID() {
     return maze.longID() ^ individualID;
+  }
+
+  @Override
+  public boolean canTouch(Entity touchee) {
+    return touchee instanceof Enemy;
+  }
+
+  @Override
+  public void touch(Entity touchee) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'touch'");
   }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public class Maze {
@@ -40,7 +41,7 @@ public class Maze {
     entities.forEach(this::addEntity);
   }
 
-  long longID(){
+  public long longID(){
     long longID = 0;
     for(char c: this.ID.toCharArray()){
       longID <<= 1;

@@ -32,6 +32,7 @@ public class Record {
    */
   public void record(KeyEvent e) {
     // TODO: once App creates the mapper class/method/whatever
+    System.out.println(e);
   }
 
   /**
@@ -40,6 +41,7 @@ public class Record {
    * @param e key to log
    */
   public void record(PlayerAction a) {
+    System.out.println(a);
     playerActions.add(a);
   }
 
