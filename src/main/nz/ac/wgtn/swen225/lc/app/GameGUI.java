@@ -84,15 +84,7 @@ public class GameGUI extends JFrame{
 
         GameDisplay gameDisplay = new GameDisplay();
         add(BorderLayout.CENTER, gameDisplay);
-
-        /*
-         * Creates a timer which refreshes the Graphics pane every time a tick occurs.
-         * TODO: test setup to make sure it works as expected.
-         */
-        timer = new Timer(GameState.DEFAULT_TICK_RATE, unused->{
-            assert SwingUtilities.isEventDispatchThread();
-            gameDisplay.repaint();
-        });
+        timer = MainScreen.createTimer(gameDisplay);
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);

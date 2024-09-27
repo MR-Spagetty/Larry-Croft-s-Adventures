@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
- * TODO add comments
+ * Responsible for constructing parts of the Graphical User Interface used during gameplay. This
+ * class also performs the updating of statistics related to the game, including the level of the game,
+ * the number of chips left to collect, and the time remaining.
  */
 public class MainScreen {
     //The Screen that will be displayed when the game is paused.
@@ -25,7 +27,23 @@ public class MainScreen {
     }
 
     /**
-     * TODO add comments and actions for "exit" "save" and "help".
+     * Creates a timer which refreshes the Graphics pane every time a tick occurs.
+     * TODO: test setup to make sure it works as expected.
+     *
+     * @param gameDisplay The graphics display that will need to be refreshed by the timer.
+     * @return The timer that will refresh the graphics display every few seconds.
+     */
+    public static Timer createTimer(GameDisplay gameDisplay){
+        return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
+            assert SwingUtilities.isEventDispatchThread();
+            gameDisplay.repaint();
+        });
+    }
+
+    /**
+     * Creates and returns the JPanel that will hold buttons that perform specific actions in relation
+     * to the game and the GUI.
+     * TODO add actions for "exit" "save" and "help".
      */
     public static JPanel createGameButtons(){
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
