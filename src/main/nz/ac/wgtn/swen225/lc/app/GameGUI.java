@@ -85,12 +85,14 @@ public class GameGUI extends JFrame{
         GameDisplay gameDisplay = new GameDisplay();
         add(BorderLayout.CENTER, gameDisplay);
 
-        /** TODO change the below to better integrate Renderer with App. */
-        timer = new Timer(100, unused->{
+        /*
+         * Creates a timer which refreshes the Graphics pane every time a tick occurs.
+         * TODO: test setup to make sure it works as expected.
+         */
+        timer = new Timer(GameState.DEFAULT_TICK_RATE, unused->{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
         });
-        /** extent of todo */
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);
@@ -99,12 +101,4 @@ public class GameGUI extends JFrame{
 
         timer.start();
     }
-
-    /**
-     * A "tickOverride()" method that the Recorder can use to allow for replay-back.
-     * TODO: Make an "InteractReplay" interface that has this method and a method that takes in a PlayerAction and does something with it.
-     */
-    public static void tickOverride(){ GameState.getGameState().tick(); }
-
-
 }
