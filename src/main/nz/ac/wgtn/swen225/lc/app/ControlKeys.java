@@ -36,7 +36,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeysToActions();
     }
 
-    public void assignKeysToDirections(){
+    private void assignKeysToDirections(){
         assignKeyToPlayerAction(KeyEvent.VK_KP_UP, PlayerAction.Up);
         assignKeyToPlayerAction(KeyEvent.VK_KP_DOWN, PlayerAction.Down);
         assignKeyToPlayerAction(KeyEvent.VK_KP_LEFT, PlayerAction.Left);
@@ -46,7 +46,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     /**
      * TODO Create actions for each key!
      */
-    public void assignKeysToActions(){
+    private void assignKeysToActions(){
         assignKeyToAction(KeyEvent.VK_X, () -> {});
         assignKeyToAction(KeyEvent.VK_S, () -> {});
         assignKeyToAction(KeyEvent.VK_R, () -> {});
