@@ -101,7 +101,10 @@ public class GameGUI extends JFrame{
     }
 
     /**
-     * A "tick()" method that the Recorder can use to allow for replay-back.
+     * A "tickOverride()" method that the Recorder can use to allow for replay-back.
+     * TODO: Make an "InteractReplay" interface that has this method and a method that takes in a PlayerAction and does something with it.
      */
     public static void tickOverride(){ GameState.getGameState().tick(); }
+
+
 }
