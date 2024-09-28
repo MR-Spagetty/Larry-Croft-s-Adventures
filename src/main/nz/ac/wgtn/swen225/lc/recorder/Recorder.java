@@ -17,7 +17,11 @@ public class Recorder {
   private String levelID;
   private List<PlayerAction> playerActions = new ArrayList<>();
 
+<<<<<<< HEAD
   public Recorder(String levelID) {
+=======
+  Recorder(String levelID) {
+>>>>>>> fb9601ec7aee6670f7605ff639f4c1758267c9f6
     Objects.requireNonNull(levelID);
     if (levelID.isEmpty()) {
       throw new IllegalArgumentException("levelID cannot be empty");
@@ -26,6 +30,7 @@ public class Recorder {
   }
 
   /**
+<<<<<<< HEAD
    * Map the keyevent to player action then push into playerActions List
    * 
    * @param e key to log
@@ -35,6 +40,8 @@ public class Recorder {
   }
 
   /**
+=======
+>>>>>>> fb9601ec7aee6670f7605ff639f4c1758267c9f6
    * Adds the playeraction into the playerActions list
    * 
    * @param e key to log
