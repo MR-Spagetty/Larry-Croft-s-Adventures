@@ -23,7 +23,7 @@ public class GameUI {
         JPanel menu = new JPanel();
         menu.setPreferredSize(new Dimension(150, 400));
         menu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS)); /* ??? */
+        menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 
         //menu.add(createGameInfo());
         menu.add(createGameButtons());
@@ -69,6 +69,8 @@ public class GameUI {
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
         JPanel gameButtons = new JPanel();
+        gameButtons.setPreferredSize(new Dimension(150, 200));
+        gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
         gameButtons.add(pauseGame);
         gameButtons.add(exitGame);
