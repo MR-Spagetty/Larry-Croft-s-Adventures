@@ -78,7 +78,7 @@ public class UserInterface extends JFrame{
      * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        add(BorderLayout.NORTH, GameUI.createGameButtons());
+        add(BorderLayout.EAST, GameUI.createMenu());
 
         GraphicsPane pane = new GraphicsPane();
         add(BorderLayout.CENTER, pane);

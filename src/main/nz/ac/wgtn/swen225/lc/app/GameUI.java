@@ -34,7 +34,7 @@ public class GameUI {
     /**
      * TODO add comments and take action on todos below.
      */
-    public static JPanel createGameInfo(){
+    private static JPanel createGameInfo(){
         JPanel GameInfo = new JPanel();
         /** TODO Display the number of levels here */
         /** TODO Display the number of chips left to collect */
@@ -62,7 +62,7 @@ public class GameUI {
      * to the game and the GUI.
      * TODO add actions for "exit" "save" and "help".
      */
-    public static JPanel createGameButtons(){
+    private static JPanel createGameButtons(){
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
         JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
@@ -72,10 +72,10 @@ public class GameUI {
         gameButtons.setPreferredSize(new Dimension(150, 200));
         gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
-        gameButtons.add(pauseGame);
-        gameButtons.add(exitGame);
-        gameButtons.add(saveGame);
-        gameButtons.add(displayHelp);
+        gameButtons.add(BorderLayout.CENTER, pauseGame);
+        gameButtons.add(BorderLayout.CENTER, exitGame);
+        gameButtons.add(BorderLayout.CENTER, saveGame);
+        gameButtons.add(BorderLayout.CENTER, displayHelp);
 
         return gameButtons;
     }
