@@ -16,5 +16,5 @@ public interface Replay {
    *             This corresponds to the index in the 'actions' list.
    * @return The PlayerAction object representing the player's action in the specified frame.
    */
-  public PlayerAction replay(int tick);
+  public void replay(int tick);
 }
