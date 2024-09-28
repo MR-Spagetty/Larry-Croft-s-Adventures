@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
@@ -13,6 +14,22 @@ import nz.ac.wgtn.swen225.lc.domain.*;
 public class GameUI {
     //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
+
+    /**
+     * Creates the menu containing information about the current game, and the buttons in the game.
+     * TODO: Make sure we're satisfied with aspects of the Border.
+     */
+    public static JPanel createMenu(){
+        JPanel menu = new JPanel();
+        menu.setPreferredSize(new Dimension(150, 400));
+        menu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS)); /* ??? */
+
+        //menu.add(createGameInfo());
+        //menu.add(createGameButtons());
+
+        return menu;
+    }
 
     /**
      * TODO add comments and take action on todos below.
