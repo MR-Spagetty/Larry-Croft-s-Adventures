@@ -69,7 +69,7 @@ public class GameUI {
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
         JPanel gameButtons = new JPanel();
-        gameButtons.setPreferredSize(new Dimension(150, 200));
+        gameButtons.setPreferredSize(new Dimension(150, 100));
         gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
         gameButtons.add(BorderLayout.CENTER, pauseGame);
@@ -85,6 +85,7 @@ public class GameUI {
      */
     private static JButton createButtonWithAction(ActionListener al, String text){
         JButton newButton = new JButton(text);
+        newButton.setPreferredSize(new Dimension(150, 25));
         newButton.addActionListener(al);
 
         return newButton;

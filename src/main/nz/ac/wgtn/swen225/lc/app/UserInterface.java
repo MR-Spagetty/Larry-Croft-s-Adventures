@@ -80,6 +80,7 @@ public class UserInterface extends JFrame{
     private void createMainMenu(){
         add(BorderLayout.EAST, GameUI.createMenu());
 
+        /*
         GraphicsPane pane = new GraphicsPane();
         add(BorderLayout.CENTER, pane);
         timer = GameUI.createTimer(pane);
@@ -90,5 +91,6 @@ public class UserInterface extends JFrame{
         this.requestFocus();
 
         timer.start();
+         */
     }
 }
