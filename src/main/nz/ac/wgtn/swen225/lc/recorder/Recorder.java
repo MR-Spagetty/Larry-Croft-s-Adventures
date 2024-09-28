@@ -26,16 +26,6 @@ public class Recorder {
   }
 
   /**
-   * Map the keyevent to player action then push into playerActions List
-   * 
-   * @param e key to log
-   */
-  public void record(KeyEvent e) {
-    // TODO: once App creates the mapper class/method/whatever
-    System.out.println(e);
-  }
-
-  /**
    * Adds the playeraction into the playerActions list
    * 
    * @param e key to log
