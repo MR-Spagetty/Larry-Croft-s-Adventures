@@ -26,7 +26,7 @@ public class GameUI {
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS)); /* ??? */
 
         //menu.add(createGameInfo());
-        //menu.add(createGameButtons());
+        menu.add(createGameButtons());
 
         return menu;
     }
@@ -69,6 +69,7 @@ public class GameUI {
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
         JPanel gameButtons = new JPanel();
+
         gameButtons.add(pauseGame);
         gameButtons.add(exitGame);
         gameButtons.add(saveGame);
