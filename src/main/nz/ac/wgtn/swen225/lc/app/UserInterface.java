@@ -31,6 +31,9 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
+    private final int WIDTH = 1200;
+    private final int HEIGHT = 600;
+
     /**
      * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
      * This involves defining the size of the GUI window, and putting the Start Menu components inside.
@@ -39,7 +42,7 @@ public class UserInterface extends JFrame{
     public UserInterface(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(1200, 600));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         addWindowListener(new WindowAdapter(){
             public void windowClosed(WindowEvent e){ closeGame.run(); }
@@ -78,7 +81,7 @@ public class UserInterface extends JFrame{
      * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        add(BorderLayout.EAST, GameUI.createMenu());
+        add(BorderLayout.EAST, GameUI.createMenu(WIDTH/4, HEIGHT));
 
         /*
         GraphicsPane pane = new GraphicsPane();

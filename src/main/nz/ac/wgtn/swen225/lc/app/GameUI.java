@@ -19,22 +19,23 @@ public class GameUI {
      * Creates the menu containing information about the current game, and the buttons in the game.
      * TODO: Make sure we're satisfied with aspects of the Border.
      */
-    public static JPanel createMenu(){
+    public static JPanel createMenu(int width, int height){
         Color backgroundColor = Color.DARK_GRAY;
-        JPanel menu = templateJPanel(backgroundColor, 150, 400);
+        JPanel menu = templateJPanel(backgroundColor, width, height);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
-        menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor));
-        menu.add(BorderLayout.SOUTH, createGameButtons(backgroundColor));
+        menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor, width, height/2));
+        menu.add(BorderLayout.SOUTH, createGameButtons(backgroundColor, width, height/2));
 
         return menu;
     }
 
     /**
-     * TODO add comments and take action on todos below.
+     * Creates the section of the side panel, where information like the current level and the number
+     * of chips remaining is displayed.
      */
-    private static JPanel createGameInfo(Color backgroundColor){
-        JPanel gameInfo = templateJPanel(backgroundColor, 150, 200);
+    private static JPanel createGameInfo(Color backgroundColor, int width, int height){
+        JPanel gameInfo = templateJPanel(backgroundColor, width, height);
         JLabel levelDisplay = templateJLabel("LEVEL: ");
 
         /** TODO Display the number of chips left to collect */
@@ -64,13 +65,13 @@ public class GameUI {
      * to the game and the GUI.
      * TODO add actions for "exit" "save" and "help".
      */
-    private static JPanel createGameButtons(Color backgroundColor){
+    private static JPanel createGameButtons(Color backgroundColor, int width, int height){
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
         JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
-        JPanel gameButtons = templateJPanel(Color.WHITE, 150, 200);
+        JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
 
         gameButtons.add(BorderLayout.CENTER, pauseGame);
         gameButtons.add(BorderLayout.CENTER, exitGame);
@@ -100,7 +101,7 @@ public class GameUI {
 
     private static JLabel templateJLabel(String text){
         JLabel newLabel = new JLabel(text);
-        newLabel.setFont(newLabel.getFont().deriveFont(18f));
+        newLabel.setFont(new Font("Comic Sans", Font.BOLD, 18)); /*TODO: Get opinions on fonts.*/
         newLabel.setForeground(Color.WHITE);
 
         return newLabel;
