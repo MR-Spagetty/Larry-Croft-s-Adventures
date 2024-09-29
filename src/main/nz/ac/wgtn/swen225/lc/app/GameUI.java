@@ -1,7 +1,6 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -25,7 +24,7 @@ public class GameUI {
         JPanel menu = templateJPanel(backgroundColor, 150, 400);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
-        //menu.add(createGameInfo());
+        //menu.add(createGameInfo(backgroundColor));
         menu.add(createGameButtons(backgroundColor));
 
         return menu;
@@ -34,7 +33,7 @@ public class GameUI {
     /**
      * TODO add comments and take action on todos below.
      */
-    private static JPanel createGameInfo(){
+    private static JPanel createGameInfo(Color backgroundColor){
         JPanel gameInfo = templateJPanel(Color.WHITE, 150, 200);
         JLabel levelDisplay = new JLabel("LEVEL: ");
 
@@ -80,9 +79,6 @@ public class GameUI {
         return gameButtons;
     }
 
-    /**
-     * Small helper method which creates a new button and adds an action to it.
-     */
     private static JButton createButtonWithAction(ActionListener al, String text){
         JButton newButton = new JButton(text); /*text*/
         newButton.setPreferredSize(new Dimension(150, 25));
