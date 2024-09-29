@@ -9,7 +9,7 @@ public class AutoReplay implements Replay {
   }
 
   @Override
-  public void replay(int tick) {
+  public void replay() {
     // TODO: loop ticks using the default tick speed and play a different action each time
   }
 
