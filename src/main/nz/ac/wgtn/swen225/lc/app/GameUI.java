@@ -34,12 +34,13 @@ public class GameUI {
      * TODO add comments and take action on todos below.
      */
     private static JPanel createGameInfo(Color backgroundColor){
-        JPanel gameInfo = templateJPanel(Color.WHITE, 150, 200);
-        JLabel levelDisplay = new JLabel("LEVEL: ");
+        JPanel gameInfo = templateJPanel(backgroundColor, 150, 200);
+        JLabel levelDisplay = templateJLabel("LEVEL: ");
 
-        /** TODO Display the number of levels here */
         /** TODO Display the number of chips left to collect */
         /** TODO Display the time remaining */
+
+        gameInfo.add(levelDisplay);
 
         return gameInfo;
     }
@@ -95,5 +96,13 @@ public class GameUI {
         newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 
         return newPanel;
+    }
+
+    private static JLabel templateJLabel(String text){
+        JLabel newLabel = new JLabel(text);
+        newLabel.setFont(newLabel.getFont().deriveFont(18f));
+        newLabel.setForeground(Color.WHITE);
+
+        return newLabel;
     }
 }
