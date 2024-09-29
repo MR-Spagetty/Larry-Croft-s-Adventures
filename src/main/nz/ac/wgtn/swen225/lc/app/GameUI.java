@@ -21,12 +21,9 @@ public class GameUI {
      * TODO: Make sure we're satisfied with aspects of the Border.
      */
     public static JPanel createMenu(){
-        JPanel menu = new JPanel();
         Color backgroundColor = Color.DARK_GRAY;
-        menu.setPreferredSize(new Dimension(150, 400));
+        JPanel menu = templateJPanel(backgroundColor, 150, 400);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-        menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
-        menu.setBackground(backgroundColor);
 
         //menu.add(createGameInfo());
         menu.add(createGameButtons(backgroundColor));
@@ -38,13 +35,14 @@ public class GameUI {
      * TODO add comments and take action on todos below.
      */
     private static JPanel createGameInfo(){
-        JPanel GameInfo = new JPanel();
+        JPanel gameInfo = templateJPanel(Color.WHITE, 150, 200);
+        JLabel levelDisplay = new JLabel("LEVEL: ");
 
         /** TODO Display the number of levels here */
         /** TODO Display the number of chips left to collect */
         /** TODO Display the time remaining */
 
-        return GameInfo;
+        return gameInfo;
     }
 
     /**
@@ -72,9 +70,7 @@ public class GameUI {
         JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
-        JPanel gameButtons = new JPanel();
-        gameButtons.setBackground(Color.WHITE);
-        gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
+        JPanel gameButtons = templateJPanel(Color.WHITE, 150, 200);
 
         gameButtons.add(BorderLayout.CENTER, pauseGame);
         gameButtons.add(BorderLayout.CENTER, exitGame);
@@ -94,5 +90,14 @@ public class GameUI {
         newButton.addActionListener(al);
 
         return newButton;
+    }
+
+    private static JPanel templateJPanel(Color backgroundColor, int width, int height){
+        JPanel newPanel = new JPanel();
+        newPanel.setBackground(backgroundColor);
+        newPanel.setPreferredSize(new Dimension(width, height));
+        newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+
+        return newPanel;
     }
 }
