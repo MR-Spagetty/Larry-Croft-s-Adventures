@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -21,12 +22,14 @@ public class GameUI {
      */
     public static JPanel createMenu(){
         JPanel menu = new JPanel();
+        Color backgroundColor = Color.DARK_GRAY;
         menu.setPreferredSize(new Dimension(150, 400));
-        menu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
+        menu.setBackground(backgroundColor);
 
         //menu.add(createGameInfo());
-        menu.add(createGameButtons());
+        menu.add(createGameButtons(backgroundColor));
 
         return menu;
     }
@@ -36,6 +39,7 @@ public class GameUI {
      */
     private static JPanel createGameInfo(){
         JPanel GameInfo = new JPanel();
+
         /** TODO Display the number of levels here */
         /** TODO Display the number of chips left to collect */
         /** TODO Display the time remaining */
@@ -62,14 +66,14 @@ public class GameUI {
      * to the game and the GUI.
      * TODO add actions for "exit" "save" and "help".
      */
-    private static JPanel createGameButtons(){
+    private static JPanel createGameButtons(Color backgroundColor){
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
         JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
         JPanel gameButtons = new JPanel();
-        gameButtons.setPreferredSize(new Dimension(150, 100));
+        gameButtons.setBackground(Color.WHITE);
         gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
         gameButtons.add(BorderLayout.CENTER, pauseGame);
@@ -84,8 +88,9 @@ public class GameUI {
      * Small helper method which creates a new button and adds an action to it.
      */
     private static JButton createButtonWithAction(ActionListener al, String text){
-        JButton newButton = new JButton(text);
+        JButton newButton = new JButton(text); /*text*/
         newButton.setPreferredSize(new Dimension(150, 25));
+        newButton.setFont(newButton.getFont().deriveFont(24f));
         newButton.addActionListener(al);
 
         return newButton;
