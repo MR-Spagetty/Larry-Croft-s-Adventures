@@ -24,8 +24,8 @@ public class GameUI {
         JPanel menu = templateJPanel(backgroundColor, 150, 400);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
-        //menu.add(createGameInfo(backgroundColor));
-        menu.add(createGameButtons(backgroundColor));
+        menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor));
+        menu.add(BorderLayout.SOUTH, createGameButtons(backgroundColor));
 
         return menu;
     }
