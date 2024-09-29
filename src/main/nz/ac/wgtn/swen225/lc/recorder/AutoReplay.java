@@ -4,7 +4,7 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 public class AutoReplay implements Replay {
 
-  AutoReplay() {
+  public AutoReplay() {
     // TODO: determin how to parse and get file after persistency is completed
   }
 
@@ -12,5 +12,4 @@ public class AutoReplay implements Replay {
   public void replay() {
     // TODO: loop ticks using the default tick speed and play a different action each time
   }
-
 }
