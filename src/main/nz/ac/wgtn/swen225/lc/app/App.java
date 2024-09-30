@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.Replay;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
@@ -27,10 +28,10 @@ public class App{
      *
      * INTEGRATION DONE:
      * - A way to advance a tick.
+     * - Pass PlayerAction to Recorder each tick.
      *
      * INTEGRATION NEEDED:
      * - A way to forward a player action to Domain.
-     * - Pass PlayerAction to Recorder each tick.
      * - For AutoReplay, you just need to call it once.
      * - For TickReplay, you need to ask user for tick speed then pass it to the constructor.
      * - For StepReplay, you need to call the replay method each time the player presses a key.
@@ -51,4 +52,16 @@ public class App{
      * @param action The given player action
      */
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+
+    /**
+     * Calls the "Auto Replay" feature in the Replayer. This is only done once!
+     * TODO: Figure out how to call "replay()" in "Replay" class.
+     */
+    public static void callAutoReplay(){}
+
+    /*
+     * TODO: Fill in the following methods.
+     */
+    public static void callTickReplay(){}
+    public static void callStepReplay(){}
 }
