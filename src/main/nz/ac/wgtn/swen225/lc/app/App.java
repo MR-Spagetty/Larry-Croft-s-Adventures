@@ -2,7 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
-import nz.ac.wgtn.swen225.lc.recorder.Replay;
+import nz.ac.wgtn.swen225.lc.recorder.*;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
@@ -56,9 +56,8 @@ public class App{
 
     /**
      * Calls the "Auto Replay" feature in the Replayer. This is only done once!
-     * TODO: Figure out how to call "replay()" in "Replay" class.
      */
-    public static void callAutoReplay(){}
+    public static void callAutoReplay(){ new AutoReplay().replay(); }
 
     /*
      * TODO: Fill in the following methods.
