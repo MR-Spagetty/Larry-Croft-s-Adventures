@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 import javax.swing.*;
 
@@ -21,4 +22,7 @@ public class App{
     /*
      * TODO: Add in further integration with Domain, Recorder, Renderer, and Persistency.
      */
+    public void doSomething(PlayerAction action){
+
+    }
 }
