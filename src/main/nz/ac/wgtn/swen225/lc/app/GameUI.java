@@ -66,10 +66,10 @@ public class GameUI {
      * TODO add actions for "exit" "save" and "help".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
-        JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
-        JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
-        JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
+        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "    PAUSE   ");
+        JButton exitGame = createButtonWithAction(unused -> {}, "    EXIT    ");
+        JButton saveGame = createButtonWithAction(unused -> {}, "    SAVE    ");;
+        JButton displayHelp = createButtonWithAction(unused -> {}, "    HELP     ");;
 
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
 
@@ -82,20 +82,12 @@ public class GameUI {
     }
 
     private static JButton createButtonWithAction(ActionListener al, String text){
-        /*
         JButton newButton = new JButton(text);
-        newButton.setPreferredSize(new Dimension(150, 25));
+        newButton.setPreferredSize(new Dimension(150, 50));
         newButton.setFont(newButton.getFont().deriveFont(24f));
         newButton.addActionListener(al);
 
         return newButton;
-        */
-
-        // used for creating buttons with increased size , for key frame
-        JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(100, 100));
-        button.setFont(button.getFont().deriveFont(15f));
-        return button;
     }
 
     private static JPanel templateJPanel(Color backgroundColor, int width, int height){
