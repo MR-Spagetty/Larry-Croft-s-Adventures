@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
 
@@ -11,6 +12,8 @@ import javax.swing.*;
  * menu can be created
  */
 public class App{
+    private final static Recorder rec = new Recorder("a");
+
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
     /**
@@ -38,9 +41,14 @@ public class App{
     /**
      * Takes a given player action and forwards it to the Domain class for...
      */
-    public static void forwardToDomain(PlayerAction action){
+    public static void forwardActionToDomain(PlayerAction action){
         /* TODO: How will Domain receive the PlayerAction? */
     }
 
-
+    /**
+     * Passes a given player action to the recorder to allow for that action to be recorded.
+     *
+     * @param action The given player action
+     */
+    public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 }
