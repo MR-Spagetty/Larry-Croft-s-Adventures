@@ -9,32 +9,37 @@ import nz.ac.wgtn.swen225.lc.domain.tiles.Empty;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
-public class EmptyTests {
+public class EmptyTests implements TileBaseTests {
+
+  @Override
+  public Tile tile() {
+  return et(0, 0);
+  }
 
   @Test
   void finePut() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     Entity e = e(0, 0);
     t.put(e);
   }
 
   @Test
   void badPut() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     t.put(e(0, 0));
     assertThrows(ISE, () -> t.put(e(0, 0)));
   }
 
   @Test
   void getEmpty() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     assert t.getOccupant().isEmpty();
   }
 
   @Test
   void getOccupied() {
     Entity e = e(0, 0);
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     t.put(e);
     assert t.getOccupant().isPresent();
     assertEquals(t.getOccupant().get(), e);
@@ -42,20 +47,20 @@ public class EmptyTests {
 
   @Test
   void canEnter() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     assert t.canEnter(e(0, 0));
   }
 
   @Test
   void cantEnter() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     t.put(e(0, 0));
     assert !t.canEnter(e(0, 0));
   }
 
   @Test
   void enterGood() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     Entity e = e(0, 0);
     t.enter(e);
     assertEquals(e, t.getOccupant().get());
@@ -70,7 +75,7 @@ public class EmptyTests {
 
   @Test
   void leave1() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     Entity e = e(0, 0);
     t.put(e);
     t.leave(e);
@@ -79,7 +84,7 @@ public class EmptyTests {
 
   @Test
   void leave2() {
-    Empty t = (Empty) et(0, 0);
+    Tile t = tile();
     Entity e = e(0, 0);
     t.put(e);
     t.leave(e(0, 0));

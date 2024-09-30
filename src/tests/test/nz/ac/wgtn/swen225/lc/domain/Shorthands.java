@@ -24,6 +24,9 @@ public interface Shorthands {
   static Wall w(long x, long y){
     return new Wall(p(0, 0));
   }
+  static Exit ex(long x, long y){
+    return new Exit(p(0, 0));
+  }
 
   static Entity e(long x, long y) {
     return e(p(x, y));
