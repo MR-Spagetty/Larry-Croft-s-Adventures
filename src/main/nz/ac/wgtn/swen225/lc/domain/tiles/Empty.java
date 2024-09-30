@@ -43,7 +43,7 @@ public class Empty implements Tile {
     // TODO handeling of advanced occupants
     if (this.occupant.isPresent()) {
       throw new IllegalStateException(
-          "The entity: %l may not enter this tile".formatted(enteree.getUID()));
+          "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
     this.occupant = Optional.of(enteree);
   }

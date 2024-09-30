@@ -1,7 +1,6 @@
 package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import java.util.Optional;
-
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 
@@ -21,24 +20,30 @@ public interface Tile extends Comparable<Tile> {
    * @param enteree the entity to check for entrance
    * @return {@code true} if the entity can enter this tile, {@code false} otherwise
    */
-  boolean canEnter(Entity enteree);
+  default boolean canEnter(Entity enteree) {
+    return false;
+  }
 
   /**
    * Allows the specified entity to enter this tile.
    *
    * @param enteree the entity to enter this tile
    * @throws IllegalStateException if the tile may not be occupied by the entity
+   * @throws UnsupportedOperationException if the tile may never be occupied
    */
-  void enter(Entity enteree);
+  default void enter(Entity enteree) {
+    throw new UnsupportedOperationException("This tile may not be occupied");
+  }
 
   /**
    * similar to {@link #enter(Entity)} but does not execute any additional actions
    *
    * @param enteree the entity to put in this tiles
    * @throws IllegalStateException if the tile may not be occupied by the entity
+   * @throws UnsupportedOperationException if the tile may never be occupied
    */
   default void put(Entity enteree) {
-    throw new IllegalArgumentException("This tile may not be occupied");
+    throw new UnsupportedOperationException("This tile may not be occupied");
   }
 
   /**
