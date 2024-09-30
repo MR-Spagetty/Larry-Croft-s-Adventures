@@ -22,13 +22,21 @@ public class App{
     /*
      * TODO: Add in further integration with Domain, Recorder, Renderer, and Persistency.
      *
+     * INTEGRATION DONE:
+     * - A way to advance a tick.
+     *
      * INTEGRATION NEEDED:
-     * - Make a method that takes in a PlayerAction and does something with it.
-     * - Somehow forward a player action to Domain.
-     * - Add an additional "keystroke" that will call "step.replay()"
-     * - SEE THE DISCORD CHAT!
+     * - A way to forward a player action to Domain.
+     * - Pass PlayerAction to Recorder each tick.
+     * - For AutoReplay, you just need to call it once.
+     * - For TickReplay, you need to ask user for tick speed then pass it to the constructor.
+     * - For StepReplay, you need to call the replay method each time the player presses a key.
+     *
+     * NB: The replay is a bit more complicated, I have a replay interface and three classes that extend that interface.
      */
     public void doSomething(PlayerAction action){
 
     }
+
+
 }
