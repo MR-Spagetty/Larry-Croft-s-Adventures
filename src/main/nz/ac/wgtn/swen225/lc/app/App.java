@@ -15,12 +15,18 @@ public class App{
 
     /**
      * A "tickOverride()" method that the Recorder can use to allow for replay-back.
-     * TODO: Make an "InteractReplay" interface that has this method and a method that takes in a PlayerAction and does something with it.
+     * All this method will do is advance a tick in the current game!
      */
     public static void tickOverride(){ GameState.getGameState().tick(); }
 
     /*
      * TODO: Add in further integration with Domain, Recorder, Renderer, and Persistency.
+     *
+     * INTEGRATION NEEDED:
+     * - Make a method that takes in a PlayerAction and does something with it.
+     * - Somehow forward a player action to Domain.
+     * - Add an additional "keystroke" that will call "step.replay()"
+     * - SEE THE DISCORD CHAT!
      */
     public void doSomething(PlayerAction action){
 
