@@ -1,10 +1,10 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
-import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Empty;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public interface Shorthands {
@@ -17,41 +17,7 @@ public interface Shorthands {
   }
 
   static Tile et(Point loc) {
-    return new Tile() {
-      Optional<Entity> oc = Optional.empty();
-
-      @Override
-      public Point location() {
-        return loc;
-      }
-
-      @Override
-      public boolean canEnter(Entity enteree) {
-        return getOccupant().isEmpty();
-      }
-
-      @Override
-      public void enter(Entity enteree) {
-        enter(enteree);
-      }
-
-      @Override
-      public void put(Entity enteree) {
-        oc = Optional.of(enteree);
-      }
-
-      @Override
-      public void leave(Entity exitee) {
-        if (oc.map(e -> e.equals(exitee)).orElse(false)) {
-          oc = Optional.empty();
-        }
-      }
-
-      @Override
-      public Optional<Entity> getOccupant() {
-        return oc;
-      }
-    };
+    return new Empty(loc);
   }
 
   static Entity e(long x, long y) {

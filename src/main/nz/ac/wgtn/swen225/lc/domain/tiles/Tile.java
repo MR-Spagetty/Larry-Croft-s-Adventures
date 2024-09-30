@@ -38,7 +38,7 @@ public interface Tile extends Comparable<Tile> {
    * @throws IllegalStateException if the tile may not be occupied by the entity
    */
   default void put(Entity enteree) {
-    throw new IllegalStateException("This tile may not be occupied");
+    throw new IllegalArgumentException("This tile may not be occupied");
   }
 
   /**

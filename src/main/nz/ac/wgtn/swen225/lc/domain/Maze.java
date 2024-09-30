@@ -146,8 +146,7 @@ public class Maze {
   public List<Entity> getEntities(Point around, long range) {
     return getTiles(around, range).stream()
         .map(Tile::getOccupant)
-        .filter(Optional::isPresent)
-        .map(Optional::get)
+        .flatMap(Optional::stream)
         .toList();
   }
 }
