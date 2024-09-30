@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
@@ -15,15 +16,34 @@ public class GameUI {
     static PauseScreen ps = new PauseScreen(200);
 
     /**
-     * TODO add comments and take action on todos below.
+     * Creates the menu containing information about the current game, and the buttons in the game.
+     * TODO: Make sure we're satisfied with aspects of the Border.
      */
-    public static JPanel createGameInfo(){
-        JPanel GameInfo = new JPanel();
-        /** TODO Display the number of levels here */
+    public static JPanel createMenu(int width, int height){
+        Color backgroundColor = Color.DARK_GRAY;
+        JPanel menu = templateJPanel(backgroundColor, width, height);
+        menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
+
+        menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor, width, height/2));
+        menu.add(BorderLayout.SOUTH, createGameButtons(backgroundColor, width, height/2));
+
+        return menu;
+    }
+
+    /**
+     * Creates the section of the side panel, where information like the current level and the number
+     * of chips remaining is displayed.
+     */
+    private static JPanel createGameInfo(Color backgroundColor, int width, int height){
+        JPanel gameInfo = templateJPanel(backgroundColor, width, height);
+        JLabel levelDisplay = templateJLabel("LEVEL: ");
+
         /** TODO Display the number of chips left to collect */
         /** TODO Display the time remaining */
 
-        return GameInfo;
+        gameInfo.add(levelDisplay);
+
+        return gameInfo;
     }
 
     /**
@@ -45,28 +65,45 @@ public class GameUI {
      * to the game and the GUI.
      * TODO add actions for "exit" "save" and "help".
      */
-    public static JPanel createGameButtons(){
+    private static JPanel createGameButtons(Color backgroundColor, int width, int height){
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
         JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
         JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
-        JPanel gameButtons = new JPanel();
-        gameButtons.add(pauseGame);
-        gameButtons.add(exitGame);
-        gameButtons.add(saveGame);
-        gameButtons.add(displayHelp);
+        JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
+
+        gameButtons.add(BorderLayout.CENTER, pauseGame);
+        gameButtons.add(BorderLayout.CENTER, exitGame);
+        gameButtons.add(BorderLayout.CENTER, saveGame);
+        gameButtons.add(BorderLayout.CENTER, displayHelp);
 
         return gameButtons;
     }
 
-    /**
-     * Small helper method which creates a new button and adds an action to it.
-     */
     private static JButton createButtonWithAction(ActionListener al, String text){
-        JButton newButton = new JButton(text);
+        JButton newButton = new JButton(text); /*text*/
+        newButton.setPreferredSize(new Dimension(150, 25));
+        newButton.setFont(newButton.getFont().deriveFont(24f));
         newButton.addActionListener(al);
 
         return newButton;
+    }
+
+    private static JPanel templateJPanel(Color backgroundColor, int width, int height){
+        JPanel newPanel = new JPanel();
+        newPanel.setBackground(backgroundColor);
+        newPanel.setPreferredSize(new Dimension(width, height));
+        newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+
+        return newPanel;
+    }
+
+    private static JLabel templateJLabel(String text){
+        JLabel newLabel = new JLabel(text);
+        newLabel.setFont(new Font("Comic Sans", Font.BOLD, 18)); /*TODO: Get opinions on fonts.*/
+        newLabel.setForeground(Color.WHITE);
+
+        return newLabel;
     }
 }
