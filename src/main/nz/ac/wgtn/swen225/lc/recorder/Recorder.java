@@ -8,7 +8,8 @@ import java.util.Objects;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 /**
- * Responsible for recording user actions and storing them in the defined json style.
+ * Responsible for recording user actions and storing them in the defined json
+ * style.
  * 
  * @param levelID level ID of the level corrosponding to the inputs.
  */
@@ -37,8 +38,10 @@ public class Recorder {
 
   /*
    * Getter method for playerActions list
+   * 
+   * @return the playerAction List
    */
-  public List<PlayerAction> playerActions(){
+  public List<PlayerAction> playerActions() {
     return playerActions;
   }
 
@@ -46,7 +49,7 @@ public class Recorder {
    * Saves the recorded user inputs in the specified json format.
    * 
    * @param filename filename of this set of inputs and level ID.
-   * @param path path to save the file.
+   * @param path     path to save the file.
    */
   public void save(String filename, Path path) {
     // TODO: save file, finish when persistence module is completed
