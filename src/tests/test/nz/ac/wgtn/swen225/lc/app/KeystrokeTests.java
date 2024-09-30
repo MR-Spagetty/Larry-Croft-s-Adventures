@@ -1,10 +1,6 @@
 package test.nz.ac.wgtn.swen225.lc.app;
 
-<<<<<<< HEAD:src/tests/test/nz/ac/wgtn/swen225/lc/App/KeystrokeTests.java
 import nz.ac.wgtn.swen225.lc.app.ControlKeys;
-=======
-import nz.ac.wgtn.swen225.lc.app.*;
->>>>>>> 96b34abfc2617a85766c15e082568981254bc709:src/tests/test/nz/ac/wgtn/swen225/lc/app/KeystrokeTests.java
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 import org.junit.jupiter.api.Assertions;
