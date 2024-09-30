@@ -66,10 +66,12 @@ public class GameUI {
      * TODO add actions for "exit" "save" and "help".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "      PAUSE     ");
-        JButton exitGame = createButtonWithAction(unused -> {},               "       EXIT       ");
-        JButton saveGame = createButtonWithAction(unused -> {},               "      SAVE       ");;
-        JButton displayHelp = createButtonWithAction(unused -> {},            "      HELP       ");;
+        String textSpacing = "            "; //Spacing for the text of the buttons.
+
+        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), textSpacing + "PAUSE" + textSpacing);
+        JButton exitGame = createButtonWithAction(unused -> {}, textSpacing + "EXIT " + textSpacing);
+        JButton saveGame = createButtonWithAction(unused -> {}, textSpacing + "SAVE" + textSpacing);;
+        JButton displayHelp = createButtonWithAction(unused -> {}, textSpacing + "HELP" + textSpacing);;
 
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
 
