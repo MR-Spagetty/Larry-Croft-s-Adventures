@@ -34,8 +34,12 @@ public class App{
      *
      * NB: The replay is a bit more complicated, I have a replay interface and three classes that extend that interface.
      */
-    public void doSomething(PlayerAction action){
 
+    /**
+     * Takes a given player action and forwards it to the Domain class for...
+     */
+    public static void forwardToDomain(PlayerAction action){
+        /* TODO: How will Domain receive the PlayerAction? */
     }
 
 
