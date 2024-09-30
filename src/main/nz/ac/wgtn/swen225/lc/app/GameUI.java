@@ -82,12 +82,20 @@ public class GameUI {
     }
 
     private static JButton createButtonWithAction(ActionListener al, String text){
-        JButton newButton = new JButton(text); /*text*/
+        /*
+        JButton newButton = new JButton(text);
         newButton.setPreferredSize(new Dimension(150, 25));
         newButton.setFont(newButton.getFont().deriveFont(24f));
         newButton.addActionListener(al);
 
         return newButton;
+        */
+
+        // used for creating buttons with increased size , for key frame
+        JButton button = new JButton(text);
+        button.setPreferredSize(new Dimension(100, 100));
+        button.setFont(button.getFont().deriveFont(15f));
+        return button;
     }
 
     private static JPanel templateJPanel(Color backgroundColor, int width, int height){
