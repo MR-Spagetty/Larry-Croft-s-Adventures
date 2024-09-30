@@ -43,7 +43,8 @@ public class App{
      * Takes a given player action and forwards it to the Domain class for...
      */
     public static void forwardActionToDomain(PlayerAction action){
-        /* TODO: How will Domain receive the PlayerAction? */
+        /* TODO: Domain needs to create method to receive PlayerAction. */
+        GameState.getGameState().getPlayer().setActionQueue(action);
     }
 
     /**
