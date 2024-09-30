@@ -17,6 +17,7 @@ public class KeystrokeTests{
     }
 
     @Test void strokeMapsNowhere(){
+        keys.setPlayerActionAtTick();
         Assertions.assertEquals(keys.getActivePlayerAction(), PlayerAction.None);
         keys.setNextKeyStroke(KeyEvent.VK_G); //"G" is not assigned to a Player action in the game.
         keys.setPlayerActionAtTick();
