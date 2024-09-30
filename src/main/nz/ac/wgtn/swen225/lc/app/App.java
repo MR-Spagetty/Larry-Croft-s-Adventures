@@ -29,10 +29,10 @@ public class App{
      * INTEGRATION DONE:
      * - A way to advance a tick.
      * - Pass PlayerAction to Recorder each tick.
-     *
-     * INTEGRATION NEEDED:
      * - A way to forward a player action to Domain.
      * - For AutoReplay, you just need to call it once.
+     *
+     * INTEGRATION NEEDED:
      * - For TickReplay, you need to ask user for tick speed then pass it to the constructor.
      * - For StepReplay, you need to call the replay method each time the player presses a key.
      *
@@ -59,9 +59,18 @@ public class App{
      */
     public static void callAutoReplay(){ new AutoReplay().replay(); }
 
+    /**
+     * Creates a new "Tick Replay" instance, which involves passing in the current tick (??), and then calls
+     * the "replay()".
+     * TODO: Check to see if the implementation is correct. If yes, "getTick()" will need to be public.
+     */
+    public static void callTickReplay(){
+        TickReplay tReplay = new TickReplay(GameState.getGameState().getTick());
+        tReplay.replay();
+    }
+
     /*
      * TODO: Fill in the following methods.
      */
-    public static void callTickReplay(){}
     public static void callStepReplay(){}
 }
