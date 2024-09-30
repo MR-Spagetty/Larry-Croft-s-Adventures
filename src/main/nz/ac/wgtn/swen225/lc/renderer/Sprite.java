@@ -17,6 +17,7 @@ public class Sprite {
   private static Graphics graphics;
   private BufferedImage image;
   private Point position;
+  private static int size = 32;
 
   /**
    * Converts Tile information to a usable Sprite
@@ -77,6 +78,6 @@ public class Sprite {
    * Renders the image at its given position with a fixed size
   */
   boolean draw() {
-    return graphics.drawImage(image, (int) position.x(), (int) position.y(), 32, 32, null);
+    return graphics.drawImage(image, (int) position.x(), (int) position.y(), size, size, null);
   }
 }
