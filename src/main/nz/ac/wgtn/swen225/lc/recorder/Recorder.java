@@ -30,8 +30,16 @@ public class Recorder {
    * @param e key to log
    */
   public void record(PlayerAction a) {
+    Objects.requireNonNull(a);
     System.out.println(a);
     playerActions.add(a);
+  }
+
+  /*
+   * Getter method for playerActions list
+   */
+  public List<PlayerAction> playerActions(){
+    return playerActions;
   }
 
   /**
