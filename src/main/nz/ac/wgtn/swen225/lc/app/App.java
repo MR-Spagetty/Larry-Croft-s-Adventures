@@ -14,6 +14,7 @@ import javax.swing.*;
  */
 public class App{
     private final static Recorder rec = new Recorder("a");
+    private final static StepReplay sReplay = new StepReplay();
 
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
@@ -69,8 +70,8 @@ public class App{
         tReplay.replay();
     }
 
-    /*
-     * TODO: Fill in the following methods.
+    /**
+     * Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed.
      */
-    public static void callStepReplay(){}
+    public static void callStepReplay(){ sReplay.replay(); }
 }
