@@ -3,7 +3,7 @@ package nz.ac.wgtn.swen225.lc.persistency;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONList implements JSONType {
+public class JSONArray implements JSONType {
 
   // List to hold multiple JSONType elements
   private List<JSONType> elements = new ArrayList<>();
@@ -17,7 +17,7 @@ public class JSONList implements JSONType {
   public void add(Double value) { elements.add(new JSONDouble(value)); }
   public void add(Boolean value) { elements.add(new JSONBool(value)); }
   public void add(JSONObject value) { elements.add(value); }
-  public void add(JSONList value) { elements.add(value); }
+  public void add(JSONArray value) { elements.add(value); }
 
   // Return the list of elements
   public List<JSONType> getElements() { return elements; }
