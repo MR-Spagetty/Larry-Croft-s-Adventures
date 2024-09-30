@@ -32,8 +32,6 @@ public class App{
      * - Pass PlayerAction to Recorder each tick.
      * - A way to forward a player action to Domain.
      * - For AutoReplay, you just need to call it once.
-     *
-     * INTEGRATION NEEDED:
      * - For TickReplay, you need to ask user for tick speed then pass it to the constructor.
      * - For StepReplay, you need to call the replay method each time the player presses a key.
      *
@@ -41,7 +39,9 @@ public class App{
      */
 
     /**
-     * Takes a given player action and forwards it to the Domain class for...
+     * Takes a given player action and forwards it to the Domain class.
+     *
+     * @param action The given player action
      */
     public static void forwardActionToDomain(PlayerAction action){
         /* TODO: Domain needs to create method to receive PlayerAction. */
@@ -55,9 +55,7 @@ public class App{
      */
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
-    /**
-     * Calls the "Auto Replay" feature in the Replayer. This is only done once!
-     */
+    /** Calls the "Auto Replay" feature in the Replayer. This is only done once! */
     public static void callAutoReplay(){ new AutoReplay().replay(); }
 
     /**
@@ -70,8 +68,6 @@ public class App{
         tReplay.replay();
     }
 
-    /**
-     * Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed.
-     */
+    /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
     public static void callStepReplay(){ sReplay.replay(); }
 }
