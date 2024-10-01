@@ -121,5 +121,5 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * This method is static to allow for the Recorder to access this method without needing to create an instance
      * of this class first.
      */
-    public static PlayerAction getActivePlayerAction(){ return active; }
+    public PlayerAction getActivePlayerAction(){ return active; }
 }
