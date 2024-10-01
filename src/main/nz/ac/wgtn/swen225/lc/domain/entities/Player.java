@@ -3,20 +3,21 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
-
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 
 public class Player implements MoveableEntity {
 
-  private PlayerAction actionQueue = PlayerAction.None;
+  private Point actionQueue = new Point(0, 0);
 
   private Consumer<Point> logger = a -> {};
 
   private Point location;
   private Maze maze;
   private final long individualID;
+  private boolean dead = false;
+  private boolean won = false;
 
   private long lastTick = -1;
 
@@ -28,6 +29,13 @@ public class Player implements MoveableEntity {
   public Player(Point start, long indID, Consumer<Point> logger) {
     this(start, indID);
     this.logger = logger;
+  }
+  /**
+   * Queues an action for the player to use in the next tick
+   * @param newAction
+   */
+  public void queueAction(PlayerAction newAction){
+    this.actionQueue = newAction.offset;
   }
 
   @Override
@@ -41,9 +49,9 @@ public class Player implements MoveableEntity {
       return;
     }
     Point origin = location();
-    move(actionQueue.offset);
-    logger.accept(location().sub(origin));
-    actionQueue = PlayerAction.None;
+    move(this.actionQueue);
+    this.logger.accept(location().sub(origin));
+    this.actionQueue = new Point(0, 0);
   }
 
   @Override
@@ -92,5 +100,29 @@ public class Player implements MoveableEntity {
   public void touch(Entity touchee) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'touch'");
+  }
+
+  /** wins the level */
+  public void win() {
+    this.won = true;
+  }
+
+  /**
+   * @return whether the level has be one yet
+   */
+  public boolean hasWon() {
+    return this.won;
+  }
+
+  /** kills the player */
+  public void die() {
+    this.dead = true;
+  }
+
+  /**
+   * @return whether the player is dead or not
+   */
+  public boolean isDead() {
+    return this.dead;
   }
 }

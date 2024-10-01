@@ -3,10 +3,10 @@ package nz.ac.wgtn.swen225.lc.domain;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import javax.swing.Timer;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
-import javax.swing.Timer;
 
 public final class GameState {
 
@@ -21,18 +21,26 @@ public final class GameState {
     return inst;
   }
 
-
-
   private String levelID = null;
   private Path levelPath = null;
   private Maze levelMaze = null;
 
   private Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
+
   {
     this.tickTimer.setRepeats(true);
   }
 
   private GameState() {}
+
+  public boolean hasWon() {
+    return getPlayer().hasWon();
+  }
+
+  public boolean hasLost() {
+
+    return (this.tick >= this.levelMaze.maxTicks) ? true : getPlayer().isDead();
+  }
 
   /**
    * Returns the ID of the current level.
@@ -62,7 +70,10 @@ public final class GameState {
             (e, cons) -> {
               if (e instanceof Player p) cons.accept(p);
             })
-        .findAny()
+        .reduce(
+            (p1, p2) -> {
+              throw new IllegalStateException("Level contains more than one player");
+            })
         .orElseThrow(() -> new IllegalStateException("Level does not contain a player"));
   }
 
@@ -115,13 +126,8 @@ public final class GameState {
 
   static Maze setupLevel() {
 
-    List<Entity> entities = List.of(
-      new Player(new Point(0, 0), 0)
-    );
-    List<Tile> tiles = List.of(
-      new Empty(new Point(0, 0)),
-      new Empty(new Point(1, 0))
-    );
+    List<Entity> entities = List.of(new Player(new Point(0, 0), 0));
+    List<Tile> tiles = List.of(new Empty(new Point(0, 0)), new Empty(new Point(1, 0)));
     long maxTicks = 500;
     Maze maze = new Maze(maxTicks, "example", tiles, entities);
     entities.get(0).setMaze(maze);
