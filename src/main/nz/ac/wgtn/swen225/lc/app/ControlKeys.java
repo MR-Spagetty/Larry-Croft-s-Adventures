@@ -114,9 +114,18 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
             return;
         }
 
+<<<<<<< HEAD
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
 
         App.forwardActionToRecorder(active);
     }
+=======
+    /**
+     * Returns the action that is player is currently carrying out in a tick.
+     * This method is static to allow for the Recorder to access this method without needing to create an instance
+     * of this class first.
+     */
+    public PlayerAction getActivePlayerAction(){ return active; }
+>>>>>>> 1f67399990a04654b4826e2f7dbb0307ae49cd18
 }
