@@ -44,8 +44,7 @@ public class App{
      * @param action The given player action
      */
     public static void forwardActionToDomain(PlayerAction action){
-        /* TODO: Domain needs to create method to receive PlayerAction. */
-        GameState.getGameState().getPlayer().setActionQueue(action);
+        GameState.getGameState().getPlayer().queueAction(action);
     }
 
     /**
