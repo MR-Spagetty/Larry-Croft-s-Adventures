@@ -1,6 +1,6 @@
 package test.nz.ac.wgtn.swen225.lc.recorder;
 
-import nz.ac.wgtn.swen225.lc.recorder.Record;
+import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 import org.junit.jupiter.api.Test;
 
 /**

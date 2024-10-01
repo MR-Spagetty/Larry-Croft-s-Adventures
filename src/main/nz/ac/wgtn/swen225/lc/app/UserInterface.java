@@ -5,14 +5,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import nz.ac.wgtn.swen225.lc.domain.*;
-
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
  *
  * @author Developer 1 <dev1@example.internal>
  */
-public class GameGUI extends JFrame{
+public class UserInterface extends JFrame{
     /*
      * Action to be executed when the user closes the Game GUI with the 'X' button.
      * This action will be mostly similar to quitting the current game playing, as you will also be
@@ -25,7 +23,7 @@ public class GameGUI extends JFrame{
      * the Game Menu itself.) Currently, the Runnable action does not do anything, as what is executed is dependent
      * on the components that are in the start menu (as these are removed).
      */
-    Runnable changeGUIStyles = ()->{};
+    Runnable startGame = ()->{};
 
     /*
      * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
@@ -33,15 +31,18 @@ public class GameGUI extends JFrame{
      */
     static Timer timer;
 
+    private final int WIDTH = 1200;
+    private final int HEIGHT = 600;
+
     /**
      * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
      * This involves defining the size of the GUI window, and putting the Start Menu components inside.
      * TODO: make a more professional version of the Start Menu GUI.
      */
-    public GameGUI(){
+    public UserInterface(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(1200, 600));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         addWindowListener(new WindowAdapter(){
             public void windowClosed(WindowEvent e){ closeGame.run(); }
@@ -57,14 +58,14 @@ public class GameGUI extends JFrame{
      * Helper method that creates the "components" that will be in the Start Menu.
      */
     private void createStartMenu(){
-        JLabel instructions = StartScreen.instructions;
-        JPanel buttons = StartScreen.createButtonsSection((unused -> changeGUIStyles.run()), (unused -> {}));
+        JLabel instructions = StartUI.instructions;
+        JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()), (unused -> {}));
 
         /*
-         * "changeGUIStyles" will be changed so when executed, the contents on the Start Menu are removed.
+         * "startGame" will be changed so when executed, the contents on the Start Menu are removed.
          * This is because this action will be run when a game is started.
          */
-        changeGUIStyles = () -> {
+        startGame = () -> {
             remove(instructions); remove(buttons);
             SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
             createMainMenu();
@@ -80,16 +81,12 @@ public class GameGUI extends JFrame{
      * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        add(BorderLayout.NORTH, MainScreen.createGameButtons());
+        add(BorderLayout.EAST, GameUI.createMenu(WIDTH/4, HEIGHT));
 
-        GameDisplay gameDisplay = new GameDisplay();
-        add(BorderLayout.CENTER, gameDisplay);
-
-        /** TODO change the below to better integrate Renderer with App. */
-        timer = new Timer(100, unused->{
-            assert SwingUtilities.isEventDispatchThread();
-            gameDisplay.repaint();
-        });
+        /*
+        GraphicsPane pane = new GraphicsPane();
+        add(BorderLayout.CENTER, pane);
+        timer = GameUI.createTimer(pane);
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);
@@ -97,10 +94,6 @@ public class GameGUI extends JFrame{
         this.requestFocus();
 
         timer.start();
+         */
     }
-
-    /**
-     * A "tick()" method that the Recorder can use to allow for replay-back.
-     */
-    public static void tick(){ GameState.getGameState().tick(); }
 }

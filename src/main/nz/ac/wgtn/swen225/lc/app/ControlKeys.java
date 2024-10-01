@@ -13,9 +13,7 @@ import nz.ac.wgtn.swen225.lc.recorder.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
-
-    //Current player action that the player is moving in a tick.
-    private static PlayerAction active = PlayerAction.None;
+    private static PlayerAction active = PlayerAction.None; //Current player action being executed in a tick.
 
     /**
      * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
@@ -35,7 +33,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeysToActions();
     }
 
-    public void assignKeysToDirections(){
+    private void assignKeysToDirections(){
         assignKeyToPlayerAction(KeyEvent.VK_KP_UP, PlayerAction.Up);
         assignKeyToPlayerAction(KeyEvent.VK_KP_DOWN, PlayerAction.Down);
         assignKeyToPlayerAction(KeyEvent.VK_KP_LEFT, PlayerAction.Left);
@@ -45,15 +43,16 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     /**
      * TODO Create actions for each key!
      */
-    public void assignKeysToActions(){
+    private void assignKeysToActions(){
         assignKeyToAction(KeyEvent.VK_X, () -> {});
         assignKeyToAction(KeyEvent.VK_S, () -> {});
         assignKeyToAction(KeyEvent.VK_R, () -> {});
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> MainScreen.ps.showScreen());
-        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> MainScreen.ps.hideScreen());
+        assignKeyToAction(KeyEvent.VK_SPACE, () -> GameUI.ps.showScreen());
+        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameUI.ps.hideScreen());
+        assignKeyToAction(KeyEvent.VK_R, App::callStepReplay);
     }
 
     /**
@@ -106,20 +105,18 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * Also, the new Player Action will be passed to the recorder for recording.
      */
     public void setPlayerActionAtTick(){
-        //We first need to set the current player action back to no value, so the player stops moving.
-        active = PlayerAction.None;
-
-        //If there is a player action that is pending to be executed, this will be executed for this tick.
-        if (pendingKeyStroke != INVALID_KEY_STROKE) {
-            active = getPlayerAction(pendingKeyStroke);
-            pendingKeyStroke = INVALID_KEY_STROKE;
+        /*
+         * We first check to see if there is a pending player action to execute. If there's none, we won't
+         * continue from here. (We will initialise the active direction to "None".)
+         */
+        if (pendingKeyStroke == INVALID_KEY_STROKE){
+            active = PlayerAction.None;
+            return;
         }
-    }
 
-    /**
-     * Returns the action that is player is currently carrying out in a tick.
-     * This method is static to allow for the Recorder to access this method without needing to create an instance
-     * of this class first.
-     */
-    public PlayerAction getActivePlayerAction(){ return active; }
+        active = getPlayerAction(pendingKeyStroke);
+        pendingKeyStroke = INVALID_KEY_STROKE;
+
+        App.forwardActionToRecorder(active);
+    }
 }
