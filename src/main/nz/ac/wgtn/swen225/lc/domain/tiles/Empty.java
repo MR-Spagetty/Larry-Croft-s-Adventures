@@ -25,6 +25,14 @@ public class Empty implements Tile {
   }
 
   @Override
+  public void put(Entity enteree) {
+    if (getOccupant().isPresent()) {
+      throw new IllegalStateException("Tile already occupied");
+    }
+    this.occupant = Optional.of(enteree);
+  }
+
+  @Override
   public boolean canEnter(Entity enteree) {
     // TODO checks with advanced occupants
     return getOccupant().isEmpty();
@@ -35,9 +43,14 @@ public class Empty implements Tile {
     // TODO handeling of advanced occupants
     if (this.occupant.isPresent()) {
       throw new IllegalStateException(
-          "The entity: %l may not enter this tile".formatted(enteree.getUID()));
+          "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
     this.occupant = Optional.of(enteree);
+  }
+
+  @Override
+  public Optional<Entity> getOccupant() {
+    return this.occupant;
   }
 
   @Override
