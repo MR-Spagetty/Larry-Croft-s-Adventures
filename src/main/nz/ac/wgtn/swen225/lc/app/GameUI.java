@@ -84,8 +84,8 @@ public class GameUI {
 
     private static JButton createButtonWithAction(ActionListener al, String text){
         JButton newButton = new JButton(text);
-        newButton.setPreferredSize(new Dimension(150, 50));
-        newButton.setFont(newButton.getFont().deriveFont(24f));
+        newButton.setPreferredSize(new Dimension(75, 75));
+        newButton.setFont(newButton.getFont().deriveFont(18f));
         newButton.addActionListener(al);
 
         return newButton;
