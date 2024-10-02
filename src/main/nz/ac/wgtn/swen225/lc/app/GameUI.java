@@ -81,6 +81,9 @@ public class GameUI {
         return gameButtons;
     }
 
+    /*
+    * TODO: Urgently fix alignment issues!!
+    */
     private static JPanel createTopButtonRow(){
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
@@ -102,9 +105,9 @@ public class GameUI {
         topButtonSection.add(stopRecord);
 
         JButton saveGame = createButton(unused -> {}, "SAVE");
-        saveGame.setPreferredSize(new Dimension(150, 75));
+        saveGame.setPreferredSize(new Dimension(150, 50));
 
-        JPanel bottomButtonSection = templateJPanel(Color.WHITE, 150, 75, false);
+        JPanel bottomButtonSection = templateJPanel(Color.WHITE, 150, 50, false);
         bottomButtonSection.add(saveGame);
 
         JPanel buttonRow = templateJPanel(Color.WHITE, 150, 150, true);
