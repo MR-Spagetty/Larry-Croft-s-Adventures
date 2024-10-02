@@ -67,11 +67,13 @@ public class GameUI {
      * TODO rearrange buttons into "square icons" and use "icons".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        ImageIcon recordIcon = new ImageIcon("src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png");
+        String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
+
+        ImageIcon recordIcon = new ImageIcon(url + "record.png");
         JToggleButton startRecord = createButtonIcon(unused -> {}, recordIcon);
 
-        JToggleButton stopRecord = new JToggleButton("STOP");
-        stopRecord.addActionListener(unused -> {});
+        ImageIcon stopIcon = new ImageIcon(url + "stop.png");
+        JToggleButton stopRecord = createButtonIcon(unused -> {}, stopIcon);
 
         JPanel buttonRow1 = new JPanel();
         buttonRow1.setBackground(Color.WHITE);
