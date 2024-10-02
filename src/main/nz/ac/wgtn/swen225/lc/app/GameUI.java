@@ -21,7 +21,7 @@ public class GameUI {
      */
     public static JPanel createMenu(int width, int height){
         Color backgroundColor = Color.DARK_GRAY;
-        JPanel menu = templateJPanel(backgroundColor, width, height);
+        JPanel menu = templateJPanel(backgroundColor, width, height, true);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
         menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor, width, height/2));
@@ -35,7 +35,7 @@ public class GameUI {
      * of chips remaining is displayed.
      */
     private static JPanel createGameInfo(Color backgroundColor, int width, int height){
-        JPanel gameInfo = templateJPanel(backgroundColor, width, height);
+        JPanel gameInfo = templateJPanel(backgroundColor, width, height, true);
         JLabel levelDisplay = templateJLabel("LEVEL: ");
 
         /** TODO Display the number of chips left to collect */
@@ -69,32 +69,41 @@ public class GameUI {
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
-        JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"));
-        JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"));
+        JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"), true);
+        JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"), false);
 
-        JPanel buttonRow1 = new JPanel();
-        buttonRow1.setBackground(Color.WHITE);
-        buttonRow1.add(startRecord);
-        buttonRow1.add(stopRecord);
-
-        JButton saveGame = createButton(unused -> {}, "SAVE");
-        JPanel buttonRow2 = new JPanel();
-        buttonRow2.add(saveGame);
+        JPanel buttonRow = createTopButtonRow(startRecord, stopRecord);
 
         JButton pauseGame = createButton(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButton(unused -> {}, "EXIT");
         JButton displayHelp = createButton(unused -> {}, "HELP");
 
-        JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
+        JPanel gameButtons = templateJPanel(Color.WHITE, width, height, true);
 
-        //gameButtons.add(BorderLayout.CENTER, pauseGame);
-        gameButtons.add(buttonRow1);
-        gameButtons.add(saveGame);
+        gameButtons.add(buttonRow);
         gameButtons.add(pauseGame);
         gameButtons.add(exitGame);
         gameButtons.add(displayHelp);
 
         return gameButtons;
+    }
+
+    private static JPanel createTopButtonRow(JToggleButton startRecord, JToggleButton stopRecord){
+        JPanel topButtonSection = templateJPanel(Color.WHITE, 150, 75, false);
+        topButtonSection.add(startRecord);
+        topButtonSection.add(stopRecord);
+
+        JButton saveGame = createButton(unused -> {}, "SAVE");
+        saveGame.setPreferredSize(new Dimension(150, 75));
+
+        JPanel bottomButtonSection = templateJPanel(Color.WHITE, 150, 75, false);
+        bottomButtonSection.add(saveGame);
+
+        JPanel buttonRow = templateJPanel(Color.WHITE, 150, 150, true);
+        buttonRow.add(topButtonSection);
+        buttonRow.add(bottomButtonSection);
+
+        return buttonRow;
     }
 
     private static JButton createButton(ActionListener al, String text){
@@ -106,19 +115,21 @@ public class GameUI {
         return newButton;
     }
 
-    private static JToggleButton createButtonIcon(ActionListener al, ImageIcon icon){
+    private static JToggleButton createButtonIcon(ActionListener al, ImageIcon icon, boolean enabled){
         JToggleButton newButton = new JToggleButton(icon);
         newButton.setPreferredSize(new Dimension(75, 50));
         newButton.addActionListener(al);
+        newButton.setEnabled(enabled);
 
         return newButton;
     }
 
-    private static JPanel templateJPanel(Color backgroundColor, int width, int height){
+    private static JPanel templateJPanel(Color backgroundColor, int width, int height, boolean setLayout){
         JPanel newPanel = new JPanel();
         newPanel.setBackground(backgroundColor);
         newPanel.setPreferredSize(new Dimension(width, height));
-        newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+
+        if (setLayout){ newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS)); }
 
         return newPanel;
     }
