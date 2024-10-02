@@ -67,30 +67,13 @@ public class GameUI {
      * TODO rearrange buttons into "square icons" and use "icons".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
-
-        JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"), true);
-        JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"), false);
-
-        startRecord.addActionListener(unused -> {
-                    startRecord.setEnabled(false);
-                    stopRecord.setEnabled(true);
-        });
-
-        stopRecord.addActionListener(unused -> {
-            stopRecord.setEnabled(false);
-            startRecord.setEnabled(true);
-        });
-
-        JPanel buttonRow = createTopButtonRow(startRecord, stopRecord);
-
         JButton pauseGame = createButton(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButton(unused -> {}, "EXIT");
         JButton displayHelp = createButton(unused -> {}, "HELP");
 
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height, true);
 
-        gameButtons.add(buttonRow);
+        gameButtons.add(createTopButtonRow());
         gameButtons.add(pauseGame);
         gameButtons.add(exitGame);
         gameButtons.add(displayHelp);
@@ -98,7 +81,22 @@ public class GameUI {
         return gameButtons;
     }
 
-    private static JPanel createTopButtonRow(JToggleButton startRecord, JToggleButton stopRecord){
+    private static JPanel createTopButtonRow(){
+        String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
+
+        JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"), true);
+        JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"), false);
+
+        startRecord.addActionListener(unused -> {
+            startRecord.setEnabled(false);
+            stopRecord.setEnabled(true);
+        });
+
+        stopRecord.addActionListener(unused -> {
+            stopRecord.setEnabled(false);
+            startRecord.setEnabled(true);
+        });
+
         JPanel topButtonSection = templateJPanel(Color.WHITE, 150, 75, false);
         topButtonSection.add(startRecord);
         topButtonSection.add(stopRecord);
