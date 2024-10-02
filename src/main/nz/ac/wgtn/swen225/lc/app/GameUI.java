@@ -69,11 +69,8 @@ public class GameUI {
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
-        ImageIcon recordIcon = new ImageIcon(url + "record.png");
-        JToggleButton startRecord = createButtonIcon(unused -> {}, recordIcon);
-
-        ImageIcon stopIcon = new ImageIcon(url + "stop.png");
-        JToggleButton stopRecord = createButtonIcon(unused -> {}, stopIcon);
+        JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"));
+        JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"));
 
         JPanel buttonRow1 = new JPanel();
         buttonRow1.setBackground(Color.WHITE);
@@ -111,7 +108,7 @@ public class GameUI {
 
     private static JToggleButton createButtonIcon(ActionListener al, ImageIcon icon){
         JToggleButton newButton = new JToggleButton(icon);
-        newButton.setPreferredSize(new Dimension(50, 50));
+        newButton.setPreferredSize(new Dimension(75, 50));
         newButton.addActionListener(al);
 
         return newButton;
