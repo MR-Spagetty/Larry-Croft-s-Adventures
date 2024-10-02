@@ -67,17 +67,35 @@ public class GameUI {
      * TODO rearrange buttons into "square icons" and use "icons".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
+        JToggleButton startRecord = new JToggleButton("START");
+        startRecord.addActionListener(unused -> {});
+
+        JToggleButton stopRecord = new JToggleButton("STOP");
+        stopRecord.addActionListener(unused -> {});
+
+        //JButton startRecord = createButtonWithAction(unused -> {}, "START");
+        //JButton stopRecord = createButtonWithAction(unused -> {}, "STOP");
+        JPanel buttonRow1 = new JPanel();
+        buttonRow1.setBackground(Color.WHITE);
+        buttonRow1.add(startRecord);
+        buttonRow1.add(stopRecord);
+
+        JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");
+        JPanel buttonRow2 = new JPanel();
+        buttonRow2.add(saveGame);
+
         JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
         JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
-        JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
-        JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
+        JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");
 
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
 
-        gameButtons.add(BorderLayout.CENTER, pauseGame);
-        gameButtons.add(BorderLayout.CENTER, exitGame);
-        gameButtons.add(BorderLayout.CENTER, saveGame);
-        gameButtons.add(BorderLayout.CENTER, displayHelp);
+        //gameButtons.add(BorderLayout.CENTER, pauseGame);
+        gameButtons.add(buttonRow1);
+        gameButtons.add(saveGame);
+        gameButtons.add(pauseGame);
+        gameButtons.add(exitGame);
+        gameButtons.add(displayHelp);
 
         return gameButtons;
     }
