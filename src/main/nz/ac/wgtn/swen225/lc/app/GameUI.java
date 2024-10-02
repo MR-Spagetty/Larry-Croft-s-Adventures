@@ -72,6 +72,16 @@ public class GameUI {
         JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"), true);
         JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"), false);
 
+        startRecord.addActionListener(unused -> {
+                    startRecord.setEnabled(false);
+                    stopRecord.setEnabled(true);
+        });
+
+        stopRecord.addActionListener(unused -> {
+            stopRecord.setEnabled(false);
+            startRecord.setEnabled(true);
+        });
+
         JPanel buttonRow = createTopButtonRow(startRecord, stopRecord);
 
         JButton pauseGame = createButton(unused -> ps.showScreen(), "PAUSE");
