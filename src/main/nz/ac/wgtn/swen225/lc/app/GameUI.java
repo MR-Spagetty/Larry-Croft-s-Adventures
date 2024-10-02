@@ -63,15 +63,14 @@ public class GameUI {
     /**
      * Creates and returns the JPanel that will hold buttons that perform specific actions in relation
      * to the game and the GUI.
-     * TODO add actions for "exit" "save" and "help".
+     * TODO add actions for "exit" "save" and "help", and buttons for "Record" and "Pause Recording"
+     * TODO rearrange buttons into "square icons" and use "icons".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        String textSpacing = "            "; //Spacing for the text of the buttons.
-
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), textSpacing + "PAUSE" + textSpacing);
-        JButton exitGame = createButtonWithAction(unused -> {}, textSpacing + "EXIT " + textSpacing);
-        JButton saveGame = createButtonWithAction(unused -> {}, textSpacing + "SAVE" + textSpacing);;
-        JButton displayHelp = createButtonWithAction(unused -> {}, textSpacing + "HELP" + textSpacing);;
+        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
+        JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
+        JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");;
+        JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");;
 
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
 
