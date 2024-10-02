@@ -68,28 +68,23 @@ public class GameUI {
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
         ImageIcon recordIcon = new ImageIcon("src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png");
-        JToggleButton startRecord = new JToggleButton(recordIcon);
-        startRecord.setPreferredSize(new Dimension(50, 50));
-        startRecord.addActionListener(unused -> {});
-
+        JToggleButton startRecord = createButtonIcon(unused -> {}, recordIcon);
 
         JToggleButton stopRecord = new JToggleButton("STOP");
         stopRecord.addActionListener(unused -> {});
 
-        //JButton startRecord = createButtonWithAction(unused -> {}, "START");
-        //JButton stopRecord = createButtonWithAction(unused -> {}, "STOP");
         JPanel buttonRow1 = new JPanel();
         buttonRow1.setBackground(Color.WHITE);
         buttonRow1.add(startRecord);
         buttonRow1.add(stopRecord);
 
-        JButton saveGame = createButtonWithAction(unused -> {}, "SAVE");
+        JButton saveGame = createButton(unused -> {}, "SAVE");
         JPanel buttonRow2 = new JPanel();
         buttonRow2.add(saveGame);
 
-        JButton pauseGame = createButtonWithAction(unused -> ps.showScreen(), "PAUSE");
-        JButton exitGame = createButtonWithAction(unused -> {}, "EXIT");
-        JButton displayHelp = createButtonWithAction(unused -> {}, "HELP");
+        JButton pauseGame = createButton(unused -> ps.showScreen(), "PAUSE");
+        JButton exitGame = createButton(unused -> {}, "EXIT");
+        JButton displayHelp = createButton(unused -> {}, "HELP");
 
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height);
 
@@ -103,10 +98,18 @@ public class GameUI {
         return gameButtons;
     }
 
-    private static JButton createButtonWithAction(ActionListener al, String text){
+    private static JButton createButton(ActionListener al, String text){
         JButton newButton = new JButton(text);
         newButton.setPreferredSize(new Dimension(75, 75));
         newButton.setFont(newButton.getFont().deriveFont(18f));
+        newButton.addActionListener(al);
+
+        return newButton;
+    }
+
+    private static JToggleButton createButtonIcon(ActionListener al, ImageIcon icon){
+        JToggleButton newButton = new JToggleButton(icon);
+        newButton.setPreferredSize(new Dimension(50, 50));
         newButton.addActionListener(al);
 
         return newButton;
