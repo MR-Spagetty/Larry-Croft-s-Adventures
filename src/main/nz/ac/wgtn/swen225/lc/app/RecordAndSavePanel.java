@@ -17,6 +17,7 @@ public class RecordAndSavePanel extends JPanel {
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
         Color backgroundColor = Color.WHITE;
         int totalWidth = 150;
+        int totalHeight = 50;
 
         JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"), true);
         JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"), false);
@@ -31,16 +32,16 @@ public class RecordAndSavePanel extends JPanel {
             startRecord.setEnabled(true);
         });
 
-        JPanel topButtonSection = templateJPanel(backgroundColor, totalWidth, 50);
+        JPanel topButtonSection = templateJPanel(backgroundColor, totalWidth, totalHeight);
         topButtonSection.setLayout(new GridLayout(1, 2, 4, 4));
         topButtonSection.add(startRecord);
         topButtonSection.add(stopRecord);
 
-        JPanel bottomButtonSection = templateJPanel(backgroundColor, totalWidth, 50);
+        JPanel bottomButtonSection = templateJPanel(backgroundColor, totalWidth, totalHeight);
         bottomButtonSection.add(createSaveButton());
 
         this.setBackground(backgroundColor);
-        this.setPreferredSize(new Dimension(totalWidth, 150));
+        this.setPreferredSize(new Dimension(totalWidth, (totalHeight * 2)));
         this.add(new JLabel("RECORD AND SAVE GAME"));
         this.add(topButtonSection);
         this.add(bottomButtonSection);
@@ -56,8 +57,8 @@ public class RecordAndSavePanel extends JPanel {
 
     private static JButton createSaveButton(){
         JButton newButton = new JButton("SAVE");
-        newButton.setPreferredSize(new Dimension(150, 50));
-        newButton.setFont(newButton.getFont().deriveFont(18f));
+        newButton.setPreferredSize(new Dimension(150, 40));
+        newButton.setFont(newButton.getFont().deriveFont(15f));
         newButton.addActionListener(unused -> {});
 
         return newButton;
