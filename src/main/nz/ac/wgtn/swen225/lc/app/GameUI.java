@@ -21,7 +21,7 @@ public class GameUI {
      */
     public static JPanel createMenu(int width, int height){
         Color backgroundColor = Color.DARK_GRAY;
-        JPanel menu = templateJPanel(backgroundColor, width, height, true);
+        JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
         menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor, width, height/2));
@@ -35,7 +35,7 @@ public class GameUI {
      * of chips remaining is displayed.
      */
     private static JPanel createGameInfo(Color backgroundColor, int width, int height){
-        JPanel gameInfo = templateJPanel(backgroundColor, width, height, true);
+        JPanel gameInfo = new DefaultPanel(backgroundColor, width, height);
         JLabel levelDisplay = templateJLabel("LEVEL: ");
 
         /** TODO Display the number of chips left to collect */
@@ -67,9 +67,9 @@ public class GameUI {
      * TODO rearrange buttons into "square icons" and use "icons".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        JButton pauseGame = createButton(unused -> ps.showScreen(), "PAUSE");
-        JButton exitGame = createButton(unused -> {}, "EXIT");
-        JButton displayHelp = createButton(unused -> {}, "HELP");
+        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", width, height, 18f);
+        JButton exitGame = new DefaultButton(unused -> {}, "EXIT", width, height, 18f);
+        JButton displayHelp = new DefaultButton(unused -> {}, "HELP", width, height, 18f);
 
         JPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
         gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
@@ -80,15 +80,6 @@ public class GameUI {
         //gameButtons.add(displayHelp);
 
         return gameButtons;
-    }
-
-    private static JButton createButton(ActionListener al, String text){
-        JButton newButton = new JButton(text);
-        newButton.setPreferredSize(new Dimension(75, 75));
-        newButton.setFont(newButton.getFont().deriveFont(18f));
-        newButton.addActionListener(al);
-
-        return newButton;
     }
 
     private static JLabel templateJLabel(String text){
