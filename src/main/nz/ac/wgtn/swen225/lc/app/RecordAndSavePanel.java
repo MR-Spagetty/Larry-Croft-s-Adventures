@@ -35,8 +35,7 @@ public class RecordAndSavePanel extends JPanel {
             startRecord.setEnabled(true);
         });
 
-        JPanel topButtonSection = templateJPanel(backgroundColor, totalWidth, totalHeight);
-        topButtonSection.setLayout(new GridLayout(1, 2, 4, 4));
+        GridPanel topButtonSection = new GridPanel(backgroundColor, totalWidth, totalHeight, 1, 2);
         topButtonSection.add(startRecord);
         topButtonSection.add(stopRecord);
 
