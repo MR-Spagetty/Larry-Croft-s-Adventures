@@ -31,6 +31,20 @@ public class GameUI {
     }
 
     /**
+     * Creates a timer which refreshes the Graphics pane every time a tick occurs.
+     * TODO: test setup to make sure it works as expected.
+     *
+     * @param gameDisplay The graphics display that will need to be refreshed by the timer.
+     * @return The timer that will refresh the graphics display every few seconds.
+     */
+    public static Timer createTimer(GraphicsPane gameDisplay){
+        return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
+            assert SwingUtilities.isEventDispatchThread();
+            gameDisplay.repaint();
+        });
+    }
+
+    /**
      * Creates the section of the side panel, where information like the current level and the number
      * of chips remaining is displayed.
      */
@@ -47,20 +61,6 @@ public class GameUI {
     }
 
     /**
-     * Creates a timer which refreshes the Graphics pane every time a tick occurs.
-     * TODO: test setup to make sure it works as expected.
-     *
-     * @param gameDisplay The graphics display that will need to be refreshed by the timer.
-     * @return The timer that will refresh the graphics display every few seconds.
-     */
-    public static Timer createTimer(GraphicsPane gameDisplay){
-        return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
-            assert SwingUtilities.isEventDispatchThread();
-            gameDisplay.repaint();
-        });
-    }
-
-    /**
      * Creates and returns the JPanel that will hold buttons that perform specific actions in relation
      * to the game and the GUI.
      * TODO add actions for "exit" "save" and "help", and buttons for "Record" and "Pause Recording"
@@ -70,14 +70,19 @@ public class GameUI {
         DefaultPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
         gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
-        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", width, height, 18f);
-        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", width, height, 18f);
-        DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", width, height, 18f);
+        int cgbWidth = width/3, cgbHeight = 10;
+
+        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
+        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
+        DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", cgbWidth, cgbHeight, 15f);
+
+        GridPanel controlGameButtons = new GridPanel(Color.WHITE, width, cgbHeight, 1, 3);
+        controlGameButtons.add(pauseGame);
+        controlGameButtons.add(exitGame);
+        controlGameButtons.add(displayHelp);
 
         gameButtons.add(new RecordAndSavePanel());
-        //gameButtons.add(pauseGame);
-        //gameButtons.add(exitGame);
-        //gameButtons.add(displayHelp);
+        gameButtons.add(controlGameButtons);
 
         return gameButtons;
     }
