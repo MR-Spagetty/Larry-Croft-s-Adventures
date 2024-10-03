@@ -68,8 +68,8 @@ public class GameUI {
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
         DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", width, height, 18f);
-        JButton exitGame = new DefaultButton(unused -> {}, "EXIT", width, height, 18f);
-        JButton displayHelp = new DefaultButton(unused -> {}, "HELP", width, height, 18f);
+        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", width, height, 18f);
+        DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", width, height, 18f);
 
         JPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
         gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
