@@ -31,7 +31,8 @@ public class RecordAndSavePanel extends JPanel {
             startRecord.setEnabled(true);
         });
 
-        JPanel topButtonSection = templateJPanel(backgroundColor, totalWidth, 75);
+        JPanel topButtonSection = templateJPanel(backgroundColor, totalWidth, 50);
+        topButtonSection.setLayout(new GridLayout(1, 2, 4, 4));
         topButtonSection.add(startRecord);
         topButtonSection.add(stopRecord);
 
@@ -40,14 +41,13 @@ public class RecordAndSavePanel extends JPanel {
 
         this.setBackground(backgroundColor);
         this.setPreferredSize(new Dimension(totalWidth, 150));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(new JLabel("RECORD AND SAVE GAME"));
         this.add(topButtonSection);
         this.add(bottomButtonSection);
     }
 
     private static JToggleButton createButtonIcon(ActionListener al, ImageIcon icon, boolean enabled){
         JToggleButton newButton = new JToggleButton(icon);
-        newButton.setPreferredSize(new Dimension(75, 50));
         newButton.addActionListener(al);
         newButton.setEnabled(enabled);
 
