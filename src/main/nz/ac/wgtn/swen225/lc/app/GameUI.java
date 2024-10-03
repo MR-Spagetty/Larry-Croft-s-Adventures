@@ -67,12 +67,12 @@ public class GameUI {
      * TODO rearrange buttons into "square icons" and use "icons".
      */
     private static JPanel createGameButtons(Color backgroundColor, int width, int height){
+        DefaultPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
+        gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
+
         DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", width, height, 18f);
         DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", width, height, 18f);
         DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", width, height, 18f);
-
-        JPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
-        gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
         gameButtons.add(new RecordAndSavePanel());
         //gameButtons.add(pauseGame);
