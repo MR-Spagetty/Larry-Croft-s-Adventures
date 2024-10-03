@@ -21,14 +21,17 @@ public class RecordAndSavePanel extends JPanel {
 
         JToggleButton startRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "record.png"), true);
         JToggleButton stopRecord = createButtonIcon(unused -> {}, new ImageIcon(url + "stop.png"), false);
+        JToggleButton saveGame = createSaveButton();
 
         startRecord.addActionListener(unused -> {
             startRecord.setEnabled(false);
+            saveGame.setEnabled(false);
             stopRecord.setEnabled(true);
         });
 
         stopRecord.addActionListener(unused -> {
             stopRecord.setEnabled(false);
+            saveGame.setEnabled(true);
             startRecord.setEnabled(true);
         });
 
@@ -38,7 +41,7 @@ public class RecordAndSavePanel extends JPanel {
         topButtonSection.add(stopRecord);
 
         JPanel bottomButtonSection = templateJPanel(backgroundColor, totalWidth, totalHeight);
-        bottomButtonSection.add(createSaveButton());
+        bottomButtonSection.add(saveGame);
 
         this.setBackground(backgroundColor);
         this.setPreferredSize(new Dimension(totalWidth, (totalHeight * 2)));
@@ -55,10 +58,11 @@ public class RecordAndSavePanel extends JPanel {
         return newButton;
     }
 
-    private static JButton createSaveButton(){
-        JButton newButton = new JButton("SAVE");
+    private static JToggleButton createSaveButton(){
+        JToggleButton newButton = new JToggleButton("SAVE");
         newButton.setPreferredSize(new Dimension(150, 40));
         newButton.setFont(newButton.getFont().deriveFont(15f));
+        newButton.setEnabled(false);
         newButton.addActionListener(unused -> {});
 
         return newButton;

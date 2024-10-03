@@ -74,9 +74,9 @@ public class GameUI {
         JPanel gameButtons = templateJPanel(Color.WHITE, width, height, true);
 
         gameButtons.add(new RecordAndSavePanel());
-        gameButtons.add(pauseGame);
-        gameButtons.add(exitGame);
-        gameButtons.add(displayHelp);
+        //gameButtons.add(pauseGame);
+        //gameButtons.add(exitGame);
+        //gameButtons.add(displayHelp);
 
         return gameButtons;
     }
