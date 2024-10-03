@@ -39,7 +39,7 @@ public class RecordAndSavePanel extends JPanel {
         topButtonSection.add(startRecord);
         topButtonSection.add(stopRecord);
 
-        JPanel bottomButtonSection = templateJPanel(backgroundColor, totalWidth, totalHeight);
+        JPanel bottomButtonSection = new DefaultPanel(backgroundColor, totalWidth, totalHeight);
         bottomButtonSection.add(saveGame);
 
         this.setBackground(backgroundColor);
@@ -65,13 +65,5 @@ public class RecordAndSavePanel extends JPanel {
         newButton.addActionListener(unused -> {});
 
         return newButton;
-    }
-
-    private static JPanel templateJPanel(Color backgroundColor, int width, int height){
-        JPanel newPanel = new JPanel();
-        newPanel.setBackground(backgroundColor);
-        newPanel.setPreferredSize(new Dimension(width, height));
-
-        return newPanel;
     }
 }

@@ -71,7 +71,8 @@ public class GameUI {
         JButton exitGame = createButton(unused -> {}, "EXIT");
         JButton displayHelp = createButton(unused -> {}, "HELP");
 
-        JPanel gameButtons = templateJPanel(Color.WHITE, width, height, true);
+        JPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
+        gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
 
         gameButtons.add(new RecordAndSavePanel());
         //gameButtons.add(pauseGame);
@@ -88,16 +89,6 @@ public class GameUI {
         newButton.addActionListener(al);
 
         return newButton;
-    }
-
-    private static JPanel templateJPanel(Color backgroundColor, int width, int height, boolean setLayout){
-        JPanel newPanel = new JPanel();
-        newPanel.setBackground(backgroundColor);
-        newPanel.setPreferredSize(new Dimension(width, height));
-
-        if (setLayout){ newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS)); }
-
-        return newPanel;
     }
 
     private static JLabel templateJLabel(String text){
