@@ -2,6 +2,8 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -20,13 +22,32 @@ public class GameUI {
      */
     public static JPanel createMenu(int width, int height){
         Color backgroundColor = Color.DARK_GRAY;
+
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, height/2));
-        menu.add(BorderLayout.SOUTH, createGameButtons(backgroundColor, width, height/2));
+
+        Map<String, DefaultButton> buttonsToAdd = createGameButtons(width, 10);
+        menu.add(BorderLayout.SOUTH, new GameButtons(Color.WHITE, width, height/2, 10, buttonsToAdd));
 
         return menu;
+    }
+
+    /**
+     * Creates all the Game Buttons that will interact with the game itself. This is done before initialising the
+     * panel that contains all of these buttons.
+     */
+    public static Map<String, DefaultButton> createGameButtons(int cgbWidth, int cgbHeight){
+        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
+        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
+        DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", cgbWidth, cgbHeight, 15f);
+
+        Map<String, DefaultButton> map = new HashMap<>();
+        map.put("PAUSE", pauseGame);
+        map.put("EXIT", exitGame);
+        map.put("HELP", displayHelp);
+
+        return map;
     }
 
     /**
@@ -41,32 +62,5 @@ public class GameUI {
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
         });
-    }
-
-    /**
-     * Creates and returns the JPanel that will hold buttons that perform specific actions in relation
-     * to the game and the GUI.
-     * TODO add actions for "exit" "save" and "help", and buttons for "Record" and "Pause Recording"
-     * TODO rearrange buttons into "square icons" and use "icons".
-     */
-    private static JPanel createGameButtons(Color backgroundColor, int width, int height){
-        DefaultPanel gameButtons = new DefaultPanel(Color.WHITE, width, height);
-        gameButtons.setLayout(new BoxLayout(gameButtons, BoxLayout.Y_AXIS));
-
-        int cgbWidth = width/3, cgbHeight = 10;
-
-        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
-        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
-        DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", cgbWidth, cgbHeight, 15f);
-
-        GridPanel controlGameButtons = new GridPanel(Color.WHITE, width, cgbHeight, 1, 3);
-        controlGameButtons.add(pauseGame);
-        controlGameButtons.add(exitGame);
-        controlGameButtons.add(displayHelp);
-
-        gameButtons.add(new RecordAndSavePanel());
-        gameButtons.add(controlGameButtons);
-
-        return gameButtons;
     }
 }
