@@ -2,7 +2,6 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -24,7 +23,7 @@ public class GameUI {
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 
-        menu.add(BorderLayout.NORTH, createGameInfo(backgroundColor, width, height/2));
+        menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, height/2));
         menu.add(BorderLayout.SOUTH, createGameButtons(backgroundColor, width, height/2));
 
         return menu;
@@ -42,22 +41,6 @@ public class GameUI {
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
         });
-    }
-
-    /**
-     * Creates the section of the side panel, where information like the current level and the number
-     * of chips remaining is displayed.
-     */
-    private static JPanel createGameInfo(Color backgroundColor, int width, int height){
-        JPanel gameInfo = new DefaultPanel(backgroundColor, width, height);
-        JLabel levelDisplay = templateJLabel("LEVEL: ");
-
-        /** TODO Display the number of chips left to collect */
-        /** TODO Display the time remaining */
-
-        gameInfo.add(levelDisplay);
-
-        return gameInfo;
     }
 
     /**
@@ -85,13 +68,5 @@ public class GameUI {
         gameButtons.add(controlGameButtons);
 
         return gameButtons;
-    }
-
-    private static JLabel templateJLabel(String text){
-        JLabel newLabel = new JLabel(text);
-        newLabel.setFont(new Font("Comic Sans", Font.BOLD, 18)); /*TODO: Get opinions on fonts.*/
-        newLabel.setForeground(Color.WHITE);
-
-        return newLabel;
     }
 }
