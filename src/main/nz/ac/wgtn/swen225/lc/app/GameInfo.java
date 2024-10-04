@@ -9,6 +9,7 @@ import java.awt.*;
 public class GameInfo extends DefaultPanel{
     public GameInfo(Color backgroundColor, int width, int height){
         super(backgroundColor, width, height);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel levelDisplay = new CustomJLabel("LEVEL: ");
         JLabel timeDisplay = new CustomJLabel("TIME: ");
