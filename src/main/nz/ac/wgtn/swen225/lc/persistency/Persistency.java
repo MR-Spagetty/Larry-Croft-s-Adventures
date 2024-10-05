@@ -37,9 +37,9 @@ public class Persistency {
   }
 
   // Parse a string and convert it into a custom JSONObject
-  private static JSONObject parseJSONObject(String jsonString) {
+  private static nz.ac.wgtn.swen225.lc.persistency.JSONObject parseJSONObject(String jsonString) {
     JSONObject jsonObject = new JSONObject(jsonString);  // Parse string into JSONObject
-    JSONObject customObject = new JSONObject();  // Our custom JSONObject
+     nz.ac.wgtn.swen225.lc.persistency.JSONObject customObject = new nz.ac.wgtn.swen225.lc.persistency.JSONObject();  // Our custom JSONObject
 
     for (String key : jsonObject.keySet()) {
       Object value = jsonObject.get(key);
@@ -57,8 +57,8 @@ public class Persistency {
         customObject.put(key, (Double) value);
       } else if (value instanceof Boolean) {
         customObject.put(key, (Boolean) value);
-      } else {
-        customObject.put(key, 0);  // Handle null values
+      } else if (value == JSONObject.NULL) {
+        customObject.put(key);  // Handle null values
       }
     }
 
@@ -75,22 +75,39 @@ public class Persistency {
 
       // Recursively handle nested objects or arrays
       if (value instanceof JSONList) {
-        customList.put(parseJSONObject(value.toString()));
+        customList.add(parseJSONObject(value.toString()));
       } else if (value instanceof JSONArray) {
-        customList.put(parseJSONArray(value.toString()));
+        customList.add(parseJSONArray(value.toString()));
       } else if (value instanceof String) {
-        customList.put((String) value);
+        customList.add((String) value);
       } else if (value instanceof Long) {
-        customList.put((Long) value);
+        customList.add((Long) value);
       } else if (value instanceof Double) {
-        customList.put((Double) value);
+        customList.add((Double) value);
       } else if (value instanceof Boolean) {
-        customList.put((Boolean) value);
-      } else {
-        customList.add(null);  // Handle null values
+        customList.add((Boolean) value);
+      } else if (value == JSONObject.NULL){
+        customList.add(JSONNull.INSTANCE);  // Handle null values
       }
     }
 
     return customList;
+  }
+
+  public static void main(String[] args) {
+    try{
+      // Simple test loading JSON Object
+      System.out.println("Testing Object load:");
+      JSONType jsonObject = Persistency.loadFromFile("testObject.json");
+      System.out.println(jsonObject); //
+
+      // Simple test loading a JSON Array
+      System.out.println("Testing Object load:");
+      JSONType jsonArray = Persistency.loadFromFile("testArray.json");
+      System.out.println(jsonArray); //
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
