@@ -7,6 +7,7 @@ import org.json.JSONTokener;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class Persistency {
 
@@ -45,24 +46,30 @@ public class Persistency {
       Object value = jsonObject.get(key);
 
       // Recursively handle nested objects or arrays
-      if (value instanceof JSONObject) {
-        customObject.put(key, parseJSONObject(value.toString()));
-      } else if (value instanceof JSONArray) {
-        customObject.put(key, parseJSONArray(value.toString()));
-      } else if (value instanceof String) {
-        customObject.put(key, (String) value);
-      } else if (value instanceof Long) {
-        customObject.put(key, (Long) value);
-      } else if (value instanceof Double) {
-        customObject.put(key, (Double) value);
-      } else if (value instanceof Boolean) {
-        customObject.put(key, (Boolean) value);
-      } else if (value == JSONObject.NULL) {
-        customObject.put(key);  // Handle null values
-      }
+//      if (value instanceof JSONObject) {
+//        customObject.put(key, parseJSONObject(value.toString()));
+//      } else if (value instanceof JSONArray) {
+//        customObject.put(key, parseJSONArray(value.toString()));
+//      } else if (value instanceof String) {
+//        customObject.put(key, (String) value);
+//      } else if (value instanceof Integer) {
+//        customObject.put(new JSONLong(((Integer) value).longValue())); // Convertins integer to long
+//      } else if (value instanceof Long) {
+//        customObject.put(new JSONLong((Long) value));  // Use JSONLong directly
+//      } else if (value instanceof BigDecimal) {
+//        customObject.put(new JSONDouble(((BigDecimal) value).doubleValue()));  // Convert BigDecimal to JSONDouble
+//      } else if (value instanceof Double) {
+//        customObject.put(new JSONDouble((Double) value));  // Use JSONDouble directly
+//      } else if (value instanceof Boolean) {
+//        customObject.put(key, (Boolean) value);
+//      } else if (value == JSONObject.NULL) {
+//        customObject.put(key);  // Handle null values
+//      }
+      customObject.put(key, value);
     }
 
     return customObject;
+    //return jsonObject;
   }
 
   // Parse a string and convert it into a custom JSONList
@@ -72,6 +79,7 @@ public class Persistency {
 
     for (int i = 0; i < jsonArray.length(); i++) {
       Object value = jsonArray.get(i);
+      //System.out.println("Value at index " + i + ": " + value + " (Type: " + value.getClass().getSimpleName() + ")");  // Debug line
 
       // Recursively handle nested objects or arrays
       if (value instanceof JSONList) {
@@ -80,10 +88,14 @@ public class Persistency {
         customList.add(parseJSONArray(value.toString()));
       } else if (value instanceof String) {
         customList.add((String) value);
+      } else if (value instanceof Integer) {
+        customList.add(new JSONLong(((Integer) value).longValue())); // Convertins integer to long
       } else if (value instanceof Long) {
-        customList.add((Long)value);
+        customList.add(new JSONLong((Long) value));  // Use JSONLong directly
+      } else if (value instanceof BigDecimal) {
+        customList.add(new JSONDouble(((BigDecimal) value).doubleValue()));  // Convert BigDecimal to JSONDouble
       } else if (value instanceof Double) {
-        customList.add((Double) value);
+        customList.add(new JSONDouble((Double) value));  // Use JSONDouble directly
       } else if (value instanceof Boolean) {
         customList.add((Boolean) value);
       } else if (value == JSONObject.NULL){
