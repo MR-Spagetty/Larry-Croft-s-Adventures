@@ -81,7 +81,7 @@ public class Persistency {
       } else if (value instanceof String) {
         customList.add((String) value);
       } else if (value instanceof Long) {
-        customList.add((Long) value);
+        customList.add((Long)value);
       } else if (value instanceof Double) {
         customList.add((Double) value);
       } else if (value instanceof Boolean) {
@@ -102,7 +102,7 @@ public class Persistency {
       System.out.println(jsonObject); //
 
       // Simple test loading a JSON Array
-      System.out.println("Testing Object load:");
+      System.out.println("\nTesting Array load:");
       JSONType jsonArray = Persistency.loadFromFile("testArray.json");
       System.out.println(jsonArray); //
 
