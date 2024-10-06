@@ -11,12 +11,20 @@ import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 public class Conveyor implements MovementAffectorTile {
   private static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
   private Point targetDir;
+  private Optional<Entity> occupant = Optional.empty();
+  private final Point location;
 
   /**
    * @param targetDir
    */
-  public Conveyor(int type) {
+  public Conveyor(Point location, int type) {
+    this.location = location;
     this.targetDir = DIRS[type].offset;
+  }
+
+  @Override
+  public Point location() {
+    return location;
   }
 
   /**
@@ -42,32 +50,28 @@ public class Conveyor implements MovementAffectorTile {
   }
 
   @Override
-  public void enter(Entity enteree) {
-    // TODO Auto-generated method stub
+  public void put(Entity enteree) {
+    this.occupant = Optional.of(enteree);
+  }
 
+  @Override
+  public void enter(Entity enteree) {
+    if (this.occupant.isPresent()) {
+      throw new IllegalStateException(
+          "The entity: %d may not enter this tile".formatted(enteree.getUID()));
+    }
+    this.occupant = Optional.of(enteree);
   }
 
   @Override
   public Optional<Entity> getOccupant() {
-    // TODO Auto-generated method stub
-    return Optional.empty();
+    return this.occupant;
   }
 
   @Override
   public void leave(Entity exitee) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public Point location() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public void put(Entity enteree) {
-    // TODO Auto-generated method stub
-
+    if (this.occupant.map(e -> e.equals(exitee)).orElse(false)) {
+      this.occupant = Optional.empty();
+    }
   }
 }
