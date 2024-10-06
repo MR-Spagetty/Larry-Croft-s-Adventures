@@ -14,8 +14,6 @@ public interface Replay {
    *
    * @param tick The frame number for which the recorded player action is needed.
    *             This corresponds to the index in the 'actions' list.
-   * @return The PlayerAction object representing the player's action in the
-   *         specified frame.
    */
   public void replay();
 }
