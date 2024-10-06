@@ -10,10 +10,7 @@ public interface Replay {
   public List<PlayerAction> actions = null;
 
   /**
-   * Retrieves the player's action at the specified frame (tick) of the game replay.
-   *
-   * @param tick The frame number for which the recorded player action is needed.
-   *             This corresponds to the index in the 'actions' list.
+   * Sends inputs to App and ticks the game in different ways depending on the implementation
    */
   public void replay();
 }
