@@ -3,9 +3,12 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
+
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffectorTile;
 
 public class Player implements MoveableEntity {
 
@@ -18,6 +21,7 @@ public class Player implements MoveableEntity {
   private final long individualID;
   private boolean dead = false;
   private boolean won = false;
+  private Point lastMove = new Point(0, 0);
 
   private long lastTick = -1;
 
@@ -39,6 +43,11 @@ public class Player implements MoveableEntity {
   }
 
   @Override
+  public Point lastMove() {
+    return this.lastMove;
+  }
+
+  @Override
   public long lastTicked() {
     return this.lastTick;
   }
@@ -47,7 +56,11 @@ public class Player implements MoveableEntity {
   public void tick(long tick) {
     if (tick <= lastTicked()) {
       return;
+    }Point move = this.actionQueue;
+    if(maze.getTile(location()).get() instanceof MovementAffectorTile MET){
+      move = MET.affectMove(this, move);
     }
+    this.lastMove = move;
     Point origin = location();
     move(this.actionQueue);
     this.logger.accept(location().sub(origin));
