@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Collections;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
 import nz.ac.wgtn.swen225.lc.recorder.*;
@@ -121,10 +122,9 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
 
         rec.record(active); //Passed to the recorder to allow for the action to be recorded.
     }
+
     /**
      * Returns the action that is player is currently carrying out in a tick.
-     * This method is static to allow for the Recorder to access this method without needing to create an instance
-     * of this class first.
      */
     public PlayerAction getActivePlayerAction(){ return active; }
 }
