@@ -87,7 +87,7 @@ public record Point(long x, long y) implements Comparable<Point> {
    * @return a new Point representing the x-component of this Point
    */
   public Point xComp() {
-    return mul(new Point(1, 0));
+    return new Point(this.x, 0);
   }
 
   /**
@@ -96,7 +96,7 @@ public record Point(long x, long y) implements Comparable<Point> {
    * @return a new Point representing the y-component of this Point
    */
   public Point yComp() {
-    return mul(new Point(0, 1));
+    return new Point(0, this.y);
   }
 
   /**
