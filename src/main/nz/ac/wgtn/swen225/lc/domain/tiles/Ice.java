@@ -17,9 +17,15 @@ public class Ice implements MovementAffectorTile {
     this.location = location;
   }
 
+  /**
+   * affects the given movement of the given entity to obey the properties of ice
+   *
+   * <p>the properties of ice are continued momentum in that once an entity has begun movement in a
+   * direction it will continue to move in that direction until it cannot
+   */
   @Override
   public Point affectMove(MoveableEntity e, Point moveToEffect) {
-    return e.lastMove().equals(Point.ORIGIN)?moveToEffect:e.lastMove();
+    return e.lastMove().equals(Point.ORIGIN) ? moveToEffect : e.lastMove();
   }
 
   @Override

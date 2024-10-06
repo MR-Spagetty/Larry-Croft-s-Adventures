@@ -51,6 +51,13 @@ public class DirectionalIce extends Ice {
     this(location, TYPE.values()[typeID]);
   }
 
+  /**
+   * affects the given movement of the given entity to obey the properties of ice and redirection
+   *
+   * <p>Similar to the {@link Ice} tile this tile also enforces the properties of ice but also
+   * redirects the movement of the entity to leave through the side of the tile the entity did not
+   * enter through depending on the type
+   */
   @Override
   public Point affectMove(MoveableEntity e, Point moveToEffect) {
     final Point atSideA = this.type.a.add(location());
