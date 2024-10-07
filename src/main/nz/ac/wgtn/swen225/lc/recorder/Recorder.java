@@ -14,16 +14,14 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
  * @param levelID level ID of the level corrosponding to the inputs.
  */
 public class Recorder {
-  private String levelID;
-  private List<PlayerAction> playerActions = new ArrayList<>();
+    private String levelID;
+    private List<PlayerAction> playerActions = new ArrayList<>();
 
   public Recorder(String levelID) {
     Objects.requireNonNull(levelID);
     if (levelID.isEmpty()) {
       throw new IllegalArgumentException("levelID cannot be empty");
     }
-    this.levelID = levelID;
-  }
 
   /**
    * Adds the playeraction into the playerActions list
