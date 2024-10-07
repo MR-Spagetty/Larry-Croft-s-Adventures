@@ -4,6 +4,10 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 public class AutoReplay implements Replay {
 
+  /*
+   * Constructor of the AutoReplay class, opens a recorder json file, parse it and
+   * store it in super.actions
+   */
   public AutoReplay() {
     // TODO: determin how to parse and get file after persistency is completed
   }
