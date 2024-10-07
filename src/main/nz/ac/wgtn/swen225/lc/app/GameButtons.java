@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
@@ -11,6 +12,8 @@ public class GameButtons extends GridPanel{
     public GameButtons(Color backgroundColor, int width, int height, Map<String, DefaultButton> buttonsToAdd){
         super(backgroundColor, width, height, 5, 1);
 
+        this.add(buttonsToAdd.get("RECORD"));
+        this.add(buttonsToAdd.get("SAVE"));
         this.add(buttonsToAdd.get("PAUSE"));
         this.add(buttonsToAdd.get("EXIT"));
         this.add(buttonsToAdd.get("HELP"));

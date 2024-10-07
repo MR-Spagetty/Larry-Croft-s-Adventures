@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,16 +39,30 @@ public class GameUI {
      * panel that contains all of these buttons.
      */
     public static Map<String, DefaultButton> createGameButtons(int cgbWidth, int cgbHeight){
+        DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE", cgbWidth, cgbHeight, 15f);
         DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
         DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
         DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", cgbWidth, cgbHeight, 15f);
 
         Map<String, DefaultButton> map = new HashMap<>();
+        map.put("RECORD", createRecordButton(cgbWidth, cgbHeight));
+        map.put("SAVE", saveGame);
         map.put("PAUSE", pauseGame);
         map.put("EXIT", exitGame);
         map.put("HELP", displayHelp);
 
         return map;
+    }
+
+    private static DefaultButton createRecordButton(int width, int height){
+        String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png";
+        ImageIcon icon = new ImageIcon(url);
+
+        DefaultButton newButton = new DefaultButton(unused -> {}, icon, width, height);
+        newButton.addActionListener(unused -> {});
+        newButton.setEnabled(true);
+
+        return newButton;
     }
 
     /**
