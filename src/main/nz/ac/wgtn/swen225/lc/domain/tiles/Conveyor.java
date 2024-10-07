@@ -73,5 +73,20 @@ public class Conveyor implements MovementAffectorTile {
     if (this.occupant.map(e -> e.equals(exitee)).orElse(false)) {
       this.occupant = Optional.empty();
     }
+  }PlayerAction getFacing() {
+    if (this.targetDir.equals(Point.ORIGIN)) {
+      return PlayerAction.None;
+    } else if (this.targetDir.equals(new Point(1, 0))) {
+      return PlayerAction.Right;
+    } else if (this.targetDir.equals(new Point(-1, 0))) {
+      return PlayerAction.Left;
+    } else if (this.targetDir.equals(new Point(0, 1))) {
+      return PlayerAction.Up;
+    } else if (this.targetDir.equals(new Point(0, -1))) {
+      return PlayerAction.Down;
+    } else {
+      throw new IllegalStateException("Unexpected targetDir encountered");
+    }
   }
+
 }

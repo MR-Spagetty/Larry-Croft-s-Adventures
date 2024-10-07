@@ -181,4 +181,21 @@ public class Player implements MoveableEntity {
   public boolean isDead() {
     return this.dead;
   }
+
+  PlayerAction getFacing() {
+    Point move = lastMove().limit(1l);
+    if (move.equals(Point.ORIGIN)) {
+      return PlayerAction.None;
+    } else if (move.equals(new Point(1, 0))) {
+      return PlayerAction.Right;
+    } else if (move.equals(new Point(-1, 0))) {
+      return PlayerAction.Left;
+    } else if (move.equals(new Point(0, 1))) {
+      return PlayerAction.Up;
+    } else if (move.equals(new Point(0, -1))) {
+      return PlayerAction.Down;
+    } else {
+      throw new IllegalStateException("Unexpected last move encountered");
+    }
+  }
 }
