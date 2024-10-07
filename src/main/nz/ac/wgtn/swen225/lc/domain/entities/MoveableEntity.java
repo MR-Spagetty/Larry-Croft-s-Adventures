@@ -11,7 +11,6 @@ public interface MoveableEntity extends Entity {
    * Moves this entity by the specified amount in the given maze.
    *
    * @param by the amount to move this entity
-   * @param in the maze in which to move this entity
    */
   default void move(Point by) {
     Tile oldLoc =

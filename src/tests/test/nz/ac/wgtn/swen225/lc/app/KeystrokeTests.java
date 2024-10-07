@@ -1,6 +1,6 @@
 package test.nz.ac.wgtn.swen225.lc.app;
 
-import nz.ac.wgtn.swen225.lc.app.*;
+import nz.ac.wgtn.swen225.lc.app.ControlKeys;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 import org.junit.jupiter.api.Assertions;

@@ -11,8 +11,6 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 /**
  * Responsible for recording user actions and storing them in the defined json
  * style.
- * 
- * @param levelID level ID of the level corrosponding to the inputs.
  */
 public class Recorder {
   private Path levelPath;
@@ -26,7 +24,7 @@ public class Recorder {
   /**
    * Adds the playeraction into the playerActions list
    * 
-   * @param e key to log
+   * @param a action to log
    */
   public void record(PlayerAction a) {
     Objects.requireNonNull(a);
