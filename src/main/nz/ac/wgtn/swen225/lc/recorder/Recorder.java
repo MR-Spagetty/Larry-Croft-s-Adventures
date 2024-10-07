@@ -3,6 +3,7 @@ package nz.ac.wgtn.swen225.lc.recorder;
 import java.util.List;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
@@ -14,15 +15,12 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
  * @param levelID level ID of the level corrosponding to the inputs.
  */
 public class Recorder {
-  private String levelID;
+  private Path levelPath;
   private List<PlayerAction> playerActions = new ArrayList<>();
 
-  public Recorder(String levelID) {
-    Objects.requireNonNull(levelID);
-    if (levelID.isEmpty()) {
-      throw new IllegalArgumentException("levelID cannot be empty");
-    }
-    this.levelID = levelID;
+  public Recorder(Path path) {
+    Objects.requireNonNull(path);
+    this.levelPath = path;
   }
 
   /**
@@ -42,7 +40,7 @@ public class Recorder {
    * @return the playerAction List
    */
   public List<PlayerAction> playerActions() {
-    return playerActions;
+    return Collections.unmodifiableList(playerActions);
   }
 
   /**
