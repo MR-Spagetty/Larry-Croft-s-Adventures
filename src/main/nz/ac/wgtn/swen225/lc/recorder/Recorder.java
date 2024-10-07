@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Map;
-import java.util.HashMap;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
@@ -15,10 +13,9 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
  * and store them in the defined json file structure.
  */
 public class Recorder {
-  private List<PlayerAction> levelActions = new ArrayList<>();
-  private Map<Integer, List<PlayerAction>> allActions = new HashMap<>();
+  private List<Level> allLevels = new ArrayList<>();
+  private Level currentLevel;
   private Path dirPath;
-  private int level = 1;
 
   public Recorder(Path dirPath) {
     Objects.requireNonNull(dirPath);
@@ -33,16 +30,7 @@ public class Recorder {
   public void record(PlayerAction a) {
     Objects.requireNonNull(a);
     System.out.println(a);
-    levelActions.add(a);
-  }
-
-  /*
-   * Getter method for playerActions list
-   * 
-   * @return the playerAction List
-   */
-  public List<PlayerAction> playerActions() {
-    return Collections.unmodifiableList(levelActions);
+    currentLevel.actions(a);
   }
 
   /*
@@ -50,9 +38,7 @@ public class Recorder {
    * level by one as well as clearing the levelActions.
    */
   public void endLevel() {
-    allActions.put(level, levelActions);
-    level++;
-    levelActions.clear();
+    allLevels.add(currentLevel);
   }
 
   public void endGame() {
@@ -60,14 +46,9 @@ public class Recorder {
   }
 
   /**
-   * Saves the recorded user inputs in the specified json format.
-   * 
-   * @param filename      Filename of this set of inputs and level ID.
-   * @param path          The path of the current level.
-   * @param nextLevelPath The path of the next level, can be null for end of game.
-   * @param actions       The actions to save to file.
+   * Saves the stored levels.
    */
-  private void save(String filename, Path levelPath, Path nextLevelPath, List<PlayerAction> actions) {
+  private void save() {
     // TODO: save file, finish when persistence module is completed
   }
 }
