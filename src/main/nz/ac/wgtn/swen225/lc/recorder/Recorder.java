@@ -10,8 +10,6 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 /**
  * Responsible for recording user actions and storing them in the defined json
  * style.
- * 
- * @param levelID level ID of the level corrosponding to the inputs.
  */
 public class Recorder {
     private String levelID;
@@ -22,12 +20,14 @@ public class Recorder {
     if (levelID.isEmpty()) {
       throw new IllegalArgumentException("levelID cannot be empty");
     }
+
+    this.levelID = levelID;
   }
 
   /**
    * Adds the playeraction into the playerActions list
    * 
-   * @param e key to log
+   * @param a action to log
    */
   public void record(PlayerAction a) {
     Objects.requireNonNull(a);
