@@ -11,6 +11,7 @@ import java.util.Objects;
  */
 abstract class Replay {
   public List<PlayerAction> actions;
+  int tick = 0;
 
   /*
    * Takes in a path and parse it and set it to actions. Then intitilizes a game.

@@ -2,11 +2,16 @@ package nz.ac.wgtn.swen225.lc.recorder;
 
 import java.nio.file.Path;
 import java.util.Objects;
+import javax.swing.Timer;
+
+import nz.ac.wgtn.swen225.lc.app.App;
 
 public class TickReplay extends Replay {
-  private Long tickSpeed;
+  private int tickSpeed;
+  private Timer timer;
+  
 
-  public TickReplay(Path path, Long tickSpeed) {
+  public TickReplay(Path path, int tickSpeed) {
     super(path);
     Objects.requireNonNull(tickSpeed);
     if (tickSpeed < 0) {
@@ -17,6 +22,23 @@ public class TickReplay extends Replay {
 
   @Override
   public void replay() {
-    // TODO: plays an action with the given tick speed
+    // TODO: loop ticks using the default tick speed and play a different action
+    // each time
+    timer = new Timer(tickSpeed, a -> update());
+    timer.setRepeats(true);
+    timer.start();
+  }
+
+  /*
+   * updates the game by a tick by sending App an action then ticking
+   */
+  private void update(){
+    App.forwardActionToDomain(actions.get(tick));
+    App.tickOverride();
+    tick++;
+    if (actions.size() > tick){
+      timer.stop();
+    }
+    //TODO: go to next level
   }
 }

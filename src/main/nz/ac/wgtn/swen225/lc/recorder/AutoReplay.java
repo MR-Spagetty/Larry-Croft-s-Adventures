@@ -4,14 +4,12 @@ import java.nio.file.Path;
 import javax.swing.Timer;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
-import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.app.App;
 
 /*
  * Autamatically replays the file using the default tick speed
  */
 public class AutoReplay extends Replay {
-  private int tick = 0;
   private Timer timer;
 
   public AutoReplay(Path p) {
