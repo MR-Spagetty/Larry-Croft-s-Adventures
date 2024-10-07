@@ -14,7 +14,7 @@ public class StartUI{
      * itself, and if a game has not been loaded (which is loaded by pressing the "Load" button), a new game will
      * be initiated.
      */
-    public static JPanel createButtonsSection(ActionListener onStart, ActionListener onLoad){
+    public static JPanel createButtonsSection(ActionListener onStart){
         JPanel buttons = new JPanel();
         JButton start = new JButton("Start the Game!");
         JButton load = new JButton("Load existing game!");
@@ -23,7 +23,7 @@ public class StartUI{
         buttons.add(load);
 
         start.addActionListener(onStart);
-        load.addActionListener(onLoad);
+        load.addActionListener(unused -> loadGame());
 
         return buttons;
     }

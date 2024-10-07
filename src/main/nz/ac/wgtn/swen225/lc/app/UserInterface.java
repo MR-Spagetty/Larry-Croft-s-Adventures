@@ -60,7 +60,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JLabel instructions = StartUI.instructions;
-        JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()), (unused -> {}));
+        JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()));
 
         /*
          * "startGame" will be changed so when executed, the contents on the Start Menu are removed.
