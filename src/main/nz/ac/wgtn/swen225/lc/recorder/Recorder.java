@@ -5,20 +5,24 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Map;
+import java.util.HashMap;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 /**
- * Responsible for recording user actions and storing them in the defined json
- * style.
+ * Responsible for recording user actions across all levels of the game
+ * and store them in the defined json file structure.
  */
 public class Recorder {
-  private Path levelPath;
-  private List<PlayerAction> playerActions = new ArrayList<>();
+  private List<PlayerAction> levelActions = new ArrayList<>();
+  private Map<Integer, List<PlayerAction>> allActions = new HashMap<>();
+  private Path dirPath;
+  private int level = 1;
 
-  public Recorder(Path path) {
-    Objects.requireNonNull(path);
-    this.levelPath = path;
+  public Recorder(Path dirPath) {
+    Objects.requireNonNull(dirPath);
+    this.dirPath = dirPath;
   }
 
   /**
@@ -29,7 +33,7 @@ public class Recorder {
   public void record(PlayerAction a) {
     Objects.requireNonNull(a);
     System.out.println(a);
-    playerActions.add(a);
+    levelActions.add(a);
   }
 
   /*
@@ -38,16 +42,32 @@ public class Recorder {
    * @return the playerAction List
    */
   public List<PlayerAction> playerActions() {
-    return Collections.unmodifiableList(playerActions);
+    return Collections.unmodifiableList(levelActions);
+  }
+
+  /*
+   * Ends the recording of a level by storing the recorded actions and advance
+   * level by one as well as clearing the levelActions.
+   */
+  public void endLevel() {
+    allActions.put(level, levelActions);
+    level++;
+    levelActions.clear();
+  }
+
+  public void endGame() {
+
   }
 
   /**
    * Saves the recorded user inputs in the specified json format.
    * 
-   * @param filename filename of this set of inputs and level ID.
-   * @param path     path to save the file.
+   * @param filename      Filename of this set of inputs and level ID.
+   * @param path          The path of the current level.
+   * @param nextLevelPath The path of the next level, can be null for end of game.
+   * @param actions       The actions to save to file.
    */
-  public void save(String filename, Path path) {
+  private void save(String filename, Path levelPath, Path nextLevelPath, List<PlayerAction> actions) {
     // TODO: save file, finish when persistence module is completed
   }
 }
