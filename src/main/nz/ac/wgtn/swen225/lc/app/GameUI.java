@@ -27,8 +27,8 @@ public class GameUI {
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, height/2));
 
-        Map<String, DefaultButton> buttonsToAdd = createGameButtons(width, 10);
-        menu.add(BorderLayout.SOUTH, new GameButtons(Color.WHITE, width, height/2, 10, buttonsToAdd));
+        Map<String, DefaultButton> buttonsToAdd = createGameButtons(width, 30);
+        menu.add(BorderLayout.SOUTH, new GameButtons(Color.WHITE, width, height/2, buttonsToAdd));
 
         return menu;
     }
