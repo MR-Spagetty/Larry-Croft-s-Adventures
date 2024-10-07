@@ -22,6 +22,7 @@ public class Recorder {
     if (levelID.isEmpty()) {
       throw new IllegalArgumentException("levelID cannot be empty");
     }
+  }
 
   /**
    * Adds the playeraction into the playerActions list
