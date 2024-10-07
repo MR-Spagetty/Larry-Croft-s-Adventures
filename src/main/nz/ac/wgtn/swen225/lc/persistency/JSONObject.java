@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.persistency;
 
+import org.json.JSONArray;
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -9,17 +11,10 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
   private Map<String, JSONType> data = new HashMap<>();
 
   // Add key-value pairs to the JSON object by wrapping them in JSONType
-//  public void put(String key, String value) { data.put(key, new JSONString(value)); }
-//  public void put(String key, Long value) { data.put(key, new JSONLong(value)); }
-//  public void put(String key, Double value) { data.put(key, new JSONDouble(value)); }
-//  public void put(String key, Boolean value) { data.put(key, new JSONBool(value)); }
-//  public void put(String key) { data.put(key, JSONNull.INSTANCE); } // Null handling like a pro kachow
-//  public void put(String key, JSONObject value) { data.put(key, value); }
-//  public void put(String key, JSONList value) { data.put(key, value); }
 
   public void put(String key, Object value) {
-    if (value instanceof String) {
-      data.put(key, new JSONString((String) value));
+    if (value == null) {
+      data.put(key, JSONNull.INSTANCE);  // Handle null values
     } else if (value instanceof Long) {
       data.put(key, new JSONLong((Long) value));
     } else if (value instanceof Double) {
@@ -29,16 +24,55 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
     } else if (value instanceof BigDecimal) {
       data.put(key, new JSONDouble(((BigDecimal) value).doubleValue()));  // Convert BigDecimal to JSONDouble
     } else if (value instanceof Boolean) {
-      data.put(key, new JSONBool((Boolean) value));
-    } else if (value == null) {
-      data.put(key, JSONNull.INSTANCE);  // Handle null values
+      data.put(key, JSONBool.of((Boolean) value));
+    } else if (value instanceof String) {
+      data.put(key, new JSONString((String) value));
     } else if (value instanceof JSONObject) {
       data.put(key, (JSONType) value);
-    } else if (value instanceof JSONList) {
+    } else if (value instanceof List) {  // Handle List as JSONList
+      data.put(key, new JSONList((List<JSONType>) value));
+    } else if (value.getClass().getSimpleName().equals("JSONArray")) {  // Check for JSONArray
+      data.put(key, new JSONList(convertJSONArrayToList((JSONArray) value))); // Implement this method
+//    } else if (value instanceof JSONBool) {
+//      data.put(key, (JSONType) value);
+//    } else if (value instanceof JSONDouble) {
+//      data.put(key, (JSONType) value);
+//    } else if (value instanceof JSONLong) {
+//      data.put(key, (JSONType) value);
+//    } else if (value instanceof JSONString) {
+//      data.put(key, (JSONType) value);
+    } else if (value instanceof JSONType) {
       data.put(key, (JSONType) value);
     } else {
       throw new IllegalArgumentException("Unsupported value type: " + value.getClass().getSimpleName());
     }
+  }
+
+
+  // Method to convert JSONArray to List
+  private List<JSONType> convertJSONArrayToList(JSONArray jsonArray) {
+    List<JSONType> list = new ArrayList<>();
+    for (Object item : jsonArray) {
+      // You need to check the type of each item and wrap it as needed
+      if (item instanceof String) {
+        list.add(new JSONString((String) item));
+      } else if (item instanceof Long) {
+        list.add(new JSONLong((Long) item));
+      } else if (item instanceof Double) {
+        list.add(new JSONDouble((Double) item));
+      } else if (item instanceof Integer) {
+        list.add(new JSONLong(((Integer) item).longValue())); // Convert Integer to JSONLong
+      } else if (item instanceof BigDecimal) {
+        list.add(new JSONDouble(((BigDecimal) item).doubleValue())); // Convert BigDecimal to JSONDouble
+      } else if (item instanceof Boolean) {
+        list.add(JSONBool.of((Boolean) item));
+      } else if (item instanceof JSONObject) {
+        list.add((JSONObject) item);
+      } else {
+        //  handling for other
+      }
+    }
+    return list;
   }
 
 
@@ -70,10 +104,10 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
     throw new IllegalArgumentException("Value is not a Double");
   }
 
-  public Boolean getBoolean(String key) {
-    JSONType value = data.get(key);
+  public JSONBool getBoolean(Boolean b) {
+    JSONType value = data.get(b);
     if (value instanceof JSONBool) {
-      return ((JSONBool) value).value();
+      return (JSONBool.of(b));
     }
     throw new IllegalArgumentException("Value is not a Boolean");
   }

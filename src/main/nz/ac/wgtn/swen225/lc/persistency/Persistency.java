@@ -12,11 +12,18 @@ import java.math.BigDecimal;
 public class Persistency {
 
   // Load JSONType from file
-  public static JSONType loadFromFile(String filename) throws IOException {
+  public static JSONType loadFromFile(String filePath) throws IOException {
     // Read the JSON string from the file
-    String json = FileUtils.readFileToString(new File(filename), "UTF-8");
+    File file = new File(filePath);
 
-    // Check if the string represents a JSONObject or JSONArray
+    if (!file.exists()) {
+      throw new IOException("File not found: " + filePath);  // Handle cases where file doesn't exist
+    }
+
+
+    String json = FileUtils.readFileToString(new File(filePath), "UTF-8");
+    //json = "[" + json + "]";
+
     return parseJSONString(json);
   }
 
@@ -26,11 +33,14 @@ public class Persistency {
     JSONTokener tokener = new JSONTokener(json);
     Object parsedJson = tokener.nextValue();
 
+    // Creating a visitor to handle the parsing and conversion stuff
+    JSONParserVisitor visitor = new JSONParserVisitor();
+
     // If it's a JSON object, call the object parser
     if (parsedJson instanceof JSONObject) {
-      return (JSONType) parseJSONObject(json);  // Send raw string to parser
+      return visitor.visit(parsedJson);  // Send the org.json.JSONObject to visitor
     } else if (parsedJson instanceof JSONArray) {
-      return parseJSONArray(json);  // Send raw string to parser
+      return visitor.visit(parsedJson);  // Send the org.json.JSONArray to visitor
     }
 
     // Throw an error if neither object nor array
@@ -44,36 +54,15 @@ public class Persistency {
 
     for (String key : jsonObject.keySet()) {
       Object value = jsonObject.get(key);
-
-      // Recursively handle nested objects or arrays
-//      if (value instanceof JSONObject) {
-//        customObject.put(key, parseJSONObject(value.toString()));
-//      } else if (value instanceof JSONArray) {
-//        customObject.put(key, parseJSONArray(value.toString()));
-//      } else if (value instanceof String) {
-//        customObject.put(key, (String) value);
-//      } else if (value instanceof Integer) {
-//        customObject.put(new JSONLong(((Integer) value).longValue())); // Convertins integer to long
-//      } else if (value instanceof Long) {
-//        customObject.put(new JSONLong((Long) value));  // Use JSONLong directly
-//      } else if (value instanceof BigDecimal) {
-//        customObject.put(new JSONDouble(((BigDecimal) value).doubleValue()));  // Convert BigDecimal to JSONDouble
-//      } else if (value instanceof Double) {
-//        customObject.put(new JSONDouble((Double) value));  // Use JSONDouble directly
-//      } else if (value instanceof Boolean) {
-//        customObject.put(key, (Boolean) value);
-//      } else if (value == JSONObject.NULL) {
-//        customObject.put(key);  // Handle null values
-//      }
       customObject.put(key, value);
     }
-
     return customObject;
-    //return jsonObject;
   }
 
   // Parse a string and convert it into a custom JSONList
-  private static JSONList parseJSONArray(String jsonString) {
+
+  // Parse a string and convert it into a custom JSONList
+  static JSONList parseJSONArray(String jsonString) {
     JSONArray jsonArray = new JSONArray(jsonString);  // Parse string into JSONArray
     JSONList customList = new JSONList();  // Our custom JSONList
 
@@ -115,7 +104,7 @@ public class Persistency {
 
       // Simple test loading a JSON Array
       System.out.println("\nTesting Array load:");
-      JSONType jsonArray = Persistency.loadFromFile("testArray.json");
+      JSONType jsonArray = Persistency.loadFromFile("src/main/nz/ac/wgtn/swen225/lc/persistency/testArray.json");
       System.out.println(jsonArray); //
 
     } catch (Exception e) {
