@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Class responsible for containing a special part of the Panel, which contains the buttons that will allow you
- * to record a game, save the current game, and replay the current game recorded.
+ * Class responsible for containing a special part of the Panel, which contains the list of items the player has in
+ * the inventory.
  */
-public class RecordAndSavePanel extends JPanel {
+public class InventoryPanel extends JPanel {
 
     /**
      * Constructor of the Record-And-Save Panel, where the content of the Panel is loaded in.
      */
-    public RecordAndSavePanel(){
+    public InventoryPanel(){
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
         Color backgroundColor = Color.WHITE;
         int totalWidth = 150;
