@@ -24,11 +24,10 @@ public class GameUI {
         Color backgroundColor = Color.DARK_GRAY;
 
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
-        menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
 
         Map<String, DefaultButton> buttonsToAdd = createGameButtons(width, 30);
-        menu.add(BorderLayout.SOUTH, new GameButtons(Color.WHITE, width, (height/2), buttonsToAdd));
+        menu.add(BorderLayout.SOUTH, new GameButtons(backgroundColor, width, (height/2), buttonsToAdd));
 
         return menu;
     }

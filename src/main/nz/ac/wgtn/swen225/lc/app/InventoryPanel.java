@@ -1,6 +1,5 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -14,6 +13,6 @@ public class InventoryPanel extends GridPanel {
      * TODO: Investigate how the "Inventory icons" will be loaded.
      */
     public InventoryPanel(int width, int height){
-        super(Color.WHITE, width, height, 2, 3);
+        super(Color.LIGHT_GRAY, width, height, 2, 3);
     }
 }

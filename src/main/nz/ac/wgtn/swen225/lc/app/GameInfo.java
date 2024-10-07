@@ -14,12 +14,14 @@ public class GameInfo extends DefaultPanel{
         JLabel levelDisplay = new CustomJLabel("LEVEL: ");
         JLabel timeDisplay = new CustomJLabel("TIME: ");
         JLabel chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: ");
+        JLabel nothing = new CustomJLabel(" ");
 
         this.add(levelDisplay);
         this.add(timeDisplay);
         this.add(chipsLeftDisplay);
-        this.add(new CustomJLabel(" "));
+        this.add(nothing);
         this.add(new InventoryPanel(width, 60));
+        this.add(nothing);
     }
 
     /**
@@ -29,7 +31,7 @@ public class GameInfo extends DefaultPanel{
      */
     private class CustomJLabel extends JLabel{
         public CustomJLabel(String text){
-            super(text);
+            super(text, SwingUtilities.CENTER);
             this.setFont(new Font("Comic Sans", Font.BOLD, 18));
             this.setForeground(Color.WHITE);
         }
