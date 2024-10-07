@@ -4,27 +4,18 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import java.util.List;
 
 /**
- * This class replays a recorded game saved by record.java.
- * 
- * It is stored in a list where each index is mapped to the corrosponding frame and direction.
+ * This interface represents a replay system for a recorded game,
  */
-public class Replay {
-  List<PlayerAction> actions;
-
-  Replay() {
-    // TODO: determin how to get the replay json file and how to parse it and store it in actions
-    // after persistence is completed.
-  }
+public interface Replay {
+  public List<PlayerAction> actions = null;
 
   /**
-   * Sends back the movement of the character at the specified frame
-   * 
-   * @param frame the frame of the game that wants to be replayed 
+   * Retrieves the player's action at the specified frame (tick) of the game replay.
+   *
+   * @param tick The frame number for which the recorded player action is needed.
+   *             This corresponds to the index in the 'actions' list.
+   * @return The PlayerAction object representing the player's action in the
+   *         specified frame.
    */
-  public PlayerAction replay(int tick) {
-    if (tick < 0) {
-      throw new IllegalArgumentException("tick cannot be less than 0");
-    }
-    return actions.get(tick);
-  }
+  public void replay();
 }
