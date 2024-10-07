@@ -6,10 +6,11 @@ import java.util.function.Consumer;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffectorTile;
 
 public class Player implements MoveableEntity {
 
-  private Point actionQueue = new Point(0, 0);
+  private Point actionQueue = Point.ORIGIN;
 
   private Consumer<Point> logger = a -> {};
 
@@ -18,6 +19,7 @@ public class Player implements MoveableEntity {
   private final long individualID;
   private boolean dead = false;
   private boolean won = false;
+  private Point lastMove = Point.ORIGIN;
 
   private long lastTick = -1;
 
@@ -30,12 +32,19 @@ public class Player implements MoveableEntity {
     this(start, indID);
     this.logger = logger;
   }
+
   /**
    * Queues an action for the player to use in the next tick
+   *
    * @param newAction
    */
-  public void queueAction(PlayerAction newAction){
+  public void queueAction(PlayerAction newAction) {
     this.actionQueue = newAction.offset;
+  }
+
+  @Override
+  public Point lastMove() {
+    return this.lastMove;
   }
 
   @Override
@@ -48,10 +57,22 @@ public class Player implements MoveableEntity {
     if (tick <= lastTicked()) {
       return;
     }
+    Point move = this.actionQueue;
+    if (maze.getTile(location()).get() instanceof MovementAffectorTile MET) {
+      move = MET.affectMove(this, move);
+    }
+    this.lastMove = move;
     Point origin = location();
-    move(this.actionQueue);
-    this.logger.accept(location().sub(origin));
-    this.actionQueue = new Point(0, 0);
+    try {
+      move(this.actionQueue);
+    } finally {
+      Point locDelta = location().sub(origin);
+      if (locDelta.equals(Point.ORIGIN)){
+        this.lastMove = Point.ORIGIN;
+      }
+      this.logger.accept(locDelta);
+      this.actionQueue = Point.ORIGIN;
+    }
   }
 
   @Override
