@@ -2,7 +2,6 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +25,10 @@ public class GameUI {
 
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-        menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, height/2));
+        menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
 
         Map<String, DefaultButton> buttonsToAdd = createGameButtons(width, 30);
-        menu.add(BorderLayout.SOUTH, new GameButtons(Color.WHITE, width, height/2, buttonsToAdd));
+        menu.add(BorderLayout.SOUTH, new GameButtons(Color.WHITE, width, (height/2), buttonsToAdd));
 
         return menu;
     }

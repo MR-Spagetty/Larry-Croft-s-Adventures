@@ -1,8 +1,6 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
