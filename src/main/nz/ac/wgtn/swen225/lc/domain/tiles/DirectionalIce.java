@@ -28,7 +28,7 @@ public class DirectionalIce extends Ice {
     }
   }
 
-  private final TYPE type;
+  public final TYPE type;
 
   /**
    * creates a new Directional ice tile of the given type
