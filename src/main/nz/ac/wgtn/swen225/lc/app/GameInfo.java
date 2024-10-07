@@ -18,6 +18,8 @@ public class GameInfo extends DefaultPanel{
         this.add(levelDisplay);
         this.add(timeDisplay);
         this.add(chipsLeftDisplay);
+        this.add(new CustomJLabel(" "));
+        this.add(new InventoryPanel(width, 60));
     }
 
     /**
