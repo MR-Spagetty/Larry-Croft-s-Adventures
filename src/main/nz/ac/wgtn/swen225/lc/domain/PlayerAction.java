@@ -5,7 +5,7 @@ public enum PlayerAction {
   Down(new Point(0, -1)),
   Left(new Point(-1, 0)),
   Right(new Point(1, 0)),
-  None(new Point(0, 0));
+  None(Point.ORIGIN);
 
   public final Point offset;
   PlayerAction(Point mvOffset) {

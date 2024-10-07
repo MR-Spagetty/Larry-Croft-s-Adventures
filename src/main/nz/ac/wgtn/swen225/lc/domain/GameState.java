@@ -33,12 +33,21 @@ public final class GameState {
 
   private GameState() {}
 
+  /**
+   * checks if the level has been one
+   *
+   * @return whether the level has been won
+   */
   public boolean hasWon() {
     return getPlayer().hasWon();
   }
 
+  /**
+   * checks if the level has been lost
+   *
+   * @return whether the level has been lost
+   */
   public boolean hasLost() {
-
     return (this.tick >= this.levelMaze.maxTicks) ? true : getPlayer().isDead();
   }
 
@@ -82,7 +91,7 @@ public final class GameState {
    *
    * @return A long value representing the current tick count.
    */
-  long getTick() {
+  public long getTick() {
     return this.tick;
   }
 
@@ -104,7 +113,7 @@ public final class GameState {
    * @param levelID A string representing the ID of the level to be set.
    * @return A boolean value indicating whether the level was successfully set.
    */
-  boolean setLevel(String levelID) {
+  public boolean setLevel(String levelID) {
     throw new UnsupportedOperationException("set level by ID NYI");
   }
 
@@ -114,7 +123,7 @@ public final class GameState {
    * @param levelPath A Path object representing the path to the level to be set.
    * @return A boolean value indicating whether the level was successfully set.
    */
-  boolean setLevel(Path levelPath) {
+  public boolean setLevel(Path levelPath) {
     throw new UnsupportedOperationException("set level by path NYI");
   }
 
@@ -126,8 +135,8 @@ public final class GameState {
 
   static Maze setupLevel() {
 
-    List<Entity> entities = List.of(new Player(new Point(0, 0), 0));
-    List<Tile> tiles = List.of(new Empty(new Point(0, 0)), new Empty(new Point(1, 0)));
+    List<Entity> entities = List.of(new Player(Point.ORIGIN, 0));
+    List<Tile> tiles = List.of(new Empty(Point.ORIGIN), new Empty(new Point(1, 0)));
     long maxTicks = 500;
     Maze maze = new Maze(maxTicks, "example", tiles, entities);
     entities.get(0).setMaze(maze);
