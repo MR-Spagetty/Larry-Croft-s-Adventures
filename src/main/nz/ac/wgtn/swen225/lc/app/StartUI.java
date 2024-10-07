@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
  */
 public class StartUI{
-    static JLabel instructions = new JLabel("Instructions go here!");
-
     /**
      * Creates a "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start the game
      * itself, and if a game has not been loaded (which is loaded by pressing the "Load" button), a new game will
