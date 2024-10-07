@@ -1,6 +1,9 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.*;
+import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
 
@@ -10,15 +13,60 @@ import javax.swing.*;
  * menu can be created
  */
 public class App{
+    private final static Recorder rec = new Recorder("a");
+    private final static StepReplay sReplay = new StepReplay();
+
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
     /**
      * A "tickOverride()" method that the Recorder can use to allow for replay-back.
-     * TODO: Make an "InteractReplay" interface that has this method and a method that takes in a PlayerAction and does something with it.
+     * All this method will do is advance a tick in the current game!
      */
     public static void tickOverride(){ GameState.getGameState().tick(); }
 
     /*
      * TODO: Add in further integration with Domain, Recorder, Renderer, and Persistency.
+     *
+     * INTEGRATION DONE:
+     * - A way to advance a tick.
+     * - Pass PlayerAction to Recorder each tick.
+     * - A way to forward a player action to Domain.
+     * - For AutoReplay, you just need to call it once.
+     * - For TickReplay, you need to ask user for tick speed then pass it to the constructor.
+     * - For StepReplay, you need to call the replay method each time the player presses a key.
+     *
+     * NB: The replay is a bit more complicated, I have a replay interface and three classes that extend that interface.
      */
+
+    /**
+     * Takes a given player action and forwards it to the Domain class.
+     *
+     * @param action The given player action
+     */
+    public static void forwardActionToDomain(PlayerAction action){
+        GameState.getGameState().getPlayer().queueAction(action);
+    }
+
+    /**
+     * Passes a given player action to the recorder to allow for that action to be recorded.
+     *
+     * @param action The given player action
+     */
+    public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+
+    /** Calls the "Auto Replay" feature in the Replayer. This is only done once! */
+    public static void callAutoReplay(){ new AutoReplay().replay(); }
+
+    /**
+     * Creates a new "Tick Replay" instance, which involves passing in the current tick (??), and then calls
+     * the "replay()".
+     * TODO: Check to see if the implementation is correct. If yes, "getTick()" will need to be public.
+     */
+    public static void callTickReplay(){
+        TickReplay tReplay = new TickReplay(GameState.getGameState().getTick());
+        tReplay.replay();
+    }
+
+    /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
+    public static void callStepReplay(){ sReplay.replay(); }
 }

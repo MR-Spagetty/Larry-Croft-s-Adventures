@@ -1,13 +1,14 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
-import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
-import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
-import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.domain.entities.*;
+import nz.ac.wgtn.swen225.lc.domain.tiles.*;
 
 public interface Shorthands {
+  Class<IllegalArgumentException> IAE = IllegalArgumentException.class;
+  Class<IllegalStateException> ISE = IllegalStateException.class;
+  Class<UnsupportedOperationException> UOE = UnsupportedOperationException.class;
   static Point p(long x, long y) {
     return new Point(x, y);
   }
@@ -17,48 +18,22 @@ public interface Shorthands {
   }
 
   static Tile et(Point loc) {
-    return new Tile() {
-      Optional<Entity> oc = Optional.empty();
+    return new Empty(loc);
+  }
 
-      @Override
-      public Point location() {
-        return loc;
-      }
-
-      @Override
-      public boolean canEnter(Entity enteree) {
-        return getOccupant().isEmpty();
-      }
-
-      @Override
-      public void enter(Entity enteree) {
-        enter(enteree);
-      }
-
-      @Override
-      public void put(Entity enteree) {
-        oc = Optional.of(enteree);
-      }
-
-      @Override
-      public void leave(Entity exitee) {
-        if (oc.map(e -> e.equals(exitee)).orElse(false)) {
-          oc = Optional.empty();
-        }
-      }
-
-      @Override
-      public Optional<Entity> getOccupant() {
-        return oc;
-      }
-    };
+  static Wall w(long x, long y){
+    return new Wall(p(0, 0));
+  }
+  static Exit ex(long x, long y){
+    return new Exit(p(0, 0));
   }
 
   static Entity e(long x, long y) {
     return e(p(x, y));
   }
-
+  static long[] entityCount = {0};
   static Entity e(Point p) {
+    long id = entityCount[0]++;
     return new MoveableEntity() {
       Point l = p;
       long lastT = -1;
@@ -101,8 +76,7 @@ public interface Shorthands {
 
       @Override
       public long getUID() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUID'");
+        return id;
       }
 
       @Override

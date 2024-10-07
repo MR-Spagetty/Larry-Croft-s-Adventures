@@ -14,10 +14,7 @@ import nz.ac.wgtn.swen225.lc.recorder.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
-    public Recorder rec = new Recorder("a");
-
-    //Current player action that the player is moving in a tick.
-    private static PlayerAction active = PlayerAction.None;
+    private static PlayerAction active = PlayerAction.None; //Current player action being executed in a tick.
 
     /**
      * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
@@ -56,6 +53,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_2, () -> {});
         assignKeyToAction(KeyEvent.VK_SPACE, () -> GameUI.ps.showScreen());
         assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameUI.ps.hideScreen());
+        assignKeyToAction(KeyEvent.VK_R, App::callStepReplay);
     }
 
     /**
@@ -120,7 +118,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
 
-        rec.record(active); //Passed to the recorder to allow for the action to be recorded.
+        App.forwardActionToRecorder(active);
     }
 
     /**

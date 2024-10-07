@@ -1,46 +1,45 @@
 package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import java.util.Optional;
-
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
-public class Empty implements Tile {
-
-  /**
-   * creates a new Empty tile at the given location
-   *
-   * @param location the location to create the tile at
-   */
-  public Empty(Point location) {
-    this.location = location;
-  }
+public class Ice implements MovementAffectorTile {
 
   private Optional<Entity> occupant = Optional.empty();
   private final Point location;
 
+  /**
+   * @param location
+   */
+  public Ice(Point location) {
+    this.location = location;
+  }
+
+  /**
+   * affects the given movement of the given entity to obey the properties of ice
+   *
+   * <p>the properties of ice are continued momentum in that once an entity has begun movement in a
+   * direction it will continue to move in that direction until it cannot
+   */
+  @Override
+  public Point affectMove(MoveableEntity e, Point moveToEffect) {
+    return e.lastMove().equals(Point.ORIGIN) ? moveToEffect : e.lastMove();
+  }
+
   @Override
   public Point location() {
-    return location;
+    return this.location;
   }
 
   @Override
   public void put(Entity enteree) {
-    if (getOccupant().isPresent()) {
-      throw new IllegalStateException("Tile already occupied");
-    }
     this.occupant = Optional.of(enteree);
   }
 
   @Override
-  public boolean canEnter(Entity enteree) {
-    // TODO checks with advanced occupants
-    return getOccupant().isEmpty();
-  }
-
-  @Override
   public void enter(Entity enteree) {
-    // TODO handeling of advanced occupants
     if (this.occupant.isPresent()) {
       throw new IllegalStateException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
