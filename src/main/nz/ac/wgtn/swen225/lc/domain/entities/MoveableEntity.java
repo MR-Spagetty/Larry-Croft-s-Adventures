@@ -11,17 +11,8 @@ public interface MoveableEntity extends Entity {
    * Moves this entity by the specified amount in the given maze.
    *
    * @param by the amount to move this entity
-   * @param in the maze in which to move this entity
    */
   default void move(Point by) {
-    Tile newLoc =
-        getMaze()
-            .getTile(location().add(by))
-            .orElseThrow(
-                () -> new IllegalArgumentException("requested tile does not exist in maze"));
-    if (newLoc.getOccupant().map(e -> e.canTouch(this)).orElse(false)) {
-      newLoc.getOccupant().get().touch(this);
-    }
     Tile oldLoc =
         getMaze()
             .getTile(location())
