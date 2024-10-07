@@ -1,15 +1,16 @@
 package nz.ac.wgtn.swen225.lc.recorder;
 
+import java.nio.file.Path;
+
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
-public class AutoReplay implements Replay {
-
-  /*
-   * Constructor of the AutoReplay class, opens a recorder json file, parse it and
-   * store it in super.actions
-   */
-  public AutoReplay() {
-    // TODO: determin how to parse and get file after persistency is completed
+/*
+ * Autamatically replays the file using the default tick speed
+ */
+public class AutoReplay extends Replay {
+  public AutoReplay(Path p) {
+    super(p);
+    replay();
   }
 
   @Override

@@ -1,11 +1,13 @@
 package nz.ac.wgtn.swen225.lc.recorder;
 
+import java.nio.file.Path;
 import java.util.Objects;
 
-public class TickReplay implements Replay {
+public class TickReplay extends Replay {
   private Long tickSpeed;
 
-  public TickReplay(Long tickSpeed) {
+  public TickReplay(Path path, Long tickSpeed) {
+    super(path);
     Objects.requireNonNull(tickSpeed);
     if (tickSpeed < 0) {
       throw new IllegalArgumentException("Tickspeed cannot be less than 0");
