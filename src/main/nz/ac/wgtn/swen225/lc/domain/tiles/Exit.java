@@ -18,7 +18,7 @@ public class Exit extends Empty {
   @Override
   public void enter(Entity enteree) {
     if (enteree instanceof Player p) {
-      // TODO finish level
+      p.win();
     }
     super.enter(enteree);
   }

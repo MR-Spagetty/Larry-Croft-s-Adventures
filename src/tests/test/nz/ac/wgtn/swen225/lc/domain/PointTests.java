@@ -17,10 +17,10 @@ import org.junit.jupiter.api.Test;
 public class PointTests {
   @Test
   void addZero() {
-    Point p1 = new Point(0, 0);
-    Point p2 = new Point(0, 0);
+    Point p1 = Point.ORIGIN;
+    Point p2 = Point.ORIGIN;
     Point result = p1.add(p2);
-    assertEquals(result, new Point(0, 0));
+    assertEquals(result, Point.ORIGIN);
   }
 
   @Test
@@ -49,10 +49,10 @@ public class PointTests {
 
   @Test
   void subtractZero() {
-    Point p1 = new Point(0, 0);
-    Point p2 = new Point(0, 0);
+    Point p1 = Point.ORIGIN;
+    Point p2 = Point.ORIGIN;
     Point result = p1.sub(p2);
-    assertEquals(result, new Point(0, 0));
+    assertEquals(result, Point.ORIGIN);
   }
 
   @Test
@@ -81,15 +81,15 @@ public class PointTests {
 
   @Test
   void distance0() {
-    Point p1 = new Point(0, 0);
-    Point p2 = new Point(0, 0);
+    Point p1 = Point.ORIGIN;
+    Point p2 = Point.ORIGIN;
     double result = p1.dist(p2);
     assertEquals(result, 0.0);
   }
 
   @Test
   void distance1() {
-    Point p1 = new Point(0, 0);
+    Point p1 = Point.ORIGIN;
     Point p2 = new Point(3, 4);
     double result = p1.dist(p2);
     assertEquals(result, 5.0);
@@ -97,7 +97,7 @@ public class PointTests {
 
   @Test
   void distance2() {
-    Point p1 = new Point(0, 0);
+    Point p1 = Point.ORIGIN;
     Point p2 = new Point(-3, -4);
     double result = p1.dist(p2);
     assertEquals(result, 5.0);

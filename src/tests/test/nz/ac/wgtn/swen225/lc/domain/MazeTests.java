@@ -8,17 +8,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
-
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
-
 import org.junit.jupiter.api.Test;
 
 public class MazeTests {
-  Class<IllegalArgumentException> IAE = IllegalArgumentException.class;
-  Class<UnsupportedOperationException> UOE = UnsupportedOperationException.class;
 
   List<Tile> area3x3(Function<Point, Tile> tile, long cX, long cY) {
     Point cPoint = new Point(cX, cY);

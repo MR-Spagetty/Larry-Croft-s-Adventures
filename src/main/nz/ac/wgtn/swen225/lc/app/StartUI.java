@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
  */
-public class StartScreen{
+public class StartUI{
     static JLabel instructions = new JLabel("Instructions go here!");
 
     /**

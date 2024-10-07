@@ -29,11 +29,11 @@ public class PauseScreen extends JFrame{
 
     public void showScreen(){
         setVisible(true);
-        GameGUI.timer.stop();
+        UserInterface.timer.stop();
     }
 
     public void hideScreen(){
         setVisible(false);
-        GameGUI.timer.start();
+        UserInterface.timer.start();
     }
 }
