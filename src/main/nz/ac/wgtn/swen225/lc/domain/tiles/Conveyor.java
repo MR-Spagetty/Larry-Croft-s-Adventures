@@ -10,7 +10,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
 public class Conveyor implements MovementAffectorTile {
   private static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
-  private Point targetDir;
+  public final Point targetDir;
   private Optional<Entity> occupant = Optional.empty();
   private final Point location;
 
