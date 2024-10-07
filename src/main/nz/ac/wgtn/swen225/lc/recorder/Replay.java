@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This interface represents a replay system for a recorded game,
+ * This interface represents a replay system for a recorded game.
  */
 abstract class Replay {
   public List<PlayerAction> actions;
 
+  /*
+   * Takes in a path and parse it and set it to actions. Then intitilizes a game.
+   */
   Replay(Path p){
     Objects.requireNonNull(p);
-    //TODO: call parse and set action equal to the result
+    //TODO: call parse and set action equal to the result as well as initilize a game
   }
   
   /**
