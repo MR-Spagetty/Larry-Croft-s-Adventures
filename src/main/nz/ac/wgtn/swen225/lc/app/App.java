@@ -6,6 +6,8 @@ import nz.ac.wgtn.swen225.lc.recorder.*;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 /**
  * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI or the Keystrokes.
@@ -13,8 +15,11 @@ import javax.swing.*;
  * menu can be created.
  */
 public class App{
-    private final static Recorder rec = new Recorder("a");
-    private final static StepReplay sReplay = new StepReplay();
+    /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
+    private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
+
+    private final static Recorder rec = new Recorder(recorderPath);
+    private final static StepReplay sReplay = new StepReplay(recorderPath); /** Should be public??? */
 
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
@@ -55,7 +60,7 @@ public class App{
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
     /** Calls the "Auto Replay" feature in the Replayer. This is only done once! */
-    public static void callAutoReplay(){ new AutoReplay().replay(); }
+    public static void callAutoReplay(){ new AutoReplay(recorderPath).replay(); }
 
     /**
      * Creates a new "Tick Replay" instance, which involves passing in the current tick (??), and then calls
@@ -63,7 +68,7 @@ public class App{
      * TODO: Check to see if the implementation is correct. If yes, "getTick()" will need to be public.
      */
     public static void callTickReplay(){
-        TickReplay tReplay = new TickReplay(GameState.getGameState().getTick());
+        TickReplay tReplay = new TickReplay(recorderPath, (int)GameState.getGameState().getTick());
         tReplay.replay();
     }
 
