@@ -13,7 +13,7 @@ public class DirectionalIce extends Ice {
    * Enum for representing the type of DirectionalIce to create and the directions it redirects to
    * and from
    */
-  enum TYPE {
+  public enum TYPE {
     NorthEast(Up, Right),
     SouthEast(Down, Right),
     SouthWest(Down, Left),
