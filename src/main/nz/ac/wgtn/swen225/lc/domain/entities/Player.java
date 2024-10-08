@@ -182,7 +182,7 @@ public class Player implements MoveableEntity {
     return this.dead;
   }
 
-  PlayerAction getFacing() {
+  public PlayerAction getFacing() {
     Point move = lastMove().limit(1l);
     if (move.equals(Point.ORIGIN)) {
       return PlayerAction.None;
