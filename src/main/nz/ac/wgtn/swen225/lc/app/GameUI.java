@@ -40,7 +40,7 @@ public class GameUI {
         DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE", cgbWidth, cgbHeight, 15f);
         DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
         DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
-        DefaultButton displayHelp = new DefaultButton(unused -> {}, "HELP", cgbWidth, cgbHeight, 15f);
+        DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP", cgbWidth, cgbHeight, 15f);
 
         Map<String, DefaultButton> map = new HashMap<>();
         map.put("RECORD", createRecordButton(cgbWidth, cgbHeight));
@@ -61,6 +61,10 @@ public class GameUI {
         newButton.setEnabled(true);
 
         return newButton;
+    }
+
+    private static void createHelpDialog(){
+        JOptionPane.showMessageDialog(null, new Instructions(), "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
