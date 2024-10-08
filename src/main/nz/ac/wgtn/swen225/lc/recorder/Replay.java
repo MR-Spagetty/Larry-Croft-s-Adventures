@@ -1,21 +1,28 @@
 package nz.ac.wgtn.swen225.lc.recorder;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * This interface represents a replay system for a recorded game,
+ * This interface represents a replay system for a recorded game.
  */
-public interface Replay {
-  public List<PlayerAction> actions = null;
+abstract class Replay {
+  public List<PlayerAction> actions;
+  int tick = 0;
 
-  /**
-   * Retrieves the player's action at the specified frame (tick) of the game replay.
-   *
-   * @param tick The frame number for which the recorded player action is needed.
-   *             This corresponds to the index in the 'actions' list.
-   * @return The PlayerAction object representing the player's action in the
-   *         specified frame.
+  /*
+   * Takes in a path and parse it and set it to actions. Then intitilizes a game.
    */
-  public void replay();
+  Replay(Path p){
+    Objects.requireNonNull(p);
+    //TODO: call parse and set action equal to the result as well as initilize a game
+  }
+  
+  /**
+   * Sends inputs to App and ticks the game in different ways depending on the implementation
+   */
+  public abstract void replay();
 }

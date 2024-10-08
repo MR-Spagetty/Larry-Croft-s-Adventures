@@ -1,9 +1,10 @@
 {
-    "levelName" : "Level ID",
-    "inputs" : [
+    "path" : "this/is/path",
+    "actions" : [
         "up",
         "down",
         "left",
         "right"
-    ]
+    ],
+    "nextLevel" : "path/to/nextLevel"
 }
