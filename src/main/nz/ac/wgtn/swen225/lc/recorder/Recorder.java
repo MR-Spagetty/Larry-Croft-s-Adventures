@@ -43,6 +43,11 @@ public class Recorder {
     currentLevel.actions(a);
   }
 
+  /*
+   * Starts a level by creating a new level object and set it to currentLevel
+   * 
+   * @param levelPath The path to the levelfile, not to be confused with the recorder file
+   */
   public void startLevel(Path levelPath) {
     Objects.requireNonNull(levelPath);
     String filename = (allLevels.size() + 1) + ".json";
