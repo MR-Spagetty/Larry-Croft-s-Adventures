@@ -2,9 +2,8 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 
-public class Instructions extends GridPanel{
+public class Instructions extends DefaultPanel{
     public Instructions(){
-        super(8, 1);
 
         this.add(new JLabel("HOW TO PLAY THE GAME:"));
         this.add(new JLabel(" - Use the Arrow keys to move Larry Croft around!"));
