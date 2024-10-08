@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Instructions extends DefaultPanel{
     public Instructions(){
-        this.add(new JLabel("HOW TO PLAY THE GAME:"));
+        this.add(createLabel("HOW TO PLAY THE GAME:"));
         this.add(new JLabel(" - Use the Arrow keys to move Larry Croft around!"));
         this.add(new JLabel(" - YOUR AIM: Collect all of the \"Chips,\" and find the Exit! Dot it all before time runs out!"));
         this.add(new JLabel(" - Press \"SPACE\" to pause the game currently playing!"));
