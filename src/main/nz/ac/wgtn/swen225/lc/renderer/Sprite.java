@@ -61,7 +61,7 @@ public class Sprite {
       return switch (o) {
         // Exit class image
         case Exit exit ->
-            ImageIO.read(Sprite.class.getClassLoader().getResource("Finish Tile.png"));
+            ImageIO.read(Sprite.class.getClassLoader().getResource("finishTile.png"));
         // Wall class image
         case Wall wall -> ImageIO.read(Sprite.class.getClassLoader().getResource("Wall.png"));
         // Empty class image
@@ -83,7 +83,41 @@ public class Sprite {
               // Default player image
               default -> ImageIO.read(Sprite.class.getClassLoader().getResource("playerDown.png"));
             };
-        // Default image for when no individual case in place
+        // Conveyor class image
+        case Conveyor conveyor ->
+            switch (conveyor.getFacing()) {
+              // Upwards orientation
+              case Up -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorUp.png"));
+              // Upwards orientation
+              case Left -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorLeft.png"));
+              // Upwards orientation
+              case Down -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorDown.png"));
+              // Upwards orientation
+              case Right -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorRight.png"));
+              // Default is Error image
+              default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
+            };
+        // Directional Ice class image
+        case DirectionalIce directionalIce ->
+            switch (directionalIce.type) {
+              // North-east rotation
+              case NorthEast ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("iceDirUpRight.png"));
+              // South-east rotation
+              case SouthEast ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("iceDirDownRight.png"));
+              // South-west rotation
+              case SouthWest ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("iceDirDownLeft.png"));
+              // North-west rotation
+              case NorthWest ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("iceDirUpLeft.png"));
+              // Default is Error image
+              default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
+            };
+        // Ice class image
+        case Ice ice -> ImageIO.read(Sprite.class.getClassLoader().getResource("ice.png"));
+        // Default Error image for when no individual case in place
         default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
       };
     } catch (IOException e) {
