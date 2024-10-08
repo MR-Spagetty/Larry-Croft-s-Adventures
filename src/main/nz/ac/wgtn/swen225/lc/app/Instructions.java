@@ -1,10 +1,10 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Instructions extends DefaultPanel{
     public Instructions(){
-
         this.add(new JLabel("HOW TO PLAY THE GAME:"));
         this.add(new JLabel(" - Use the Arrow keys to move Larry Croft around!"));
         this.add(new JLabel(" - YOUR AIM: Collect all of the \"Chips,\" and find the Exit! Dot it all before time runs out!"));
@@ -13,5 +13,12 @@ public class Instructions extends DefaultPanel{
         this.add(new JLabel(" - Press \"CTRL + S\" to save and exit the current game."));
         this.add(new JLabel(" - Press \"CTRL + 1\" to start a new game at Level 1."));
         this.add(new JLabel(" - Press \"CTRL + 2\" to start a new game at Level 2."));
+    }
+
+    public JLabel createLabel(String text){
+        JLabel returnLabel = new JLabel(text);
+        returnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        return returnLabel;
     }
 }
