@@ -22,8 +22,6 @@ public class TickReplay extends Replay {
 
   @Override
   public void replay() {
-    // TODO: loop ticks using the default tick speed and play a different action
-    // each time
     timer = new Timer(tickSpeed, a -> update());
     timer.setRepeats(true);
     timer.start();

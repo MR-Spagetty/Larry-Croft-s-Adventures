@@ -19,8 +19,6 @@ public class AutoReplay extends Replay {
 
   @Override
   public void replay() {
-    // TODO: loop ticks using the default tick speed and play a different action
-    // each time
     timer = new Timer(GameState.DEFAULT_TICK_RATE, a -> update());
     timer.setRepeats(true);
     timer.start();
@@ -35,7 +33,7 @@ public class AutoReplay extends Replay {
     tick++;
     if (actions.size() > tick){
       timer.stop();
+      //TODO: go to next level
     }
-    //TODO: go to next level
   }
 }
