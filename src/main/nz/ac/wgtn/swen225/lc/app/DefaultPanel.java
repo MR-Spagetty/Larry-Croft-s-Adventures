@@ -8,6 +8,4 @@ public class DefaultPanel extends JPanel {
         this.setBackground(backgroundColor);
         this.setPreferredSize(new Dimension(width, height));
     }
-
-    public DefaultPanel(){}
 }

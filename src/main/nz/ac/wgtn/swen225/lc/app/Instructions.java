@@ -2,8 +2,10 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 
-public class Instructions extends DefaultPanel{
+public class Instructions extends GridPanel{
     public Instructions(){
+        super(8, 1);
+
         this.add(new JLabel("HOW TO PLAY THE GAME:"));
         this.add(new JLabel(" - Use the Arrow keys to move Larry Croft around!"));
         this.add(new JLabel(" - YOUR AIM: Collect all of the \"Chips,\" and find the Exit! Dot it all before time runs out!"));
