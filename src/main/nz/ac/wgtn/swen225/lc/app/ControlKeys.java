@@ -2,10 +2,8 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Collections;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
-import nz.ac.wgtn.swen225.lc.recorder.*;
 
 /**
  * An extension of the class "KeyStrokes", which is responsible for actually controlling key events, rather than
