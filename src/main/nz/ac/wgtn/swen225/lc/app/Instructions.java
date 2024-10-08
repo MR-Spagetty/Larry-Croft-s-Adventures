@@ -15,7 +15,7 @@ public class Instructions extends DefaultPanel{
         this.add(new JLabel(" - Press \"CTRL + 2\" to start a new game at Level 2."));
     }
 
-    public JLabel createLabel(String text){
+    private JLabel createLabel(String text){
         JLabel returnLabel = new JLabel(text);
         returnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
