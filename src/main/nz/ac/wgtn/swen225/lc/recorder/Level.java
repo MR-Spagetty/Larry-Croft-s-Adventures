@@ -11,9 +11,9 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 public class Level {
   private String filename;
   private List<PlayerAction> actions;
-  private Path filePath;
+  private Path savePath;
   private Path levelPath;
-  private Path nextLevelPath;
+  private Path nextSavePath;
 
   /**
    * Constructs a new Level with the specified parameters.
@@ -21,25 +21,24 @@ public class Level {
    * @param filename      The name of the file associated with the level.
    * @param actions       A list of player actions representing the player's moves
    *                      in the level.
-   * @param filePath      The path where the level is saved.
+   * @param savePath      The path where the level is saved.
    * @param levelPath     The path of the current level.
-   * @param nextLevelPath The path to the next level.
+   * @param nextSavePath The path to the next level.
    */
-  public Level(String filename, List<PlayerAction> actions, Path filePath, Path levelPath, Path nextLevelPath) {
+  public Level(String filename, List<PlayerAction> actions, Path savePath, Path levelPath) {
     this.filename = filename;
     this.actions = actions;
-    this.filePath = filePath;
+    this.savePath = savePath;
     this.levelPath = levelPath;
-    this.nextLevelPath = nextLevelPath;
   }
+  
+  // Setters
+  public void nextSavePath(Path p){ nextSavePath = p; }
+  public void actions(PlayerAction a){ actions.add(a); }
 
-  public void updateNextLevel(Path nextLevel){
-    nextLevelPath = nextLevel;
-  }
-
-  public void actions(PlayerAction a){
-    actions.add(a);
-  }
+  // Getters
+  public Path savePath(){ return savePath; }
+  public List<PlayerAction> actions() { return actions; }
 
   /**
    * Saves the current state of the level.
