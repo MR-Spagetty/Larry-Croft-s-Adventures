@@ -33,14 +33,6 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
       data.put(key, new JSONList((List<JSONType>) value));
     } else if (value.getClass().getSimpleName().equals("JSONArray")) {  // Check for JSONArray
       data.put(key, new JSONList(convertJSONArrayToList((JSONArray) value))); // Implement this method
-//    } else if (value instanceof JSONBool) {
-//      data.put(key, (JSONType) value);
-//    } else if (value instanceof JSONDouble) {
-//      data.put(key, (JSONType) value);
-//    } else if (value instanceof JSONLong) {
-//      data.put(key, (JSONType) value);
-//    } else if (value instanceof JSONString) {
-//      data.put(key, (JSONType) value);
     } else if (value instanceof JSONType) {
       data.put(key, (JSONType) value);
     } else {
@@ -75,6 +67,10 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
     return list;
   }
 
+  // Method to return the set of keys
+  public Set<String> keySet() {
+    return data.keySet();
+  }
 
   // Get a value by key
   public JSONType get(String key) { return data.get(key); }
