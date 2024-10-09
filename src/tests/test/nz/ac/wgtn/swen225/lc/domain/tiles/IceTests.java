@@ -2,7 +2,7 @@ package test.nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.p;
+import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
 import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
@@ -21,27 +21,27 @@ public class IceTests implements IceBaseTests {
   }
 
   @Test
-  void fromNorth() {
-    testFromBase(p(0, 1), Down, p(0, -1));
+  public void fromNorth() {
+    testFromBase(North, Down, South);
   }
 
   @Test
-  void fromSouth() {
-    testFromBase(p(0, -1), Up, p(0, 1));
+  public void fromSouth() {
+    testFromBase(South, Up, North);
   }
 
   @Test
-  void fromEast() {
-    testFromBase(p(1, 0), Left, p(-1, 0));
+  public void fromEast() {
+    testFromBase(East, Left, West);
   }
 
   @Test
-  void fromWest() {
-    testFromBase(p(-1, 0), Right, p(1, 0));
+  public void fromWest() {
+    testFromBase(West, Right, East);
   }
 
   @Test
-  void fromOn() {
+  public void fromOn() {
     Stream.of(PlayerAction.values())
         .forEach(
             act -> {

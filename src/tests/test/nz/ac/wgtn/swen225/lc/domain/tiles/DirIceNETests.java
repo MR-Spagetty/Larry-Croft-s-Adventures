@@ -1,0 +1,50 @@
+package test.nz.ac.wgtn.swen225.lc.domain.tiles;
+
+import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
+
+import org.junit.jupiter.api.Test;
+
+import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+
+public final class DirIceNETests implements DirectionalIceTests {
+
+  @Override
+  public Tile tile() {
+    return tile(0);
+  }
+
+  @Test
+  public void fromNorth() {
+    testFromBase(North, Down, East);
+  }
+
+  @Test
+  public void fromEast() {
+    testFromBase(East, Left, North);
+  }
+
+  @Test
+  public void fromSouth() {
+    Maze scene = getScencario();
+    Player player = getPlayer(South);
+    scene.addEntity(player);
+    player.queueAction(Up);
+    assertThrows(IAE, () -> player.tick(0));
+  }
+
+  @Test
+  public void fromWest() {
+    Maze scene = getScencario();
+    Player player = getPlayer(West);
+    scene.addEntity(player);
+    player.queueAction(Right);
+    assertThrows(IAE, () -> player.tick(0));
+  }
+
+  @Test
+  public void fromOn() {}
+}

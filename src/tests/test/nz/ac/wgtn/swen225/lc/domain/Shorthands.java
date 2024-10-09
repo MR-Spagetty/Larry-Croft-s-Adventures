@@ -1,6 +1,7 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
 import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
@@ -9,6 +10,10 @@ public interface Shorthands {
   Class<IllegalArgumentException> IAE = IllegalArgumentException.class;
   Class<IllegalStateException> ISE = IllegalStateException.class;
   Class<UnsupportedOperationException> UOE = UnsupportedOperationException.class;
+  Point North = PlayerAction.Up.offset;
+  Point South = PlayerAction.Down.offset;
+  Point East = PlayerAction.Right.offset;
+  Point West = PlayerAction.Left.offset;
   static Point p(long x, long y) {
     return new Point(x, y);
   }

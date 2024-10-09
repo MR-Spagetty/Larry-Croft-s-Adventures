@@ -7,6 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import org.junit.jupiter.api.Test;
 
 public interface IceBaseTests extends METBaseTests {
 
@@ -24,4 +25,14 @@ public interface IceBaseTests extends METBaseTests {
               assertEquals(end, player.location());
             });
   }
+
+  void fromNorth();
+
+  void fromSouth();
+
+  void fromEast();
+
+  void fromWest();
+
+  void fromOn();
 }
