@@ -1,7 +1,10 @@
 package test.nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;

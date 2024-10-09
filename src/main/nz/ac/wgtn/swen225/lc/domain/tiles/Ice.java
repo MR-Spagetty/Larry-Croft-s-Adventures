@@ -35,13 +35,16 @@ public class Ice implements MovementAffectorTile {
 
   @Override
   public void put(Entity enteree) {
+    if (this.occupant.isPresent()) {
+      throw new IllegalStateException();
+    }
     this.occupant = Optional.of(enteree);
     enteree.location(location());
   }
 
   @Override
   public void enter(Entity enteree) {
-    if (this.occupant.isPresent()) {
+    if (!canEnter(enteree)) {
       throw new IllegalStateException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }

@@ -9,4 +9,7 @@ public sealed interface DirectionalIceTests extends IceBaseTests
   default Tile tile(int facing) {
     return new DirectionalIce(Point.ORIGIN, facing);
   }
+
+  @Override
+  void alreadyOccupiedEnter();
 }
