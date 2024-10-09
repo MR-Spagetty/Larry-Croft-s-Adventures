@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -15,6 +17,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
 public class GameUI {
     //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
+    static Map<String, DefaultButton> buttonsToAdd = new HashMap<>();
 
     /**
      * Creates the menu containing information about the current game, and the buttons in the game.
@@ -26,7 +29,7 @@ public class GameUI {
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
 
-        Map<String, DefaultButton> buttonsToAdd = createGameButtons(width, 30);
+        buttonsToAdd = createGameButtons(width, 30);
         menu.add(BorderLayout.SOUTH, new GameButtons(backgroundColor, width, (height/2), buttonsToAdd));
 
         return menu;
@@ -80,4 +83,9 @@ public class GameUI {
             gameDisplay.repaint();
         });
     }
+
+    /**
+     * Returns the list of buttons that have been created in the game.
+     */
+    public Set<DefaultButton> getButtons(){ return new HashSet<>(buttonsToAdd.values()); }
 }
