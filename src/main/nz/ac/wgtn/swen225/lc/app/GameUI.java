@@ -15,21 +15,21 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * the number of chips left to collect, and the time remaining.
  */
 public class GameUI {
-    //The Screen that will be displayed when the game is paused.
-    static PauseScreen ps = new PauseScreen(200);
-    static Map<String, DefaultButton> buttonsToAdd = new HashMap<>();
+    static PauseScreen ps = new PauseScreen(200); //The Screen that will be displayed when the game is paused.
+    static Map<String, DefaultButton> buttonsToAdd = new HashMap<>(); //The Buttons that are part of the Game UI.
+    Color backgroundColor = Color.DARK_GRAY; //The Background colour of the UI.
+
+    public GameUI(int width, int height){
+        buttonsToAdd = createGameButtons(width, 30);
+    }
 
     /**
      * Creates the menu containing information about the current game, and the buttons in the game.
      * TODO: Make sure we're satisfied with aspects of the Border.
      */
     public static JPanel createMenu(int width, int height){
-        Color backgroundColor = Color.DARK_GRAY;
-
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
-
-        buttonsToAdd = createGameButtons(width, 30);
         menu.add(BorderLayout.SOUTH, new GameButtons(backgroundColor, width, (height/2), buttonsToAdd));
 
         return menu;

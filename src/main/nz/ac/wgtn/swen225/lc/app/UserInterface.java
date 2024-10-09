@@ -32,6 +32,9 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
+    //An instance of the wider "Game UI" that the user will be interacting with when they are playing the game!
+    GameUI gameControls;
+
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
 
@@ -53,6 +56,8 @@ public class UserInterface extends JFrame{
 
         pack();
         setVisible(true);
+
+        gameControls = new GameUI(WIDTH/4, HEIGHT);
     }
 
     /**
