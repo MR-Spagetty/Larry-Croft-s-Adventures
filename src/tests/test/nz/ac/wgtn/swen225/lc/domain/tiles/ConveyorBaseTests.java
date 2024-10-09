@@ -5,21 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
 import java.util.stream.Stream;
-
-import org.junit.jupiter.api.Test;
-
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Conveyor;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import org.junit.jupiter.api.Test;
 
 public sealed interface ConveyorBaseTests extends METBaseTests
     permits NConvTests, EConvTests, SConvTests, WConvTests {
   default Tile tile(int dir) {
     Conveyor t = new Conveyor(Point.ORIGIN, dir);
-    assertEquals( Conveyor.DIRS[dir], t.getFacing());
+    assertEquals(Conveyor.DIRS[dir], t.getFacing());
     return t;
   }
 
@@ -74,5 +72,14 @@ public sealed interface ConveyorBaseTests extends METBaseTests
   @Test
   default void fromWest() {
     test(West, Right);
+  }
+
+  @Test
+  default void fromOn() {
+    Maze scenario = getScencario();
+    Player p = getPlayer(Point.ORIGIN);
+    scenario.addEntity(p);
+    p.tick(0);
+    assertEquals(((Conveyor) tile()).getFacing().offset, p.location());
   }
 }

@@ -15,9 +15,6 @@ import org.junit.jupiter.api.Test;
 public final class WConvTests implements ConveyorBaseTests {
 
   @Test
-  public void fromOn() {}
-
-  @Test
   public void fromWest() {
     Maze scenario = getScencario();
     Player p = getPlayer(West);

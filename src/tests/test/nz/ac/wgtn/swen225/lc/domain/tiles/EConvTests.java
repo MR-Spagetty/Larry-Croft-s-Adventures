@@ -15,9 +15,6 @@ import org.junit.jupiter.api.Test;
 public final class EConvTests implements ConveyorBaseTests {
 
   @Test
-  public void fromOn() {}
-
-  @Test
   public void fromEast() {
     Maze scenario = getScencario();
     Player p = getPlayer(East);

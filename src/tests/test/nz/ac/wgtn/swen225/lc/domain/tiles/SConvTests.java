@@ -28,9 +28,6 @@ public final class SConvTests implements ConveyorBaseTests {
     assertThrows(IAE, () -> p.tick(0));
   }
 
-  @Test
-  public void fromOn() {}
-
   @Override
   public Tile tile() {
     return tile(2);
