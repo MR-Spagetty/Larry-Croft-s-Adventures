@@ -2,29 +2,21 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.*;
 
-import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
-public class Conveyor implements MovementAffectorTile {
+public class Conveyor extends MovementAffectorTile {
   public static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
   private final PlayerAction targetDir;
-  private Optional<Entity> occupant = Optional.empty();
-  private final Point location;
 
   /**
    * @param targetDir
    */
   public Conveyor(Point location, int type) {
-    this.location = location;
+    super(location);
     this.targetDir = DIRS[type];
-  }
-
-  @Override
-  public Point location() {
-    return location;
   }
 
   /**
@@ -46,38 +38,8 @@ public class Conveyor implements MovementAffectorTile {
 
   @Override
   public boolean canEnter(Entity enteree) {
-    return getOccupant().isEmpty()
+    return super.canEnter(enteree)
         && !enteree.location().equals(location().add(this.targetDir.offset));
-  }
-
-  @Override
-  public void put(Entity enteree) {
-    if (this.occupant.isPresent()) {
-      throw new IllegalStateException();
-    }
-    this.occupant = Optional.of(enteree);
-    enteree.location(location());
-  }
-
-  @Override
-  public void enter(Entity enteree) {
-    if (!canEnter(enteree)) {
-      throw new IllegalStateException(
-          "The entity: %d may not enter this tile".formatted(enteree.getUID()));
-    }
-    put(enteree);
-  }
-
-  @Override
-  public Optional<Entity> getOccupant() {
-    return this.occupant;
-  }
-
-  @Override
-  public void leave(Entity exitee) {
-    if (this.occupant.map(e -> e.equals(exitee)).orElse(false)) {
-      this.occupant = Optional.empty();
-    }
   }
 
   public PlayerAction getFacing() {

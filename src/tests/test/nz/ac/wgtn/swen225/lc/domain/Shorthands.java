@@ -18,11 +18,11 @@ public interface Shorthands {
     return new Point(x, y);
   }
 
-  static Tile et(long x, long y) {
+  static AbstractTile et(long x, long y) {
     return et(p(x, y));
   }
 
-  static Tile et(Point loc) {
+  static AbstractTile et(Point loc) {
     return new Empty(loc);
   }
 

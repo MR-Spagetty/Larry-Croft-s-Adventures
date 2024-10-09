@@ -7,11 +7,11 @@ import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 import java.util.List;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
 import org.junit.jupiter.api.Test;
 
 public interface TileBaseTests {
-  Tile tile();
+  AbstractTile tile();
 
   @Test
   default void goodConst() {
@@ -21,7 +21,7 @@ public interface TileBaseTests {
   @Test
   default void leaveNonCurrentTile() {
     Player p = new Player(West, 0);
-    Tile t = tile();
+    AbstractTile t = tile();
     new Maze(1, "NONE", List.of(t, et(West)), List.of(e(ORIGIN), p));
     t.leave(p);
   }
@@ -38,7 +38,7 @@ public interface TileBaseTests {
   @Test
   default void alreadyOccupiedEnter() {
     Player p = new Player(West, 0);
-    Tile t = tile();
+    AbstractTile t = tile();
     new Maze(1, "NONE", List.of(t, et(West)), List.of(e(ORIGIN), p));
     assertThrows(ISE, () -> t.enter(p));
   }

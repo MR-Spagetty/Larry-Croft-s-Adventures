@@ -2,7 +2,7 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffectorTile;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
 
 /** MoveableEntity is a more advanced version of a {@link Entity} that is capable of moving */
 public interface MoveableEntity extends Entity {
@@ -14,7 +14,7 @@ public interface MoveableEntity extends Entity {
    * @param by the amount to move this entity
    */
   default void move(Point by) {
-    Tile oldLoc =
+    AbstractTile oldLoc =
         getMaze()
             .getTile(location())
             .orElseThrow(
@@ -27,7 +27,7 @@ public interface MoveableEntity extends Entity {
     if (by.equals(Point.ORIGIN)) {
       return;
     }
-    Tile newLoc =
+    AbstractTile newLoc =
         getMaze()
             .getTile(location().add(by))
             .orElseThrow(

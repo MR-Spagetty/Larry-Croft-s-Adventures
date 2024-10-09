@@ -2,7 +2,7 @@ package nz.ac.wgtn.swen225.lc.domain.entities.items;
 
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
 
 public interface Item extends Entity {
   @Override

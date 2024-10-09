@@ -11,22 +11,22 @@ import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
 import org.junit.jupiter.api.Test;
 
 public class MazeTests {
 
-  List<Tile> area3x3(Function<Point, Tile> tile, long cX, long cY) {
+  List<AbstractTile> area3x3(Function<Point, AbstractTile> tile, long cX, long cY) {
     Point cPoint = new Point(cX, cY);
     return Stream.<Long>of(-1l, 0l, 1l)
-        .<Tile>mapMulti(
+        .<AbstractTile>mapMulti(
             (x, cons) ->
                 Stream.<Long>of(-1l, 0l, 1l)
                     .forEach(y -> cons.accept(tile.apply(cPoint.add(p(x, y))))))
         .toList();
   }
 
-  void area3x3(Maze m, Function<Point, Tile> tile, long cX, long cY) {
+  void area3x3(Maze m, Function<Point, AbstractTile> tile, long cX, long cY) {
     area3x3(tile, cX, cY).forEach(m::addTile);
   }
 
@@ -91,9 +91,9 @@ public class MazeTests {
 
   @Test
   void getTile1() {
-    Tile exp = et(0, 0);
+    AbstractTile exp = et(0, 0);
     Maze maze = new Maze(0, "", List.of(exp), List.of());
-    Tile found = maze.getTile(p(0, 0)).get();
+    AbstractTile found = maze.getTile(p(0, 0)).get();
     assertEquals(exp, found);
     assert exp == found;
   }
@@ -101,23 +101,23 @@ public class MazeTests {
   @Test
   void getTile2() {
     Maze maze = new Maze(0, "");
-    Optional<Tile> found = maze.getTile(p(0, 0));
+    Optional<AbstractTile> found = maze.getTile(p(0, 0));
     assert found.isEmpty();
   }
 
   @Test
   void getTiles1() {
-    List<Tile> exp = area3x3(Shorthands::et, 0, 0);
+    List<AbstractTile> exp = area3x3(Shorthands::et, 0, 0);
     Maze maze = new Maze(0, "", exp, List.of());
     assertEquals(exp, maze.getTiles(p(0, 0), 1));
   }
 
   @Test
   void getTiles2() {
-    List<Tile> in = area3x3(Shorthands::et, 0, 0);
-    Tile exp = in.get(4);
+    List<AbstractTile> in = area3x3(Shorthands::et, 0, 0);
+    AbstractTile exp = in.get(4);
     Maze maze = new Maze(0, "", in, List.of());
-    List<Tile> found = maze.getTiles(p(0, 0), 0);
+    List<AbstractTile> found = maze.getTiles(p(0, 0), 0);
     assertEquals(1, found.size());
     assertEquals(exp, found.getFirst());
     assertEquals(maze.getTile(p(0, 0)).get(), found.getFirst());
@@ -125,11 +125,11 @@ public class MazeTests {
 
   @Test
   void getTiles3() {
-    List<Tile> in = area3x3(Shorthands::et, 0, 0);
-    Tile exp = in.get(0);
+    List<AbstractTile> in = area3x3(Shorthands::et, 0, 0);
+    AbstractTile exp = in.get(0);
     Maze maze = new Maze(0, "", in, List.of());
     assertEquals(exp, maze.getTile(p(-1, -1)).get());
-    List<Tile> found = maze.getTiles(p(-2, -2), 1);
+    List<AbstractTile> found = maze.getTiles(p(-2, -2), 1);
     assertEquals(1, found.size());
     assertEquals(exp, found.getFirst());
   }

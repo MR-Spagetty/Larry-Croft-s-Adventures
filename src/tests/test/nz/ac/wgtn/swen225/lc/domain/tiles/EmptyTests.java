@@ -6,40 +6,40 @@ import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Empty;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
 import org.junit.jupiter.api.Test;
 
 public class EmptyTests implements TileBaseTests {
 
   @Override
-  public Tile tile() {
+  public AbstractTile tile() {
   return et(0, 0);
   }
 
   @Test
   void finePut() {
-    Tile t = tile();
+    AbstractTile t = tile();
     Entity e = e(0, 0);
     t.put(e);
   }
 
   @Test
   void badPut() {
-    Tile t = tile();
+    AbstractTile t = tile();
     t.put(e(0, 0));
     assertThrows(ISE, () -> t.put(e(0, 0)));
   }
 
   @Test
   void getEmpty() {
-    Tile t = tile();
+    AbstractTile t = tile();
     assert t.getOccupant().isEmpty();
   }
 
   @Test
   void getOccupied() {
     Entity e = e(0, 0);
-    Tile t = tile();
+    AbstractTile t = tile();
     t.put(e);
     assert t.getOccupant().isPresent();
     assertEquals(t.getOccupant().get(), e);
@@ -47,20 +47,20 @@ public class EmptyTests implements TileBaseTests {
 
   @Test
   void canEnter() {
-    Tile t = tile();
+    AbstractTile t = tile();
     assert t.canEnter(e(0, 0));
   }
 
   @Test
   void cantEnter() {
-    Tile t = tile();
+    AbstractTile t = tile();
     t.put(e(0, 0));
     assert !t.canEnter(e(0, 0));
   }
 
   @Test
   void enterGood() {
-    Tile t = tile();
+    AbstractTile t = tile();
     Entity e = e(0, 0);
     t.enter(e);
     assertEquals(e, t.getOccupant().get());
@@ -68,14 +68,14 @@ public class EmptyTests implements TileBaseTests {
 
   @Test
   void enterBad() {
-    Tile t = et(0, 0);
+    AbstractTile t = et(0, 0);
     t.put(e(0, 0));
     assertThrows(ISE, () -> t.enter(e(0, 0)));
   }
 
   @Test
   void leave1() {
-    Tile t = tile();
+    AbstractTile t = tile();
     Entity e = e(0, 0);
     t.put(e);
     t.leave(e);
@@ -84,7 +84,7 @@ public class EmptyTests implements TileBaseTests {
 
   @Test
   void leave2() {
-    Tile t = tile();
+    AbstractTile t = tile();
     Entity e = e(0, 0);
     t.put(e);
     t.leave(e(0, 0));
