@@ -62,6 +62,7 @@ public class Maze {
             .orElseThrow(
                 () -> new IllegalArgumentException("No tile exists at the required coordinates"));
     reqTile.put(toAdd);
+    toAdd.setMaze(this);
   }
 
   /**

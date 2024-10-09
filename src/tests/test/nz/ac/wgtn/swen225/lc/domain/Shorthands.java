@@ -86,6 +86,11 @@ public interface Shorthands {
 
       @Override
       public void touch(Entity touchee) {}
+
+      @Override
+      public Point lastMove() {
+        return p(0, 0);
+      }
     };
   }
 }
