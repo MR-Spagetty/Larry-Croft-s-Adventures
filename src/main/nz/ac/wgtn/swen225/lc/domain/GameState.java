@@ -1,12 +1,9 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Objects;
 import javax.swing.Timer;
-import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
-import nz.ac.wgtn.swen225.lc.domain.tiles.*;
 
 public final class GameState {
 

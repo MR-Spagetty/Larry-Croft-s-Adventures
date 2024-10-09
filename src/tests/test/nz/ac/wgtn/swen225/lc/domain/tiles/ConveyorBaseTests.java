@@ -10,12 +10,12 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Conveyor;
-import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 public sealed interface ConveyorBaseTests extends METBaseTests
     permits NConvTests, EConvTests, SConvTests, WConvTests {
-  default AbstractTile tile(int dir) {
+  default Tile tile(int dir) {
     Conveyor t = new Conveyor(Point.ORIGIN, dir);
     assertEquals(Conveyor.DIRS[dir], t.getFacing());
     return t;

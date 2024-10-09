@@ -8,13 +8,13 @@ import java.util.List;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
-import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 public final class DirIceSWTests implements DirectionalIceTests {
 
   @Override
-  public AbstractTile tile() {
+  public Tile tile() {
     return tile(2);
   }
 
@@ -49,7 +49,7 @@ public final class DirIceSWTests implements DirectionalIceTests {
   @Test
   public void alreadyOccupiedEnter() {
     Player p = new Player(West, 0);
-    AbstractTile t = tile();
+    Tile t = tile();
     new Maze(1, "NONE", List.of(t, et(West)), List.of(e(Point.ORIGIN), p));
     assertThrows(ISE, () -> t.enter(p));
   }

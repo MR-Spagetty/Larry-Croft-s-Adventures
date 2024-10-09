@@ -9,7 +9,7 @@ import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
-import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 public final class WConvTests implements ConveyorBaseTests {
@@ -24,7 +24,7 @@ public final class WConvTests implements ConveyorBaseTests {
   }
 
   @Override
-  public AbstractTile tile() {
+  public Tile tile() {
     return tile(3);
   }
 

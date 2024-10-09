@@ -1,34 +1,36 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
-import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 
-public interface Enemy extends MoveableEntity {
+public abstract class Enemy extends MoveableEntity {
+  public Enemy(Point location, long individualID) {
+    super(location, individualID);
+  }
+
   @Override
-  default boolean canTouch(Entity touchee) {
+  public void tick(long tick) {
+    if (tick <= lastTicked()) {
+      return;
+    }
+    this.lastTick = tick;
+    doBehaviour(tick);
+  }
+
+  /**
+   * execute's enemy's behaviour
+   *
+   * @param tick the current tick
+   */
+  protected abstract void doBehaviour(long tick);
+
+  @Override
+  public boolean canTouch(Entity touchee) {
     return touchee instanceof Player;
   }
 
   @Override
-  default void touch(Entity touchee) {
+  public void touch(Entity touchee) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'touch'");
-  }
-
-  default PlayerAction getFacing() {
-    Point move = lastMove().limit(1l);
-    if (move.equals(Point.ORIGIN)) {
-      return PlayerAction.None;
-    } else if (move.equals(new Point(1, 0))) {
-      return PlayerAction.Right;
-    } else if (move.equals(new Point(-1, 0))) {
-      return PlayerAction.Left;
-    } else if (move.equals(new Point(0, 1))) {
-      return PlayerAction.Up;
-    } else if (move.equals(new Point(0, -1))) {
-      return PlayerAction.Down;
-    } else {
-      throw new IllegalStateException("Unexpected last move encountered");
-    }
   }
 }

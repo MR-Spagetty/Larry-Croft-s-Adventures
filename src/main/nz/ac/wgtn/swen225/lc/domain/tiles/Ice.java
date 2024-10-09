@@ -3,7 +3,7 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
-public class Ice extends MovementAffectorTile {
+public class Ice extends MovementAffecterTile {
 
   /**
    * @param location

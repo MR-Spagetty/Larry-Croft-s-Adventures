@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
-import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
 public class Maze {
-  private List<AbstractTile> tiles = new ArrayList<>();
+  private List<Tile> tiles = new ArrayList<>();
   public final long maxTicks;
   final String ID;
 
@@ -33,10 +33,10 @@ public class Maze {
    * @param tiles the tiles to fill teh maze with
    * @param entities the entities to populate the maze with
    */
-  public Maze(long maxTicks, String ID, List<AbstractTile> tiles, List<Entity> entities) {
+  public Maze(long maxTicks, String ID, List<Tile> tiles, List<Entity> entities) {
     this(maxTicks, ID);
     tiles.forEach(this::addTile);
-    this.tiles.sort(AbstractTile::compareTo);
+    this.tiles.sort(Tile::compareTo);
     entities.forEach(this::addEntity);
   }
 
@@ -56,11 +56,11 @@ public class Maze {
    * @throws IllegalArgumentException if there is no tile at the coordinates of the given entity
    */
   public void addEntity(Entity toAdd) {
-    AbstractTile reqTile =
+    Tile reqTile =
         getTile(toAdd.location())
             .orElseThrow(
                 () -> new IllegalArgumentException("No tile exists at the required coordinates"));
-    toAdd.setMaze(this);
+    toAdd.maze(this);
     reqTile.put(toAdd);
   }
 
@@ -71,7 +71,7 @@ public class Maze {
    * @throws IllegalArgumentException if there is already a tile at the coordinates of the given
    *     tile
    */
-  public void addTile(AbstractTile tile) {
+  public void addTile(Tile tile) {
     if (getTile(tile.location()).isPresent()) {
       throw new IllegalArgumentException("Tile at those coordinates already exists");
     }
@@ -85,8 +85,8 @@ public class Maze {
    * @return an {@link Optional} containing the tile at the requested location, or an empty {@link
    *     Optional} if there is no such tile
    */
-  public Optional<AbstractTile> getTile(Point at) {
-    tiles.sort(AbstractTile::compareTo);
+  public Optional<Tile> getTile(Point at) {
+    tiles.sort(Tile::compareTo);
     return tiles.parallelStream().filter(t -> t.location().equals(at)).findAny();
   }
 
@@ -97,8 +97,8 @@ public class Maze {
    * @param range the range (inclusive ±) the region occupies in a square around around
    * @return the tiles within that region
    */
-  public List<AbstractTile> getTiles(Point around, long range) {
-    tiles.sort(AbstractTile::compareTo);
+  public List<Tile> getTiles(Point around, long range) {
+    tiles.sort(Tile::compareTo);
     return tiles.parallelStream()
         .filter(
             t -> {
@@ -120,7 +120,7 @@ public class Maze {
    *     empty {@link Optional} if there is no such entity
    */
   public Optional<Entity> getEntity(Point at) {
-    return getTile(at).flatMap(AbstractTile::getOccupant);
+    return getTile(at).flatMap(Tile::getOccupant);
   }
 
   /**
@@ -130,7 +130,7 @@ public class Maze {
    */
   public List<Entity> getEntities() {
     return tiles.stream()
-        .map(AbstractTile::getOccupant)
+        .map(Tile::getOccupant)
         .filter(Optional::isPresent)
         .map(Optional::get)
         .toList();
@@ -145,7 +145,7 @@ public class Maze {
    */
   public List<Entity> getEntities(Point around, long range) {
     return getTiles(around, range).stream()
-        .map(AbstractTile::getOccupant)
+        .map(Tile::getOccupant)
         .flatMap(Optional::stream)
         .toList();
   }

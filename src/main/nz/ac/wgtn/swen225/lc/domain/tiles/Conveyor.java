@@ -7,7 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
-public class Conveyor extends MovementAffectorTile {
+public class Conveyor extends MovementAffecterTile {
   public static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
   private final PlayerAction targetDir;
 

@@ -4,7 +4,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import java.util.Optional;
 
-public interface Tile extends Comparable<AbstractTile> {
+public interface Tile extends Comparable<Tile> {
 
   /**
    * Returns the location of this tile in the game world.
@@ -69,7 +69,7 @@ public interface Tile extends Comparable<AbstractTile> {
    * @see Point#compareTo(Point)
    */
   @Override
-  default int compareTo(AbstractTile other) {
+  default int compareTo(Tile other) {
     return location().compareTo(other.location());
   }
 }

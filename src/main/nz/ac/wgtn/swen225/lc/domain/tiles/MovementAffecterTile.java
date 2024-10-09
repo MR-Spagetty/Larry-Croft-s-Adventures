@@ -4,9 +4,9 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
 /** Interface for use by tiles that affect the movement of an entity */
-public abstract class MovementAffectorTile extends AbstractTile {
+public abstract class MovementAffecterTile extends AbstractTile {
 
-  public MovementAffectorTile(Point location) {
+  public MovementAffecterTile(Point location) {
     super(location);
   }
 

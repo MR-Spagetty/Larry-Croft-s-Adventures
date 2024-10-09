@@ -13,12 +13,12 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.DirectionalIce;
-import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 public sealed interface DirectionalIceTests extends IceBaseTests
     permits DirIceNETests, DirIceSETests, DirIceSWTests, DirIceNWTests {
-  default AbstractTile tile(int facing) {
+  default Tile tile(int facing) {
     return new DirectionalIce(Point.ORIGIN, facing);
   }
 

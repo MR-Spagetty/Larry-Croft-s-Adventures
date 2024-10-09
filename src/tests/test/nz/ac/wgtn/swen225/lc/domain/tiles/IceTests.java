@@ -10,13 +10,13 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Ice;
-import nz.ac.wgtn.swen225.lc.domain.tiles.AbstractTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 public class IceTests implements IceBaseTests {
 
   @Override
-  public AbstractTile tile() {
+  public Tile tile() {
     return new Ice(Point.ORIGIN);
   }
 
