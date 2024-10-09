@@ -3,7 +3,6 @@ package nz.ac.wgtn.swen225.lc.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
@@ -41,9 +40,9 @@ public class Maze {
     entities.forEach(this::addEntity);
   }
 
-  public long longID(){
+  public long longID() {
     long longID = 0;
-    for(char c: this.ID.toCharArray()){
+    for (char c : this.ID.toCharArray()) {
       longID <<= 1;
       longID |= c;
     }
@@ -61,6 +60,7 @@ public class Maze {
         getTile(toAdd.location())
             .orElseThrow(
                 () -> new IllegalArgumentException("No tile exists at the required coordinates"));
+    toAdd.setMaze(this);
     reqTile.put(toAdd);
   }
 
