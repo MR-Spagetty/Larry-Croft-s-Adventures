@@ -38,6 +38,7 @@ public class Level {
 
   // Getters
   public Path savePath(){ return savePath; }
+  public Path nextSavePath(){ return nextSavePath; }
   public List<PlayerAction> actions() { return actions; }
 
   /**

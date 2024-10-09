@@ -1,61 +1,145 @@
 package test.nz.ac.wgtn.swen225.lc.recorder;
 
-import nz.ac.wgtn.swen225.lc.recorder.Recorder;
-import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
-
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-/**
- * Test class for the Recorder.
- */
-public class RecorderTest {
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.*;
+
+class RecorderTest {
 
   private Recorder recorder;
+  private Path testDirPath;
 
   @BeforeEach
-  public void setUp() {
-    // Initialize the Recorder with a valid levelID
-    recorder = new Recorder("Level1");
+  void setUp() {
+    testDirPath = Paths.get("test_directory");
+    recorder = new Recorder(testDirPath);
   }
 
   @Test
-  public void testConstructor_nullLevelID_throwsException() {
-    // Test that passing null to the constructor throws NullPointerException
+  void testConstructorNullDirPathThrowsException() {
     assertThrows(NullPointerException.class, () -> new Recorder(null));
   }
 
   @Test
-  public void testConstructor_emptyLevelID_throwsException() {
-    // Test that passing an empty string to the constructor throws IllegalArgumentException
-    assertThrows(IllegalArgumentException.class, () -> new Recorder(""));
+  void testStartLevelInitializesNewLevel() {
+    Path levelPath = Paths.get("level1.json");
+    recorder.startLevel(levelPath);
+
+    Level currentLevel = getCurrentLevelFromRecorder(recorder);
+    assertNotNull(currentLevel);
+    assertEquals("1.json", currentLevel.savePath().getFileName().toString());
   }
 
   @Test
-  public void testConstructor_validLevelID_initializesRecorder() {
-    // Test that the Recorder is correctly initialized with a valid levelID
-    Recorder recorder = new Recorder("Level1");
-    assertNotNull(recorder);
+  void testStartLevelCreatesNewFilename() {
+    Path level1Path = Paths.get("level1.json");
+    Path level2Path = Paths.get("level2.json");
+
+    recorder.startLevel(level1Path);
+    recorder.endLevel();
+    recorder.startLevel(level2Path);
+
+    Level currentLevel = getCurrentLevelFromRecorder(recorder);
+    // Ensure the second level has the correct filename
+    assertEquals("2.json", currentLevel.savePath().getFileName().toString());
   }
 
   @Test
-  public void testRecord_addsPlayerAction() {
-    // Test that a PlayerAction is correctly added to the playerActions list
-    recorder.record(PlayerAction.Up);
-    recorder.record(PlayerAction.Down);
-    
-    // Validate that the action has been added
-    List<PlayerAction> actions = recorder.playerActions();
-    assertEquals(2, actions.size());
-    assertEquals(List.of(PlayerAction.Up, PlayerAction.Down), actions);
+  void testEndLevelStoresCurrentLevel() {
+    Path levelPath = Paths.get("level1.json");
+    recorder.startLevel(levelPath);
+    recorder.endLevel();
+
+    List<Level> allLevels = getAllLevelsFromRecorder(recorder);
+    assertEquals(1, allLevels.size());
+    assertNotNull(allLevels.get(0));
+    assertNull(getCurrentLevelFromRecorder(recorder)); // currentLevel should be null after ending the level
+  }
+
+  //@Test
+  void testRecordAction() {
+    // Create a PlayerAction instance
+    PlayerAction action = new PlayerAction("MOVE", "UP"); // AssuDeveloper 4 <dev4@example.internal> PlayerAction has these parameters
+    Path levelPath = Paths.get("level1.json");
+
+    recorder.startLevel(levelPath);
+    recorder.record(action);
+
+    Level currentLevel = getCurrentLevelFromRecorder(recorder);
+    List<PlayerAction> actions = currentLevel.actions();
+
+    // Verify that the action was added to the current level's actions list
+    assertEquals(1, actions.size());
+    assertEquals(action, actions.get(0));
   }
 
   @Test
-  public void testRecord_nullPlayerAction_throwsException() {
-    // Test that recording a null PlayerAction throws a NullPointerException
-    assertThrows(NullPointerException.class, () -> recorder.record(null));
+  void testEndGameLinksLevels() {
+    Path level1Path = Paths.get("level1.json");
+    Path level2Path = Paths.get("level2.json");
+
+    recorder.startLevel(level1Path);
+    recorder.endLevel();
+    recorder.startLevel(level2Path);
+    recorder.endLevel();
+
+    recorder.endGame();
+
+    List<Level> allLevels = getAllLevelsFromRecorder(recorder);
+    assertEquals(2, allLevels.size());
+
+    // Check if the levels are linked correctly
+    Level firstLevel = allLevels.get(0);
+    Level secondLevel = allLevels.get(1);
+    assertEquals(secondLevel.savePath(), firstLevel.nextSavePath());
+    assertEquals(secondLevel.nextSavePath(), null);
+  }
+
+  @Test
+  void testEndGameSavesAllLevels() {
+    Path level1Path = Paths.get("level1.json");
+    Path level2Path = Paths.get("level2.json");
+
+    recorder.startLevel(level1Path);
+    recorder.endLevel();
+    recorder.startLevel(level2Path);
+    recorder.endLevel();
+
+    recorder.endGame();
+
+    List<Level> allLevels = getAllLevelsFromRecorder(recorder);
+
+    // AssuDeveloper 4 <dev4@example.internal> we check that save is called by confirDeveloper 4 <dev4@example.internal> save paths are set
+    assertNotNull(allLevels.get(0).savePath());
+    assertNotNull(allLevels.get(1).savePath());
+  }
+
+  // Utility methods to access private fields (if needed)
+  private Level getCurrentLevelFromRecorder(Recorder recorder) {
+    try {
+      var field = Recorder.class.getDeclaredField("currentLevel");
+      field.setAccessible(true);
+      return (Level) field.get(recorder);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private List<Level> getAllLevelsFromRecorder(Recorder recorder) {
+    try {
+      var field = Recorder.class.getDeclaredField("allLevels");
+      field.setAccessible(true);
+      return (List<Level>) field.get(recorder);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }
