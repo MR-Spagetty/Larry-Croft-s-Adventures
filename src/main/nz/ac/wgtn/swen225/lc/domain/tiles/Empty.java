@@ -30,6 +30,7 @@ public class Empty implements Tile {
       throw new IllegalStateException("Tile already occupied");
     }
     this.occupant = Optional.of(enteree);
+    enteree.location(location());
   }
 
   @Override
@@ -45,7 +46,7 @@ public class Empty implements Tile {
       throw new IllegalStateException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
-    this.occupant = Optional.of(enteree);
+    put(enteree);
   }
 
   @Override

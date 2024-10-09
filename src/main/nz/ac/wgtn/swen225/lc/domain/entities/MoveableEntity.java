@@ -37,6 +37,5 @@ public interface MoveableEntity extends Entity {
     }
     oldLoc.leave(this);
     newLoc.enter(this);
-    location(newLoc.location());
   }
 }

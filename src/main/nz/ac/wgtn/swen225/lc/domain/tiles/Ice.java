@@ -36,6 +36,7 @@ public class Ice implements MovementAffectorTile {
   @Override
   public void put(Entity enteree) {
     this.occupant = Optional.of(enteree);
+    enteree.location(location());
   }
 
   @Override
@@ -44,7 +45,7 @@ public class Ice implements MovementAffectorTile {
       throw new IllegalStateException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
-    this.occupant = Optional.of(enteree);
+    put(enteree);
   }
 
   @Override
