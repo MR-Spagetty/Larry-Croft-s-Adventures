@@ -81,7 +81,4 @@ public class KeyStrokes {
             }
         };
     }
-
-    /** TODO Need a list of buttons to send to the methods. */
-
 }
