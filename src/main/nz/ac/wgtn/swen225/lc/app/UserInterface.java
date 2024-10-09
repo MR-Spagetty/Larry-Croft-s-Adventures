@@ -87,12 +87,12 @@ public class UserInterface extends JFrame{
      * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        add(BorderLayout.EAST, GameUI.createMenu(WIDTH/4, HEIGHT));
+        add(BorderLayout.EAST, gameControls.createMenu());
 
         /*
         GraphicsPane pane = new GraphicsPane();
         add(BorderLayout.CENTER, pane);
-        timer = GameUI.createTimer(pane);
+        timer = gameControls.createTimer(pane);
 
         this.addKeyListener(new ControlKeys());
         this.setFocusable(true);

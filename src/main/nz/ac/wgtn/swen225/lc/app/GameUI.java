@@ -19,15 +19,20 @@ public class GameUI {
     static Map<String, DefaultButton> buttonsToAdd = new HashMap<>(); //The Buttons that are part of the Game UI.
     Color backgroundColor = Color.DARK_GRAY; //The Background colour of the UI.
 
+    int width, height;
+
     public GameUI(int width, int height){
-        buttonsToAdd = createGameButtons(width, 30);
+        this.width = width;
+        this.height = height;
+
+        buttonsToAdd = createGameButtons(this.width, 30);
     }
 
     /**
      * Creates the menu containing information about the current game, and the buttons in the game.
      * TODO: Make sure we're satisfied with aspects of the Border.
      */
-    public static JPanel createMenu(int width, int height){
+    public JPanel createMenu(){
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
         menu.add(BorderLayout.SOUTH, new GameButtons(backgroundColor, width, (height/2), buttonsToAdd));
@@ -39,7 +44,7 @@ public class GameUI {
      * Creates all the Game Buttons that will interact with the game itself. This is done before initialising the
      * panel that contains all of these buttons.
      */
-    public static Map<String, DefaultButton> createGameButtons(int cgbWidth, int cgbHeight){
+    public Map<String, DefaultButton> createGameButtons(int cgbWidth, int cgbHeight){
         DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE", cgbWidth, cgbHeight, 15f);
         DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
         DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
@@ -55,7 +60,7 @@ public class GameUI {
         return map;
     }
 
-    private static DefaultButton createRecordButton(int width, int height){
+    private DefaultButton createRecordButton(int width, int height){
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png";
         ImageIcon icon = new ImageIcon(url);
 
@@ -66,7 +71,7 @@ public class GameUI {
         return newButton;
     }
 
-    private static void createHelpDialog(){
+    private void createHelpDialog(){
         JOptionPane.showMessageDialog(null, new Instructions(), "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -77,7 +82,7 @@ public class GameUI {
      * @param gameDisplay The graphics display that will need to be refreshed by the timer.
      * @return The timer that will refresh the graphics display every few seconds.
      */
-    public static Timer createTimer(GraphicsPane gameDisplay){
+    public Timer createTimer(GraphicsPane gameDisplay){
         return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
