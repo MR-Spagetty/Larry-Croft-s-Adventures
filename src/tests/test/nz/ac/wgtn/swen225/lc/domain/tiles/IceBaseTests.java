@@ -18,7 +18,7 @@ public interface IceBaseTests extends METBaseTests {
     Stream.of(PlayerAction.values())
         .forEach(
             act -> {
-              Maze scenario = getScencario();
+              Maze scenario = getScenario();
               Player player = getPlayer(start);
               scenario.addEntity(player);
               player.queueAction(dir);

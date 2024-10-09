@@ -16,7 +16,7 @@ public final class EConvTests implements ConveyorBaseTests {
 
   @Test
   public void fromEast() {
-    Maze scenario = getScencario();
+    Maze scenario = getScenario();
     Player p = getPlayer(East);
     scenario.addEntity(p);
     p.queueAction(Left);

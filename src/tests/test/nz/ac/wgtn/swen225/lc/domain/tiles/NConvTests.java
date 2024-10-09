@@ -22,7 +22,7 @@ public final class NConvTests implements ConveyorBaseTests {
 
   @Test
   public void fromNorth() {
-    Maze scenario = getScencario();
+    Maze scenario = getScenario();
     Player p = getPlayer(North);
     scenario.addEntity(p);
     p.queueAction(Down);

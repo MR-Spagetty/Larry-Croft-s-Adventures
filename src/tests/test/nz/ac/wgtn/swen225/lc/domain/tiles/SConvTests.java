@@ -21,7 +21,7 @@ public final class SConvTests implements ConveyorBaseTests {
 
   @Test
   public void fromSouth() {
-    Maze scenario = getScencario();
+    Maze scenario = getScenario();
     Player p = getPlayer(South);
     scenario.addEntity(p);
     p.queueAction(Up);

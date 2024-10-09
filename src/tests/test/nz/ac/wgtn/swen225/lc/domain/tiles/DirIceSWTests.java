@@ -20,7 +20,7 @@ public final class DirIceSWTests implements DirectionalIceTests {
 
   @Test
   public void fromNorth() {
-    Maze scene = getScencario();
+    Maze scene = getScenario();
     Player player = getPlayer(North);
     scene.addEntity(player);
     player.queueAction(Down);
@@ -34,7 +34,7 @@ public final class DirIceSWTests implements DirectionalIceTests {
 
   @Test
   public void fromEast() {
-    Maze scene = getScencario();
+    Maze scene = getScenario();
     Player player = getPlayer(East);
     scene.addEntity(player);
     player.queueAction(Left);
@@ -45,9 +45,6 @@ public final class DirIceSWTests implements DirectionalIceTests {
   public void fromWest() {
     testFromBase(West, Right, South);
   }
-
-  @Test
-  public void fromOn() {}
 
   @Test
   public void alreadyOccupiedEnter() {

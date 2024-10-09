@@ -25,7 +25,7 @@ public sealed interface ConveyorBaseTests extends METBaseTests
     Stream.concat(Stream.of(None), Stream.of(nullActs))
         .forEach(
             act -> {
-              Maze scenario = getScencario();
+              Maze scenario = getScenario();
               Player player = getPlayer(start);
               scenario.addEntity(player);
               player.queueAction(dir);
@@ -41,7 +41,7 @@ public sealed interface ConveyorBaseTests extends METBaseTests
     Stream.concat(Stream.of(None), Stream.of(actions))
         .forEach(
             act -> {
-              Maze scenario = getScencario();
+              Maze scenario = getScenario();
               Player player = getPlayer(start);
               scenario.addEntity(player);
               player.queueAction(dir);
@@ -76,7 +76,7 @@ public sealed interface ConveyorBaseTests extends METBaseTests
 
   @Test
   default void fromOn() {
-    Maze scenario = getScencario();
+    Maze scenario = getScenario();
     Player p = getPlayer(Point.ORIGIN);
     scenario.addEntity(p);
     p.tick(0);

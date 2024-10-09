@@ -17,7 +17,7 @@ public interface METBaseTests extends TileBaseTests {
     return new Player(p, 0);
   }
 
-  default Maze getScencario() {
+  default Maze getScenario() {
     Maze out = new Maze(10000l, "NONE");
     IntStream.range(-1, 2).mapToObj(x -> et(x, -1)).forEach(out::addTile);
     out.addTile(et(-1, 0));

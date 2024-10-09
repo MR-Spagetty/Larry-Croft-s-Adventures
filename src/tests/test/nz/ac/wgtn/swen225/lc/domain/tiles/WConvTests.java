@@ -16,7 +16,7 @@ public final class WConvTests implements ConveyorBaseTests {
 
   @Test
   public void fromWest() {
-    Maze scenario = getScencario();
+    Maze scenario = getScenario();
     Player p = getPlayer(West);
     scenario.addEntity(p);
     p.queueAction(Left);

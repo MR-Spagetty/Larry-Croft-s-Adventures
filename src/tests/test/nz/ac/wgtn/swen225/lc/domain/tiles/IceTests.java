@@ -45,7 +45,7 @@ public class IceTests implements IceBaseTests {
     Stream.of(PlayerAction.values())
         .forEach(
             act -> {
-              Maze scenario = getScencario();
+              Maze scenario = getScenario();
               Player player = getPlayer(Point.ORIGIN);
               scenario.addEntity(player);
               player.queueAction(act);
