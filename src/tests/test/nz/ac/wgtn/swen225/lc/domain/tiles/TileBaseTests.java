@@ -19,6 +19,14 @@ public interface TileBaseTests {
   }
 
   @Test
+  default void leaveNonCurrentTile() {
+    Player p = new Player(West, 0);
+    Tile t = tile();
+    new Maze(1, "NONE", List.of(t, et(West)), List.of(e(ORIGIN), p));
+    t.leave(p);
+  }
+
+  @Test
   default void alreadyOccupiedPut() {
     assertThrows(
         ISE,

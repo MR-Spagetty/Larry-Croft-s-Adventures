@@ -26,4 +26,14 @@ public interface METBaseTests extends TileBaseTests {
     IntStream.range(-1, 2).mapToObj(x -> et(x, 1)).forEach(out::addTile);
     return out;
   }
+
+  void fromNorth();
+
+  void fromSouth();
+
+  void fromEast();
+
+  void fromWest();
+
+  void fromOn();
 }

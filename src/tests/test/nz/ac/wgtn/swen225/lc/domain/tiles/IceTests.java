@@ -4,7 +4,6 @@ import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
-import java.util.List;
 import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
@@ -53,13 +52,5 @@ public class IceTests implements IceBaseTests {
               player.tick(0);
               assertEquals(act.offset, player.location());
             });
-  }
-
-  @Test
-  public void leaveNonCurrentTile() {
-    Player p = new Player(West, 0);
-    Tile t = tile();
-    new Maze(1, "NONE", List.of(t, et(West)), List.of(e(Point.ORIGIN), p));
-    t.leave(p);
   }
 }

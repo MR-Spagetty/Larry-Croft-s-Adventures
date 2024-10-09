@@ -47,7 +47,6 @@ public final class DirIceSWTests implements DirectionalIceTests {
   }
 
   @Test
-  @Override
   public void fromOn() {}
 
   @Test

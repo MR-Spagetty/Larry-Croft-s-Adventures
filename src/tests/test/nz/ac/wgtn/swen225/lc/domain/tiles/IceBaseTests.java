@@ -28,14 +28,4 @@ public interface IceBaseTests extends METBaseTests {
               assertEquals(end, player.location());
             });
   }
-
-  void fromNorth();
-
-  void fromSouth();
-
-  void fromEast();
-
-  void fromWest();
-
-  void fromOn();
 }
