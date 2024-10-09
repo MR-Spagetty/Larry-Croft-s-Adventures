@@ -19,12 +19,12 @@ public class DirectionalIce extends Ice {
     SouthWest(Down, Left),
     NorthWest(Up, Left);
 
-    final Point a;
-    final Point b;
+    public final PlayerAction a;
+    public final PlayerAction b;
 
     TYPE(PlayerAction sideA, PlayerAction sideB) {
-      this.a = sideA.offset;
-      this.b = sideB.offset;
+      this.a = sideA;
+      this.b = sideB;
     }
   }
 
@@ -60,14 +60,19 @@ public class DirectionalIce extends Ice {
    */
   @Override
   public Point affectMove(MoveableEntity e, Point moveToEffect) {
-    final Point atSideA = this.type.a.add(location());
-    final Point atSideB = this.type.b.add(location());
+    final Point atSideA = this.type.a.offset.add(location());
+    final Point atSideB = this.type.b.offset.add(location());
     Point ePreLoc = e.location().sub(e.lastMove());
+    if (ePreLoc.equals(location())
+        && (moveToEffect.limit(1l).equals(this.type.a.offset.mul(-1l))
+            || moveToEffect.limit(1l).equals(this.type.b.offset.mul(-1l)))) {
+      throw new IllegalArgumentException("Entity may not move in that direction");
+    }
     if (ePreLoc.equals(atSideA)) {
-      return this.type.b;
+      return this.type.b.offset;
     }
     if (ePreLoc.equals(atSideB)) {
-      return this.type.a;
+      return this.type.a.offset;
     }
     return super.affectMove(e, moveToEffect);
   }
@@ -75,7 +80,7 @@ public class DirectionalIce extends Ice {
   @Override
   public boolean canEnter(Entity enteree) {
     return super.canEnter(enteree)
-        && (enteree.location().equals(location().add(this.type.a))
-            || enteree.location().equals(location().add(this.type.b)));
+        && (enteree.location().equals(location().add(this.type.a.offset))
+            || enteree.location().equals(location().add(this.type.b.offset)));
   }
 }

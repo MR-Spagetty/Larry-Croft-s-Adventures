@@ -7,6 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 /** MoveableEntity is a more advanced version of a {@link Entity} that is capable of moving */
 public interface MoveableEntity extends Entity {
   Point lastMove();
+
   /**
    * Moves this entity by the specified amount in the given maze.
    *
@@ -22,6 +23,9 @@ public interface MoveableEntity extends Entity {
                         "Maze does not contain tile this entity occupies"));
     if (oldLoc instanceof MovementAffectorTile MET) {
       by = MET.affectMove(this, by);
+    }
+    if (by.equals(Point.ORIGIN)) {
+      return;
     }
     Tile newLoc =
         getMaze()

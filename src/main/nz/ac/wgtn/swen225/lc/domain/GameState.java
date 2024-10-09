@@ -132,14 +132,4 @@ public final class GameState {
     this.levelMaze = level;
     this.tickTimer.restart();
   }
-
-  static Maze setupLevel() {
-
-    List<Entity> entities = List.of(new Player(Point.ORIGIN, 0));
-    List<Tile> tiles = List.of(new Empty(Point.ORIGIN), new Empty(new Point(1, 0)));
-    long maxTicks = 500;
-    Maze maze = new Maze(maxTicks, "example", tiles, entities);
-    entities.get(0).setMaze(maze);
-    return maze;
-  }
 }

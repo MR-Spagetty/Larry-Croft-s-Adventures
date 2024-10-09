@@ -9,8 +9,8 @@ import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 
 public class Conveyor implements MovementAffectorTile {
-  private static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
-  public final Point targetDir;
+  public static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
+  private final PlayerAction targetDir;
   private Optional<Entity> occupant = Optional.empty();
   private final Point location;
 
@@ -19,7 +19,7 @@ public class Conveyor implements MovementAffectorTile {
    */
   public Conveyor(Point location, int type) {
     this.location = location;
-    this.targetDir = DIRS[type].offset;
+    this.targetDir = DIRS[type];
   }
 
   @Override
@@ -36,31 +36,36 @@ public class Conveyor implements MovementAffectorTile {
   public Point affectMove(MoveableEntity e, Point moveToEffect) {
     Point allowed;
     // Entity's "concious" movement may only be perpendicular to this conveyor
-    if (this.targetDir.equals(Up.offset) || this.targetDir.equals(Down.offset)) {
+    if (this.targetDir == Up || this.targetDir == Down) {
       allowed = moveToEffect.xComp();
     } else {
       allowed = moveToEffect.yComp();
     }
-    return allowed.add(this.targetDir).limit(1l);
+    return allowed.add(this.targetDir.offset).limit(1l);
   }
 
   @Override
   public boolean canEnter(Entity enteree) {
-    return getOccupant().isEmpty() && !enteree.location().equals(location().add(targetDir));
+    return getOccupant().isEmpty()
+        && !enteree.location().equals(location().add(this.targetDir.offset));
   }
 
   @Override
   public void put(Entity enteree) {
+    if (this.occupant.isPresent()) {
+      throw new IllegalStateException();
+    }
     this.occupant = Optional.of(enteree);
+    enteree.location(location());
   }
 
   @Override
   public void enter(Entity enteree) {
-    if (this.occupant.isPresent()) {
+    if (!canEnter(enteree)) {
       throw new IllegalStateException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
-    this.occupant = Optional.of(enteree);
+    put(enteree);
   }
 
   @Override
@@ -74,20 +79,8 @@ public class Conveyor implements MovementAffectorTile {
       this.occupant = Optional.empty();
     }
   }
-  public PlayerAction getFacing() {
-    if (this.targetDir.equals(Point.ORIGIN)) {
-      return PlayerAction.None;
-    } else if (this.targetDir.equals(new Point(1, 0))) {
-      return PlayerAction.Right;
-    } else if (this.targetDir.equals(new Point(-1, 0))) {
-      return PlayerAction.Left;
-    } else if (this.targetDir.equals(new Point(0, 1))) {
-      return PlayerAction.Up;
-    } else if (this.targetDir.equals(new Point(0, -1))) {
-      return PlayerAction.Down;
-    } else {
-      throw new IllegalStateException("Unexpected targetDir encountered");
-    }
-  }
 
+  public PlayerAction getFacing() {
+    return this.targetDir;
+  }
 }
