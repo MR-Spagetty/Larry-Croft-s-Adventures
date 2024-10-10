@@ -9,10 +9,9 @@ import nz.ac.wgtn.swen225.lc.app.App;
 public class TickReplay extends Replay {
   private int tickSpeed;
   private Timer timer;
-  
 
-  public TickReplay(Path path, int tickSpeed) {
-    super(path);
+  public TickReplay(Path p, int tickSpeed) {
+    super(p);
     Objects.requireNonNull(tickSpeed);
     if (tickSpeed < 0) {
       throw new IllegalArgumentException("Tickspeed cannot be less than 0");
@@ -33,12 +32,10 @@ public class TickReplay extends Replay {
   }
 
   /*
-   * updates the game by a tick by sending App an action then ticking
+   * updates the game by a tick then checks if the replay has ended
    */
   private void update(){
-    App.forwardActionToDomain(actions.get(tick));
-    App.tickOverride();
-    tick++;
+    advanceTick();
     if (actions.size() > tick){
       timer.stop();
       //TODO: go to next level

@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.recorder;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.app.App;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -19,6 +20,12 @@ abstract class Replay {
   Replay(Path p){
     Objects.requireNonNull(p);
     //TODO: call parse and set action equal to the result as well as initilize a game
+  }
+
+  protected void advanceTick(){
+    App.forwardActionToDomain(actions.get(tick));
+    App.tickOverride();
+    tick++;
   }
   
   /**
