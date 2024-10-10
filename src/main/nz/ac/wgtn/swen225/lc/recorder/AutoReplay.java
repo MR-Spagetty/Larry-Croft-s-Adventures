@@ -17,6 +17,11 @@ public class AutoReplay extends Replay {
     replay();
   }
 
+  /*
+   * Replay implementation of AutoReplay.
+   * 
+   * This implementation will send an input each tick at the default tickrate defined in Domain/Gamestate.
+   */
   @Override
   public void replay() {
     timer = new Timer(GameState.DEFAULT_TICK_RATE, a -> update());
