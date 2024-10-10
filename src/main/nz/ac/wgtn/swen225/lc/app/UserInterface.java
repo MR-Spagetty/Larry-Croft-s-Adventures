@@ -108,12 +108,6 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Recursion at work here: This method returns the list of buttons that have been created in the game,
-     * which is done in a method in "GameUI".
-     */
-    public Set<DefaultButton> getButtons(){ return gameControls.getButtons(); }
-
-    /**
      * Recursion at work here: This method returns the list of keystrokes associated with an action,
      * which is done in a method in "KeyStrokes". (Which extends "ControlKeys".)
      */

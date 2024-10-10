@@ -8,6 +8,7 @@ import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Set;
 
 /**
  * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI or the Keystrokes.
@@ -74,4 +75,10 @@ public class App{
 
     /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
     public static void callStepReplay(){ sReplay.replay(); }
+
+    /**
+     * This method returns the list of buttons that have been created in the game. This method is specifically
+     * for the purpose of allowing the "Fuzz" module to access the
+     */
+    public Set<DefaultButton> getButtons(){ return new GameButtons().getButtons(); }
 }
