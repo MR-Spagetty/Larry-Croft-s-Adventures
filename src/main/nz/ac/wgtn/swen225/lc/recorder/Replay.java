@@ -12,6 +12,7 @@ import java.util.Objects;
  */
 abstract class Replay {
   public List<PlayerAction> actions;
+  public Path nextLevelPath;
   int tick = 0;
 
   /*
@@ -22,10 +23,28 @@ abstract class Replay {
     //TODO: call parse and set action equal to the result as well as initilize a game
   }
 
+  /*
+   * Initilizes a level with App and give it the path to the level file.
+   */
+  private void initLevel(){
+    //TODO: initilize level
+  }
+
+  /*
+   * Sends the input related to the current tick then advances that game by a tick.
+   */
   protected void advanceTick(){
     App.forwardActionToDomain(actions.get(tick));
     App.tickOverride();
     tick++;
+    checkLevelEnd();
+  }
+
+  /*
+   * Checks if the replay for this level has finished and setup next level if there is one.
+   */
+  private boolean checkLevelEnd(){
+    return tick < actions.size()
   }
   
   /**

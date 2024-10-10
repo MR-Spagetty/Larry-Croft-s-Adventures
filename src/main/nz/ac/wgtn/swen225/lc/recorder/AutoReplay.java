@@ -4,7 +4,6 @@ import java.nio.file.Path;
 import javax.swing.Timer;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
-import nz.ac.wgtn.swen225.lc.app.App;
 
 /*
  * Autamatically replays the file using the default tick speed
@@ -24,19 +23,8 @@ public class AutoReplay extends Replay {
    */
   @Override
   public void replay() {
-    timer = new Timer(GameState.DEFAULT_TICK_RATE, a -> update());
+    timer = new Timer(GameState.DEFAULT_TICK_RATE, a -> advanceTick());
     timer.setRepeats(true);
     timer.start();
-  }
-
-  /*
-   * updates the game by a tick then check if the game has ended.
-   */
-  private void update(){
-    advanceTick();
-    if (actions.size() > tick){
-      timer.stop();
-      //TODO: go to next level
-    }
   }
 }
