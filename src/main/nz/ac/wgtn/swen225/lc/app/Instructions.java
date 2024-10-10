@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Instructions extends DefaultPanel{
-    public Instructions(){
+    private static final Instructions INSTRUCTIONS_PANEL = new Instructions();
+    public static Instructions instructionsPanel = INSTRUCTIONS_PANEL;
+
+    private Instructions(){
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(createLabel("HOW TO PLAY THE GAME:"));

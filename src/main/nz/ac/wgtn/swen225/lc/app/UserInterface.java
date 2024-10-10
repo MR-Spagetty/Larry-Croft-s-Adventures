@@ -65,7 +65,7 @@ public class UserInterface extends JFrame{
      * Helper method that creates the "components" that will be in the Start Menu.
      */
     private void createStartMenu(){
-        JPanel instructions = new Instructions();
+        JPanel instructions = Instructions.instructionsPanel;
         JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()));
 
         /*

@@ -63,7 +63,7 @@ public class GameButtons extends GridPanel{
     }
 
     private void createHelpDialog(){
-        JOptionPane.showMessageDialog(null, new Instructions(), "Help", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
     /** Returns the list of buttons that have been created in the game. */
