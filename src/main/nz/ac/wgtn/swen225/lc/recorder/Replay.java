@@ -44,7 +44,7 @@ abstract class Replay {
    * Checks if the replay for this level has finished and setup next level if there is one.
    */
   private boolean checkLevelEnd(){
-    return tick < actions.size()
+    return tick < actions.size();
   }
   
   /**
