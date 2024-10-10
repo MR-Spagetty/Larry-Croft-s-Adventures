@@ -64,21 +64,23 @@ class RecorderTest {
     assertNull(getCurrentLevelFromRecorder(recorder)); // currentLevel should be null after ending the level
   }
 
-  //@Test
+  @Test
   void testRecordAction() {
     // Create a PlayerAction instance
-    PlayerAction action = new PlayerAction("MOVE", "UP"); // AssuDeveloper 4 <dev4@example.internal> PlayerAction has these parameters
     Path levelPath = Paths.get("level1.json");
 
     recorder.startLevel(levelPath);
-    recorder.record(action);
+    recorder.record(PlayerAction.Up);
+    recorder.record(PlayerAction.Down);
+    recorder.record(PlayerAction.Left);
+    recorder.record(PlayerAction.Right);
 
     Level currentLevel = getCurrentLevelFromRecorder(recorder);
     List<PlayerAction> actions = currentLevel.actions();
 
     // Verify that the action was added to the current level's actions list
-    assertEquals(1, actions.size());
-    assertEquals(action, actions.get(0));
+    assertEquals(4, actions.size());
+    assertEquals(List.of(PlayerAction.Up, PlayerAction.Down, PlayerAction.Left, PlayerAction.Right), actions);
   }
 
   @Test
