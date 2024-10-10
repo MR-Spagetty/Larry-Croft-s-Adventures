@@ -4,8 +4,6 @@ import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
 
-import nz.ac.wgtn.swen225.lc.app.App;
-
 public class TickReplay extends Replay {
   private int tickSpeed;
   private Timer timer;
@@ -22,23 +20,12 @@ public class TickReplay extends Replay {
   /*
    * Replay implementation of TickReplay.
    * 
-   * This implementation will send an input each tick whhere the tick speed is provided with the constructor.
+   * This implementation will send an input each tick where the tick speed is provided with the constructor.
    */
   @Override
   public void replay() {
-    timer = new Timer(tickSpeed, a -> update());
+    timer = new Timer(tickSpeed, a -> advanceTick());
     timer.setRepeats(true);
     timer.start();
-  }
-
-  /*
-   * updates the game by a tick then checks if the replay has ended
-   */
-  private void update(){
-    advanceTick();
-    if (actions.size() > tick){
-      timer.stop();
-      //TODO: go to next level
-    }
   }
 }
