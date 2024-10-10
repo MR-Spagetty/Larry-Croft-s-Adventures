@@ -29,7 +29,7 @@ public class GameUI {
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
 
         GameButtons buttons = GameButtons.gameButtons;
-        buttons.constructPanel(backgroundColor, width, (height/2), 15f);
+        buttons.constructPanel(backgroundColor, width, (height/10), 15f);
 
         menu.add(BorderLayout.SOUTH, buttons);
 
