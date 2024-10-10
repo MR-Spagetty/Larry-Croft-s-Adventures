@@ -40,10 +40,14 @@ public class Maze {
     entities.forEach(this::addEntity);
   }
 
+  /**
+  Gets the Maze id as a long for use by entities to generate their UIDS
+   * @return the longified ID
+   */
   public long longID() {
     long longID = 0;
     for (char c : this.ID.toCharArray()) {
-      longID <<= 1;
+      longID <<= 8;
       longID |= c;
     }
     return longID;
