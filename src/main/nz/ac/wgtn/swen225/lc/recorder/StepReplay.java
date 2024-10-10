@@ -7,7 +7,6 @@ public class StepReplay extends Replay {
 
   public StepReplay(Path p) {
     super(p);
-    //TODO Auto-generated constructor stub
   }
 
   @Override

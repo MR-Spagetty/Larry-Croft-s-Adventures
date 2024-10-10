@@ -30,12 +30,10 @@ public class AutoReplay extends Replay {
   }
 
   /*
-   * updates the game by a tick by sending App an action then ticking
+   * updates the game by a tick then check if the game has ended.
    */
   private void update(){
-    App.forwardActionToDomain(actions.get(tick));
-    App.tickOverride();
-    tick++;
+    advanceTick();
     if (actions.size() > tick){
       timer.stop();
       //TODO: go to next level
