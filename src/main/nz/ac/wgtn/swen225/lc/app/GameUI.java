@@ -28,8 +28,8 @@ public class GameUI {
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
 
-        GameButtons buttons = new GameButtons(backgroundColor, width, (height/2));
-        buttons.constructPanel();
+        GameButtons buttons = GameButtons.gameButtons;
+        buttons.constructPanel(backgroundColor, width, (height/2), 15f);
 
         menu.add(BorderLayout.SOUTH, buttons);
 

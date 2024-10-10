@@ -31,7 +31,7 @@ public class GameButtons extends GridPanel{
      * allow for the option of creating the Game Buttons without needing to create the full panel.
      * (Largely for Fuzz testing purposes.)
      */
-    public void constructPanel(Color backgroundColor, int width, int height, int fontSize){
+    public void constructPanel(Color backgroundColor, int width, int height, float fontSize){
         super.setBackground(backgroundColor);
 
         buttonsToAdd.forEach(b -> {
