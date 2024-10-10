@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI or the Keystrokes.
@@ -81,4 +82,7 @@ public class App{
      * for the purpose of allowing the "Fuzz" module to access the
      */
     public List<DefaultButton> getButtons(){ return GameButtons.gameButtons.getButtons(); }
+
+    /** Returns the list of keystrokes associated with an action. */
+    public Set<Integer> getKeyStrokes(){ return ControlKeys.keyController.getKeyStrokes(); }
 }

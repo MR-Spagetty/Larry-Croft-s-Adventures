@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Set;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
@@ -33,10 +32,8 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
-    //An instance of the wider "Game UI" that the user will be interacting with when they are playing the game!
-    GameUI gameControls;
-
-    ControlKeys keyController; //An instance of the "Key Controller" they will be interacting with.
+    GameUI gameControls; //The wider "Game UI" that the user will be interacting with!
+    ControlKeys keyControl; //An instance of the "Key Controller" they will be interacting with.
 
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
@@ -61,7 +58,7 @@ public class UserInterface extends JFrame{
         setVisible(true);
 
         gameControls = new GameUI(WIDTH/4, HEIGHT);
-        keyController = new ControlKeys();
+        keyControl = ControlKeys.keyController;
     }
 
     /**
@@ -92,7 +89,7 @@ public class UserInterface extends JFrame{
      */
     private void createMainMenu(){
         this.add(BorderLayout.EAST, gameControls.createMenu());
-        this.addKeyListener(keyController);
+        this.addKeyListener(keyControl);
 
         /*
         GraphicsPane pane = new GraphicsPane();
@@ -106,10 +103,4 @@ public class UserInterface extends JFrame{
         timer.start();
          */
     }
-
-    /**
-     * Recursion at work here: This method returns the list of keystrokes associated with an action,
-     * which is done in a method in "KeyStrokes". (Which extends "ControlKeys".)
-     */
-    public Set<Integer> getKeyStrokes(){ return keyController.getKeyStrokes(); }
 }

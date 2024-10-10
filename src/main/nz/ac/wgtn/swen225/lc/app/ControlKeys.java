@@ -12,6 +12,13 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
+    /*
+     * To prevent two instances of a "Key Controller" from being created, we create a single instance here,
+     * and make it accessible!
+     */
+    private static final ControlKeys KEY_CONTROLLER = new ControlKeys();
+    public static ControlKeys keyController = KEY_CONTROLLER;
+
     private static PlayerAction active = PlayerAction.None; //Current player action being executed in a tick.
 
     /**

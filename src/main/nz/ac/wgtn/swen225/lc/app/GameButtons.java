@@ -15,8 +15,8 @@ public class GameButtons extends GridPanel{
     List<DefaultButton> buttonsToAdd = new ArrayList<>();
 
     /*
-     * To prevent two instances of a "Game Buttons" class being created, we create a single instance here,
-     * and make it accessible!
+     * To prevent two instances of a "Game Buttons" class from being created, we create a single
+     *  instance here, and make it accessible!
      */
     private static final GameButtons GAMEBUTTONS = new GameButtons();
     static GameButtons gameButtons = GAMEBUTTONS;
