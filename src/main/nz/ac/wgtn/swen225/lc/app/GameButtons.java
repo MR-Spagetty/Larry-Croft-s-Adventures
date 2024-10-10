@@ -2,10 +2,8 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 
 /**
  * Class which holds the buttons that perform specific actions in relation to the game and the GUI.
@@ -14,11 +12,18 @@ public class GameButtons extends GridPanel{
     //The Screen that will be displayed when the game is paused.
     static PauseScreen ps = new PauseScreen(200);
 
-    Map<String, DefaultButton> buttonsToAdd = new HashMap<>();
+    List<DefaultButton> buttonsToAdd = new ArrayList<>();
 
-    public GameButtons(Color backgroundColor, int width, int height){
-        super(backgroundColor, width, height, 5, 1);
-        this.buttonsToAdd = createGameButtons(width, 30);
+    /*
+     * To prevent two instances of a "Game Buttons" class being created, we create a single instance here,
+     * and make it accessible!
+     */
+    private static final GameButtons GAMEBUTTONS = new GameButtons();
+    static GameButtons gameButtons = GAMEBUTTONS;
+
+    public GameButtons(){
+        super(5, 1);
+        this.buttonsToAdd = createGameButtons();
     }
 
     /**
@@ -26,43 +31,35 @@ public class GameButtons extends GridPanel{
      * allow for the option of creating the Game Buttons without needing to create the full panel.
      * (Largely for Fuzz testing purposes.)
      */
-    public void constructPanel(){
-        this.add(buttonsToAdd.get("RECORD"));
-        this.add(buttonsToAdd.get("SAVE"));
-        this.add(buttonsToAdd.get("PAUSE"));
-        this.add(buttonsToAdd.get("EXIT"));
-        this.add(buttonsToAdd.get("HELP"));
+    public void constructPanel(Color backgroundColor, int width, int height, int fontSize){
+        super.setBackground(backgroundColor);
+
+        buttonsToAdd.forEach(b -> {
+            b.setPreferredSize(new Dimension(width, height));
+            if (b.getText() != null) b.setFont(b.getFont().deriveFont(fontSize));
+            this.add(b);
+        });
     }
 
     /**
      * Creates all the Game Buttons that will interact with the game itself. This is done before initialising the
      * panel that contains all of these buttons.
      */
-    public Map<String, DefaultButton> createGameButtons(int cgbWidth, int cgbHeight){
-        DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE", cgbWidth, cgbHeight, 15f);
-        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
-        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
-        DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP", cgbWidth, cgbHeight, 15f);
+    public List<DefaultButton> createGameButtons(){
+        DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE");
+        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE");
+        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT");
+        DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP");
+        DefaultButton recordButton = createRecordButton();
 
-        Map<String, DefaultButton> map = new HashMap<>();
-        map.put("RECORD", createRecordButton(cgbWidth, cgbHeight));
-        map.put("SAVE", saveGame);
-        map.put("PAUSE", pauseGame);
-        map.put("EXIT", exitGame);
-        map.put("HELP", displayHelp);
-
-        return map;
+        return List.of(recordButton, saveGame, pauseGame, exitGame, displayHelp);
     }
 
-    private DefaultButton createRecordButton(int width, int height){
+    private DefaultButton createRecordButton(){
         String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png";
         ImageIcon icon = new ImageIcon(url);
 
-        DefaultButton newButton = new DefaultButton(unused -> {}, icon, width, height);
-        newButton.addActionListener(unused -> {});
-        newButton.setEnabled(true);
-
-        return newButton;
+        return new DefaultButton(unused -> {}, icon);
     }
 
     private void createHelpDialog(){
@@ -70,5 +67,5 @@ public class GameButtons extends GridPanel{
     }
 
     /** Returns the list of buttons that have been created in the game. */
-    public Set<DefaultButton> getButtons(){ return new HashSet<>(buttonsToAdd.values()); }
+    public List<DefaultButton> getButtons(){ return Collections.unmodifiableList(buttonsToAdd); }
 }
