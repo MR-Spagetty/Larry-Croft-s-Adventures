@@ -20,6 +20,11 @@ public class TickReplay extends Replay {
     this.tickSpeed = tickSpeed;
   }
 
+  /*
+   * Replay implementation of TickReplay.
+   * 
+   * This implementation will send an input each tick whhere the tick speed is provided with the constructor.
+   */
   @Override
   public void replay() {
     timer = new Timer(tickSpeed, a -> update());
@@ -36,7 +41,7 @@ public class TickReplay extends Replay {
     tick++;
     if (actions.size() > tick){
       timer.stop();
+      //TODO: go to next level
     }
-    //TODO: go to next level
   }
 }
