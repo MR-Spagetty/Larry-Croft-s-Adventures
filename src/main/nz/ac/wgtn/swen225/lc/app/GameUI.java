@@ -2,10 +2,6 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -15,8 +11,6 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * the number of chips left to collect, and the time remaining.
  */
 public class GameUI {
-    static PauseScreen ps = new PauseScreen(200); //The Screen that will be displayed when the game is paused.
-    static Map<String, DefaultButton> buttonsToAdd = new HashMap<>(); //The Buttons that are part of the Game UI.
     Color backgroundColor = Color.DARK_GRAY; //The Background colour of the UI.
 
     int width, height;
@@ -24,8 +18,6 @@ public class GameUI {
     public GameUI(int width, int height){
         this.width = width;
         this.height = height;
-
-        buttonsToAdd = createGameButtons(this.width, 30);
     }
 
     /**
@@ -35,44 +27,13 @@ public class GameUI {
     public JPanel createMenu(){
         JPanel menu = new DefaultPanel(backgroundColor, width, height);
         menu.add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
-        menu.add(BorderLayout.SOUTH, new GameButtons(backgroundColor, width, (height/2), buttonsToAdd));
+
+        GameButtons buttons = new GameButtons(backgroundColor, width, (height/2));
+        buttons.constructPanel();
+
+        menu.add(BorderLayout.SOUTH, buttons);
 
         return menu;
-    }
-
-    /**
-     * Creates all the Game Buttons that will interact with the game itself. This is done before initialising the
-     * panel that contains all of these buttons.
-     */
-    public Map<String, DefaultButton> createGameButtons(int cgbWidth, int cgbHeight){
-        DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE", cgbWidth, cgbHeight, 15f);
-        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE", cgbWidth, cgbHeight, 15f);
-        DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT", cgbWidth, cgbHeight, 15f);
-        DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP", cgbWidth, cgbHeight, 15f);
-
-        Map<String, DefaultButton> map = new HashMap<>();
-        map.put("RECORD", createRecordButton(cgbWidth, cgbHeight));
-        map.put("SAVE", saveGame);
-        map.put("PAUSE", pauseGame);
-        map.put("EXIT", exitGame);
-        map.put("HELP", displayHelp);
-
-        return map;
-    }
-
-    private DefaultButton createRecordButton(int width, int height){
-        String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png";
-        ImageIcon icon = new ImageIcon(url);
-
-        DefaultButton newButton = new DefaultButton(unused -> {}, icon, width, height);
-        newButton.addActionListener(unused -> {});
-        newButton.setEnabled(true);
-
-        return newButton;
-    }
-
-    private void createHelpDialog(){
-        JOptionPane.showMessageDialog(null, new Instructions(), "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
@@ -88,9 +49,4 @@ public class GameUI {
             gameDisplay.repaint();
         });
     }
-
-    /**
-     * Returns the list of buttons that have been created in the game.
-     */
-    public Set<DefaultButton> getButtons(){ return new HashSet<>(buttonsToAdd.values()); }
 }
