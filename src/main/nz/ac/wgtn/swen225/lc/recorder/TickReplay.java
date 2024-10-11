@@ -4,15 +4,12 @@ import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
 
-import nz.ac.wgtn.swen225.lc.app.App;
-
 public class TickReplay extends Replay {
   private int tickSpeed;
   private Timer timer;
-  
 
-  public TickReplay(Path path, int tickSpeed) {
-    super(path);
+  public TickReplay(Path p, int tickSpeed) {
+    super(p);
     Objects.requireNonNull(tickSpeed);
     if (tickSpeed < 0) {
       throw new IllegalArgumentException("Tickspeed cannot be less than 0");
@@ -20,25 +17,15 @@ public class TickReplay extends Replay {
     this.tickSpeed = tickSpeed;
   }
 
+  /*
+   * Replay implementation of TickReplay.
+   * 
+   * This implementation will send an input each tick where the tick speed is provided with the constructor.
+   */
   @Override
   public void replay() {
-    // TODO: loop ticks using the default tick speed and play a different action
-    // each time
-    timer = new Timer(tickSpeed, a -> update());
+    timer = new Timer(tickSpeed, a -> advanceTick());
     timer.setRepeats(true);
     timer.start();
-  }
-
-  /*
-   * updates the game by a tick by sending App an action then ticking
-   */
-  private void update(){
-    App.forwardActionToDomain(actions.get(tick));
-    App.tickOverride();
-    tick++;
-    if (actions.size() > tick){
-      timer.stop();
-    }
-    //TODO: go to next level
   }
 }

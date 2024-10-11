@@ -7,11 +7,16 @@ public class StepReplay extends Replay {
 
   public StepReplay(Path p) {
     super(p);
-    //TODO Auto-generated constructor stub
   }
 
+  /*
+   * Replay implementation of StepReplay.
+   * 
+   * Gets called whenever the player presses a defined key controlled by App.
+   * Advanced tick.
+   */
   @Override
   public void replay() {
-    // TODO: call the tick and play method in app when it is finished
+    advanceTick();
   }
 }
