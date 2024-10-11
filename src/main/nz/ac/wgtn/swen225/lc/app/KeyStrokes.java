@@ -1,9 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
@@ -68,7 +66,19 @@ public class KeyStrokes {
         runAction.run();
     }
 
-    public Collection<PlayerAction> playerActionEventList(){
-        return Collections.unmodifiableCollection(strokeToPlayerAction.values());
+    /**
+     * Returns a COMBINED set of all the keystrokes that have been assigned to a Player Action or an
+     * action to the GUI in the game.
+     */
+    public Set<Integer> getKeyStrokes(){
+        Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
+        Set<Integer> keyStrokesToUIAction = strokeToUIAction.keySet();
+
+        return new HashSet<>(){
+            {
+            addAll(keyStrokesToPlayerAction);
+            addAll(keyStrokesToUIAction);
+            }
+        };
     }
 }

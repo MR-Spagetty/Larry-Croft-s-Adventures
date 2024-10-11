@@ -32,6 +32,9 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
+    GameUI gameControls; //The wider "Game UI" that the user will be interacting with!
+    ControlKeys keyControl; //An instance of the "Key Controller" they will be interacting with.
+
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
 
@@ -53,13 +56,16 @@ public class UserInterface extends JFrame{
 
         pack();
         setVisible(true);
+
+        gameControls = new GameUI(WIDTH/4, HEIGHT);
+        keyControl = ControlKeys.keyController;
     }
 
     /**
      * Helper method that creates the "components" that will be in the Start Menu.
      */
     private void createStartMenu(){
-        JPanel instructions = new Instructions();
+        JPanel instructions = Instructions.instructionsPanel;
         JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()));
 
         /*
@@ -82,14 +88,14 @@ public class UserInterface extends JFrame{
      * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        add(BorderLayout.EAST, GameUI.createMenu(WIDTH/4, HEIGHT));
+        this.add(BorderLayout.EAST, gameControls.createMenu());
+        this.addKeyListener(keyControl);
 
         /*
         GraphicsPane pane = new GraphicsPane();
         add(BorderLayout.CENTER, pane);
-        timer = GameUI.createTimer(pane);
+        timer = gameControls.createTimer(pane);
 
-        this.addKeyListener(new ControlKeys());
         this.setFocusable(true);
         pack();
         this.requestFocus();

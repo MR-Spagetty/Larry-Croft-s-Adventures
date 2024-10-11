@@ -5,7 +5,7 @@ import java.nio.file.Path;
 public class StepReplay extends Replay {
   private int tick = 0;
 
-  StepReplay(Path p) {
+  public StepReplay(Path p) {
     super(p);
     //TODO Auto-generated constructor stub
   }

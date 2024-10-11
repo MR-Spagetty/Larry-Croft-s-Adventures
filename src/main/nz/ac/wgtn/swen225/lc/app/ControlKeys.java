@@ -2,10 +2,8 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Collections;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
-import nz.ac.wgtn.swen225.lc.recorder.*;
 
 /**
  * An extension of the class "KeyStrokes", which is responsible for actually controlling key events, rather than
@@ -14,6 +12,13 @@ import nz.ac.wgtn.swen225.lc.recorder.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
+    /*
+     * To prevent two instances of a "Key Controller" from being created, we create a single instance here,
+     * and make it accessible!
+     */
+    private static final ControlKeys KEY_CONTROLLER = new ControlKeys();
+    public static ControlKeys keyController = KEY_CONTROLLER;
+
     private static PlayerAction active = PlayerAction.None; //Current player action being executed in a tick.
 
     /**
@@ -51,8 +56,8 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> GameUI.ps.showScreen());
-        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameUI.ps.hideScreen());
+        assignKeyToAction(KeyEvent.VK_SPACE, () -> GameButtons.ps.showScreen());
+        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameButtons.ps.hideScreen());
         assignKeyToAction(KeyEvent.VK_R, App::callStepReplay);
     }
 
