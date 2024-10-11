@@ -1,17 +1,30 @@
 package nz.ac.wgtn.swen225.lc.domain.tiles;
 
+import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
-import java.util.Optional;
 
-public interface Tile extends Comparable<Tile> {
+/** Represents a tile in the game world. */
+public abstract class AbstractTile implements Tile {
+
+  private final Point location;
+  /**
+   * @param location
+   */
+  public AbstractTile(Point location) {
+    this.location = location;
+  }
+
+  private Optional<Entity> occupant = Optional.empty();
 
   /**
    * Returns the location of this tile in the game world.
    *
    * @return the location of this tile
    */
-  Point location();
+  public final Point location() {
+    return this.location;
+  }
 
   /**
    * Determines whether the specified entity can enter this tile.
@@ -19,7 +32,10 @@ public interface Tile extends Comparable<Tile> {
    * @param enteree the entity to check for entrance
    * @return {@code true} if the entity can enter this tile, {@code false} otherwise
    */
-  boolean canEnter(Entity enteree);
+  public boolean canEnter(Entity enteree) {
+    // TODO handle more advanced occupants
+    return getOccupant().isEmpty();
+  }
 
   /**
    * Allows the specified entity to enter this tile.
@@ -28,7 +44,13 @@ public interface Tile extends Comparable<Tile> {
    * @throws IllegalStateException if the tile may not be occupied by the entity
    * @throws UnsupportedOperationException if the tile may never be occupied
    */
-  void enter(Entity enteree);
+  public void enter(Entity enteree) {
+    if (!canEnter(enteree)) {
+      throw new IllegalStateException(
+          "The entity: %d may not enter this tile".formatted(enteree.getUID()));
+    }
+    put(enteree);
+  }
 
   /**
    * similar to {@link #enter(Entity)} but does not execute any additional actions
@@ -37,7 +59,15 @@ public interface Tile extends Comparable<Tile> {
    * @throws IllegalStateException if the tile may not be occupied by the entity
    * @throws UnsupportedOperationException if the tile may never be occupied
    */
-  void put(Entity enteree);
+  public final void put(Entity enteree) {
+    if (this.occupant.isPresent()) {
+      throw new IllegalStateException(
+          "The entity: %d may not be put in this tile as it is already occupied"
+              .formatted(enteree.getUID()));
+    }
+    this.occupant = Optional.of(enteree);
+    enteree.location(location());
+  }
 
   /**
    * Returns the entity currently occupying this tile, if any.
@@ -45,7 +75,9 @@ public interface Tile extends Comparable<Tile> {
    * @return an {@link Optional} containing the entity currently occupying this tile, or an empty
    *     {@link Optional} if the tile is empty
    */
-  Optional<Entity> getOccupant();
+  public final Optional<Entity> getOccupant() {
+    return this.occupant;
+  }
 
   /**
    * Allows the specified entity to leave this tile.
@@ -56,20 +88,9 @@ public interface Tile extends Comparable<Tile> {
    *
    * @param exitee the entity to leave this tile
    */
-  void leave(Entity exitee);
-
-  /**
-   * Compares this tile with the specified tile for order.
-   *
-   * <p>This method is used for sorting tiles in a game world. It compares the locations of the
-   * tiles, using the natural ordering of {@link Point}.
-   *
-   * @param other the tile to be compared with this tile
-   * @return an integer representing the ordering of the tiles
-   * @see Point#compareTo(Point)
-   */
-  @Override
-  default int compareTo(Tile other) {
-    return location().compareTo(other.location());
+  public final void leave(Entity exitee) {
+    if (getOccupant().map(e -> e == exitee).orElse(false)) {
+      this.occupant = Optional.empty();
+    }
   }
 }

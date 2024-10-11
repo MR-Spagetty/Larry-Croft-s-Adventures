@@ -71,7 +71,7 @@ public interface Entity {
    *
    * @return the inhabited maze
    */
-  Maze getMaze();
+  Maze maze();
 
   /**
    * sets the maze that this Entity inhabits
@@ -80,5 +80,5 @@ public interface Entity {
    *
    * @param maze the maze to inhabit
    */
-  void setMaze(Maze maze);
+  void maze(Maze maze);
 }
