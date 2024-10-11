@@ -63,15 +63,23 @@ public class Persistency {
 
     // Go over customObject keys and the vales and add them to JSONObject
     for (String key : keys){ //org.json.JSONObject.getNames(customObject)) {
-        Object value = customObject.get(key);
+      Object value = customObject.get(key);
 
-        if (value instanceof JSONObject) {
-          jsonObject.put(key, convertCustomJSONObjectToString((JSONObject) value));
-        } else if (value instanceof JSONList) {
-          jsonObject.put(key, convertCustomJSONListToString((JSONList) value));
-        } else {
-          jsonObject.put(key, value);
-        }
+      if (value instanceof JSONObject) {
+        jsonObject.put(key, convertCustomJSONObjectToString((JSONObject) value));
+      } else if (value instanceof JSONList) {
+        jsonObject.put(key, convertCustomJSONListToString((JSONList) value));
+      } else if (value instanceof JSONString) {
+        jsonObject.put(key, ((JSONString) value).get()); // Extract string value
+      } else if (value instanceof JSONLong) {
+        jsonObject.put(key, ((JSONLong) value).get()); // Extract long value
+      } else if (value instanceof JSONDouble) {
+        jsonObject.put(key, ((JSONDouble) value).get()); // Extract double value
+      } else if (value instanceof JSONBool) {
+        //jsonObject.put(key, ((JSONBool) value).get()); // Extract boolean value
+      } else if (value == JSONNull.INSTANCE) {
+        jsonObject.put(key, org.json.JSONObject.NULL); // Handle null values
+      }
     }
     return jsonObject;
   }
@@ -86,13 +94,21 @@ public class Persistency {
         jsonArray.put(convertCustomJSONObjectToString((JSONObject) value));
       } else if (value instanceof JSONList) {
         jsonArray.put(convertCustomJSONListToString((JSONList) value));
-      } else {
-        jsonArray.put(value);  // Directly add primitive values (strings, numbers, booleans)
+      } else if (value instanceof JSONString) {
+        jsonArray.put(((JSONString) value).get()); // Extract string value
+      } else if (value instanceof JSONLong) {
+        jsonArray.put(((JSONLong) value).get()); // Extract long value
+      } else if (value instanceof JSONDouble) {
+        jsonArray.put(((JSONDouble) value).get()); // Extract double value
+      } else if (value instanceof JSONBool) {
+        //jsonArray.put(((JSONBool) value).get()); // Extract boolean value
+      } else if (value == JSONNull.INSTANCE) {
+        jsonArray.put(org.json.JSONObject.NULL); // Handle null values
       }
     }
     return jsonArray;
-  }  
-  
+  }
+
   // Parse the raw JSON string to determine if it's an object or array
   private static JSONType parseJSONString(String json) {
     // Use JSONTokener to determine the structure of the string
@@ -116,7 +132,7 @@ public class Persistency {
   // Parse a string and convert it into a custom JSONObject
   private static JSONObject parseJSONObject(String jsonString) {
     org.json.JSONObject jsonObject = new org.json.JSONObject(jsonString);  // Parse string into JSONObject
-     JSONObject customObject = new JSONObject();  // Our custom JSONObject
+    JSONObject customObject = new JSONObject();  // Our custom JSONObject
 
     for (String key : jsonObject.keySet()) {
       Object value = jsonObject.get(key);

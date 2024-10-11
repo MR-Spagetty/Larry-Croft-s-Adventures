@@ -75,59 +75,9 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
   // Get a value by key
   public JSONType get(String key) { return data.get(key); }
 
-  // Type-specific retrieval methods
-  public String getString(String key) {
-    JSONType value = data.get(key);
-    if (value instanceof JSONString) {
-      return ((JSONString) value).value();
-    }
-    throw new IllegalArgumentException("Value is not a String");
-  }
-
-  public Long getLong(String key) {
-    JSONType value = data.get(key);
-    if (value instanceof JSONLong) {
-      return ((JSONLong) value).value();
-    }
-    throw new IllegalArgumentException("Value is not a Long");
-  }
-
-  public Double getDouble(String key) {
-    JSONType value = data.get(key);
-    if (value instanceof JSONDouble) {
-      return ((JSONDouble) value).value();
-    }
-    throw new IllegalArgumentException("Value is not a Double");
-  }
-
-  public JSONBool getBoolean(Boolean b) {
-    JSONType value = data.get(b);
-    if (value instanceof JSONBool) {
-      return (JSONBool.of(b));
-    }
-    throw new IllegalArgumentException("Value is not a Boolean");
-  }
-
-  public JSONObject getJSONObject(String key) {
-    JSONType value = data.get(key);
-    if (value instanceof JSONObject) {
-      return (JSONObject) value;
-    }
-    throw new IllegalArgumentException("Value is not a JSONObject");
-  }
-
-  public JSONList getJSONArray(String key) {
-    JSONType value = data.get(key);
-    if (value instanceof JSONList) {
-      return (JSONList) value;
-    }
-    throw new IllegalArgumentException("Value is not a JSONList");
-  }
-
   @Override
   public String toString() {
     return "JSONObject: " + data.toString();
   }
-
 
 }
