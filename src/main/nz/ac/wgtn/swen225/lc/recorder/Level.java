@@ -1,5 +1,6 @@
 package nz.ac.wgtn.swen225.lc.recorder;
 
+import java.util.Collections;
 import java.util.List;
 import java.nio.file.Path;
 
@@ -38,7 +39,8 @@ public class Level {
 
   // Getters
   public Path savePath(){ return savePath; }
-  public List<PlayerAction> actions() { return actions; }
+  public Path nextSavePath(){ return nextSavePath; }
+  public List<PlayerAction> actions() { return Collections.unmodifiableList(actions); }
 
   /**
    * Saves the current state of the level.
