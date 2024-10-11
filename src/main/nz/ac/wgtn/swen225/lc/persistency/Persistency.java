@@ -41,12 +41,12 @@ public class Persistency {
     if (jsonType instanceof JSONObject) {
 
       // Convert custom JSONObject to string
-      return convertCustomJSONObjectToString((JSONObject) jsonType).toString();
+      return convertCustomJSONObjectToString((JSONObject) jsonType).toString(2);
 
     } else if (jsonType instanceof JSONList) {
 
       // Convert custom JSONList to string
-      return convertCustomJSONListToString((JSONList) jsonType).toString();
+      return convertCustomJSONListToString((JSONList) jsonType).toString(2);
 
     } else {
 
@@ -76,7 +76,7 @@ public class Persistency {
       } else if (value instanceof JSONDouble) {
         jsonObject.put(key, ((JSONDouble) value).get()); // Extract double value
       } else if (value instanceof JSONBool) {
-        //jsonObject.put(key, ((JSONBool) value).get()); // Extract boolean value
+        jsonObject.put(key, ((JSONBool) value).get()); // Extract boolean value
       } else if (value == JSONNull.INSTANCE) {
         jsonObject.put(key, org.json.JSONObject.NULL); // Handle null values
       }
@@ -101,7 +101,7 @@ public class Persistency {
       } else if (value instanceof JSONDouble) {
         jsonArray.put(((JSONDouble) value).get()); // Extract double value
       } else if (value instanceof JSONBool) {
-        //jsonArray.put(((JSONBool) value).get()); // Extract boolean value
+        jsonArray.put(((JSONBool) value).get()); // Extract boolean value
       } else if (value == JSONNull.INSTANCE) {
         jsonArray.put(org.json.JSONObject.NULL); // Handle null values
       }
