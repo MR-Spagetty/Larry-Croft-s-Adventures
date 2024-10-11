@@ -27,7 +27,7 @@ public class JSONParserVisitor {
       case String s -> new JSONString(s);
       case Integer i -> (new JSONLong(((Integer) value).longValue()));
       case BigDecimal bd -> (new JSONDouble(((BigDecimal) value).doubleValue()));
-      //case JSONBool jb -> jb ;// (new JSONBool(((JSONBool) value). )) // how to implement?
+      
       default -> throw new IllegalArgumentException("Type \"%s\" is not valid".formatted(value.getClass()));
     };
   }
