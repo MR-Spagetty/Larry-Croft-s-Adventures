@@ -9,9 +9,6 @@ import java.util.List;
  * Holds the buttons that perform specific actions in relation to the game and the GUI.
  */
 public class GameButtons extends GridPanel{
-    //The Screen that will be displayed when the game is paused.
-    static PauseScreen ps = new PauseScreen(200);
-
     List<DefaultButton> buttonsToAdd = new ArrayList<>();
 
     /*
@@ -47,7 +44,7 @@ public class GameButtons extends GridPanel{
      */
     public List<DefaultButton> createGameButtons(){
         DefaultButton saveGame = new DefaultButton(unused -> {}, "SAVE");
-        DefaultButton pauseGame = new DefaultButton(unused -> ps.showScreen(), "PAUSE");
+        DefaultButton pauseGame = new DefaultButton(unused -> pauseGame(), "PAUSE");
         DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT");
         DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP");
         DefaultButton recordButton = createRecordButton();
@@ -64,6 +61,19 @@ public class GameButtons extends GridPanel{
 
     private void createHelpDialog(){
         JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public static void pauseGame(){
+        String[] option = {"Return to Game"};
+
+        if (UserInterface.timer != null) UserInterface.timer.stop(); //The timer is stopped when the game is paused!
+
+        int result = JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, option, option[0]);
+
+        System.out.println(result);
+
+        if (result == 0 && UserInterface.timer != null) UserInterface.timer.start();
     }
 
     /** Returns the list of buttons that have been created in the game. */
