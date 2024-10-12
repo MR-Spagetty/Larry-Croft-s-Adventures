@@ -3,7 +3,11 @@ package nz.ac.wgtn.swen225.lc.app;
 import javax.swing.*;
 import java.awt.*;
 
-public class Instructions extends DefaultPanel{
+/**
+ * Another Custom panel which holds the Instructions of the game. It basically is just a "wall of text"
+ * all contained in a single panel, so the instructions of the game can be used in multiple places!
+ */
+public class Instructions extends JPanel{
     private static final Instructions INSTRUCTIONS_PANEL = new Instructions();
     public static Instructions instructionsPanel = INSTRUCTIONS_PANEL;
 

@@ -9,15 +9,16 @@ import java.awt.event.ActionListener;
  */
 public class DefaultButton extends JToggleButton{
     public DefaultButton(ActionListener al, String text){
-        super(text); //Calls the "JButton" constructor and adds in the set text.
+        super(text); //Calls the "JToggleButton" constructor and adds in the set text.
         restOfConstructor(al);
     }
 
     public DefaultButton(ActionListener al, ImageIcon img){
-        super(img); //Calls the "JButton" constructor and adds in the set text.
+        super(img);
         restOfConstructor(al);
     }
 
+    /** The method containing the "common code" with the two constructors, to prevent duplication. */
     private void restOfConstructor(ActionListener al){
         this.addActionListener(al);
         this.setEnabled(true); //The button will be enabled by default.

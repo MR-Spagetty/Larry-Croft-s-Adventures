@@ -3,7 +3,6 @@ package nz.ac.wgtn.swen225.lc.app;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.*;
-import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
 import java.nio.file.FileSystems;
@@ -21,7 +20,7 @@ public class App{
     private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
 
     private final static Recorder rec = new Recorder(recorderPath);
-    private final static StepReplay sReplay = new StepReplay(recorderPath); /** Should be public??? */
+    private final static StepReplay sReplay = new StepReplay(recorderPath);
 
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
@@ -67,7 +66,7 @@ public class App{
     /**
      * Creates a new "Tick Replay" instance, which involves passing in the current tick (??), and then calls
      * the "replay()".
-     * TODO: Check to see if the implementation is correct. If yes, "getTick()" will need to be public.
+     * TODO: Check to see if the implementation is correct.
      */
     public static void callTickReplay(){
         TickReplay tReplay = new TickReplay(recorderPath, (int)GameState.getGameState().getTick());
