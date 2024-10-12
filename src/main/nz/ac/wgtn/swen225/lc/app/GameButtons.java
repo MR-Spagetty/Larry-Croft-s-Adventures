@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class GameButtons extends GridPanel{
     List<DefaultButton> buttonsToAdd = new ArrayList<>();
+    private final static String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
     /*
      * To prevent two instances of a "Game Buttons" class from being created, we create a single
@@ -53,8 +54,7 @@ public class GameButtons extends GridPanel{
     }
 
     private DefaultButton createRecordButton(){
-        String url = "src/main/nz/ac/wgtn/swen225/lc/app/assets/record.png";
-        ImageIcon icon = new ImageIcon(url);
+        ImageIcon icon = new ImageIcon(IMG_URL + "record.png");
 
         return new DefaultButton(unused -> {}, icon);
     }
@@ -65,15 +65,18 @@ public class GameButtons extends GridPanel{
 
     public static void pauseGame(){
         String[] option = {"Return to Game"};
+        ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
 
         if (UserInterface.timer != null) UserInterface.timer.stop(); //The timer is stopped when the game is paused!
 
-        int result = JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, option, option[0]);
+        /*
+         * The program will not continue running as long as this Dialog box is on the screen.
+         * Take note it can also be closed by hitting the "ESC" key or the "X" button on the window!
+         */
+        JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
 
-        System.out.println(result);
-
-        if (result == 0 && UserInterface.timer != null) UserInterface.timer.start();
+        if (UserInterface.timer != null) UserInterface.timer.start();
     }
 
     /** Returns the list of buttons that have been created in the game. */
