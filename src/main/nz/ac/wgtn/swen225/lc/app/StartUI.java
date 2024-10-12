@@ -1,7 +1,9 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Class which controls the "Start Menu" GUI, including the Buttons and their corresponding actions.
@@ -21,16 +23,36 @@ public class StartUI{
         buttons.add(load);
 
         start.addActionListener(onStart);
-        load.addActionListener(unused -> loadGame());
+        load.addActionListener(unused -> loadExistingGame());
 
         return buttons;
     }
 
     /**
-     * Loads an existing game from a ".json" file.
+     * Loads an existing game from a ".json" file using the JFileChooser mechanism. You are repeatedly asked for a
+     * file until you either select a valid file, or if you decide to abandon selecting a valid file.
+     *
+     * References:
+     * https://www.tutorialspoint.com/get-the-path-of-the-file-selected-in-the-jfilechooser-component-with-java
+     * https://www.geeksforgeeks.org/java-swing-jfilechooser/
      */
-    public static void loadGame(){
-        /** TODO If neccesary, create a file chooser for selecting a game file. */
-        System.out.println("Feature to load game has not been implemented yet.");
+    public static void loadExistingGame(){
+        boolean validFileSelected = false;
+        File chosenFile;
+
+        while (!validFileSelected){
+            JFileChooser chooseFile = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            int result = chooseFile.showOpenDialog(null);
+
+            if (result != JFileChooser.APPROVE_OPTION) return;
+
+            chosenFile = chooseFile.getSelectedFile();
+
+            if (chosenFile.getName().contains(".json")){ validFileSelected = true; }
+            else {
+                JOptionPane.showMessageDialog(null, "Invalid File Selected! Only \".json\" files can be selected!",
+                        "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }

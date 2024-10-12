@@ -67,7 +67,8 @@ public class GameButtons extends GridPanel{
         String[] option = {"Return to Game"};
         ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
 
-        if (UserInterface.timer != null) UserInterface.timer.stop(); //The timer is stopped when the game is paused!
+        //The timer is stopped when the game is paused, if the timer has been initialised.
+        if (UserInterface.timer != null) UserInterface.timer.stop();
 
         /*
          * The program will not continue running as long as this Dialog box is on the screen.
