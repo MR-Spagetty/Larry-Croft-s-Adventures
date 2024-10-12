@@ -8,4 +8,8 @@ public enum JSONBool implements JSONType {
   static JSONBool of (Boolean b){
     return b ? True : False;
   }
+
+  public Boolean get(){
+    return this == True;
+  }
 }

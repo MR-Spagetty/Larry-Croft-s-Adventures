@@ -1,41 +1,66 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
-import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffectorTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffecterTile;
 
-public class Player implements MoveableEntity {
+public class Player extends MoveableEntity {
 
   private Point actionQueue = Point.ORIGIN;
 
   private Consumer<Point> logger = a -> {};
 
-  private Point location;
-  private Maze maze;
-  private final long individualID;
   private List<Item> inventory = new ArrayList<>();
   private boolean dead = false;
   private boolean won = false;
-  private Point lastMove = Point.ORIGIN;
-
-  private long lastTick = -1;
 
   public Player(Point start, long indID) {
-    this.individualID = indID;
-    this.location = start;
+    super(start, indID);
   }
 
   public Player(Point start, long indID, Consumer<Point> logger) {
-    this(start, indID);
+    super(start, indID);
     this.logger = logger;
+  }
+
+  @Override
+  public void tick(long tick) {
+    if (tick <= lastTicked()) {
+      return;
+    }
+    this.lastTick = tick;
+    Point move = this.actionQueue;
+    if (maze().getTile(location()).get() instanceof MovementAffecterTile MET) {
+      move = MET.affectMove(this, move);
+    }
+    this.lastMove = move;
+    Point origin = location();
+    try {
+      move(this.actionQueue);
+    } finally {
+      Point locDelta = location().sub(origin);
+      if (locDelta.equals(Point.ORIGIN)) {
+        this.lastMove = Point.ORIGIN;
+      }
+      this.logger.accept(locDelta);
+      this.actionQueue = Point.ORIGIN;
+    }
+  }
+
+  @Override
+  public boolean canTouch(Entity touchee) {
+    return touchee instanceof Enemy;
+  }
+
+  @Override
+  public void touch(Entity touchee) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'touch'");
   }
 
   /**
@@ -45,76 +70,6 @@ public class Player implements MoveableEntity {
    */
   public void queueAction(PlayerAction newAction) {
     this.actionQueue = newAction.offset;
-  }
-
-  @Override
-  public Point lastMove() {
-    return this.lastMove;
-  }
-
-  @Override
-  public long lastTicked() {
-    return this.lastTick;
-  }
-
-  @Override
-  public void tick(long tick) {
-    if (tick <= lastTicked()) {
-      return;
-    }
-    Point move = this.actionQueue;
-    if (maze.getTile(location()).get() instanceof MovementAffectorTile MET) {
-      move = MET.affectMove(this, move);
-    }
-    this.lastMove = move;
-    Point origin = location();
-    try {
-      move(this.actionQueue);
-    } finally {
-      Point locDelta = location().sub(origin);
-      if (locDelta.equals(Point.ORIGIN)){
-        this.lastMove = Point.ORIGIN;
-      }
-      this.logger.accept(locDelta);
-      this.actionQueue = Point.ORIGIN;
-    }
-  }
-
-  @Override
-  public Point location() {
-    return this.location;
-  }
-
-  @Override
-  public void location(Point newLocation) {
-    if (getMaze().getTile(newLocation).isEmpty()) {
-      throw new IllegalArgumentException("Requested location is not valid in this maze");
-    }
-    this.location = newLocation;
-  }
-
-  @Override
-  public Maze getMaze() {
-    return this.maze;
-  }
-
-  @Override
-  public void setMaze(Maze maze) {
-    this.maze = maze;
-    try {
-      Field mazeField = this.getClass().getField("maze");
-      Field modifiersField = Field.class.getDeclaredField("modifiers");
-      modifiersField.setAccessible(true);
-      modifiersField.setInt(mazeField, mazeField.getModifiers() | Modifier.FINAL);
-    } catch (NoSuchFieldException NSF) {
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  public long getUID() {
-    return maze.longID() ^ individualID;
   }
 
   /**
@@ -147,17 +102,6 @@ public class Player implements MoveableEntity {
     return Collections.unmodifiableList(this.inventory);
   }
 
-  @Override
-  public boolean canTouch(Entity touchee) {
-    return touchee instanceof Enemy;
-  }
-
-  @Override
-  public void touch(Entity touchee) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'touch'");
-  }
-
   /** wins the level */
   public void win() {
     this.won = true;
@@ -180,22 +124,5 @@ public class Player implements MoveableEntity {
    */
   public boolean isDead() {
     return this.dead;
-  }
-
-  public PlayerAction getFacing() {
-    Point move = lastMove().limit(1l);
-    if (move.equals(Point.ORIGIN)) {
-      return PlayerAction.None;
-    } else if (move.equals(new Point(1, 0))) {
-      return PlayerAction.Right;
-    } else if (move.equals(new Point(-1, 0))) {
-      return PlayerAction.Left;
-    } else if (move.equals(new Point(0, 1))) {
-      return PlayerAction.Up;
-    } else if (move.equals(new Point(0, -1))) {
-      return PlayerAction.Down;
-    } else {
-      throw new IllegalStateException("Unexpected last move encountered");
-    }
   }
 }

@@ -16,8 +16,6 @@ public class JSONList implements JSONType {
   public JSONList(){}
   // Literally jus to create an empty list
 
-  //public void add(JSONType element) { elements.add(element); }
-
   // Overload add methods for each type
   public void add(String value) { elements.add(new JSONString(value)); }
   public void add(Long value) { elements.add(new JSONLong(value)); }

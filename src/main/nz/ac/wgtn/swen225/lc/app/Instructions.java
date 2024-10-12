@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Instructions extends DefaultPanel{
-    public Instructions(){
+    private static final Instructions INSTRUCTIONS_PANEL = new Instructions();
+    public static Instructions instructionsPanel = INSTRUCTIONS_PANEL;
+
+    private Instructions(){
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(createLabel("HOW TO PLAY THE GAME:"));
         this.add(createLabel(" - Use the Arrow keys to move Larry Croft around!"));
-        this.add(createLabel(" - YOUR AIM: Collect all of the \"Chips,\" and find the Exit! Dot it all before time runs out!"));
+        this.add(createLabel(" - YOUR AIM: Collect all of the \"Chips,\" and find the Exit! Do it all before time runs out!"));
         this.add(createLabel(" - Press \"SPACE\" to pause the game currently playing!"));
         this.add(createLabel(" - Press \"CTRL + X\" to quit the current game without saving."));
         this.add(createLabel(" - Press \"CTRL + S\" to save and exit the current game."));
