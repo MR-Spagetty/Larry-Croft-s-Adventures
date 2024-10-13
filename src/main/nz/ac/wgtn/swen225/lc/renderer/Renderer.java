@@ -14,7 +14,7 @@ public class Renderer {
     Maze maze = state.getMaze();
     Player player = state.getPlayer();
     // renders all tiles
-    maze.getTiles(player.location(), renderDistance).stream().map(t -> new Sprite(t)).forEach(t -> t.draw());
+    //maze.getTiles(player.location(), renderDistance).stream().map(t -> new Sprite(t)).forEach(t -> t.draw());
     // renders all entities
     maze.getEntities(player.location(), renderDistance).stream().map(s -> new Sprite(s)).forEach(s -> s.draw());
   }

@@ -16,14 +16,11 @@ public class StartUI{
      */
     public static JPanel createButtonsSection(ActionListener onStart){
         JPanel buttons = new JPanel();
-        JButton start = new JButton("Start the Game!");
-        JButton load = new JButton("Load existing game!");
+        DefaultButton start = new DefaultButton(onStart, "Start new game!");
+        DefaultButton resume = new DefaultButton(unused -> loadExistingGame(), "Resume existing game!");
 
         buttons.add(start);
-        buttons.add(load);
-
-        start.addActionListener(onStart);
-        load.addActionListener(unused -> loadExistingGame());
+        buttons.add(resume);
 
         return buttons;
     }
@@ -44,7 +41,7 @@ public class StartUI{
             JFileChooser chooseFile = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int result = chooseFile.showOpenDialog(null);
 
-            if (result != JFileChooser.APPROVE_OPTION) return;
+            if (result != JFileChooser.APPROVE_OPTION) return; //If you decide to cancel the operation.
 
             chosenFile = chooseFile.getSelectedFile();
 
