@@ -44,7 +44,7 @@ public class Parser {
    * @return a list of PlayerAction objects
    */
   private static List<PlayerAction> parseActions(JSONObject t) {
-    List<JSONType> actionJSON = ((JSONList)t.get("nextLevel")).getElements();
+    List<JSONType> actionJSON = ((JSONList)t.get("actions")).getElements();
     return actionJSON.stream()
             .map(a->((JSONString)a).value())
             .map(a->mapper.get(a))

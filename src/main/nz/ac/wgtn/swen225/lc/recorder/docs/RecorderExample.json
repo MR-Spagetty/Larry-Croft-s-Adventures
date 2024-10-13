@@ -2,9 +2,9 @@
     "level" : "this/is/path",
     "nextLevel" : "path/to/nextLevel",
     "actions" : [
-        "up",
-        "down",
-        "left",
-        "right"
+        "Up",
+        "Down",
+        "Left",
+        "Right"
     ]
 }
