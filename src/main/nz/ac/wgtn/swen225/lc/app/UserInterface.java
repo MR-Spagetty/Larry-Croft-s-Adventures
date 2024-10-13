@@ -64,29 +64,14 @@ public class UserInterface extends JFrame{
      * Helper method that creates the "components" that will be in the Start Menu.
      */
     private void createStartMenu(){
-        JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()));
-
-        /*
-         * "startGame" will be changed so when executed, the contents on the Start Menu are removed.
-         * This is because this action will be run when a game is started.
-         */
-        startGame = () -> {
-            remove(instructions); remove(buttons);
-            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
-            createMainMenu();
-        };
-
-        add(BorderLayout.NORTH, instructions);
-        add(BorderLayout.CENTER, buttons);
+        new StartUI();
     }
 
     /**
      * Helper method which creates the components present in the Main menu. This also sets up the keys to be used
      * in the game.
-     * TODO: Add in the pane for displaying the graphics.
      */
-    private void createMainMenu(){
+    protected void createMainMenu(){
         this.add(BorderLayout.EAST, gameControls.createMenu());
         this.addKeyListener(keyControl);
 
