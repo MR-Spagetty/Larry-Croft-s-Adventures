@@ -5,6 +5,7 @@ import java.util.List;
 import java.nio.file.Path;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.persistency.*;
 
 /**
  * Represents the actions that the player makes in a level.
@@ -44,9 +45,16 @@ public class Level {
 
   /**
    * Saves the current state of the level.
-   * This method needs to be implemented to handle saving functionality.
    */
   public void save() {
     // TODO: saves the level
+  }
+
+  private JSONList toJSONList(){
+    return new JSONList(
+      actions.stream()
+      .map(a -> (JSONType)(new JSONString(a.toString())))
+      .toList()
+      );
   }
 }
