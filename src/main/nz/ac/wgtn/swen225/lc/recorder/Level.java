@@ -2,7 +2,9 @@ package nz.ac.wgtn.swen225.lc.recorder;
 
 import java.util.Collections;
 import java.util.List;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.persistency.*;
@@ -51,6 +53,12 @@ public class Level {
     json.put("actions", toJSONList());
     json.put("level", new JSONString(levelPath.toString()));
     json.put("nextLevel", new JSONString(nextSavePath.toString()));
+
+    try{
+      Persistency.saveToFile(json, Paths.get(savePath.toString(), filename).toString());
+    } catch(IOException e){
+      throw new Error(e);
+    }
   }
 
   /*
