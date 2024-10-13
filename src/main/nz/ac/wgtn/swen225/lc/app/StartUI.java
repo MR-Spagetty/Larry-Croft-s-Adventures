@@ -16,11 +16,8 @@ public class StartUI{
      */
     public static JPanel createButtonsSection(ActionListener onStart){
         JPanel buttons = new JPanel();
-        DefaultButton start = new DefaultButton(onStart, "Start new game!");
-        DefaultButton resume = new DefaultButton(unused -> loadExistingGame(), "Resume existing game!");
-
-        buttons.add(start);
-        buttons.add(resume);
+        buttons.add(new DefaultButton(onStart, "Start new game!"));
+        buttons.add(new DefaultButton(unused -> loadExistingGame(), "Resume existing game!"));
 
         return buttons;
     }
