@@ -42,6 +42,9 @@ public class App{
      * - For StepReplay, you need to call the replay method each time the player presses a key.
      *
      * NB: The replay is a bit more complicated, I have a replay interface and three classes that extend that interface.
+     *
+     * INTEGRATION NEEDED:
+     * - A method that can end a game file, while skipping any "confirmation".
      */
 
     /**
