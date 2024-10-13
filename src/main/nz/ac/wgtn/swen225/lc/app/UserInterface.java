@@ -7,7 +7,6 @@ import java.awt.event.WindowEvent;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
- * TODO: ADD IN BUTTONS TO DO RECORDING! And add an area that will display the items picked up!
  *
  * @author Developer 1 <dev1@example.internal>
  */

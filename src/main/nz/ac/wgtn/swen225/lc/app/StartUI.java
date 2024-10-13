@@ -17,7 +17,7 @@ public class StartUI{
     public static JPanel createButtonsSection(ActionListener onStart){
         JPanel buttons = new JPanel();
         buttons.add(new DefaultButton(onStart, "Start new game!"));
-        buttons.add(new DefaultButton(unused -> loadExistingGame(), "Resume existing game!"));
+        buttons.add(new DefaultButton(unused -> {}, "Resume existing game!"));
 
         return buttons;
     }
@@ -30,15 +30,15 @@ public class StartUI{
      * https://www.tutorialspoint.com/get-the-path-of-the-file-selected-in-the-jfilechooser-component-with-java
      * https://www.geeksforgeeks.org/java-swing-jfilechooser/
      */
-    public static void loadExistingGame(){
+    public static File loadExistingGame(){
         boolean validFileSelected = false;
-        File chosenFile;
+        File chosenFile = null;
 
         while (!validFileSelected){
             JFileChooser chooseFile = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int result = chooseFile.showOpenDialog(null);
 
-            if (result != JFileChooser.APPROVE_OPTION) return; //If you decide to cancel the operation.
+            if (result != JFileChooser.APPROVE_OPTION) return null; //If you decide to cancel the operation.
 
             chosenFile = chooseFile.getSelectedFile();
 
@@ -48,5 +48,7 @@ public class StartUI{
                         "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
+
+        return chosenFile;
     }
 }
