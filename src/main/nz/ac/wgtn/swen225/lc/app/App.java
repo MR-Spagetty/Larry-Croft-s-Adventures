@@ -87,4 +87,11 @@ public class App{
 
     /** Returns the list of keystrokes associated with an action. */
     public static Set<Integer> getKeyStrokes(){ return ControlKeys.keyController.getKeyStrokes(); }
+
+    /**
+     * ????
+     */
+    public static void startGameFromFilePath(Path gameFilePath){
+        /** TODO not sure what's meant to go here, as I need to know how to start a game from a given file path. */
+    }
 }

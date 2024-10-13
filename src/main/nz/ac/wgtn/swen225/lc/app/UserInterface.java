@@ -117,11 +117,10 @@ public class UserInterface extends JFrame{
 
     /** Creates a new game and runs it. */
     private void startGame(File gameFile){
-        if (gameFile == null)
-            gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
+        if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
         removeStartUI.run();
-        /** TODO Call a method that takes in a game file and effectively "starts the game". Recorder will need it. */
+        App.startGameFromFilePath(gameFile.toPath()); /** ??? */
         createMainMenu();
     }
 
