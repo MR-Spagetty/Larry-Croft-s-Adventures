@@ -33,7 +33,7 @@ public class Parser {
     JSONObject jsonContent = openJSON(p);
     List<PlayerAction> actions = parseActions(jsonContent);
     Path nextLevel = parseNextLevel(jsonContent);
-    Path levelPath = parseLevel(jsonContent); // Possibly incorrect - should this call parseLevel?
+    Path levelPath = parseLevel(jsonContent);
     return new Level(actions, nextLevel, levelPath);
   }
 
