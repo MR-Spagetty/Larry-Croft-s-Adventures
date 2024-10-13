@@ -47,9 +47,15 @@ public class Level {
    * Saves the current state of the level.
    */
   public void save() {
-    // TODO: saves the level
+    JSONObject json = new JSONObject();
+    json.put("actions", toJSONList());
+    json.put("level", new JSONString(levelPath.toString()));
+    json.put("nextLevel", new JSONString(nextSavePath.toString()));
   }
 
+  /*
+   * Transforms the list of PlayerActions into a JsonList for saving
+   */
   private JSONList toJSONList(){
     return new JSONList(
       actions.stream()
