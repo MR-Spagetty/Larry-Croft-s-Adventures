@@ -100,7 +100,7 @@ public class UserInterface extends JFrame{
      */
     private JPanel createButtonsSection(){
         JPanel buttons = new JPanel();
-        buttons.add(new DefaultButton((unused -> startNewGame()), "Start new game!"));
+        buttons.add(new DefaultButton((unused -> startGame(null)), "Start new game!"));
         buttons.add(new DefaultButton(unused -> resumeExistingGame(), "Resume existing game!"));
 
         return buttons;
@@ -112,15 +112,15 @@ public class UserInterface extends JFrame{
      */
     private void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
-
-        if (fileToLoad != null){
-            removeStartUI.run();
-            createMainMenu();
-        }
+        if (fileToLoad != null) startGame(fileToLoad);
     }
 
     /** Creates a new game and runs it. */
-    private void startNewGame(){
+    private void startGame(File gameFile){
+        if (gameFile == null){
+            /** TODO select game file for Level 1 of game! */
+        }
+
         removeStartUI.run();
         createMainMenu();
     }
