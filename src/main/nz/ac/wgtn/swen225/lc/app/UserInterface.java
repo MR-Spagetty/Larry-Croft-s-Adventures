@@ -20,17 +20,16 @@ public class UserInterface extends JFrame{
      */
     Runnable closeGame = ()->{};
 
+    //Executed when the player wants to start a game. It basically removes all of the Start UI components from the frame.
+    Runnable removeStartUI = () -> {};
+
     /*
      * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
      * the Pause Screen can stop and start it to "technically" pause the game.
      */
     static Timer timer;
 
-    //Executed when the player wants to start a game. It basically removes all of the Start UI components from the frame.
-    Runnable removeStartUI = () -> {};
-
     GameUI gameControls; //The wider "Game UI" that the user will be interacting with!
-    ControlKeys keyControl; //An instance of the "Key Controller" they will be interacting with.
 
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
@@ -54,7 +53,6 @@ public class UserInterface extends JFrame{
         setVisible(true);
 
         gameControls = new GameUI(WIDTH/4, HEIGHT);
-        keyControl = ControlKeys.keyController;
     }
 
     /**
@@ -63,7 +61,7 @@ public class UserInterface extends JFrame{
      */
     private void createMainMenu(){
         this.add(BorderLayout.EAST, gameControls.createMenu());
-        this.addKeyListener(keyControl);
+        this.addKeyListener(ControlKeys.keyController);
 
         /*
         GraphicsPane pane = new GraphicsPane();
