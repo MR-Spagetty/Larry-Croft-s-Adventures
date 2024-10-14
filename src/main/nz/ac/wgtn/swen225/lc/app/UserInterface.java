@@ -99,13 +99,13 @@ public class UserInterface extends JFrame{
         this.add(BorderLayout.EAST, gameControls);
         this.addKeyListener(keyController);
 
-        /*
-        add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
-
         this.setFocusable(true);
         pack();
         this.requestFocus();
+
+        /*
+        add(BorderLayout.CENTER, pane);
+        timer = gameControls.createTimer(pane);
 
         timer.start();
          */

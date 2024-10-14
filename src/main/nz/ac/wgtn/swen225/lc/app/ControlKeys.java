@@ -41,13 +41,13 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     }
 
     private void assignKeysToActions(Map<String, Runnable> uiAction){
-        assignKeyToAction(KeyEvent.VK_X, () -> uiAction.get("EXIT"));
-        assignKeyToAction(KeyEvent.VK_S, () -> uiAction.get("SAVE"));
-        assignKeyToAction(KeyEvent.VK_R, () -> uiAction.get("RESUME"));
+        assignKeyToAction(KeyEvent.VK_X, uiAction.get("EXIT"));
+        assignKeyToAction(KeyEvent.VK_S, uiAction.get("SAVE"));
+        assignKeyToAction(KeyEvent.VK_R, uiAction.get("RESUME"));
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> uiAction.get("PAUSE"));
-        assignKeyToAction(KeyEvent.VK_R, () -> uiAction.get("S_REPLAY"));
+        assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
+        assignKeyToAction(KeyEvent.VK_R, uiAction.get("S_REPLAY"));
     }
 
     /**
