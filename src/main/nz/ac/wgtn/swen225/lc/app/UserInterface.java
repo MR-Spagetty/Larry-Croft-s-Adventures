@@ -125,7 +125,7 @@ public class UserInterface extends JFrame{
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
         removeStartUI.run();
-        App.startGameFromFilePath(gameFile.toPath()); /** ??? */
+        App.startGameFromFilePath(gameFile.toPath());
         createMainMenu();
     }
 

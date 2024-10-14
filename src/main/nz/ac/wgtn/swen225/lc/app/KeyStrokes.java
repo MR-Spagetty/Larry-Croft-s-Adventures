@@ -89,5 +89,4 @@ public class KeyStrokes {
     public Map<Integer, Runnable> strokesToUIAction(){
         return Collections.unmodifiableMap(strokeToUIAction);
     }
-
 }

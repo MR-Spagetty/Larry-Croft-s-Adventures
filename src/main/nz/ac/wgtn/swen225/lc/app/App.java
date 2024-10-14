@@ -100,11 +100,12 @@ public class App{
         return UserInterface.ui.keyController.strokesToUIAction();
     }
 
-
     /**
-     * ????
+     * Takes a given file path and initialises a level in the game from it.
+     *
+     * @param levelPath The path of the file for the specific level.
      */
-    public static void startGameFromFilePath(Path gameFilePath){
-        /** TODO not sure what's meant to go here, as I need to know how to start a game from a given file path. */
+    public static void startGameFromFilePath(Path levelPath){
+        GameState.getGameState().setLevel(levelPath); /** ??? */
     }
 }
