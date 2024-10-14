@@ -56,7 +56,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_C, () -> {});
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, GameButtons::pauseGame);
+        assignKeyToAction(KeyEvent.VK_SPACE, Buttons::pauseGame);
         assignKeyToAction(KeyEvent.VK_R, App::callStepReplay);
     }
 
