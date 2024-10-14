@@ -103,12 +103,9 @@ public class UserInterface extends JFrame{
         this.requestFocus();
         pack();
 
-        /*
-        add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
-
-        timer.start();
-         */
+        //add(BorderLayout.CENTER, pane);
+        //timer = gameControls.createTimer(pane);
+        //timer.start();
     }
 
     /**
