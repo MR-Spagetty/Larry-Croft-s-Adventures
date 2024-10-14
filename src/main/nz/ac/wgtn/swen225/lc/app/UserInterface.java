@@ -45,7 +45,7 @@ public class UserInterface extends JFrame{
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
                 "SAVE", () -> endGame(true),
-                "RESUME", this::loadExistingGame,
+                "RESUME", this::resumeExistingGameFromCurrentGame,
                 "PAUSE", Buttons::pauseGame,
                 "S_REPLAY", App::callStepReplay
         ));
@@ -118,6 +118,21 @@ public class UserInterface extends JFrame{
     private void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
         if (fileToLoad != null) startGame(fileToLoad);
+    }
+
+    /**
+     * Similar to the above method "resumeExistingGame", except it checks to make sure you're OK with exiting
+     * the current game before asking you to select a game file.
+     */
+    private void resumeExistingGameFromCurrentGame(){
+        int result = JOptionPane.showConfirmDialog(
+                null, "Are you sure want to exit without saving?",
+                "Confirm", JOptionPane.YES_NO_OPTION
+        );
+
+        if (result == JOptionPane.NO_OPTION) return;
+
+        resumeExistingGame();
     }
 
     /** Creates a new game and runs it. */

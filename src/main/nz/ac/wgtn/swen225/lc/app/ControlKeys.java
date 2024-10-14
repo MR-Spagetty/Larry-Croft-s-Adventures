@@ -47,7 +47,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
         assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
-        assignKeyToAction(KeyEvent.VK_P, uiAction.get("S_REPLAY"));
+        assignKeyToAction(KeyEvent.VK_P, uiAction.get("S_REPLAY")); //Hidden action
     }
 
     /**

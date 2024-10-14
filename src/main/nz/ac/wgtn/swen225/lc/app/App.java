@@ -106,6 +106,10 @@ public class App{
      * @param levelPath The path of the file for the specific level.
      */
     public static void startGameFromFilePath(Path levelPath){
-        GameState.getGameState().setLevel(levelPath); /** ??? */
+
+        //NB: Temporary until "setLevel()" method works.
+        try { GameState.getGameState().setLevel(levelPath); /* ??? */ }
+        catch (Exception ignored){}
+
     }
 }
