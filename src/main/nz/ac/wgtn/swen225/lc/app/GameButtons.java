@@ -48,21 +48,19 @@ public class GameButtons extends GridPanel{
         DefaultButton pauseGame = new DefaultButton(unused -> pauseGame(), "PAUSE");
         DefaultButton exitGame = new DefaultButton(unused -> {}, "EXIT");
         DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP");
-        DefaultButton recordButton = createRecordButton();
+        DefaultButton recordButton = new DefaultButton(unused -> {}, new ImageIcon(IMG_URL + "record.png"));
 
         return List.of(recordButton, saveGame, pauseGame, exitGame, displayHelp);
-    }
-
-    private DefaultButton createRecordButton(){
-        ImageIcon icon = new ImageIcon(IMG_URL + "record.png");
-
-        return new DefaultButton(unused -> {}, icon);
     }
 
     private void createHelpDialog(){
         JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**
+     * Pauses the game currently in progress and creates a pop-up window which indicates that the game is paused.
+     * When closed (either by hitting "ESC" or the "Return to Game" button), the game resumes.
+     */
     public static void pauseGame(){
         String[] option = {"Return to Game"};
         ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
