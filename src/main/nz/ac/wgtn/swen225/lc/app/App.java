@@ -81,9 +81,11 @@ public class App{
 
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically
-     * for the purpose of allowing the "Fuzz" module to access the
+     * for the purpose of allowing the "Fuzz" module to access the buttons.
+     *
+     * TODO: Check if this still is needed. Had to refactor the code to allow for saving and quitting the game.
      */
-    public static List<DefaultButton> getButtons(){ return GameButtons.gameButtons.getButtons(); }
+    //public static List<DefaultButton> getButtons(){ return GameButtons.gameButtons.getButtons(); }
 
     /** Returns the list of keystrokes associated with an action. */
     public static Set<Integer> getKeyStrokes(){ return ControlKeys.keyController.getKeyStrokes(); }

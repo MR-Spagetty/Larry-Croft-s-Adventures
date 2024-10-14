@@ -12,10 +12,6 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * the number of chips left to collect, and the time remaining.
  */
 public class GameUI extends DefaultPanel{
-    Color backgroundColor = Color.DARK_GRAY; //The Background colour of the UI.
-
-    int width, height;
-
     /**
      * Constructor which creates the menu containing information about the current game, and the buttons in the game.
      */
@@ -23,9 +19,6 @@ public class GameUI extends DefaultPanel{
         super(backgroundColor, width, height);
 
         add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
-
-        this.width = width;
-        this.height = height;
 
         GameButtons buttons = new GameButtons(backgroundColor, width, (height/10), 15f, mainUIButtons);
         add(BorderLayout.SOUTH, buttons);
