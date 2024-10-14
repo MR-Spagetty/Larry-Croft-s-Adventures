@@ -74,11 +74,9 @@ public class KeyStrokes {
         Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
         Set<Integer> keyStrokesToUIAction = strokeToUIAction.keySet();
 
-        return new HashSet<>(){
-            {
+        return new HashSet<>(){{
             addAll(keyStrokesToPlayerAction);
             addAll(keyStrokesToUIAction);
-            }
-        };
+        }};
     }
 }

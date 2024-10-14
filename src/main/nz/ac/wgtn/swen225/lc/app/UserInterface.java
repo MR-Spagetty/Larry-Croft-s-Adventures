@@ -3,8 +3,7 @@ package nz.ac.wgtn.swen225.lc.app;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.List;
 import java.io.File;
 
 /**
@@ -25,8 +24,6 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
-    GameUI gameControls; //The wider "Game UI" that the user will be interacting with!
-
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
 
@@ -43,8 +40,23 @@ public class UserInterface extends JFrame{
 
         pack();
         setVisible(true);
+    }
 
-        gameControls = new GameUI(WIDTH/4, HEIGHT);
+    /**
+     * Helper method which creates the components present in the Start Menu, including the Buttons and their
+     * corresponding actions.
+     */
+    private void createStartMenu(){
+        JPanel instructions = Instructions.instructionsPanel;
+        JPanel buttons = Buttons.startUIButtonPanel(() -> startGame(null), this::resumeExistingGame);
+
+        removeStartUI = () -> {
+            remove(instructions); remove(buttons);
+            SwingUtilities.updateComponentTreeUI(this);
+        };
+
+        add(BorderLayout.NORTH, instructions);
+        add(BorderLayout.CENTER, buttons);
     }
 
     /**
@@ -52,15 +64,19 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        JPanel gameUI = gameControls.createMenu();
+        List<DefaultButton> buttonsToAdd = Buttons.mainUIButtons(
+                () -> endGame(true), () -> endGame(false), () -> {}
+        );
+
+        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, buttonsToAdd); //The wider "Game UI" that the user will be interacting with!
         GraphicsPane pane = new GraphicsPane();
 
         removeGameUI = () -> {
-            remove(gameUI); remove(pane);
+            remove(gameControls); remove(pane);
             SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
         };
 
-        this.add(BorderLayout.EAST, gameUI);
+        this.add(BorderLayout.EAST, gameControls);
         this.addKeyListener(ControlKeys.keyController);
 
         /*
@@ -73,35 +89,6 @@ public class UserInterface extends JFrame{
 
         timer.start();
          */
-    }
-
-    /**
-     * Helper method which creates the components present in the Start Menu, including the Buttons and their
-     * corresponding actions.
-     */
-    private void createStartMenu(){
-        JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = createButtonsSection();
-
-        removeStartUI = () -> {
-            remove(instructions); remove(buttons);
-            SwingUtilities.updateComponentTreeUI(this);
-        };
-
-        add(BorderLayout.NORTH, instructions);
-        add(BorderLayout.CENTER, buttons);
-    }
-
-    /**
-     * Creates a "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start a new
-     * game for the player, and the other will allow the player to select an existing game to resume.
-     */
-    private JPanel createButtonsSection(){
-        JPanel buttons = new JPanel();
-        buttons.add(new DefaultButton((unused -> startGame(null)), "Start new game!"));
-        buttons.add(new DefaultButton(unused -> resumeExistingGame(), "Resume existing game!"));
-
-        return buttons;
     }
 
     /**
