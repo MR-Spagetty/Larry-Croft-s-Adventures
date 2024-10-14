@@ -5,6 +5,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.util.List;
 import java.io.File;
+import java.util.Map;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
@@ -24,14 +25,35 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 600;
+    private final int WIDTH = 1200, HEIGHT = 600;
+
+    List<DefaultButton> buttonsToAdd;
+    ControlKeys keyController;
 
     /**
      * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
-     * This involves defining the size of the GUI window, and putting the Start Menu components inside.
+     * Here, a "lite" version is created for use by the "Fuzz" class, which doesn't do any of the actual "GUI"
+     * setup. The setup needs to be done in a method called "createMenu".
      */
     public UserInterface(){
+        assert SwingUtilities.isEventDispatchThread();
+
+        buttonsToAdd = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
+
+        keyController= new ControlKeys(Map.of(
+                "EXIT", () -> endGame(false),
+                "SAVE", () -> endGame(true),
+                "RESUME", this::loadExistingGame,
+                "PAUSE", Buttons::pauseGame,
+                "S_REPLAY", App::callStepReplay
+        ));
+    }
+
+    /**
+     * Method which creates the physical menu of the "User Interface" class.
+     * This involves defining the size of the GUI window, and putting the Start Menu components inside.
+     */
+    public void createMenu(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -64,10 +86,6 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        List<DefaultButton> buttonsToAdd = Buttons.mainUIButtons(
-                () -> endGame(true), () -> endGame(false), () -> {}
-        );
-
         GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, buttonsToAdd); //The wider "Game UI" that the user will be interacting with!
         GraphicsPane pane = new GraphicsPane();
 
