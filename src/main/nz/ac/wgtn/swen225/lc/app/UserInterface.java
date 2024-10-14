@@ -100,8 +100,8 @@ public class UserInterface extends JFrame{
         this.addKeyListener(keyController);
 
         this.setFocusable(true);
-        pack();
         this.requestFocus();
+        pack();
 
         /*
         add(BorderLayout.CENTER, pane);

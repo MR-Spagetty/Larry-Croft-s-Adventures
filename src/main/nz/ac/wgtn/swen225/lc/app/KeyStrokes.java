@@ -79,4 +79,15 @@ public class KeyStrokes {
             addAll(keyStrokesToUIAction);
         }};
     }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
+    public Map<Integer, PlayerAction> strokesToPlayerAction(){
+        return Collections.unmodifiableMap(strokeToPlayerAction);
+    }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
+    public Map<Integer, Runnable> strokesToUIAction(){
+        return Collections.unmodifiableMap(strokeToUIAction);
+    }
+
 }

@@ -9,6 +9,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -88,6 +89,17 @@ public class App{
 
     /** Returns the list of keystrokes associated with an action. */
     public static Set<Integer> getKeyStrokes(){ return UserInterface.ui.keyController.getKeyStrokes(); }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
+    public static Map<Integer, PlayerAction> strokesToPlayerAction(){
+        return UserInterface.ui.keyController.strokesToPlayerAction();
+    }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
+    public static Map<Integer, Runnable> strokesToUIAction(){
+        return UserInterface.ui.keyController.strokesToUIAction();
+    }
+
 
     /**
      * ????
