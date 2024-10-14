@@ -7,6 +7,7 @@ import nz.ac.wgtn.swen225.lc.recorder.*;
 import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class App{
     private final static Recorder rec = new Recorder(recorderPath);
     private final static StepReplay sReplay = new StepReplay(recorderPath);
 
-    public App(){ SwingUtilities.invokeLater(UserInterface::new); }
+    public App(){ SwingUtilities.invokeLater(() -> UserInterface.ui.createMenu()); }
 
     /**
      * A "tickOverride()" method that the Recorder can use to allow for replay-back.
@@ -82,13 +83,11 @@ public class App{
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically
      * for the purpose of allowing the "Fuzz" module to access the buttons.
-     *
-     * TODO: Check if this still is needed. Had to refactor the code to allow for saving and quitting the game.
      */
-    //public static List<DefaultButton> getButtons(){ return GameButtons.gameButtons.getButtons(); }
+    public static List<DefaultButton> getButtons(){ return Collections.unmodifiableList(UserInterface.ui.mainUIButtons); }
 
     /** Returns the list of keystrokes associated with an action. */
-    public static Set<Integer> getKeyStrokes(){ return ControlKeys.keyController.getKeyStrokes(); }
+    public static Set<Integer> getKeyStrokes(){ return UserInterface.ui.keyController.getKeyStrokes(); }
 
     /**
      * ????

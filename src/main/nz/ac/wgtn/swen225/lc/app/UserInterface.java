@@ -27,18 +27,20 @@ public class UserInterface extends JFrame{
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
-    List<DefaultButton> buttonsToAdd;
+    List<DefaultButton> mainUIButtons;
     ControlKeys keyController;
+
+    //To prevent more than one "Lite" User Interface instance from being created.
+    private static final UserInterface USER_INTERFACE = new UserInterface();
+    public static UserInterface ui = USER_INTERFACE;
 
     /**
      * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
      * Here, a "lite" version is created for use by the "Fuzz" class, which doesn't do any of the actual "GUI"
      * setup. The setup needs to be done in a method called "createMenu".
      */
-    public UserInterface(){
-        assert SwingUtilities.isEventDispatchThread();
-
-        buttonsToAdd = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
+    private UserInterface(){
+        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
@@ -86,7 +88,7 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, buttonsToAdd); //The wider "Game UI" that the user will be interacting with!
+        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, mainUIButtons); //The wider "Game UI" that the user will be interacting with!
         GraphicsPane pane = new GraphicsPane();
 
         removeGameUI = () -> {
@@ -95,7 +97,7 @@ public class UserInterface extends JFrame{
         };
 
         this.add(BorderLayout.EAST, gameControls);
-        this.addKeyListener(ControlKeys.keyController);
+        this.addKeyListener(keyController);
 
         /*
         add(BorderLayout.CENTER, pane);
