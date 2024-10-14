@@ -13,14 +13,10 @@ import java.io.File;
  * @author Developer 1 <dev1@example.internal>
  */
 public class UserInterface extends JFrame{
-    /*
-     * Action to be executed when the user closes the Game GUI with the 'X' button.
-     * This action will be mostly similar to quitting the current game playing, as you will also be
-     * asked whether you want to save the game before quitting.
-     */
-    Runnable closeGame = ()->{};
+    //Executed when the player ends a game and goes back to the start menu.
+    Runnable removeGameUI = () -> {};
 
-    //Executed when the player wants to start a game. It basically removes all of the Start UI components from the frame.
+    //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
     Runnable removeStartUI = () -> {};
 
     /*
@@ -43,10 +39,6 @@ public class UserInterface extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        addWindowListener(new WindowAdapter(){
-            public void windowClosed(WindowEvent e){ closeGame.run(); }
-        });
-
         createStartMenu();
 
         pack();
@@ -60,11 +52,18 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        this.add(BorderLayout.EAST, gameControls.createMenu());
+        JPanel gameUI = gameControls.createMenu();
+        GraphicsPane pane = new GraphicsPane();
+
+        removeGameUI = () -> {
+            remove(gameUI); remove(pane);
+            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
+        };
+
+        this.add(BorderLayout.EAST, gameUI);
         this.addKeyListener(ControlKeys.keyController);
 
         /*
-        GraphicsPane pane = new GraphicsPane();
         add(BorderLayout.CENTER, pane);
         timer = gameControls.createTimer(pane);
 
@@ -84,10 +83,9 @@ public class UserInterface extends JFrame{
         JPanel instructions = Instructions.instructionsPanel;
         JPanel buttons = createButtonsSection();
 
-        //When we start or resume a game, we will need to remove all the Start UI elements, so we can add the Game UI in.
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
-            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
+            SwingUtilities.updateComponentTreeUI(this);
         };
 
         add(BorderLayout.NORTH, instructions);
@@ -122,6 +120,28 @@ public class UserInterface extends JFrame{
         removeStartUI.run();
         App.startGameFromFilePath(gameFile.toPath()); /** ??? */
         createMainMenu();
+    }
+
+    /**
+     * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
+     * be saved.
+     *
+     * @param save Whether the current game will be saved to a file or not!
+     */
+    public void endGame(boolean save){
+        if (save){
+            /** TODO link to method responsible for saving a game file. */
+        } else {
+            int result = JOptionPane.showConfirmDialog(
+                    null, "Are you sure want to exit without saving?",
+                    "Confirm", JOptionPane.YES_NO_OPTION
+            );
+
+            if (result == JOptionPane.NO_OPTION) return;
+        }
+
+        removeGameUI.run();
+        createStartMenu();
     }
 
     /**
