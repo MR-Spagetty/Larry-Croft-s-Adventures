@@ -1,0 +1,10 @@
+{
+  "level": "test\\level",
+  "nextLevel": "next\\save\\path",
+  "actions": [
+    "Up",
+    "Down",
+    "Left",
+    "Right"
+  ]
+}
