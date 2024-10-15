@@ -30,7 +30,7 @@ public class UserInterface extends JFrame{
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
-    //To prevent more than one "Lite" User Interface instance from being created.
+    //To prevent more than one User Interface instance from being created.
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
 
@@ -104,13 +104,14 @@ public class UserInterface extends JFrame{
         //timer.start();
     }
 
-    /** Creates a new game and runs it. This can be done from an existing game file, if neccesary. */
+    /** Creates a new game and runs it. This can be done from an existing game file, if necessary. */
     protected void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
         /** TODO Add option to enable/disable recorder in start menu, if time allows. */
         rec = new Recorder(recorderPath);
 
+        //Might use: GameState.getGameState().loadState(....);
         GameState.getGameState().setLevel(gameFile.toPath());
         removeStartUI.run();
         createMainMenu();
@@ -120,6 +121,8 @@ public class UserInterface extends JFrame{
         /**
          * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
          */
+        //GameState.getGameState().saveState(....);
+        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game, if a recorder is selected.
     }
 
     /**
@@ -127,8 +130,6 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game.
-
         removeGameUI.run();
         createStartMenu();
     }
