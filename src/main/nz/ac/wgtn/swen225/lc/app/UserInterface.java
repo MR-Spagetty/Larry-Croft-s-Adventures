@@ -143,27 +143,18 @@ public class UserInterface extends JFrame{
         createMainMenu();
     }
 
+    public void saveGame(){
+        /**
+         * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
+         * TODO Call the "saveGame()" method in the recorder to stop recording!
+         */
+    }
+
     /**
-     * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
-     * be saved.
-     *
-     * @param save Whether the current game will be saved to a file or not!
+     * Removes the content on the current JFrame that allows for playing the game, and puts back the content on the
+     * Start Menu. This is executed when the user exits a current game.
      */
-    public void endGame(boolean save){
-        if (save){
-            /**
-             * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
-             * TODO Call the "saveGame()" method in the recorder to stop recording!
-             */
-        } else {
-            int result = JOptionPane.showConfirmDialog(
-                    null, "Are you sure want to exit without saving?",
-                    "Confirm", JOptionPane.YES_NO_OPTION
-            );
-
-            if (result == JOptionPane.NO_OPTION) return;
-        }
-
+    public void goBackToStartMenu(){
         removeGameUI.run();
         createStartMenu();
     }
@@ -187,6 +178,27 @@ class InputController {
                 "PAUSE", Buttons::pauseGame,
                 "S_REPLAY", App::callStepReplay
         ));
+    }
+
+    /**
+     * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
+     * be saved.
+     *
+     * @param save Whether the current game will be saved to a file or not!
+     */
+    public void endGame(boolean save){
+        if (save){
+            UserInterface.ui.saveGame();
+        } else {
+            int result = JOptionPane.showConfirmDialog(
+                    null, "Are you sure want to exit without saving?",
+                    "Confirm", JOptionPane.YES_NO_OPTION
+            );
+
+            if (result == JOptionPane.NO_OPTION) return;
+        }
+
+        UserInterface.ui.goBackToStartMenu();
     }
 
     /**
