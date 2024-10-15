@@ -7,16 +7,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controls the "Input" and "Output" from pressing a button or a key during main gameplay.
+ * It also includes some basic commands that are executed from buttons or keys, such as the pausing of the
+ * game and the displaying of the Game Instructions during gameplay.
+ */
 public class IOController {
     private final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
     private final List<DefaultButton> mainUIButtons;
     private final ControlKeys keyController;
 
-    //To prevent more than one "Lite" User Interface instance from being created.
+    //To prevent more than one IO Controller from being created.
     private static final IOController IC = new IOController();
     public static IOController ic = IC;
 
+    /**
+     * In the constructor, the buttons and the keystrokes are initialised to their actions.
+     */
     private IOController(){
         mainUIButtons = UIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
 
