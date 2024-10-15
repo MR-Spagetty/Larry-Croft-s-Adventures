@@ -20,7 +20,11 @@ public class App{
     private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
 
     private final static Recorder rec = new Recorder(recorderPath);
+
+    //Below is all the replay instances that the recorder will need to access.
     private final static StepReplay sReplay = new StepReplay(recorderPath);
+    private final static AutoReplay aReplay = new AutoReplay(recorderPath);
+    private final static TickReplay tReplay = new TickReplay(recorderPath, 150);
 
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
@@ -59,18 +63,6 @@ public class App{
      * @param action The given player action
      */
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
-
-    /** Calls the "Auto Replay" feature in the Replay-er. This is only done once! */
-    public static void callAutoReplay(){ new AutoReplay(recorderPath).replay(); }
-
-    /**
-     * Creates a new "Tick Replay" instance, which involves passing in a set tick speed (that the user must
-     * self-define), and then calls the replay method.
-     */
-    public static void callTickReplay(int tickSpeed){
-        TickReplay tReplay = new TickReplay(recorderPath, tickSpeed);
-        tReplay.replay();
-    }
 
     /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
     public static void callStepReplay(){ sReplay.replay(); }
