@@ -119,23 +119,8 @@ public class UserInterface extends JFrame{
         if (fileToLoad != null) startGame(fileToLoad);
     }
 
-    /**
-     * Similar to the above method "resumeExistingGame", except it checks to make sure you're OK with exiting
-     * the current game before asking you to select a game file.
-     */
-    private void resumeExistingGameFromCurrentGame(){
-        int result = JOptionPane.showConfirmDialog(
-                null, "Are you sure want to exit without saving?",
-                "Confirm", JOptionPane.YES_NO_OPTION
-        );
-
-        if (result == JOptionPane.NO_OPTION) return;
-
-        resumeExistingGame();
-    }
-
-    /** Creates a new game and runs it. */
-    private void startGame(File gameFile){
+    /** Creates a new game and runs it. This can be done from an existing game file, if neccesary. */
+    protected void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
         removeStartUI.run();
@@ -143,7 +128,7 @@ public class UserInterface extends JFrame{
         createMainMenu();
     }
 
-    public void saveGame(){
+    protected void saveGame(){
         /**
          * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
          * TODO Call the "saveGame()" method in the recorder to stop recording!
@@ -154,7 +139,7 @@ public class UserInterface extends JFrame{
      * Removes the content on the current JFrame that allows for playing the game, and puts back the content on the
      * Start Menu. This is executed when the user exits a current game.
      */
-    public void goBackToStartMenu(){
+    protected void endGame(){
         removeGameUI.run();
         createStartMenu();
     }
@@ -181,6 +166,21 @@ class InputController {
     }
 
     /**
+     * Similar to the above method "resumeExistingGame", except it checks to make sure you're OK with exiting
+     * the current game before asking you to select a game file.
+     */
+    private void resumeExistingGameFromCurrentGame(){
+        int result = JOptionPane.showConfirmDialog(
+                null, "Are you sure want to exit without saving?",
+                "Confirm", JOptionPane.YES_NO_OPTION
+        );
+
+        if (result == JOptionPane.NO_OPTION) return;
+
+        resumeExistingGame();
+    }
+
+    /**
      * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
      * be saved.
      *
@@ -198,7 +198,7 @@ class InputController {
             if (result == JOptionPane.NO_OPTION) return;
         }
 
-        UserInterface.ui.goBackToStartMenu();
+        UserInterface.ui.endGame();
     }
 
     /**
