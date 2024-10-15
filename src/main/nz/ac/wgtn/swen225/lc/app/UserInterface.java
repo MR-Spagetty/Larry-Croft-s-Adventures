@@ -198,3 +198,24 @@ public class UserInterface extends JFrame{
         return chosenFile;
     }
 }
+
+class InputController {
+    List<DefaultButton> mainUIButtons;
+    ControlKeys keyController;
+
+    //To prevent more than one "Lite" User Interface instance from being created.
+    private static final InputController IC = new InputController();
+    public static InputController ic = IC;
+
+    private InputController(){
+        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
+
+        keyController= new ControlKeys(Map.of(
+                "EXIT", () -> endGame(false),
+                "SAVE", () -> endGame(true),
+                "RESUME", this::resumeExistingGameFromCurrentGame,
+                "PAUSE", Buttons::pauseGame,
+                "S_REPLAY", App::callStepReplay
+        ));
+    }
+}
