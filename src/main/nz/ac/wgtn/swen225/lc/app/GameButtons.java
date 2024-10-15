@@ -71,13 +71,15 @@ class UIButtons {
 
     /**
      * Creates the "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start a new
-     * game for the player, and the other will allow the player to select an existing game to resume.
+     * game for the player, the other will allow the player to select an existing game to resume, and the other will
+     * allow the user to replay a recorded game!
      */
-    public static JPanel startUIButtonPanel(Runnable startGame, Runnable resumeGame){
+    public static JPanel startUIButtonPanel(Runnable startGame, Runnable resumeGame, Runnable replayGame){
         JPanel buttons = new JPanel();
 
         buttons.add(new DefaultButton(unused -> startGame.run(), "Start new game!"));
         buttons.add(new DefaultButton(unused -> resumeGame.run(), "Resume existing game!"));
+        buttons.add(new DefaultButton(unused -> replayGame.run(), "Replay a game!"));
 
         return buttons;
     }

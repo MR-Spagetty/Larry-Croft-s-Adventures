@@ -34,9 +34,12 @@ public class UserInterface extends JFrame{
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
 
-    /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
-    //The recorder that will record the current game the user is playing.
-    private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
+    /**
+     * The recorder that will record the current game the user is playing.
+     * Here, the recorder and file path is initially "null" in the case that the user does not want a game to be recorded!
+     * In addition, if the recorder is to be enabled, the user will need to select the folder to save the files!
+     */
+    private static Path recorderPath= null;
     private static Recorder rec = null;
 
     /**
@@ -66,7 +69,10 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = UIButtons.startUIButtonPanel(() -> startGame(null), () -> IOController.ic.resumeExistingGame());
+        JPanel buttons = UIButtons.startUIButtonPanel(
+                () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
+        );
+        /** TODO Add checkbox here! */
 
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
@@ -105,14 +111,15 @@ public class UserInterface extends JFrame{
     }
 
     /** Creates a new game and runs it. This can be done from an existing game file, if necessary. */
-    protected void startGame(File gameFile){
+    public void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
-        /** TODO Add option to enable/disable recorder in start menu, if time allows. */
+        /** TODO Add option to enable/disable recorder in start menu and a pop-up window that decides where the files will be. */
+        recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
         rec = new Recorder(recorderPath);
 
         //Might use: GameState.getGameState().loadState(....);
-        GameState.getGameState().setLevel(gameFile.toPath());
+        //GameState.getGameState().setLevel(gameFile.toPath());
         removeStartUI.run();
         createMainMenu();
     }
@@ -121,8 +128,7 @@ public class UserInterface extends JFrame{
         /**
          * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
          */
-        //GameState.getGameState().saveState(....);
-        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game, if a recorder is selected.
+        //GameState.getGameState().saveState(....).
     }
 
     /**
@@ -130,6 +136,7 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
+        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game, if a recorder is selected.
         removeGameUI.run();
         createStartMenu();
     }
