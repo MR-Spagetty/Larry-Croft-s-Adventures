@@ -40,11 +40,11 @@ public class UserInterface extends JFrame{
      * setup. The setup needs to be done in a method called "createMenu".
      */
     private UserInterface(){
-        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
+        mainUIButtons = Buttons.mainUIButtons(() -> IOController.ic.endGame(true), () -> IOController.ic.endGame(false), () -> {});
 
         keyController= new ControlKeys(Map.of(
-                "EXIT", () -> endGame(false),
-                "SAVE", () -> endGame(true),
+                "EXIT", () -> IOController.ic.endGame(false),
+                "SAVE", () -> IOController.ic.endGame(true),
                 "RESUME", () -> IOController.ic.resumeExistingGameFromCurrentGame(),
                 "PAUSE", Buttons::pauseGame,
                 "S_REPLAY", App::callStepReplay
@@ -132,27 +132,6 @@ public class UserInterface extends JFrame{
         removeGameUI.run();
         createStartMenu();
     }
-
-    /**
-     * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
-     * be saved.
-     *
-     * @param save Whether the current game will be saved to a file or not!
-     */
-    public void endGame(boolean save){
-        if (save){
-            UserInterface.ui.saveGame();
-        } else {
-            int result = JOptionPane.showConfirmDialog(
-                    null, "Are you sure want to exit without saving?",
-                    "Confirm", JOptionPane.YES_NO_OPTION
-            );
-
-            if (result == JOptionPane.NO_OPTION) return;
-        }
-
-        UserInterface.ui.endGame();
-    }
 }
 
 class IOController {
@@ -176,6 +155,27 @@ class IOController {
                 "S_REPLAY", App::callStepReplay
         ));
          */
+    }
+
+    /**
+     * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
+     * be saved.
+     *
+     * @param save Whether the current game will be saved to a file or not!
+     */
+    public void endGame(boolean save){
+        if (save){
+            UserInterface.ui.saveGame();
+        } else {
+            int result = JOptionPane.showConfirmDialog(
+                    null, "Are you sure want to exit without saving?",
+                    "Confirm", JOptionPane.YES_NO_OPTION
+            );
+
+            if (result == JOptionPane.NO_OPTION) return;
+        }
+
+        UserInterface.ui.endGame();
     }
 
     /**
