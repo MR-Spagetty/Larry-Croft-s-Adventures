@@ -156,7 +156,7 @@ class Controller {
                 "EXIT", () -> endGame(false),
                 "SAVE", () -> endGame(true),
                 "RESUME", this::resumeExistingGameFromCurrentGame,
-                "PAUSE", Buttons::pauseGame,
+                "PAUSE", this::pauseGame,
                 "S_REPLAY", App::callStepReplay
         ));
     }
@@ -204,6 +204,30 @@ class Controller {
         }
 
         UserInterface.ui.endGame();
+    }
+
+    /**
+     * Pauses the game currently in progress and creates a pop-up window which indicates that the game is paused.
+     * When closed (either by hitting "ESC" or the "Return to Game" button), the game resumes.
+     * ===
+     * The method is stated here as it links up to the action of a button! (It's also static so it can map up to
+     * the "SPACE" bar.)
+     */
+    public void pauseGame(){
+        String[] option = {"Return to Game"};
+        ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
+
+        //The timer is stopped when the game is paused, if the timer has been initialised.
+        if (UserInterface.timer != null) UserInterface.timer.stop();
+
+        /*
+         * The program will not continue running as long as this Dialog box is on the screen.
+         * Take note it can also be closed by hitting the "ESC" key or the "X" button on the window!
+         */
+        JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
+
+        if (UserInterface.timer != null) UserInterface.timer.start();
     }
 
     /**
