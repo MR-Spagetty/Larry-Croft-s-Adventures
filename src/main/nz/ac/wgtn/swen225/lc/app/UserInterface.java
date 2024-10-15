@@ -1,10 +1,14 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
@@ -29,6 +33,11 @@ public class UserInterface extends JFrame{
     //To prevent more than one "Lite" User Interface instance from being created.
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
+
+    /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
+    //The recorder that will record the current game the user is playing.
+    private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
+    private static Recorder rec = null;
 
     /**
      * An empty constructor. This was placed here on purpose to prevent the initialisation of a new "UserInterface"
@@ -99,6 +108,9 @@ public class UserInterface extends JFrame{
     protected void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
+        /** TODO Add option to enable/disable recorder in start menu, if time allows. */
+        rec = new Recorder(recorderPath);
+
         GameState.getGameState().setLevel(gameFile.toPath());
         removeStartUI.run();
         createMainMenu();
@@ -107,7 +119,6 @@ public class UserInterface extends JFrame{
     protected void saveGame(){
         /**
          * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
-         * TODO Call the "saveGame()" method in the recorder to stop recording!
          */
     }
 
@@ -116,7 +127,16 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
+        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game.
+
         removeGameUI.run();
         createStartMenu();
     }
+
+    /**
+     * Passes a given player action to the recorder to allow for that action to be recorded.
+     *
+     * @param action The given player action
+     */
+    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 }

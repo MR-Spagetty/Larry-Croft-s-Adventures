@@ -114,7 +114,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
 
-        App.forwardActionToRecorder(active);
+        UserInterface.ui.forwardActionToRecorder(active);
     }
 
     /**

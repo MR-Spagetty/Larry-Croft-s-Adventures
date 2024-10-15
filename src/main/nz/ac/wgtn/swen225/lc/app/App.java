@@ -20,8 +20,6 @@ public class App{
     /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
     private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
 
-    private final static Recorder rec = new Recorder(recorderPath);
-
     //Below is all the replay instances that the recorder will need to access.
     private static StepReplay sReplay;
     private static AutoReplay aReplay;
@@ -60,13 +58,6 @@ public class App{
     public static void forwardActionToDomain(PlayerAction action){
         GameState.getGameState().getPlayer().queueAction(action);
     }
-
-    /**
-     * Passes a given player action to the recorder to allow for that action to be recorded.
-     *
-     * @param action The given player action
-     */
-    public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
     /** Creates an instance of the "Auto Replay" */
     public static void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
