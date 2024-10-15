@@ -78,7 +78,7 @@ public class IOController {
      * Creates the pop-up window that re-iterates the instructions that apply to the game.
      * The method is stated here as it links up to the action of a button!
      */
-    protected static void createHelpDialog(){
+    protected void createHelpDialog(){
         JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 

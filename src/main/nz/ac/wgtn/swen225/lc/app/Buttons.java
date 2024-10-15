@@ -43,8 +43,8 @@ public class Buttons{
      * @return A list consisting of the "Pause" and "Help" buttons, each wired up to their appropriate action.
      */
     private static List<DefaultButton> pauseAndHelpButtons(){
-        DefaultButton pauseGame = new DefaultButton(unused -> Controller.ic.pauseGame(), "PAUSE");
-        DefaultButton displayHelp = new DefaultButton(unused -> Controller.ic.createHelpDialog(), "HELP");
+        DefaultButton pauseGame = new DefaultButton(unused -> IOController.ic.pauseGame(), "PAUSE");
+        DefaultButton displayHelp = new DefaultButton(unused -> IOController.ic.createHelpDialog(), "HELP");
 
         return List.of(pauseGame, displayHelp);
     }
