@@ -3,12 +3,8 @@ package nz.ac.wgtn.swen225.lc.app;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.util.Collections;
-import java.util.List;
 import java.io.File;
-import java.util.Map;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
@@ -40,7 +36,7 @@ public class UserInterface extends JFrame{
      * setup. The setup needs to be done in a method called "createMenu".
      */
     private UserInterface(){
-        createMenu();
+
     }
 
     /**
@@ -106,8 +102,8 @@ public class UserInterface extends JFrame{
     protected void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
-        removeStartUI.run();
         GameState.getGameState().setLevel(gameFile.toPath());
+        removeStartUI.run();
         createMainMenu();
     }
 
