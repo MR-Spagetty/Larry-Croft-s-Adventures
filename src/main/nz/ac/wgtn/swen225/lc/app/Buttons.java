@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Buttons{
-    private final static String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
+    private static final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
     /**
      * Returns a list (rather than a panel) of the main UI buttons in the game. The actual buttons
@@ -43,17 +43,9 @@ public class Buttons{
      * @return A list consisting of the "Pause" and "Help" buttons, each wired up to their appropriate action.
      */
     private static List<DefaultButton> pauseAndHelpButtons(){
-        DefaultButton pauseGame = new DefaultButton(unused -> pauseGame(), "PAUSE");
-        DefaultButton displayHelp = new DefaultButton(unused -> createHelpDialog(), "HELP");
+        DefaultButton pauseGame = new DefaultButton(unused -> Controller.ic.pauseGame(), "PAUSE");
+        DefaultButton displayHelp = new DefaultButton(unused -> Controller.ic.createHelpDialog(), "HELP");
 
         return List.of(pauseGame, displayHelp);
-    }
-
-    /**
-     * Creates the pop-up window that re-iterates the instructions that apply to the game.
-     * The method is stated here as it links up to the action of a button!
-     */
-    private static void createHelpDialog(){
-        JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 }
