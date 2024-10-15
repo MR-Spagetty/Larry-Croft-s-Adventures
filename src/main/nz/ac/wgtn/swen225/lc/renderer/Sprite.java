@@ -63,7 +63,7 @@ public class Sprite {
         case Exit exit ->
             ImageIO.read(Sprite.class.getClassLoader().getResource("finishTile.png"));
         // Wall class image
-        case Wall wall -> ImageIO.read(Sprite.class.getClassLoader().getResource("Wall.png"));
+        case Wall wall -> ImageIO.read(Sprite.class.getClassLoader().getResource("wall.png"));
         // Empty class image
         case Empty empty -> ImageIO.read(Sprite.class.getClassLoader().getResource("tile.png"));
         // Player class image
@@ -117,6 +117,17 @@ public class Sprite {
             };
         // Ice class image
         case Ice ice -> ImageIO.read(Sprite.class.getClassLoader().getResource("ice.png"));
+        // Fire class image
+        case Fire fire -> ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
+        // Water class image
+        case Water water -> switch (water.filled()) {
+          // Filled water
+          case TRUE -> ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
+          // Empty water
+          case FALSE -> ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
+          // Default is Error image
+          case default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
+        };
         // Default Error image for when no individual case in place
         default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
       };
