@@ -7,6 +7,7 @@ import nz.ac.wgtn.swen225.lc.recorder.*;
 import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -84,19 +85,19 @@ public class App{
      * This method returns the list of buttons that have been created in the game. This method is specifically
      * for the purpose of allowing the "Fuzz" module to access the buttons.
      */
-    public static List<DefaultButton> getButtons(){ return IOController.ic.getMainUIButtons(); }
+    public static List<DefaultButton> getButtons(){ return Collections.unmodifiableList(UserInterface.ui.mainUIButtons); }
 
     /** Returns the list of keystrokes associated with an action. */
-    public static Set<Integer> getKeyStrokes(){ return IOController.ic.getKeyController().getKeyStrokes(); }
+    public static Set<Integer> getKeyStrokes(){ return UserInterface.ui.keyController.getKeyStrokes(); }
 
     /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
     public static Map<Integer, PlayerAction> strokesToPlayerAction(){
-        return IOController.ic.getKeyController().strokesToPlayerAction();
+        return UserInterface.ui.keyController.strokesToPlayerAction();
     }
 
     /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
     public static Map<Integer, Runnable> strokesToUIAction(){
-        return IOController.ic.getKeyController().strokesToUIAction();
+        return UserInterface.ui.keyController.strokesToUIAction();
     }
 
     /**
