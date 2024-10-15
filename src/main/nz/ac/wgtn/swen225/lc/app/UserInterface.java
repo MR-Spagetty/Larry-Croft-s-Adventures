@@ -45,7 +45,7 @@ public class UserInterface extends JFrame{
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
                 "SAVE", () -> endGame(true),
-                "RESUME", this::resumeExistingGameFromCurrentGame,
+                "RESUME", () -> IOController.ic.resumeExistingGameFromCurrentGame(),
                 "PAUSE", Buttons::pauseGame,
                 "S_REPLAY", App::callStepReplay
         ));
@@ -72,7 +72,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = Buttons.startUIButtonPanel(() -> startGame(null), this::resumeExistingGame);
+        JPanel buttons = Buttons.startUIButtonPanel(() -> startGame(null), () -> IOController.ic.resumeExistingGame());
 
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
@@ -182,7 +182,7 @@ class IOController {
      * Similar to the above method "resumeExistingGame", except it checks to make sure you're OK with exiting
      * the current game before asking you to select a game file.
      */
-    private void resumeExistingGameFromCurrentGame(){
+    protected void resumeExistingGameFromCurrentGame(){
         int result = JOptionPane.showConfirmDialog(
                 null, "Are you sure want to exit without saving?",
                 "Confirm", JOptionPane.YES_NO_OPTION
@@ -197,9 +197,9 @@ class IOController {
      * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
      * terminates the loading of a file.
      */
-    private void resumeExistingGame(){
+    protected void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
-        if (fileToLoad != null) startGame(fileToLoad);
+        if (fileToLoad != null) UserInterface.ui.startGame(fileToLoad);
     }
 
     /**
