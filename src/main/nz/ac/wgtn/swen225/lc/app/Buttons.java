@@ -8,19 +8,6 @@ public class Buttons{
     private final static String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
     /**
-     * Creates the "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start a new
-     * game for the player, and the other will allow the player to select an existing game to resume.
-     */
-    public static JPanel startUIButtonPanel(Runnable startGame, Runnable resumeGame){
-        JPanel buttons = new JPanel();
-
-        buttons.add(new DefaultButton(unused -> startGame.run(), "Start new game!"));
-        buttons.add(new DefaultButton(unused -> resumeGame.run(), "Resume existing game!"));
-
-        return buttons;
-    }
-
-    /**
      * Returns a list (rather than a panel) of the main UI buttons in the game. The actual buttons
      * themselves are made in two methods, with one requiring the supplement of the actions each button
      * will execute. (As they perform actions needed in different parts of the code.)
@@ -64,7 +51,6 @@ public class Buttons{
 
     /**
      * Creates the pop-up window that re-iterates the instructions that apply to the game.
-     * ===
      * The method is stated here as it links up to the action of a button!
      */
     private static void createHelpDialog(){
