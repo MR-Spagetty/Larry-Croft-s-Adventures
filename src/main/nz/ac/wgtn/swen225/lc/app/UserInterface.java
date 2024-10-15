@@ -142,6 +142,8 @@ public class UserInterface extends JFrame{
 }
 
 class Controller {
+    private final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
+
     private final List<DefaultButton> mainUIButtons;
     private final ControlKeys keyController;
 
@@ -204,6 +206,14 @@ class Controller {
         }
 
         UserInterface.ui.endGame();
+    }
+
+    /**
+     * Creates the pop-up window that re-iterates the instructions that apply to the game.
+     * The method is stated here as it links up to the action of a button!
+     */
+    protected static void createHelpDialog(){
+        JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
