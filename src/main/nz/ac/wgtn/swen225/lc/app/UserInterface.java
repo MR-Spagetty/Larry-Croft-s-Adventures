@@ -27,9 +27,6 @@ public class UserInterface extends JFrame{
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
-    List<DefaultButton> mainUIButtons;
-    ControlKeys keyController;
-
     //To prevent more than one "Lite" User Interface instance from being created.
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
@@ -40,15 +37,7 @@ public class UserInterface extends JFrame{
      * setup. The setup needs to be done in a method called "createMenu".
      */
     private UserInterface(){
-        mainUIButtons = Buttons.mainUIButtons(() -> IOController.ic.endGame(true), () -> IOController.ic.endGame(false), () -> {});
-
-        keyController= new ControlKeys(Map.of(
-                "EXIT", () -> IOController.ic.endGame(false),
-                "SAVE", () -> IOController.ic.endGame(true),
-                "RESUME", () -> IOController.ic.resumeExistingGameFromCurrentGame(),
-                "PAUSE", Buttons::pauseGame,
-                "S_REPLAY", App::callStepReplay
-        ));
+        //createMenu();
     }
 
     /**
@@ -88,7 +77,7 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, mainUIButtons); //The wider "Game UI" that the user will be interacting with!
+        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.mainUIButtons); //The wider "Game UI" that the user will be interacting with!
         GraphicsPane pane = new GraphicsPane();
 
         removeGameUI = () -> {
@@ -97,7 +86,7 @@ public class UserInterface extends JFrame{
         };
 
         this.add(BorderLayout.EAST, gameControls);
-        this.addKeyListener(keyController);
+        this.addKeyListener(IOController.ic.keyController);
 
         this.setFocusable(true);
         this.requestFocus();
@@ -114,7 +103,7 @@ public class UserInterface extends JFrame{
 
         removeStartUI.run();
         //GameState.getGameState().setLevel(gameFile.toPath());
-        createMainMenu();
+        //createMainMenu();
     }
 
     protected void saveGame(){
@@ -143,9 +132,7 @@ class IOController {
     public static IOController ic = IC;
 
     private IOController() {
-        /*
-        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {
-        });
+        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
 
         keyController = new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
@@ -154,7 +141,6 @@ class IOController {
                 "PAUSE", Buttons::pauseGame,
                 "S_REPLAY", App::callStepReplay
         ));
-         */
     }
 
     /**
