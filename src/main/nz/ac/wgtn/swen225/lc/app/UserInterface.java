@@ -57,7 +57,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = startUIButtonPanel(() -> startGame(null), () -> IOController.ic.resumeExistingGame());
+        JPanel buttons = UIButtons.startUIButtonPanel(() -> startGame(null), () -> IOController.ic.resumeExistingGame());
 
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
@@ -118,18 +118,5 @@ public class UserInterface extends JFrame{
     protected void endGame(){
         removeGameUI.run();
         createStartMenu();
-    }
-
-    /**
-     * Creates the "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start a new
-     * game for the player, and the other will allow the player to select an existing game to resume.
-     */
-    private JPanel startUIButtonPanel(Runnable startGame, Runnable resumeGame){
-        JPanel buttons = new JPanel();
-
-        buttons.add(new DefaultButton(unused -> startGame.run(), "Start new game!"));
-        buttons.add(new DefaultButton(unused -> resumeGame.run(), "Resume existing game!"));
-
-        return buttons;
     }
 }

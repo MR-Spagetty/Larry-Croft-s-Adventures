@@ -18,7 +18,7 @@ public class IOController {
     public static IOController ic = IC;
 
     private IOController(){
-        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
+        mainUIButtons = UIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
