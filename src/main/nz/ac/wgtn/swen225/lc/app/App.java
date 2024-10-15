@@ -60,16 +60,15 @@ public class App{
      */
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
-    /** Calls the "Auto Replay" feature in the Replayer. This is only done once! */
+    /** Calls the "Auto Replay" feature in the Replay-er. This is only done once! */
     public static void callAutoReplay(){ new AutoReplay(recorderPath).replay(); }
 
     /**
-     * Creates a new "Tick Replay" instance, which involves passing in the current tick (??), and then calls
-     * the "replay()".
-     * TODO: Check to see if the implementation is correct.
+     * Creates a new "Tick Replay" instance, which involves passing in a set tick speed (that the user must
+     * self-define), and then calls the replay method.
      */
-    public static void callTickReplay(){
-        TickReplay tReplay = new TickReplay(recorderPath, (int)GameState.getGameState().getTick());
+    public static void callTickReplay(int tickSpeed){
+        TickReplay tReplay = new TickReplay(recorderPath, tickSpeed);
         tReplay.replay();
     }
 
