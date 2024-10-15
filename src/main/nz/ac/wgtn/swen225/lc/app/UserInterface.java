@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.domain.GameState;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
@@ -137,7 +139,7 @@ public class UserInterface extends JFrame{
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
         removeStartUI.run();
-        App.startGameFromFilePath(gameFile.toPath());
+        GameState.getGameState().setLevel(gameFile.toPath());
         createMainMenu();
     }
 
@@ -149,7 +151,10 @@ public class UserInterface extends JFrame{
      */
     public void endGame(boolean save){
         if (save){
-            /** TODO link to method responsible for saving a game file. */
+            /**
+             * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
+             * TODO Call the "saveGame()" method in the recorder to stop recording!
+             */
         } else {
             int result = JOptionPane.showConfirmDialog(
                     null, "Are you sure want to exit without saving?",
