@@ -22,5 +22,6 @@ public class DefaultButton extends JToggleButton{
     private void restOfConstructor(ActionListener al){
         this.addActionListener(al);
         this.setEnabled(true); //The button will be enabled by default.
+        this.setFocusable(false);
     }
 }
