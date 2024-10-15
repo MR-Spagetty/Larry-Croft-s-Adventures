@@ -84,19 +84,19 @@ public class App{
      * This method returns the list of buttons that have been created in the game. This method is specifically
      * for the purpose of allowing the "Fuzz" module to access the buttons.
      */
-    public static List<DefaultButton> getButtons(){ return Controller.ic.getMainUIButtons(); }
+    public static List<DefaultButton> getButtons(){ return IOController.ic.getMainUIButtons(); }
 
     /** Returns the list of keystrokes associated with an action. */
-    public static Set<Integer> getKeyStrokes(){ return Controller.ic.getKeyController().getKeyStrokes(); }
+    public static Set<Integer> getKeyStrokes(){ return IOController.ic.getKeyController().getKeyStrokes(); }
 
     /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
     public static Map<Integer, PlayerAction> strokesToPlayerAction(){
-        return Controller.ic.getKeyController().strokesToPlayerAction();
+        return IOController.ic.getKeyController().strokesToPlayerAction();
     }
 
     /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
     public static Map<Integer, Runnable> strokesToUIAction(){
-        return Controller.ic.getKeyController().strokesToUIAction();
+        return IOController.ic.getKeyController().strokesToUIAction();
     }
 
     /**
