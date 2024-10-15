@@ -22,9 +22,9 @@ public class App{
     private final static Recorder rec = new Recorder(recorderPath);
 
     //Below is all the replay instances that the recorder will need to access.
-    private final static StepReplay sReplay = new StepReplay(recorderPath);
-    private final static AutoReplay aReplay = new AutoReplay(recorderPath);
-    private final static TickReplay tReplay = new TickReplay(recorderPath, 150);
+    private static StepReplay sReplay;
+    private static AutoReplay aReplay;
+    private static TickReplay tReplay;
 
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
@@ -64,8 +64,17 @@ public class App{
      */
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
+    /** Creates an instance of the "Auto Replay" */
+    public static void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
+
+    /** Creates an instance of the "Tick Replay" */
+    public static void tickReplay(){ tReplay = new TickReplay(recorderPath, 150); }
+
+    /** Creates an instance of the "Step Replay" */
+    public static void stepReplay(){ sReplay = new StepReplay(recorderPath); }
+
     /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
-    public static void callStepReplay(){ sReplay.replay(); }
+    public static void callStepReplay(){ if (sReplay != null) sReplay.replay(); }
 
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically
