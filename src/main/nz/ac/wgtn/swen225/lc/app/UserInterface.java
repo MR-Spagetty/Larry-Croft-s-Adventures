@@ -1,7 +1,5 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import nz.ac.wgtn.swen225.lc.domain.GameState;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
@@ -136,30 +134,6 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
-     * terminates the loading of a file.
-     */
-    private void resumeExistingGame(){
-        File fileToLoad = loadExistingGame();
-        if (fileToLoad != null) startGame(fileToLoad);
-    }
-
-    /**
-     * Similar to the above method "resumeExistingGame", except it checks to make sure you're OK with exiting
-     * the current game before asking you to select a game file.
-     */
-    private void resumeExistingGameFromCurrentGame(){
-        int result = JOptionPane.showConfirmDialog(
-                null, "Are you sure want to exit without saving?",
-                "Confirm", JOptionPane.YES_NO_OPTION
-        );
-
-        if (result == JOptionPane.NO_OPTION) return;
-
-        resumeExistingGame();
-    }
-
-    /**
      * Finishes up an already-started game and returns the user back to the main menu. If selected, the current game will also
      * be saved.
      *
@@ -178,6 +152,54 @@ public class UserInterface extends JFrame{
         }
 
         UserInterface.ui.endGame();
+    }
+}
+
+class IOController {
+    List<DefaultButton> mainUIButtons;
+    ControlKeys keyController;
+
+    //To prevent more than one "Lite" User Interface instance from being created.
+    private static final IOController IC = new IOController();
+    public static IOController ic = IC;
+
+    private IOController() {
+        /*
+        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {
+        });
+
+        keyController = new ControlKeys(Map.of(
+                "EXIT", () -> endGame(false),
+                "SAVE", () -> endGame(true),
+                "RESUME", this::resumeExistingGameFromCurrentGame,
+                "PAUSE", Buttons::pauseGame,
+                "S_REPLAY", App::callStepReplay
+        ));
+         */
+    }
+
+    /**
+     * Similar to the above method "resumeExistingGame", except it checks to make sure you're OK with exiting
+     * the current game before asking you to select a game file.
+     */
+    private void resumeExistingGameFromCurrentGame(){
+        int result = JOptionPane.showConfirmDialog(
+                null, "Are you sure want to exit without saving?",
+                "Confirm", JOptionPane.YES_NO_OPTION
+        );
+
+        if (result == JOptionPane.NO_OPTION) return;
+
+        resumeExistingGame();
+    }
+
+    /**
+     * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
+     * terminates the loading of a file.
+     */
+    private void resumeExistingGame(){
+        File fileToLoad = loadExistingGame();
+        if (fileToLoad != null) startGame(fileToLoad);
     }
 
     /**
@@ -208,29 +230,5 @@ public class UserInterface extends JFrame{
         }
 
         return chosenFile;
-    }
-}
-
-class InputController {
-    List<DefaultButton> mainUIButtons;
-    ControlKeys keyController;
-
-    //To prevent more than one "Lite" User Interface instance from being created.
-    private static final InputController IC = new InputController();
-    public static InputController ic = IC;
-
-    private InputController() {
-        /*
-        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {
-        });
-
-        keyController = new ControlKeys(Map.of(
-                "EXIT", () -> endGame(false),
-                "SAVE", () -> endGame(true),
-                "RESUME", this::resumeExistingGameFromCurrentGame,
-                "PAUSE", Buttons::pauseGame,
-                "S_REPLAY", App::callStepReplay
-        ));
-         */
     }
 }
