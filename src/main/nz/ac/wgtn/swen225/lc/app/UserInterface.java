@@ -110,15 +110,6 @@ public class UserInterface extends JFrame{
         //timer.start();
     }
 
-    /**
-     * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
-     * terminates the loading of a file.
-     */
-    private void resumeExistingGame(){
-        File fileToLoad = loadExistingGame();
-        if (fileToLoad != null) startGame(fileToLoad);
-    }
-
     /** Creates a new game and runs it. This can be done from an existing game file, if neccesary. */
     protected void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
@@ -163,6 +154,15 @@ class InputController {
                 "PAUSE", Buttons::pauseGame,
                 "S_REPLAY", App::callStepReplay
         ));
+    }
+
+    /**
+     * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
+     * terminates the loading of a file.
+     */
+    private void resumeExistingGame(){
+        File fileToLoad = loadExistingGame();
+        if (fileToLoad != null) UserInterface.ui.startGame(fileToLoad);
     }
 
     /**
