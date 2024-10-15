@@ -64,7 +64,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = startUIButtonPanel(() -> startGame(null), () -> InputController.ic.resumeExistingGame());
+        JPanel buttons = startUIButtonPanel(() -> startGame(null), () -> Controller.ic.resumeExistingGame());
 
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
@@ -81,7 +81,7 @@ public class UserInterface extends JFrame{
      */
     private void createMainMenu(){
         //The wider "Game UI" that the user will be interacting with!
-        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, InputController.ic.getMainUIButtons());
+        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, Controller.ic.getMainUIButtons());
 
         GraphicsPane pane = new GraphicsPane();
 
@@ -91,7 +91,7 @@ public class UserInterface extends JFrame{
         };
 
         this.add(BorderLayout.EAST, gameControls);
-        this.addKeyListener(InputController.ic.getKeyController());
+        this.addKeyListener(Controller.ic.getKeyController());
 
         this.setFocusable(true);
         this.requestFocus();
@@ -141,15 +141,15 @@ public class UserInterface extends JFrame{
     }
 }
 
-class InputController {
-    private List<DefaultButton> mainUIButtons;
-    private ControlKeys keyController;
+class Controller {
+    private final List<DefaultButton> mainUIButtons;
+    private final ControlKeys keyController;
 
     //To prevent more than one "Lite" User Interface instance from being created.
-    private static final InputController IC = new InputController();
-    public static InputController ic = IC;
+    private static final Controller IC = new Controller();
+    public static Controller ic = IC;
 
-    private InputController(){
+    private Controller(){
         mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
 
         keyController= new ControlKeys(Map.of(
