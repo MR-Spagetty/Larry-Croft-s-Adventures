@@ -3,7 +3,6 @@ package nz.ac.wgtn.swen225.lc.app;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.*;
-import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
 import java.nio.file.FileSystems;
@@ -21,7 +20,11 @@ public class App{
     private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
 
     private final static Recorder rec = new Recorder(recorderPath);
-    private final static StepReplay sReplay = new StepReplay(recorderPath); /** Should be public??? */
+
+    //Below is all the replay instances that the recorder will need to access.
+    private static StepReplay sReplay;
+    private static AutoReplay aReplay;
+    private static TickReplay tReplay;
 
     public App(){ SwingUtilities.invokeLater(UserInterface::new); }
 
@@ -61,21 +64,17 @@ public class App{
      */
     public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
-    /** Calls the "Auto Replay" feature in the Replayer. This is only done once! */
-    public static void callAutoReplay(){ new AutoReplay(recorderPath).replay(); }
+    /** Creates an instance of the "Auto Replay" */
+    public static void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
 
-    /**
-     * Creates a new "Tick Replay" instance, which involves passing in the current tick (??), and then calls
-     * the "replay()".
-     * TODO: Check to see if the implementation is correct. If yes, "getTick()" will need to be public.
-     */
-    public static void callTickReplay(){
-        TickReplay tReplay = new TickReplay(recorderPath, (int)GameState.getGameState().getTick());
-        tReplay.replay();
-    }
+    /** Creates an instance of the "Tick Replay" */
+    public static void tickReplay(){ tReplay = new TickReplay(recorderPath, 150); }
+
+    /** Creates an instance of the "Step Replay" */
+    public static void stepReplay(){ sReplay = new StepReplay(recorderPath); }
 
     /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
-    public static void callStepReplay(){ sReplay.replay(); }
+    public static void callStepReplay(){ if (sReplay != null) sReplay.replay(); }
 
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically
