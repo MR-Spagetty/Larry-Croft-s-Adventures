@@ -31,13 +31,10 @@ public class UserInterface extends JFrame{
     public static UserInterface ui = USER_INTERFACE;
 
     /**
-     * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
-     * Here, a "lite" version is created for use by the "Fuzz" class, which doesn't do any of the actual "GUI"
-     * setup. The setup needs to be done in a method called "createMenu".
+     * An empty constructor. This was placed here on purpose to prevent the initialisation of a new "UserInterface"
+     * class, and encourage the use of the static instance "ui". Singleton pattern at work, as usual!
      */
-    private UserInterface(){
-
-    }
+    private UserInterface(){}
 
     /**
      * Method which creates the physical menu of the "User Interface" class.

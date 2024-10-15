@@ -98,17 +98,4 @@ public class App{
     public static Map<Integer, Runnable> strokesToUIAction(){
         return IOController.ic.getKeyController().strokesToUIAction();
     }
-
-    /**
-     * Takes a given file path and initialises a level in the game from it.
-     *
-     * @param levelPath The path of the file for the specific level.
-     */
-    public static void startGameFromFilePath(Path levelPath){
-
-        //NB: Temporary until "setLevel()" method works.
-        try { GameState.getGameState().setLevel(levelPath); /* ??? */ }
-        catch (Exception ignored){}
-
-    }
 }
