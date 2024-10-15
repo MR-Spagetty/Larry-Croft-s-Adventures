@@ -1,7 +1,5 @@
 package test.nz.ac.wgtn.swen225.lc.app;
 
-import nz.ac.wgtn.swen225.lc.app.App;
-import nz.ac.wgtn.swen225.lc.app.Buttons;
 import nz.ac.wgtn.swen225.lc.app.ControlKeys;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
