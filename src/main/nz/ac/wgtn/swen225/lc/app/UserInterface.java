@@ -85,7 +85,7 @@ public class UserInterface extends JFrame{
     /**
      * Helper method which creates the components present in the Main menu. This also sets up the keys to be used
      * in the game.
-     * TODO: make a more professional version of the Main Menu GUI and add in the pane for displaying the graphics.
+     * TODO: Add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
         this.add(BorderLayout.EAST, gameControls.createMenu());

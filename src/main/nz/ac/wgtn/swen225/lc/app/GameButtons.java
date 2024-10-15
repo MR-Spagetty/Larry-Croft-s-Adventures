@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Class which holds the buttons that perform specific actions in relation to the game and the GUI.
+ * Holds the buttons that perform specific actions in relation to the game and the GUI.
  */
 public class GameButtons extends GridPanel{
     //The Screen that will be displayed when the game is paused.

@@ -51,7 +51,7 @@ public class Recorder {
   public void startLevel(Path levelPath) {
     Objects.requireNonNull(levelPath);
     String filename = (allLevels.size() + 1) + ".json";
-    currentLevel = new Level(filename, new ArrayList<>(), Paths.get(dirPath.toString(), filename), levelPath);
+    currentLevel = new Level(filename, new ArrayList<>(), dirPath, levelPath);
   }
 
   /*
