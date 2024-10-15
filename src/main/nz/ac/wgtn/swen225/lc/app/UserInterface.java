@@ -5,6 +5,7 @@ import nz.ac.wgtn.swen225.lc.domain.GameState;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 import java.io.File;
 import java.util.Map;
@@ -29,9 +30,6 @@ public class UserInterface extends JFrame{
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
-    List<DefaultButton> mainUIButtons;
-    ControlKeys keyController;
-
     //To prevent more than one "Lite" User Interface instance from being created.
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
@@ -42,15 +40,7 @@ public class UserInterface extends JFrame{
      * setup. The setup needs to be done in a method called "createMenu".
      */
     private UserInterface(){
-        mainUIButtons = Buttons.mainUIButtons(() -> endGame(true), () -> endGame(false), () -> {});
-
-        keyController= new ControlKeys(Map.of(
-                "EXIT", () -> endGame(false),
-                "SAVE", () -> endGame(true),
-                "RESUME", this::resumeExistingGameFromCurrentGame,
-                "PAUSE", Buttons::pauseGame,
-                "S_REPLAY", App::callStepReplay
-        ));
+        createMenu();
     }
 
     /**
@@ -74,7 +64,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = Buttons.startUIButtonPanel(() -> startGame(null), this::resumeExistingGame);
+        JPanel buttons = Buttons.startUIButtonPanel(() -> startGame(null), () -> InputController.ic.resumeExistingGame());
 
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
@@ -90,7 +80,9 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, mainUIButtons); //The wider "Game UI" that the user will be interacting with!
+        //The wider "Game UI" that the user will be interacting with!
+        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, InputController.ic.getMainUIButtons());
+
         GraphicsPane pane = new GraphicsPane();
 
         removeGameUI = () -> {
@@ -99,7 +91,7 @@ public class UserInterface extends JFrame{
         };
 
         this.add(BorderLayout.EAST, gameControls);
-        this.addKeyListener(keyController);
+        this.addKeyListener(InputController.ic.getKeyController());
 
         this.setFocusable(true);
         this.requestFocus();
@@ -137,8 +129,8 @@ public class UserInterface extends JFrame{
 }
 
 class InputController {
-    List<DefaultButton> mainUIButtons;
-    ControlKeys keyController;
+    private List<DefaultButton> mainUIButtons;
+    private ControlKeys keyController;
 
     //To prevent more than one "Lite" User Interface instance from being created.
     private static final InputController IC = new InputController();
@@ -160,7 +152,7 @@ class InputController {
      * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
      * terminates the loading of a file.
      */
-    private void resumeExistingGame(){
+    protected void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
         if (fileToLoad != null) UserInterface.ui.startGame(fileToLoad);
     }
@@ -230,4 +222,8 @@ class InputController {
 
         return chosenFile;
     }
+
+    /** Getters for retrieving the UI Buttons and the Key Controller. */
+    public List<DefaultButton> getMainUIButtons(){ return Collections.unmodifiableList(mainUIButtons); }
+    public ControlKeys getKeyController(){ return keyController; }
 }
