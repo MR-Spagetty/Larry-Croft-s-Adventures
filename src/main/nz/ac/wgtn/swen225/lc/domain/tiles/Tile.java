@@ -3,7 +3,10 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
+import java.util.Objects;
 
 public interface Tile extends Comparable<Tile> {
 
@@ -74,7 +77,23 @@ public interface Tile extends Comparable<Tile> {
     return location().compareTo(other.location());
   }
 
-  public static Tile fromJSON(JSONType json){
-    return null;
+  public static Tile fromJSON(JSONType json) {
+    if (json instanceof JSONObject data) {
+      Objects.requireNonNull(data.get("position"), "No position specified");
+      JSONString tileType = (JSONString)data.get("tile");
+      Objects.requireNonNull(tileType, "Tile type must be specified");
+      return switch (tileType.get()){
+        case "Empty" -> Empty.fromJSON(data);
+        case "Wall" -> Wall.fromJSON(data);
+        case "Exit" -> Exit.fromJSON(data);
+        case "Conveyor" -> Conveyor.fromJSON(data);
+        case "Ice" -> Ice.fromJSON(data);
+        case "DirectionalIce" -> DirectionalIce.fromJSON(data);
+        default -> throw new IllegalArgumentException("Unknown tile: "+tileType.get());
+      };
+    } else {
+      throw new IllegalArgumentException(
+          "Expected JSONObject but got: " + json.getClass().getName());
+    }
   }
 }
