@@ -38,14 +38,6 @@ public class UserInterface extends JFrame{
     public static UserInterface ui = USER_INTERFACE;
 
     /**
-     * The recorder that will record the current game the user is playing.
-     * Here, the recorder and file path is initially "null" in the case that the user does not want a game to be recorded!
-     * In addition, if the recorder is to be enabled, the user will need to select the folder to save the files!
-     */
-    private static Path recorderPath = null;
-    private static Recorder rec = null;
-
-    /**
      * An empty constructor. This was placed here on purpose to prevent the initialisation of a new "UserInterface"
      * class, and encourage the use of the static instance "ui". Singleton pattern at work, as usual!
      */
