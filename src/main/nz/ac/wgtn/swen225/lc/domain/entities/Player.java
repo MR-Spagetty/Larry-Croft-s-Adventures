@@ -8,6 +8,7 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
 import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffecterTile;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 
 public class Player extends MoveableEntity {
 
@@ -124,5 +125,9 @@ public class Player extends MoveableEntity {
    */
   public boolean isDead() {
     return this.dead;
+  }
+
+  public static Player fromJSON(JSONObject json){
+    return new Player(Point.fromJSON(json.get("position")), 0);
   }
 }
