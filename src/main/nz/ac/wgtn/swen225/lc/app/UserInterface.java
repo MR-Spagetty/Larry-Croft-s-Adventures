@@ -1,10 +1,10 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -156,9 +156,19 @@ public class UserInterface extends JFrame{
         );
 
         if (recordGame == JOptionPane.YES_OPTION){
-            /** TODO Add a pop-up window that decides where the files will be. */
+            JFileChooser chooseFolder = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            chooseFolder.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //So we do not select a file by accident!
+            int result = chooseFolder.showOpenDialog(null);
 
-            recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
+            //If you decide to cancel the operation, you will be told that the game will NOT be recorded!
+            if (result != JFileChooser.APPROVE_OPTION){
+                JOptionPane.showMessageDialog(
+                        null, "No folder path has been selected! Recorder will not be initiated.",
+                        "Info", JOptionPane.PLAIN_MESSAGE);
+                return;
+            }
+
+            recorderPath = chooseFolder.getCurrentDirectory().toPath();
             rec = new Recorder(recorderPath);
         }
     }
