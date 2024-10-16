@@ -67,8 +67,8 @@ public class KeyStrokes {
     }
 
     /**
-     * Returns a COMBINED set of all the keystrokes that have been assigned to a Player Action or an
-     * action to the GUI in the game.
+     * @return A COMBINED set of all the keystrokes that have been assigned to a Player Action or an
+     *         action to the GUI in the game.
      */
     public Set<Integer> getKeyStrokes(){
         Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
@@ -80,12 +80,12 @@ public class KeyStrokes {
         }};
     }
 
-    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
+    /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
     public Map<Integer, PlayerAction> strokesToPlayerAction(){
         return Collections.unmodifiableMap(strokeToPlayerAction);
     }
 
-    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
+    /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
     public Map<Integer, Runnable> strokesToUIAction(){
         return Collections.unmodifiableMap(strokeToUIAction);
     }
