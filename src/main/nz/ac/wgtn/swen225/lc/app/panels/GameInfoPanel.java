@@ -1,6 +1,6 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
-import nz.ac.wgtn.swen225.lc.app.InventoryPanel;
+import nz.ac.wgtn.swen225.lc.app.GameInventoryPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +36,7 @@ public class GameInfoPanel extends DefaultPanel {
         this.add(timeDisplay);
         this.add(chipsLeftDisplay);
         this.add(nothing);
-        this.add(new InventoryPanel(width, 60));
+        this.add(new GameInventoryPanel(width, 60));
         this.add(nothing);
     }
 
