@@ -8,8 +8,17 @@ import java.awt.*;
 /**
  * A JPanel where information like the current level and the number of chips remaining is displayed.
  */
-public class GameInfo extends DefaultPanel {
-    public GameInfo(Color backgroundColor, int width, int height){
+public class GameInfoPanel extends DefaultPanel {
+
+    /**
+     * Constructor used to initialise the Game Information panel.
+     *
+     * @param backgroundColor The background colour of the JPanel. Can be "null" if no
+     *                         background is to be set.
+     * @param width The preferred width of the JPanel.
+     * @param height The preferred height of the JPanel.
+     */
+    public GameInfoPanel(Color backgroundColor, int width, int height){
         super(backgroundColor, width, height);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -29,7 +38,6 @@ public class GameInfo extends DefaultPanel {
     /**
      * A variation of a "JLabel" class which also sets the colour of the text, the font, and
      * the size.
-     * TODO: Get opinions on fonts and try and get them working.
      */
     private class CustomJLabel extends JLabel{
         public CustomJLabel(String text){

@@ -41,7 +41,7 @@ public class UserInterface extends JFrame{
      * Here, the recorder and file path is initially "null" in the case that the user does not want a game to be recorded!
      * In addition, if the recorder is to be enabled, the user will need to select the folder to save the files!
      */
-    private static Path recorderPath= null;
+    private static Path recorderPath = null;
     private static Recorder rec = null;
 
     /**

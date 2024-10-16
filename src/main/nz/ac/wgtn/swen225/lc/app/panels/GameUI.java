@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import nz.ac.wgtn.swen225.lc.app.GameInfo;
+import nz.ac.wgtn.swen225.lc.app.GameInfoPanel;
 import nz.ac.wgtn.swen225.lc.app.GraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.*;
@@ -27,7 +27,7 @@ public class GameUI extends DefaultPanel {
     public GameUI(Color backgroundColor, int width, int height, List<DefaultButton> mainUIButtons){
         super(backgroundColor, width, height);
 
-        add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
+        add(BorderLayout.NORTH, new GameInfoPanel(backgroundColor, width, (height/3)));
 
         GameButtonsPanel buttons = new GameButtonsPanel(backgroundColor, width, (height/10), 15f, mainUIButtons);
         add(BorderLayout.SOUTH, buttons);
