@@ -3,7 +3,6 @@ package nz.ac.wgtn.swen225.lc.app;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.app.buttons.MainUIButtons;
 import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
-import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
 import nz.ac.wgtn.swen225.lc.app.otherpanels.PauseScreen;
 
 import javax.swing.*;
@@ -86,14 +85,6 @@ public class IOController {
         }
 
         UserInterface.ui.endGame();
-    }
-
-    /**
-     * Creates the pop-up window that re-iterates the instructions that apply to the game.
-     * The method is stated here as it links up to the action of a button!
-     */
-    protected void createHelpDialog(){
-        JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 
     /**

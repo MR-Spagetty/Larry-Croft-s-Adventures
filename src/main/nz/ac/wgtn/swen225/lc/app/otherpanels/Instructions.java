@@ -30,4 +30,12 @@ public class Instructions extends JPanel{
 
         return returnLabel;
     }
+
+    /**
+     * Creates the pop-up window that re-iterates the instructions that apply to the game.
+     * The method is stated here as it links up to the action of a button!
+     */
+    public void createHelpDialog(){
+        JOptionPane.showMessageDialog(null, instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
+    }
 }

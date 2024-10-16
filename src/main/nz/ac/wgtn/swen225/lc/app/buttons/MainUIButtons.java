@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app.buttons;
 
 import nz.ac.wgtn.swen225.lc.app.IOController;
+import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class MainUIButtons{
      */
     private static List<DefaultButton> pauseAndHelpButtons(){
         DefaultButton pauseGame = new DefaultButton(unused -> IOController.ic.pauseGame(), "PAUSE");
-        DefaultButton displayHelp = new DefaultButton(unused -> IOController.ic.createHelpDialog(), "HELP");
+        DefaultButton displayHelp = new DefaultButton(unused -> Instructions.instructionsPanel.createHelpDialog(), "HELP");
 
         return List.of(pauseGame, displayHelp);
     }
