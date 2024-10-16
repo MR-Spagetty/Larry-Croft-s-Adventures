@@ -25,16 +25,15 @@ public class GameButtons extends GridPanel{
  * that are to be used in the Main User Interface!
  */
 class UIButtons {
-    private static final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
 
     /**
      * Returns a list (rather than a panel) of the main UI buttons in the game. The actual buttons
      * themselves are made in two methods, with one requiring the supplement of the actions each button
      * will execute. (As they perform actions needed in different parts of the code.)
      */
-    public static List<DefaultButton> mainUIButtons(Runnable save, Runnable exit, Runnable record){
+    public static List<DefaultButton> mainUIButtons(Runnable save, Runnable exit){
         List<DefaultButton> pauseAndHelp = pauseAndHelpButtons();
-        List<DefaultButton> saveAndRec = saveAndRecButtons(save, exit, record);
+        List<DefaultButton> saveAndRec = saveAndRecButtons(save, exit);
 
         return new ArrayList<>(){{
             addAll(pauseAndHelp);
@@ -48,12 +47,11 @@ class UIButtons {
      *
      * @return A list consisting of the "Pause" and "Help" buttons, each wired up to their appropriate action.
      */
-    private static List<DefaultButton> saveAndRecButtons(Runnable save, Runnable exit, Runnable record){
-        DefaultButton saveGame = new DefaultButton(unused -> save.run(), "SAVE");
+    private static List<DefaultButton> saveAndRecButtons(Runnable save, Runnable exit){
+        DefaultButton saveGame = new DefaultButton(unused -> save.run(), "SAVE & EXIT");
         DefaultButton exitGame = new DefaultButton(unused -> exit.run(), "EXIT");
-        DefaultButton recordButton = new DefaultButton(unused -> record.run(), new ImageIcon(IMG_URL + "record.png"));
 
-        return List.of(recordButton, saveGame, exitGame);
+        return List.of(saveGame, exitGame);
     }
 
     /**
