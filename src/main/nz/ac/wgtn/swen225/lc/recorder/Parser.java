@@ -39,11 +39,11 @@ public class Parser {
   /**
    * Extracts the player actions from the parsed JSON content.
    *
-   * @param t the JSON content representing the level
+   * @param j the JSON content representing the level
    * @return a list of PlayerAction objects
    */
-  private static List<PlayerAction> parseActions(JSONObject t) {
-    List<JSONType> actionJSON = ((JSONList)t.get("actions")).getElements();
+  private static List<PlayerAction> parseActions(JSONObject j) {
+    List<JSONType> actionJSON = ((JSONList)j.get("actions")).getElements();
     return actionJSON.stream()
             .map(a->((JSONString)a).value())
             .map(a->mapper.get(a))
@@ -53,22 +53,22 @@ public class Parser {
   /**
    * Extracts the next level path from the parsed JSON content.
    *
-   * @param t the JSON content representing the level
+   * @param j the JSON content representing the level
    * @return a Path object pointing to the next level file
    */
-  private static Path parseNextLevel(JSONObject t) {
-    String path = ((JSONString)t.get("nextLevel")).value();
+  private static Path parseNextLevel(JSONObject j) {
+    String path = ((JSONString)j.get("nextLevel")).value();
     return Paths.get(path);
   }
 
   /**
    * Extracts the current level path from the parsed JSON content.
    * 
-   * @param t the JSON content representing the level
+   * @param j the JSON content representing the level
    * @return a Path object pointing to the current level file
    */
-  private static Path parseLevel(JSONObject t) {
-    String path = ((JSONString)t.get("level")).value();
+  private static Path parseLevel(JSONObject j) {
+    String path = ((JSONString)j.get("level")).value();
     return Paths.get(path);
   }
 
