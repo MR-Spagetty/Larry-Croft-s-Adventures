@@ -6,6 +6,9 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
+import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
 /** more advanced Ice tile that redirects the entity */
 public class DirectionalIce extends Ice {
@@ -82,5 +85,19 @@ public class DirectionalIce extends Ice {
     return super.canEnter(enteree)
         && (enteree.location().equals(location().add(this.type.a.offset))
             || enteree.location().equals(location().add(this.type.b.offset)));
+  }
+
+  public static DirectionalIce fromJSON(JSONObject json) {
+    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+      throw new IllegalArgumentException(
+          "Incorrect data given expected Conveyor got: " + json.get("Tile"));
+    }
+    if (!(json.get("type") instanceof JSONLong)) {
+      throw new IllegalArgumentException(
+          "Expected long type got: " + json.get("type").getClass().getName());
+    }
+    return new DirectionalIce(
+        Point.fromJSON(json.get("position")),
+        Integer.parseInt("" + (((JSONLong) json.get("type")).get())));
   }
 }
