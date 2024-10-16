@@ -8,9 +8,12 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
 import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffecterTile;
+import nz.ac.wgtn.swen225.lc.persistency.JSONList;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
-public class Player extends MoveableEntity {
+public class Player extends MoveableEntity implements JSONSerializable<Player> {
 
   private Point actionQueue = Point.ORIGIN;
 
@@ -127,7 +130,23 @@ public class Player extends MoveableEntity {
     return this.dead;
   }
 
-  public static Player fromJSON(JSONObject json){
-    return new Player(Point.fromJSON(json.get("position")), 0);
+  public static Player fromJSON(JSONObject json) {
+    final Player ref = new Player(Point.ORIGIN, 0);
+    return ref.fromJson(json);
+  }
+
+  @Override
+  public JSONType toJson() {
+    JSONObject out = new JSONObject();
+    out.put("position", this.location().toJson());
+    JSONList invOut = new JSONList();
+    getInventory().stream().map(Item::toJson).forEach(invOut::add);
+    out.put("Inventory", invOut);
+    return out;
+  }
+
+  @Override
+  public Player fromJson(JSONType json) {
+    return new Player(Point.fromJSON(((JSONObject) json).get("position")), 0);
   }
 }
