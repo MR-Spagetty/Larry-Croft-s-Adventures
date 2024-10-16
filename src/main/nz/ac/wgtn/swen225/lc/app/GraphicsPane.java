@@ -6,6 +6,8 @@ import java.awt.*;
 import nz.ac.wgtn.swen225.lc.renderer.*;
 
 /**
+ * The part of the main screen which displays the game.
+ *
  * TODO: add comments and check with Renderer that this is OK in terms of displaying the Rendered game on the UI.
  */
 public class GraphicsPane extends JPanel {

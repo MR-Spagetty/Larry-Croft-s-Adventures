@@ -1,30 +1,25 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.Recorder;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
- * TODO: ADD IN BUTTONS TO DO RECORDING! And add an area that will display the items picked up!
  *
  * @author Developer 1 <dev1@example.internal>
  */
 public class UserInterface extends JFrame{
-    /*
-     * Action to be executed when the user closes the Game GUI with the 'X' button.
-     * This action will be mostly similar to quitting the current game playing, as you will also be
-     * asked whether you want to save the game before quitting.
-     */
-    Runnable closeGame = ()->{};
+    //Executed when the player ends a game and goes back to the start menu.
+    Runnable removeGameUI = () -> {};
 
-    /*
-     * Action to be executed when the user begins playing a game. (i.e.: When we switch from the Start Menu to
-     * the Game Menu itself.) Currently, the Runnable action does not do anything, as what is executed is dependent
-     * on the components that are in the start menu (as these are removed).
-     */
-    Runnable startGame = ()->{};
+    //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
+    Runnable removeStartUI = () -> {};
 
     /*
      * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
@@ -32,50 +27,54 @@ public class UserInterface extends JFrame{
      */
     static Timer timer;
 
-    GameUI gameControls; //The wider "Game UI" that the user will be interacting with!
-    ControlKeys keyControl; //An instance of the "Key Controller" they will be interacting with.
+    private final int WIDTH = 1200, HEIGHT = 600;
 
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 600;
+    //To prevent more than one User Interface instance from being created.
+    private static final UserInterface USER_INTERFACE = new UserInterface();
+    public static UserInterface ui = USER_INTERFACE;
 
     /**
-     * Constructor of the Graphical User Interface, which is where the GUI is set up when you start up the game.
-     * This involves defining the size of the GUI window, and putting the Start Menu components inside.
-     * TODO: make a more professional version of the Start Menu GUI.
+     * The recorder that will record the current game the user is playing.
+     * Here, the recorder and file path is initially "null" in the case that the user does not want a game to be recorded!
+     * In addition, if the recorder is to be enabled, the user will need to select the folder to save the files!
      */
-    public UserInterface(){
+    private static Path recorderPath= null;
+    private static Recorder rec = null;
+
+    /**
+     * An empty constructor. This was placed here on purpose to prevent the initialisation of a new "UserInterface"
+     * class, and encourage the use of the static instance "ui". Singleton pattern at work, as usual!
+     */
+    private UserInterface(){}
+
+    /**
+     * Method which creates the physical menu of the "User Interface" class.
+     * This involves defining the size of the GUI window, and putting the Start Menu components inside.
+     */
+    public void createMenu(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-        addWindowListener(new WindowAdapter(){
-            public void windowClosed(WindowEvent e){ closeGame.run(); }
-        });
 
         createStartMenu();
 
         pack();
         setVisible(true);
-
-        gameControls = new GameUI(WIDTH/4, HEIGHT);
-        keyControl = ControlKeys.keyController;
     }
 
     /**
-     * Helper method that creates the "components" that will be in the Start Menu.
+     * Helper method which creates the components present in the Start Menu, including the Buttons and their
+     * corresponding actions.
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = StartUI.createButtonsSection((unused -> startGame.run()));
+        JPanel buttons = UIButtons.startUIButtonPanel(
+                () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
+        );
 
-        /*
-         * "startGame" will be changed so when executed, the contents on the Start Menu are removed.
-         * This is because this action will be run when a game is started.
-         */
-        startGame = () -> {
+        removeStartUI = () -> {
             remove(instructions); remove(buttons);
-            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
-            createMainMenu();
+            SwingUtilities.updateComponentTreeUI(this);
         };
 
         add(BorderLayout.NORTH, instructions);
@@ -85,22 +84,120 @@ public class UserInterface extends JFrame{
     /**
      * Helper method which creates the components present in the Main menu. This also sets up the keys to be used
      * in the game.
-     * TODO: Add in the pane for displaying the graphics.
      */
     private void createMainMenu(){
-        this.add(BorderLayout.EAST, gameControls.createMenu());
-        this.addKeyListener(keyControl);
+        //The wider "Game UI" that the user will be interacting with!
+        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        /*
         GraphicsPane pane = new GraphicsPane();
-        add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
+
+        removeGameUI = () -> {
+            remove(gameControls); remove(pane);
+            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
+        };
+
+        this.add(BorderLayout.EAST, gameControls);
+        this.addKeyListener(IOController.ic.getKeyController());
 
         this.setFocusable(true);
-        pack();
         this.requestFocus();
+        pack();
 
-        timer.start();
+        //add(BorderLayout.CENTER, pane);
+        //timer = gameControls.createTimer(pane);
+        //timer.start();
+    }
+
+    /** Creates a new game and runs it. This can be done from an existing game file, if necessary. */
+    public void startGame(File gameFile){
+        askToRecordGame();
+
+        //If a new game is being started, we will set the game file to be the first level.
+        if (gameFile == null){
+            gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
+        }
+
+        //Might use: GameState.getGameState().loadState(....);
+        //GameState.getGameState().setLevel(gameFile.toPath());
+        removeStartUI.run();
+        createMainMenu();
+        rec.startLevel(gameFile.toPath());
+    }
+
+    /**
+     * When a user finishes one level, they will be taken to the next level. This involves the recorder being
+     * signalled to stop one level and begin the next.
+     */
+    public void goBetweenLevels(){
+
+        /** TODO, figure out the path needed for the second level! */
+        if (rec != null){
+            rec.endLevel();
+            /*rec.startLevel();*/
+        }
+    }
+
+    protected void saveGame(){
+        /**
+         * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
          */
+        //GameState.getGameState().saveState(....).
+    }
+
+    /**
+     * Removes the content on the current JFrame that allows for playing the game, and puts back the content on the
+     * Start Menu. This is executed when the user exits a current game.
+     */
+    protected void endGame(){
+        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game, if a recorder is selected.
+        removeGameUI.run();
+        createStartMenu();
+    }
+
+    /**
+     * Passes a given player action to the recorder to allow for that action to be recorded.
+     *
+     * @param action The given player action
+     */
+    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+
+    /**
+     * Asks the user whether they want the game to be recorded or not.
+     * If they ask for the game to be recorded, then they need to select where to store the files!
+     */
+    private void askToRecordGame(){
+        int recordGame = JOptionPane.showConfirmDialog(
+                null, "Do you want to record the game?",
+                "Record Game?", JOptionPane.YES_NO_OPTION
+        );
+
+        if (recordGame == JOptionPane.YES_OPTION){
+            recorderPath = selectRecorderFolder();
+            if (recorderPath == null) return;
+
+            rec = new Recorder(recorderPath);
+        }
+    }
+
+    /**
+     * Selects the folder that will store the recorded files.
+     *
+     * @return The path to the folder. "null" is returned when no folder is selected, such as when the user aborts
+     *         selecting a file.
+     */
+    private Path selectRecorderFolder(){
+        JFileChooser chooseFolder = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        chooseFolder.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //So we do not select a file by accident!
+        int result = chooseFolder.showOpenDialog(null);
+
+        //If you decide to cancel the operation, you will be told that the game will NOT be recorded!
+        if (result != JFileChooser.APPROVE_OPTION){
+            JOptionPane.showMessageDialog(
+                    null, "No folder path has been selected! Recorder will not be initiated.",
+                    "Info", JOptionPane.PLAIN_MESSAGE);
+            return null;
+        }
+
+        return chooseFolder.getSelectedFile().toPath();
     }
 }

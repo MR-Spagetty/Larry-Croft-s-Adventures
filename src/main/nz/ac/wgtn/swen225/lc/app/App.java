@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -19,14 +20,12 @@ public class App{
     /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
     private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
 
-    private final static Recorder rec = new Recorder(recorderPath);
-
     //Below is all the replay instances that the recorder will need to access.
     private static StepReplay sReplay;
     private static AutoReplay aReplay;
     private static TickReplay tReplay;
 
-    public App(){ SwingUtilities.invokeLater(UserInterface::new); }
+    public App(){ SwingUtilities.invokeLater(() -> UserInterface.ui.createMenu()); }
 
     /**
      * A "tickOverride()" method that the Recorder can use to allow for replay-back.
@@ -46,6 +45,9 @@ public class App{
      * - For StepReplay, you need to call the replay method each time the player presses a key.
      *
      * NB: The replay is a bit more complicated, I have a replay interface and three classes that extend that interface.
+     *
+     * INTEGRATION NEEDED:
+     * - A method that can end a game file, while skipping any "confirmation".
      */
 
     /**
@@ -56,13 +58,6 @@ public class App{
     public static void forwardActionToDomain(PlayerAction action){
         GameState.getGameState().getPlayer().queueAction(action);
     }
-
-    /**
-     * Passes a given player action to the recorder to allow for that action to be recorded.
-     *
-     * @param action The given player action
-     */
-    public static void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 
     /** Creates an instance of the "Auto Replay" */
     public static void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
@@ -78,10 +73,20 @@ public class App{
 
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically
-     * for the purpose of allowing the "Fuzz" module to access the
+     * for the purpose of allowing the "Fuzz" module to access the buttons.
      */
-    public static List<DefaultButton> getButtons(){ return GameButtons.gameButtons.getButtons(); }
+    public static List<DefaultButton> getButtons(){ return IOController.ic.getMainUIButtons(); }
 
     /** Returns the list of keystrokes associated with an action. */
-    public static Set<Integer> getKeyStrokes(){ return ControlKeys.keyController.getKeyStrokes(); }
+    public static Set<Integer> getKeyStrokes(){ return IOController.ic.getKeyController().getKeyStrokes(); }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
+    public static Map<Integer, PlayerAction> strokesToPlayerAction(){
+        return IOController.ic.getKeyController().strokesToPlayerAction();
+    }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
+    public static Map<Integer, Runnable> strokesToUIAction(){
+        return IOController.ic.getKeyController().strokesToUIAction();
+    }
 }

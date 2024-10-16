@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
 
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -12,13 +13,6 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
-    /*
-     * To prevent two instances of a "Key Controller" from being created, we create a single instance here,
-     * and make it accessible!
-     */
-    private static final ControlKeys KEY_CONTROLLER = new ControlKeys();
-    public static ControlKeys keyController = KEY_CONTROLLER;
-
     private static PlayerAction active = PlayerAction.None; //Current player action being executed in a tick.
 
     /**
@@ -34,9 +28,9 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * and the directions will also be bound to their keystrokes.
      * This is done in two separate methods to separate the two different stages of key assignments.
      */
-    public ControlKeys(){
+    public ControlKeys(Map<String, Runnable> uiActions){
         assignKeysToDirections();
-        assignKeysToActions();
+        assignKeysToActions(uiActions);
     }
 
     private void assignKeysToDirections(){
@@ -46,19 +40,14 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToPlayerAction(KeyEvent.VK_KP_RIGHT, PlayerAction.Right);
     }
 
-    /**
-     * TODO Create actions for each key!
-     */
-    private void assignKeysToActions(){
-        assignKeyToAction(KeyEvent.VK_X, () -> {});
-        assignKeyToAction(KeyEvent.VK_S, () -> {});
-        assignKeyToAction(KeyEvent.VK_R, () -> {});
-        assignKeyToAction(KeyEvent.VK_C, () -> {});
+    private void assignKeysToActions(Map<String, Runnable> uiAction){
+        assignKeyToAction(KeyEvent.VK_X, uiAction.get("EXIT"));
+        assignKeyToAction(KeyEvent.VK_S, uiAction.get("SAVE"));
+        assignKeyToAction(KeyEvent.VK_R, uiAction.get("RESUME"));
         assignKeyToAction(KeyEvent.VK_1, () -> {});
         assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, () -> GameButtons.ps.showScreen());
-        assignKeyToAction(KeyEvent.VK_ESCAPE, () -> GameButtons.ps.hideScreen());
-        assignKeyToAction(KeyEvent.VK_R, App::callStepReplay);
+        assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
+        assignKeyToAction(KeyEvent.VK_S, uiAction.get("S_REPLAY")); //Hidden action
     }
 
     /**
@@ -74,6 +63,8 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      */
     public void keyPressed(KeyEvent e) {
         int keystroke = e.getKeyCode();
+
+        System.out.println(keystroke);
 
         if (((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) || strokeGoesToAction(keystroke)){
             performAction(keystroke);
@@ -123,7 +114,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
 
-        App.forwardActionToRecorder(active);
+        UserInterface.ui.forwardActionToRecorder(active);
     }
 
     /**

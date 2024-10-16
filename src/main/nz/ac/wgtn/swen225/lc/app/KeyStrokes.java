@@ -74,11 +74,19 @@ public class KeyStrokes {
         Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
         Set<Integer> keyStrokesToUIAction = strokeToUIAction.keySet();
 
-        return new HashSet<>(){
-            {
+        return new HashSet<>(){{
             addAll(keyStrokesToPlayerAction);
             addAll(keyStrokesToUIAction);
-            }
-        };
+        }};
+    }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
+    public Map<Integer, PlayerAction> strokesToPlayerAction(){
+        return Collections.unmodifiableMap(strokeToPlayerAction);
+    }
+
+    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
+    public Map<Integer, Runnable> strokesToUIAction(){
+        return Collections.unmodifiableMap(strokeToUIAction);
     }
 }

@@ -7,9 +7,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 public class KeystrokeTests{
-    ControlKeys keys = new ControlKeys();
+    ControlKeys keys = new ControlKeys(Map.of());
     Class<IllegalCallerException> ice = IllegalCallerException.class;
 
     @Test void assertionsEnabled(){
