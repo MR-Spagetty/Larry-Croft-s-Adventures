@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.panels;
 
 import javax.swing.JPanel;
 import java.awt.*;

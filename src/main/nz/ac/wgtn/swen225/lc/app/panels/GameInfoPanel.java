@@ -1,7 +1,5 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
-import nz.ac.wgtn.swen225.lc.app.GameInventoryPanel;
-
 import javax.swing.*;
 import java.awt.*;
 

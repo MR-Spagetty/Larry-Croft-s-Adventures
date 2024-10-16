@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import nz.ac.wgtn.swen225.lc.app.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.*;
 

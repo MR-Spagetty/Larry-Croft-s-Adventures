@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
+import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;

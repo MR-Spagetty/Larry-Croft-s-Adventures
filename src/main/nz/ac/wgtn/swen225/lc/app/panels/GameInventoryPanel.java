@@ -1,6 +1,4 @@
-package nz.ac.wgtn.swen225.lc.app;
-
-import nz.ac.wgtn.swen225.lc.app.panels.GridPanel;
+package nz.ac.wgtn.swen225.lc.app.panels;
 
 import java.awt.*;
 
