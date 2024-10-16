@@ -59,6 +59,7 @@ public class Level {
   public Path savePath() { return savePath; }
   public Path nextSavePath() { return nextSavePath; }
   public Path levelPath(){ return levelPath; }
+  public String filename() { return filename; }
   public List<PlayerAction> actions() { return Collections.unmodifiableList(actions); }
 
   /**
