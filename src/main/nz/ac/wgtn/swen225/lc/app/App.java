@@ -5,8 +5,6 @@ import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
 import javax.swing.*;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,9 +15,6 @@ import java.util.Set;
  * menu can be created.
  */
 public class App{
-    /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
-    private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
-
     public App(){ SwingUtilities.invokeLater(() -> UserInterface.ui.createMenu()); }
 
     /**
