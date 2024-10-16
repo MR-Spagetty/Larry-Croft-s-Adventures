@@ -110,9 +110,15 @@ public class UserInterface extends JFrame{
 
     /** Creates a new game and runs it. This can be done from an existing game file, if necessary. */
     public void startGame(File gameFile){
-        if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
-        askToRecordGame();
+        /*
+         * If a new game is being started, we will set the game file to be the first level.
+         * We will also ask whether we want the game to be recorded!
+         */
+        if (gameFile == null){
+            gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
+            askToRecordGame();
+        }
 
         //Might use: GameState.getGameState().loadState(....);
         //GameState.getGameState().setLevel(gameFile.toPath());
