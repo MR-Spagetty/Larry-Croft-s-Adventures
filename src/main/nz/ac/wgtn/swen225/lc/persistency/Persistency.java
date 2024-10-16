@@ -8,33 +8,44 @@ import org.json.JSONTokener;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.util.*;
+import java.nio.file.Path;
+
 
 public class Persistency {
 
   // Load JSONType from file
-  public static JSONType loadFromFile(String filePath) throws IOException {
+  public static JSONType loadFromFile(Path filePath) throws IOException {
     // Read the JSON string from the file
-    File file = new File(filePath);
-
+    File file = filePath.toFile();
     if (!file.exists()) {
-      throw new IOException("File not found: " + filePath);  // Handle cases where file doesn't exist
+      throw new IOException("File not found: " + filePath.toString());  // Handle cases where file doesn't exist
     }
 
-    String json = FileUtils.readFileToString(new File(filePath), "UTF-8");
-    //json = "[" + json + "]";
-
+    String json = Files.readString(filePath);
+    //String json = FileUtils.readFileToString(new File(filePath), "UTF-8");
     return parseJSONString(json);
   }
 
-  //Save JSONType to a file
-  public static void saveToFile(JSONType jsonType, String filePath) throws IOException {
-    // Convert the custom JSONType back to a JSON string
+  // Load JSONType from file (String)
+  public static JSONType loadFromFile(String filePath) throws IOException {
+    return loadFromFile(Path.of(filePath)); // Delegate to the Path method
+  }
 
-    String jsoString = convertToJSONString(jsonType);
+  // Save JSONType to a file (String)
+  public static void saveToFile(JSONType jsonType, String filePath) throws IOException {
+    saveToFile(jsonType, Path.of(filePath)); // Delegate to the Path method
+  }
+
+  //Save JSONType to a file
+  public static void saveToFile(JSONType jsonType, Path filePath) throws IOException {
+    // Convert the custom JSONType back to a JSON string
+    String jsonString = convertToJSONString(jsonType);
 
     // Write the JSON string to the specified file
-    FileUtils.writeStringToFile(new File(filePath), jsoString, "UTF-8");
+    //FileUtils.writeStringToFile(new File(filePath), jsoString, "UTF-8");
+    Files.writeString(filePath, jsonString);
   }
 
   private static String convertToJSONString(JSONType jsonType) {
@@ -138,10 +149,8 @@ public class Persistency {
       Object value = jsonObject.get(key);
       customObject.put(key, value);
     }
-    return customObject;
+    return customObject; 
   }
-
-  // Parse a string and convert it into a custom JSONList
 
   // Parse a string and convert it into a custom JSONList
   static JSONList parseJSONArray(String jsonString) {
@@ -185,7 +194,7 @@ public class Persistency {
       System.out.println(jsonObject); //
 
       // Save the modified object back to a new file
-      Persistency.saveToFile(jsonObject, "src/main/nz/ac/wgtn/swen225/lc/persistency/outputObject.json");
+      Persistency.saveToFile(jsonObject, "src/main/nz/ac/wgtn/swen225/lc/persistency/putputObject.json");
       System.out.println("Modified object saved to 'outputObject.json'.");
 
       // Simple test loading a JSON Array
@@ -194,7 +203,7 @@ public class Persistency {
       System.out.println(jsonArray); //
 
       // Save the modified array back to a new file
-      Persistency.saveToFile(jsonArray, "src/main/nz/ac/wgtn/swen225/lc/persistency/outputArray.json");
+      Persistency.saveToFile(jsonArray, "src/main/nz/ac/wgtn/swen225/lc/persistency/putputArray.json");
       System.out.println("Modified array saved to 'outputArray.json'.");
 
     } catch (Exception e) {
