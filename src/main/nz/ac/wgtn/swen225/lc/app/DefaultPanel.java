@@ -14,10 +14,10 @@ public class DefaultPanel extends JPanel {
     /**
      * Constructor used when we are making the Panel.
      *
-     * @param backgroundColor: The background colour of the JPanel. Can be "null" if no
+     * @param backgroundColor The background colour of the JPanel. Can be "null" if no
      *                         background is to be set.
-     * @param width: The preferred width of the JPanel.
-     * @param height: The preferred height of the JPanel.
+     * @param width The preferred width of the JPanel.
+     * @param height The preferred height of the JPanel.
      */
     public DefaultPanel(Color backgroundColor, int width, int height){
         this.setBackground(backgroundColor);

@@ -9,12 +9,23 @@ import java.util.List;
  * Holds the buttons that perform specific actions in relation to the game and the GUI.
  */
 public class GameButtons extends GridPanel{
-    public GameButtons(Color backgroundColor, int width, int height, float fontSize, List<DefaultButton> buttonsToAdd){
+
+    /**
+     * Constructor used when creating the Game Buttons JPanel.
+     *
+     * @param backgroundColor The background colour of the JPanel. Can be "null" if no
+     *                        background is to be set.
+     * @param buttonWidth The preferred width of the Buttons in the JPanel.
+     * @param buttonHeight The preferred height of the Buttons in the JPanel.
+     * @param buttonFontSize The size of the text in a Button in the JPanel, if text is available.
+     * @param buttonsToAdd The buttons that are to be added into the JPanel.
+     */
+    public GameButtons(Color backgroundColor, int buttonWidth, int buttonHeight, float buttonFontSize, List<DefaultButton> buttonsToAdd){
         super(backgroundColor, buttonsToAdd.size(), 1);
 
         buttonsToAdd.forEach(b -> {
-            b.setPreferredSize(new Dimension(width, height));
-            if (b.getText() != null) b.setFont(b.getFont().deriveFont(fontSize));
+            b.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+            if (b.getText() != null) b.setFont(b.getFont().deriveFont(buttonFontSize));
             this.add(b);
         });
     }
