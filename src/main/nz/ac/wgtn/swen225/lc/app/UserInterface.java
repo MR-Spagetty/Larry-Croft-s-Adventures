@@ -68,7 +68,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = UIButtons.startUIButtonPanel(
+        StartButtonsPanel buttons = new StartButtonsPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
         );
 
