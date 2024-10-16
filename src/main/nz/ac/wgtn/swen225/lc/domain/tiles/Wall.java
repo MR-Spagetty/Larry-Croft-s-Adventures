@@ -3,6 +3,8 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
 /**
  * Walls are basic tiles that may not be occupied
@@ -34,5 +36,13 @@ public record Wall(Point location) implements Tile {
   @Override
   public Optional<Entity> getOccupant() {
     return Optional.empty();
+  }
+
+  public static Wall fromJSON(JSONObject json) {
+    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+      throw new IllegalArgumentException(
+          "Incorrect data given expected Conveyor got: " + json.get("Tile"));
+    }
+    return new Wall(Point.fromJSON(json.get("position")));
   }
 }

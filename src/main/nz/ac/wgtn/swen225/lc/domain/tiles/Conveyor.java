@@ -49,7 +49,7 @@ public class Conveyor extends MovementAffecterTile {
     return this.targetDir;
   }
 
-  public static Conveyor fromJson(JSONObject json) {
+  public static Conveyor fromJSON(JSONObject json) {
     if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + json.get("Tile"));
