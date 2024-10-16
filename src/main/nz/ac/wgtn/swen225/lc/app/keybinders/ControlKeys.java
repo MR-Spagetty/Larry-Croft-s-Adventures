@@ -1,9 +1,10 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.keybinders;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
 
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**

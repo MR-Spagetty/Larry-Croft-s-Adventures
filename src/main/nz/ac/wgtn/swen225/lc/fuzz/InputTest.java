@@ -1,6 +1,6 @@
 package nz.ac.wgtn.swen225.lc.fuzz;
 
-import nz.ac.wgtn.swen225.lc.app.*;
+import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;

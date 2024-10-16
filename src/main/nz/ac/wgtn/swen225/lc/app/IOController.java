@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
