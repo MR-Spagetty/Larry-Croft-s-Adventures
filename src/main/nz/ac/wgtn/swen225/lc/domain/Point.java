@@ -1,12 +1,18 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
+import java.util.List;
+import nz.ac.wgtn.swen225.lc.persistency.JSONList;
+import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
+import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
+
 /**
  * Represents a point in a 2D space using long coordinates.
  *
  * @param x the x-coordinate of the point
  * @param y the y-coordinate of the point
  */
-public record Point(long x, long y) implements Comparable<Point> {
+public record Point(long x, long y) implements Comparable<Point>, JSONSerializable<Point> {
 
   public static final Point ORIGIN = new Point(0, 0);
 
@@ -114,5 +120,38 @@ public record Point(long x, long y) implements Comparable<Point> {
   public int compareTo(Point other) {
     int xComp = Long.compare(this.x, other.x);
     return xComp != 0 ? xComp : Long.compare(this.y, other.y);
+  }
+
+  @Override
+  public JSONType toJson() {
+    JSONList out = new JSONList();
+    out.add(this.x);
+    out.add(this.y);
+    return out;
+  }
+
+  @Override
+  public Point fromJson(JSONType json) {
+    if (json instanceof JSONList data) {
+      List<JSONLong> coords =
+          data.getElements().stream()
+              .map(
+                  e -> {
+                    if (e instanceof JSONLong l) {
+                      return l;
+                    }
+                    throw new IllegalArgumentException("Expected only Longs");
+                  })
+              .toList();
+      if (coords.size() != 2) {
+        throw new IllegalArgumentException("Expected exactly 2 coordinates, got: " + coords.size());
+      }
+      return new Point(coords.get(0).get(), coords.get(1).get());
+    }
+    throw new IllegalArgumentException("Expected a JSONList, got: " + json.getClass().getName());
+  }
+
+  static Point fromJSON(JSONType json) {
+    return Point.ORIGIN.fromJson(json);
   }
 }
