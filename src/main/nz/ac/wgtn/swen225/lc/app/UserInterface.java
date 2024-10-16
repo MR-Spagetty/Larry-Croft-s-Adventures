@@ -72,7 +72,6 @@ public class UserInterface extends JFrame{
         JPanel buttons = UIButtons.startUIButtonPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
         );
-        /** TODO Add checkbox here! */
 
         removeStartUI = () -> {
             remove(instructions); remove(buttons);
@@ -114,9 +113,17 @@ public class UserInterface extends JFrame{
     public void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
-        /** TODO Add option to enable/disable recorder in start menu and a pop-up window that decides where the files will be. */
-        recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
-        rec = new Recorder(recorderPath);
+        int recordGame = JOptionPane.showConfirmDialog(
+                null, "Do you want to record the game?",
+                "Record Game?", JOptionPane.YES_NO_OPTION
+        );
+
+        if (recordGame == JOptionPane.YES_OPTION){
+            /** TODO Add a pop-up window that decides where the files will be. */
+
+            recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
+            rec = new Recorder(recorderPath);
+        }
 
         //Might use: GameState.getGameState().loadState(....);
         //GameState.getGameState().setLevel(gameFile.toPath());
