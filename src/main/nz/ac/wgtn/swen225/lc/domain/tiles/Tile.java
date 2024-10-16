@@ -3,6 +3,7 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 public interface Tile extends Comparable<Tile> {
 
@@ -71,5 +72,9 @@ public interface Tile extends Comparable<Tile> {
   @Override
   default int compareTo(Tile other) {
     return location().compareTo(other.location());
+  }
+
+  public static Tile fromJSON(JSONType json){
+    return null;
   }
 }
