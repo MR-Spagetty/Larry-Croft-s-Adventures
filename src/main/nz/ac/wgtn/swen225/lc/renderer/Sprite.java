@@ -25,7 +25,7 @@ public class Sprite {
    *
    * @param tile
    */
-  public Sprite(AbstractTile tile) {
+  public Sprite(Tile tile) {
     this(resolveImage(tile), tile.location());
   }
 

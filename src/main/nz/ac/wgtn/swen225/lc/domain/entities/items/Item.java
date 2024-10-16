@@ -4,8 +4,9 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.AbstractEntity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
 
-public abstract class Item extends AbstractEntity {
+public abstract class Item extends AbstractEntity implements JSONSerializable<Item>{
   public Item(Point location, long individualID) {
     super(location, individualID);
   }
