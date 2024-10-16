@@ -2,7 +2,6 @@ package nz.ac.wgtn.swen225.lc.recorder;
 
 import java.util.List;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 
