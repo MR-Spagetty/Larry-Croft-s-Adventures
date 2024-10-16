@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import nz.ac.wgtn.swen225.lc.app.GraphicsPane;
+import nz.ac.wgtn.swen225.lc.app.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -39,7 +39,7 @@ public class GamePanel extends DefaultPanel {
      * @param gameDisplay The graphics display that will need to be refreshed by the timer.
      * @return The timer that will refresh the graphics display every few seconds.
      */
-    public Timer createTimer(GraphicsPane gameDisplay){
+    public Timer createTimer(GameGraphicsPane gameDisplay){
         return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();

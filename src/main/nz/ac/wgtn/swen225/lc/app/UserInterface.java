@@ -92,7 +92,7 @@ public class UserInterface extends JFrame{
         //The wider "Game UI" that the user will be interacting with!
         GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        GraphicsPane pane = new GraphicsPane();
+        GameGraphicsPane pane = new GameGraphicsPane();
 
         removeGameUI = () -> {
             remove(gameControls); remove(pane);
