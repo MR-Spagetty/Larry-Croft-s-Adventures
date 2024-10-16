@@ -9,6 +9,9 @@ import java.awt.*;
  * A JPanel where information like the current level and the number of chips remaining is displayed.
  */
 public class GameInfoPanel extends DefaultPanel {
+    JLabel levelDisplay;
+    JLabel timeDisplay;
+    JLabel chipsLeftDisplay;
 
     /**
      * Constructor used to initialise the Game Information panel.
@@ -22,10 +25,12 @@ public class GameInfoPanel extends DefaultPanel {
         super(backgroundColor, width, height);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel levelDisplay = new CustomJLabel("LEVEL: ");
-        JLabel timeDisplay = new CustomJLabel("TIME: ");
-        JLabel chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: ");
+        //A JLabel which literally is just for spacing out this panel with the rest.
         JLabel nothing = new CustomJLabel(" ");
+
+        levelDisplay = new CustomJLabel("LEVEL: ");
+        timeDisplay = new CustomJLabel("TIME: ");
+        chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: ");
 
         this.add(levelDisplay);
         this.add(timeDisplay);
