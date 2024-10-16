@@ -126,6 +126,15 @@ public class UserInterface extends JFrame{
         createMainMenu();
     }
 
+    /**
+     * When a user finishes one level, they will be taken to the next level. This involves the recorder being
+     * signalled to stop one level and begin the next.
+     */
+    public void goBetweenLevels(){
+        rec.endLevel();
+        rec.startLevel(); /** TODO, figure out the path needed for the second level! */
+    }
+
     protected void saveGame(){
         /**
          * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
