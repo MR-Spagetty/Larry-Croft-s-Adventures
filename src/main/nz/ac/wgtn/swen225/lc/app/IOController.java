@@ -31,7 +31,7 @@ public class IOController {
      * In the constructor, the buttons and the keystrokes are initialised to their actions.
      */
     private IOController(){
-        mainUIButtons = UIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
+        mainUIButtons = MainUIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
