@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import nz.ac.wgtn.swen225.lc.persistency.*;
 
@@ -209,5 +210,14 @@ public class Maze {
       entities.forEach(maze::addEntity);
     }
     return maze;
+  }
+
+  public List<ModifiableTile> getModifiableTiles() {
+    return this.tiles.stream()
+        .<ModifiableTile>mapMulti(
+            (t, cons) -> {
+              if (t instanceof ModifiableTile mt) cons.accept(mt);
+            })
+        .toList();
   }
 }
