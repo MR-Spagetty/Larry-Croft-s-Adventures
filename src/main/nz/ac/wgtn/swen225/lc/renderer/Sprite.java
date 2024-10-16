@@ -25,7 +25,7 @@ public class Sprite {
    *
    * @param tile
    */
-  public Sprite(AbstractTile tile) {
+  public Sprite(Tile tile) {
     this(resolveImage(tile), tile.location());
   }
 
@@ -60,10 +60,9 @@ public class Sprite {
     try {
       return switch (o) {
         // Exit class image
-        case Exit exit ->
-            ImageIO.read(Sprite.class.getClassLoader().getResource("finishTile.png"));
+        case Exit exit -> ImageIO.read(Sprite.class.getClassLoader().getResource("finishTile.png"));
         // Wall class image
-        case Wall wall -> ImageIO.read(Sprite.class.getClassLoader().getResource("Wall.png"));
+        case Wall wall -> ImageIO.read(Sprite.class.getClassLoader().getResource("wall.png"));
         // Empty class image
         case Empty empty -> ImageIO.read(Sprite.class.getClassLoader().getResource("tile.png"));
         // Player class image
@@ -89,11 +88,14 @@ public class Sprite {
               // Upwards orientation
               case Up -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorUp.png"));
               // Upwards orientation
-              case Left -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorLeft.png"));
+              case Left ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorLeft.png"));
               // Upwards orientation
-              case Down -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorDown.png"));
+              case Down ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorDown.png"));
               // Upwards orientation
-              case Right -> ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorRight.png"));
+              case Right ->
+                  ImageIO.read(Sprite.class.getClassLoader().getResource("conveyorRight.png"));
               // Default is Error image
               default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
             };
@@ -117,6 +119,14 @@ public class Sprite {
             };
         // Ice class image
         case Ice ice -> ImageIO.read(Sprite.class.getClassLoader().getResource("ice.png"));
+        // Fire class image
+        case Fire fire ->
+            ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
+        // Water class image
+        case Water water ->
+            water.filled() == true
+                ? ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"))
+                : ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
         // Default Error image for when no individual case in place
         default -> ImageIO.read(Sprite.class.getClassLoader().getResource("placeholder.png"));
       };

@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 /**
  * Basic interface that all entities in the game must implement.
@@ -81,4 +82,8 @@ public interface Entity {
    * @param maze the maze to inhabit
    */
   void maze(Maze maze);
+
+  public static Entity fromJSON(JSONType json) {
+    return null;
+  }
 }

@@ -1,9 +1,11 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.persistency.Persistency;
 
 public final class GameState {
 
@@ -105,23 +107,21 @@ public final class GameState {
   }
 
   /**
-   * Sets the current level by its ID.
-   *
-   * @param levelID A string representing the ID of the level to be set.
-   * @return A boolean value indicating whether the level was successfully set.
-   */
-  public boolean setLevel(String levelID) {
-    throw new UnsupportedOperationException("set level by ID NYI");
-  }
-
-  /**
    * Sets the current level by its path.
    *
    * @param levelPath A Path object representing the path to the level to be set.
    * @return A boolean value indicating whether the level was successfully set.
    */
   public boolean setLevel(Path levelPath) {
-    throw new UnsupportedOperationException("set level by path NYI");
+    this.levelID = null;
+    this.levelPath = null;
+    try {
+      this.levelMaze = Maze.fromJSON(Persistency.loadFromFile(levelPath));
+      this.levelID = this.levelMaze.ID;
+      this.levelPath = levelPath;
+    } catch (IOException e) {
+      return false;
+    }
   }
 
   void initLevel(Maze level) {

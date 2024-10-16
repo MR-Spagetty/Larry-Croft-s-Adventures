@@ -3,8 +3,10 @@ package nz.ac.wgtn.swen225.lc.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+import nz.ac.wgtn.swen225.lc.persistency.*;
 
 public class Maze {
   private List<Tile> tiles = new ArrayList<>();
@@ -41,7 +43,8 @@ public class Maze {
   }
 
   /**
-  Gets the Maze id as a long for use by entities to generate their UIDS
+   * Gets the Maze id as a long for use by entities to generate their UIDS
+   *
    * @return the longified ID
    */
   public long longID() {
@@ -152,5 +155,59 @@ public class Maze {
         .map(Tile::getOccupant)
         .flatMap(Optional::stream)
         .toList();
+  }
+
+  public static Maze fromJSON(JSONType json) {
+
+    if (json instanceof JSONObject data) {
+      return fromJSON(data, basicMazeData(data), List.of(), List.of());
+
+    } else {
+      throw new IllegalArgumentException("Expected JSONObject got " + json.getClass().getName());
+    }
+  }
+
+  private static Maze basicMazeData(JSONObject data) {
+    JSONType maxTicks = data.get("maxTicks");
+    if (!(maxTicks instanceof JSONLong)) {
+      throw new IllegalArgumentException(
+          "Expect JSONLong at \"maxTicks\" got " + maxTicks.getClass().getName());
+    }
+    long maxTicksVal = ((JSONLong) maxTicks).get();
+    JSONType ID = data.get("ID");
+    if (!(ID instanceof JSONString)) {
+      throw new IllegalArgumentException(
+          "Expect JSONLong at \"maxTicks\" got " + ID.getClass().getName());
+    }
+    String IDVal = ((JSONString) ID).get();
+    return new Maze(maxTicksVal, IDVal);
+  }
+
+  private static Maze fromJSON(
+      JSONObject json, Maze maze, List<Tile> changedTiles, List<Entity> entities) {
+    changedTiles.forEach(maze::addTile);
+    JSONType tiles = json.get("tiles");
+    if (!(tiles instanceof JSONList)) {
+      throw new IllegalArgumentException(
+          "Expect JSONList at \"tiles\" got " + tiles.getClass().getName());
+    }
+    Stream<Point> tilesExistAt = changedTiles.stream().map(Tile::location);
+    ((JSONList) tiles)
+        .getElements().stream()
+            .map(Tile::fromJSON)
+            .filter(t -> tilesExistAt.noneMatch(et -> et.equals(t.location())))
+            .forEach(maze::addTile);
+    JSONType entitiesJSON = json.get("entities");
+    if (!(entitiesJSON instanceof JSONList)) {
+      throw new IllegalArgumentException(
+          "Expect JSONList at \"entities\" got " + entitiesJSON.getClass().getName());
+    }
+    if (entities.isEmpty()) {
+      ((JSONList) entitiesJSON)
+          .getElements().stream().map(Entity::fromJSON).forEach(maze::addEntity);
+    } else {
+      entities.forEach(maze::addEntity);
+    }
+    return maze;
   }
 }
