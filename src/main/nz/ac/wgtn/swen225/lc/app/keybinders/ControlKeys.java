@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
 
+import nz.ac.wgtn.swen225.lc.app.Recorders;
 import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
@@ -119,7 +120,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
 
-        UserInterface.ui.forwardActionToRecorder(active);
+        Recorders.recs.forwardActionToRecorder(active);
     }
 
     /** @return The action that the player is currently carrying out in a tick. */

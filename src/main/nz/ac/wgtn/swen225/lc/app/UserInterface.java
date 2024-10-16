@@ -158,13 +158,6 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Passes a given player action to the recorder to allow for that action to be recorded.
-     *
-     * @param action The given player action
-     */
-    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
-
-    /**
      * Asks the user whether they want the game to be recorded or not.
      * If they ask for the game to be recorded, then they need to select where to store the files!
      */

@@ -1,5 +1,6 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
 import java.nio.file.Path;
@@ -31,4 +32,11 @@ public class Recorders{
 
     /** When the game is finished, the recorder is signalled to stop recording the game. */
     public void stopRecordingGame(){ if (rec != null) rec.endGame(); }
+
+    /**
+     * Passes a given player action to the recorder to allow for that action to be recorded.
+     *
+     * @param action The given player action
+     */
+    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
 }
