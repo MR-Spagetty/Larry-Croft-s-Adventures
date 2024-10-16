@@ -113,17 +113,7 @@ public class UserInterface extends JFrame{
     public void startGame(File gameFile){
         if (gameFile == null) gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
 
-        int recordGame = JOptionPane.showConfirmDialog(
-                null, "Do you want to record the game?",
-                "Record Game?", JOptionPane.YES_NO_OPTION
-        );
-
-        if (recordGame == JOptionPane.YES_OPTION){
-            /** TODO Add a pop-up window that decides where the files will be. */
-
-            recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
-            rec = new Recorder(recorderPath);
-        }
+        askToRecordGame();
 
         //Might use: GameState.getGameState().loadState(....);
         //GameState.getGameState().setLevel(gameFile.toPath());
@@ -154,4 +144,22 @@ public class UserInterface extends JFrame{
      * @param action The given player action
      */
     public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+
+    /**
+     * Asks the user whether they want the game to be recorded or not.
+     * If they ask for the game to be recorded, then they need to select where to store the files!
+     */
+    private void askToRecordGame(){
+        int recordGame = JOptionPane.showConfirmDialog(
+                null, "Do you want to record the game?",
+                "Record Game?", JOptionPane.YES_NO_OPTION
+        );
+
+        if (recordGame == JOptionPane.YES_OPTION){
+            /** TODO Add a pop-up window that decides where the files will be. */
+
+            recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
+            rec = new Recorder(recorderPath);
+        }
+    }
 }
