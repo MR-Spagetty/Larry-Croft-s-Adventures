@@ -3,6 +3,8 @@ package nz.ac.wgtn.swen225.lc.app;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.nio.file.Path;
 
 /**
@@ -39,4 +41,44 @@ public class Recorders{
      * @param action The given player action
      */
     public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+
+    /**
+     * Asks the user whether they want the game to be recorded or not.
+     * If they ask for the game to be recorded, then they need to select where to store the files!
+     */
+    protected void askToRecordGame(){
+        int recordGame = JOptionPane.showConfirmDialog(
+                null, "Do you want to record the game?",
+                "Record Game?", JOptionPane.YES_NO_OPTION
+        );
+
+        if (recordGame == JOptionPane.YES_OPTION){
+            recorderPath = selectRecorderFolder();
+            if (recorderPath == null) return;
+
+            rec = new Recorder(recorderPath);
+        }
+    }
+
+    /**
+     * Selects the folder that will store the recorded files.
+     *
+     * @return The path to the folder. "null" is returned when no folder is selected, such as when the user aborts
+     *         selecting a file.
+     */
+    private Path selectRecorderFolder(){
+        JFileChooser chooseFolder = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        chooseFolder.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //So we do not select a file by accident!
+        int result = chooseFolder.showOpenDialog(null);
+
+        //If you decide to cancel the operation, you will be told that the game will NOT be recorded!
+        if (result != JFileChooser.APPROVE_OPTION){
+            JOptionPane.showMessageDialog(
+                    null, "No folder path has been selected! Recorder will not be initiated.",
+                    "Info", JOptionPane.PLAIN_MESSAGE);
+            return null;
+        }
+
+        return chooseFolder.getSelectedFile().toPath();
+    }
 }

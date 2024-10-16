@@ -111,7 +111,7 @@ public class UserInterface extends JFrame{
      *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
      */
     public void startGame(File gameFile){
-        askToRecordGame();
+        Recorders.recs.askToRecordGame();
 
         //If a new game is being started, we will set the game file to be the first level.
         if (gameFile == null){
@@ -155,45 +155,5 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
-    }
-
-    /**
-     * Asks the user whether they want the game to be recorded or not.
-     * If they ask for the game to be recorded, then they need to select where to store the files!
-     */
-    private void askToRecordGame(){
-        int recordGame = JOptionPane.showConfirmDialog(
-                null, "Do you want to record the game?",
-                "Record Game?", JOptionPane.YES_NO_OPTION
-        );
-
-        if (recordGame == JOptionPane.YES_OPTION){
-            recorderPath = selectRecorderFolder();
-            if (recorderPath == null) return;
-
-            rec = new Recorder(recorderPath);
-        }
-    }
-
-    /**
-     * Selects the folder that will store the recorded files.
-     *
-     * @return The path to the folder. "null" is returned when no folder is selected, such as when the user aborts
-     *         selecting a file.
-     */
-    private Path selectRecorderFolder(){
-        JFileChooser chooseFolder = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        chooseFolder.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //So we do not select a file by accident!
-        int result = chooseFolder.showOpenDialog(null);
-
-        //If you decide to cancel the operation, you will be told that the game will NOT be recorded!
-        if (result != JFileChooser.APPROVE_OPTION){
-            JOptionPane.showMessageDialog(
-                    null, "No folder path has been selected! Recorder will not be initiated.",
-                    "Info", JOptionPane.PLAIN_MESSAGE);
-            return null;
-        }
-
-        return chooseFolder.getSelectedFile().toPath();
     }
 }
