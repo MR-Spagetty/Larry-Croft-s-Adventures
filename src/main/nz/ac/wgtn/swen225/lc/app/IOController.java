@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
+import nz.ac.wgtn.swen225.lc.app.buttons.MainUIButtons;
 import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
 import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
 import nz.ac.wgtn.swen225.lc.app.otherpanels.PauseScreen;

@@ -1,6 +1,6 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.buttons;
 
-import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
+import nz.ac.wgtn.swen225.lc.app.IOController;
 
 import java.util.ArrayList;
 import java.util.List;
