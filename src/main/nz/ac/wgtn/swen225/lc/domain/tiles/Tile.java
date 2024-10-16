@@ -1,8 +1,8 @@
 package nz.ac.wgtn.swen225.lc.domain.tiles;
 
+import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
-import java.util.Optional;
 
 public interface Tile extends Comparable<Tile> {
 

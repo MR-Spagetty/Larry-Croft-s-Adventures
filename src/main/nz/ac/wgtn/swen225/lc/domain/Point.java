@@ -151,7 +151,7 @@ public record Point(long x, long y) implements Comparable<Point>, JSONSerializab
     throw new IllegalArgumentException("Expected a JSONList, got: " + json.getClass().getName());
   }
 
-  static Point fromJSON(JSONType json) {
+  public static Point fromJSON(JSONType json) {
     return Point.ORIGIN.fromJson(json);
   }
 }
