@@ -1,12 +1,14 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.app.panels.DefaultPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * A JPanel where information like the current level and the number of chips remaining is displayed.
  */
-public class GameInfo extends DefaultPanel{
+public class GameInfo extends DefaultPanel {
     public GameInfo(Color backgroundColor, int width, int height){
         super(backgroundColor, width, height);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

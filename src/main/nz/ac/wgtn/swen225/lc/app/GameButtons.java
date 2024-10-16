@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.app.panels.GridPanel;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * Holds the buttons that perform specific actions in relation to the game and the GUI.
  */
-public class GameButtons extends GridPanel{
+public class GameButtons extends GridPanel {
 
     /**
      * Constructor used when creating the Game Buttons JPanel.

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+import nz.ac.wgtn.swen225.lc.app.panels.DefaultPanel;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
@@ -11,7 +12,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * class also performs the updating of statistics related to the game, including the level of the game,
  * the number of chips left to collect, and the time remaining.
  */
-public class GameUI extends DefaultPanel{
+public class GameUI extends DefaultPanel {
     /**
      * Constructor which creates the menu containing information about the current game, and the buttons in the game.
      */
