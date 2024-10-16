@@ -3,7 +3,6 @@ package nz.ac.wgtn.swen225.lc.app;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
-import nz.ac.wgtn.swen225.lc.recorder.*;
 
 import javax.swing.*;
 import java.nio.file.FileSystems;
@@ -20,11 +19,6 @@ import java.util.Set;
 public class App{
     /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
     private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
-
-    //Below is all the replay instances that the recorder will need to access.
-    private static StepReplay sReplay;
-    private static AutoReplay aReplay;
-    private static TickReplay tReplay;
 
     public App(){ SwingUtilities.invokeLater(() -> UserInterface.ui.createMenu()); }
 
@@ -59,18 +53,6 @@ public class App{
     public static void forwardActionToDomain(PlayerAction action){
         GameState.getGameState().getPlayer().queueAction(action);
     }
-
-    /** Creates an instance of the "Auto Replay" */
-    public static void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
-
-    /** Creates an instance of the "Tick Replay" */
-    public static void tickReplay(){ tReplay = new TickReplay(recorderPath, 150); }
-
-    /** Creates an instance of the "Step Replay" */
-    public static void stepReplay(){ sReplay = new StepReplay(recorderPath); }
-
-    /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
-    public static void callStepReplay(){ if (sReplay != null) sReplay.replay(); }
 
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically

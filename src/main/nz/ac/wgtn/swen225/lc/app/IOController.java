@@ -38,7 +38,7 @@ public class IOController {
                 "SAVE", () -> endGame(true),
                 "RESUME", this::resumeExistingGameFromCurrentGame,
                 "PAUSE", this::pauseGame,
-                "S_REPLAY", App::callStepReplay
+                "S_REPLAY", () -> Recorders.recs.callStepReplay()
         ));
     }
 

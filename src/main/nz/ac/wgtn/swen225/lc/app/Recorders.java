@@ -1,7 +1,10 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
+import nz.ac.wgtn.swen225.lc.recorder.AutoReplay;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
+import nz.ac.wgtn.swen225.lc.recorder.StepReplay;
+import nz.ac.wgtn.swen225.lc.recorder.TickReplay;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -23,7 +26,24 @@ public class Recorders{
     private Path recorderPath = null;
     private Recorder rec = null;
 
+    //Below is all the replay instances that the recorder will need to access.
+    private static StepReplay sReplay;
+    private static AutoReplay aReplay;
+    private static TickReplay tReplay;
+
     private Recorders(){}
+
+    /** Creates an instance of the "Auto Replay" */
+    public void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
+
+    /** Creates an instance of the "Tick Replay" */
+    public void tickReplay(){ tReplay = new TickReplay(recorderPath, 150); }
+
+    /** Creates an instance of the "Step Replay" */
+    public void stepReplay(){ sReplay = new StepReplay(recorderPath); }
+
+    /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
+    public void callStepReplay(){ if (sReplay != null) sReplay.replay(); }
 
     /**
      * Sets the main recorder to start recording a level.
