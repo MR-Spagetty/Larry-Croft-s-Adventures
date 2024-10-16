@@ -132,10 +132,12 @@ public class UserInterface extends JFrame{
     public void goBetweenLevels(){
 
         /** TODO, figure out the path needed for the second level! */
+        /*
         if (rec != null){
             rec.endLevel();
-            /*rec.startLevel();*/
+            rec.startLevel(...);
         }
+        */
     }
 
     protected void saveGame(){
@@ -150,7 +152,7 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game, if a recorder is selected.
+        Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
     }

@@ -27,5 +27,8 @@ public class Recorders{
      *
      * @param levelPath The path to the file containing a level in the game.
      */
-    public void startRecordingLevel(Path levelPath){ rec.startLevel(levelPath); }
+    public void startRecordingLevel(Path levelPath){ if (rec != null) rec.startLevel(levelPath); }
+
+    /** When the game is finished, the recorder is signalled to stop recording the game. */
+    public void stopRecordingGame(){ if (rec != null) rec.endGame(); }
 }
