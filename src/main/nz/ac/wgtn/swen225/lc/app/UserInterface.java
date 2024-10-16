@@ -112,7 +112,12 @@ public class UserInterface extends JFrame{
         //timer.start();
     }
 
-    /** Creates a new game and runs it. This can be done from an existing game file, if necessary. */
+    /**
+     * Creates a new game and runs it. This can be done from an existing game file, if necessary.
+     *
+     * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
+     *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
+     */
     public void startGame(File gameFile){
         askToRecordGame();
 
