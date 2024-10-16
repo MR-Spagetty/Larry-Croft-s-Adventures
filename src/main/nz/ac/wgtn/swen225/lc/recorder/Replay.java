@@ -15,7 +15,7 @@ abstract class Replay {
   public Path nextLevelPath;
   int tick = 0;
 
-  /*
+  /**
    * Takes in a path and parse it and set it to actions. Then intitilizes a game.
    */
   Replay(Path p){
@@ -23,14 +23,14 @@ abstract class Replay {
     //TODO: call parse and set action equal to the result as well as initilize a game
   }
 
-  /*
+  /**
    * Initilizes a level with App and give it the path to the level file.
    */
   private void initLevel(){
     //TODO: initilize level
   }
 
-  /*
+  /**
    * Sends the input related to the current tick then advances that game by a tick.
    */
   protected void advanceTick(){
@@ -40,7 +40,7 @@ abstract class Replay {
     checkLevelEnd();
   }
 
-  /*
+  /**
    * Checks if the replay for this level has finished and setup next level if there is one.
    */
   private boolean checkLevelEnd(){

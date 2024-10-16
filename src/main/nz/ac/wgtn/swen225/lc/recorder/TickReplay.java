@@ -17,7 +17,7 @@ public class TickReplay extends Replay {
     this.tickSpeed = tickSpeed;
   }
 
-  /*
+  /**
    * Replay implementation of TickReplay.
    * 
    * This implementation will send an input each tick where the tick speed is provided with the constructor.
