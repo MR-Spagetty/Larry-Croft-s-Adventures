@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
+
 import javax.swing.*;
 
 /**
