@@ -122,7 +122,7 @@ public class UserInterface extends JFrame{
         //GameState.getGameState().setLevel(gameFile.toPath());
         removeStartUI.run();
         createMainMenu();
-        rec.startLevel(gameFile.toPath());
+        Recorders.recs.startRecordingLevel(gameFile.toPath());
     }
 
     /**

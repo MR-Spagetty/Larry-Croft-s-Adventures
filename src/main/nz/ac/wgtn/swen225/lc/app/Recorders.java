@@ -21,4 +21,11 @@ public class Recorders{
     private Recorder rec = null;
 
     private Recorders(){}
+
+    /**
+     * Sets the main recorder to start recording a level.
+     *
+     * @param levelPath The path to the file containing a level in the game.
+     */
+    public void startRecordingLevel(Path levelPath){ rec.startLevel(levelPath); }
 }
