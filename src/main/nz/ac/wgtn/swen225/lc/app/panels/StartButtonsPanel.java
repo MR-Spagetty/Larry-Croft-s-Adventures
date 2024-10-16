@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.panels;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 
@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Another custom JPanel that holds the Buttons to be displayed at the start of the game.
  */
-class StartButtonsPanel extends JPanel {
+public class StartButtonsPanel extends JPanel {
 
     /**
      * Constructor used when constructing the custom JPanel.
