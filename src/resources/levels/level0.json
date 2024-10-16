@@ -1,4 +1,5 @@
 {
+    "ID" : "template",
     "tiles" : [
         {
             "tile" : "Tile",
