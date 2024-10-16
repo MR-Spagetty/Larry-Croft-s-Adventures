@@ -1,11 +1,13 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.panels;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+import nz.ac.wgtn.swen225.lc.app.GameButtons;
+import nz.ac.wgtn.swen225.lc.app.GameInfo;
+import nz.ac.wgtn.swen225.lc.app.GraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
-import nz.ac.wgtn.swen225.lc.app.panels.DefaultPanel;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
@@ -16,6 +18,12 @@ import nz.ac.wgtn.swen225.lc.domain.*;
 public class GameUI extends DefaultPanel {
     /**
      * Constructor which creates the menu containing information about the current game, and the buttons in the game.
+     *
+     * @param backgroundColor The background colour of the JPanel. Can be "null" if no
+     *                         background is to be set.
+     * @param width The preferred width of the JPanel.
+     * @param height The preferred height of the JPanel.
+     * @param mainUIButtons The buttons that are to be added into the panel that stores the buttons.
      */
     public GameUI(Color backgroundColor, int width, int height, List<DefaultButton> mainUIButtons){
         super(backgroundColor, width, height);
