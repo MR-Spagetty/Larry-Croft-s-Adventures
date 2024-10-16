@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI or the Keystrokes.
- * When you initialise the constructor for this class, you also will initialise the constructor for the GUI so a start
- * menu can be created.
+ * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI, the Keystrokes
+ * or the Recorders. When you initialise the constructor for this class, you also will initialise the constructor for
+ *  the GUI so a start menu can be created.
  */
 public class App{
     public App(){ SwingUtilities.invokeLater(() -> UserInterface.ui.createMenu()); }
