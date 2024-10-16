@@ -3,6 +3,8 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
 public class Exit extends Empty {
 
@@ -21,5 +23,13 @@ public class Exit extends Empty {
       p.win();
     }
     super.enter(enteree);
+  }
+
+  public static Exit fromJSON(JSONObject json) {
+    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+      throw new IllegalArgumentException(
+          "Incorrect data given expected Conveyor got: " + json.get("Tile"));
+    }
+    return new Exit(Point.fromJSON(json.get("position")));
   }
 }
