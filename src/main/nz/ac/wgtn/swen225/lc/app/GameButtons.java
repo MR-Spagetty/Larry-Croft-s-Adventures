@@ -1,6 +1,5 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -41,10 +40,14 @@ class UIButtons {
      * Returns a list (rather than a panel) of the main UI buttons in the game. The actual buttons
      * themselves are made in two methods, with one requiring the supplement of the actions each button
      * will execute. (As they perform actions needed in different parts of the code.)
+     *
+     * @param save The action that will be executed when the user hits the "Save and Exit" button.
+     * @param exit The action that will be executed when the user hits the "Exit" button.
+     * @return The list of the main UI buttons in the game.
      */
     public static List<DefaultButton> mainUIButtons(Runnable save, Runnable exit){
         List<DefaultButton> pauseAndHelp = pauseAndHelpButtons();
-        List<DefaultButton> saveAndRec = saveAndRecButtons(save, exit);
+        List<DefaultButton> saveAndRec = saveAndExitButtons(save, exit);
 
         return new ArrayList<>(){{
             addAll(pauseAndHelp);
@@ -56,9 +59,11 @@ class UIButtons {
      * Creates the "Save", "Exit" and "Record" buttons, which map to actions defined in another class, and are taken in as
      * parameters.
      *
+     * @param save The action that will be executed when the user hits the "Save and Exit" button.
+     * @param exit The action that will be executed when the user hits the "Exit" button.
      * @return A list consisting of the "Pause" and "Help" buttons, each wired up to their appropriate action.
      */
-    private static List<DefaultButton> saveAndRecButtons(Runnable save, Runnable exit){
+    private static List<DefaultButton> saveAndExitButtons(Runnable save, Runnable exit){
         DefaultButton saveGame = new DefaultButton(unused -> save.run(), "SAVE & EXIT");
         DefaultButton exitGame = new DefaultButton(unused -> exit.run(), "EXIT");
 
@@ -76,20 +81,5 @@ class UIButtons {
         DefaultButton displayHelp = new DefaultButton(unused -> IOController.ic.createHelpDialog(), "HELP");
 
         return List.of(pauseGame, displayHelp);
-    }
-
-    /**
-     * Creates the "JPanel" that will hold the buttons of the Start Menu. One of the buttons will start a new
-     * game for the player, the other will allow the player to select an existing game to resume, and the other will
-     * allow the user to replay a recorded game!
-     */
-    public static JPanel startUIButtonPanel(Runnable startGame, Runnable resumeGame, Runnable replayGame){
-        JPanel buttons = new JPanel();
-
-        buttons.add(new DefaultButton(unused -> startGame.run(), "Start new game!"));
-        buttons.add(new DefaultButton(unused -> resumeGame.run(), "Resume existing game!"));
-        buttons.add(new DefaultButton(unused -> replayGame.run(), "Replay a game!"));
-
-        return buttons;
     }
 }
