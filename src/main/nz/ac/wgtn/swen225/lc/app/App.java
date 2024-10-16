@@ -1,30 +1,20 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
-import nz.ac.wgtn.swen225.lc.recorder.*;
 
 import javax.swing.*;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI or the Keystrokes.
- * When you initialise the constructor for this class, you also will initialise the constructor for the GUI so a start
- * menu can be created.
+ * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI, the Keystrokes
+ * or the Recorders. When you initialise the constructor for this class, you also will initialise the constructor for
+ *  the GUI so a start menu can be created.
  */
 public class App{
-    /** TODO Is the path correct? Ideally it would be kept out of the source code folder. */
-    private final static Path recorderPath = FileSystems.getDefault().getPath("files/recorded_levels");
-
-    //Below is all the replay instances that the recorder will need to access.
-    private static StepReplay sReplay;
-    private static AutoReplay aReplay;
-    private static TickReplay tReplay;
-
     public App(){ SwingUtilities.invokeLater(() -> UserInterface.ui.createMenu()); }
 
     /**
@@ -59,33 +49,23 @@ public class App{
         GameState.getGameState().getPlayer().queueAction(action);
     }
 
-    /** Creates an instance of the "Auto Replay" */
-    public static void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
-
-    /** Creates an instance of the "Tick Replay" */
-    public static void tickReplay(){ tReplay = new TickReplay(recorderPath, 150); }
-
-    /** Creates an instance of the "Step Replay" */
-    public static void stepReplay(){ sReplay = new StepReplay(recorderPath); }
-
-    /** Simply triggers a "replay" in the Step Replay. This occurs every time a hidden key is pressed. */
-    public static void callStepReplay(){ if (sReplay != null) sReplay.replay(); }
-
     /**
      * This method returns the list of buttons that have been created in the game. This method is specifically
      * for the purpose of allowing the "Fuzz" module to access the buttons.
+     *
+     * @return The list of buttons that will be displayed in the UI during gameplay.
      */
     public static List<DefaultButton> getButtons(){ return IOController.ic.getMainUIButtons(); }
 
-    /** Returns the list of keystrokes associated with an action. */
+    /** @return The list of keystrokes associated with an action. */
     public static Set<Integer> getKeyStrokes(){ return IOController.ic.getKeyController().getKeyStrokes(); }
 
-    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
+    /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
     public static Map<Integer, PlayerAction> strokesToPlayerAction(){
         return IOController.ic.getKeyController().strokesToPlayerAction();
     }
 
-    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
+    /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
     public static Map<Integer, Runnable> strokesToUIAction(){
         return IOController.ic.getKeyController().strokesToUIAction();
     }
