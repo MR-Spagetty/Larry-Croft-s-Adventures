@@ -1,7 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
-import nz.ac.wgtn.swen225.lc.app.panels.GameUI;
+import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
@@ -90,7 +90,7 @@ public class UserInterface extends JFrame{
      */
     private void createMainMenu(){
         //The wider "Game UI" that the user will be interacting with!
-        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
+        GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
         GraphicsPane pane = new GraphicsPane();
 
