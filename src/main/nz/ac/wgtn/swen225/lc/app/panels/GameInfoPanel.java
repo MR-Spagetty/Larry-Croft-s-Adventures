@@ -1,6 +1,6 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.panels;
 
-import nz.ac.wgtn.swen225.lc.app.panels.DefaultPanel;
+import nz.ac.wgtn.swen225.lc.app.InventoryPanel;
 
 import javax.swing.*;
 import java.awt.*;
