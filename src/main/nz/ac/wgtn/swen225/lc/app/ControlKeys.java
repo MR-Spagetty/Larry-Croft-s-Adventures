@@ -27,6 +27,8 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes,
      * and the directions will also be bound to their keystrokes.
      * This is done in two separate methods to separate the two different stages of key assignments.
+     *
+     * @param uiActions A Map of the Actions that will need to be assigned to the certain keys on the keyboard.
      */
     public ControlKeys(Map<String, Runnable> uiActions){
         assignKeysToDirections();
@@ -75,8 +77,10 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     }
 
     /**
-     * Helper method to "keyPressed" which sets the next keystroke (for the player action )that will be
+     * Helper method to "keyPressed" which sets the next keystroke (for the player action) that will be
      * used in the next tick.
+     *
+     * @param keystroke The keystroke that is associated with a certain key on the keyboard.
      */
     public void setNextKeyStroke(int keystroke){
         if (pendingKeyStroke == INVALID_KEY_STROKE) pendingKeyStroke = keystroke;
@@ -117,8 +121,6 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         UserInterface.ui.forwardActionToRecorder(active);
     }
 
-    /**
-     * Returns the action that is player is currently carrying out in a tick.
-     */
+    /** @return The action that the player is currently carrying out in a tick. */
     public PlayerAction getActivePlayerAction(){ return active; }
 }
