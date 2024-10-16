@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import nz.ac.wgtn.swen225.lc.app.GameButtons;
 import nz.ac.wgtn.swen225.lc.app.GameInfo;
 import nz.ac.wgtn.swen225.lc.app.GraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
@@ -30,7 +29,7 @@ public class GameUI extends DefaultPanel {
 
         add(BorderLayout.NORTH, new GameInfo(backgroundColor, width, (height/3)));
 
-        GameButtons buttons = new GameButtons(backgroundColor, width, (height/10), 15f, mainUIButtons);
+        GameButtonsPanel buttons = new GameButtonsPanel(backgroundColor, width, (height/10), 15f, mainUIButtons);
         add(BorderLayout.SOUTH, buttons);
     }
 

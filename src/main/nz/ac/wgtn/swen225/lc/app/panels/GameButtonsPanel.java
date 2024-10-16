@@ -1,7 +1,6 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.panels;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
-import nz.ac.wgtn.swen225.lc.app.panels.GridPanel;
 
 import java.awt.*;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 /**
  * Holds the buttons that perform specific actions in relation to the game and the GUI.
  */
-public class GameButtons extends GridPanel {
+public class GameButtonsPanel extends GridPanel {
 
     /**
      * Constructor used when creating the Game Buttons JPanel.
@@ -21,7 +20,7 @@ public class GameButtons extends GridPanel {
      * @param buttonFontSize The size of the text in a Button in the JPanel, if text is available.
      * @param buttonsToAdd The buttons that are to be added into the JPanel.
      */
-    public GameButtons(Color backgroundColor, int buttonWidth, int buttonHeight, float buttonFontSize, List<DefaultButton> buttonsToAdd){
+    public GameButtonsPanel(Color backgroundColor, int buttonWidth, int buttonHeight, float buttonFontSize, List<DefaultButton> buttonsToAdd){
         super(backgroundColor, buttonsToAdd.size(), 1);
 
         buttonsToAdd.forEach(b -> {
