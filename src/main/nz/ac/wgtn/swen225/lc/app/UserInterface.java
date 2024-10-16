@@ -165,8 +165,6 @@ public class UserInterface extends JFrame{
             if (recorderPath == null) return;
 
             rec = new Recorder(recorderPath);
-
-            System.out.println(recorderPath.toString()); //Testing purposes
         }
     }
 
@@ -189,6 +187,6 @@ public class UserInterface extends JFrame{
             return null;
         }
 
-        return chooseFolder.getCurrentDirectory().toPath();
+        return chooseFolder.getSelectedFile().toPath();
     }
 }
