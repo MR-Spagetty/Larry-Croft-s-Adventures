@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Controls the "Input" and "Output" from pressing a button or a key during main gameplay.
  * It also includes some basic commands that are executed from buttons or keys, such as the pausing of the
- * game and the displaying of the Game Instructions during gameplay.
+ * game and loading/saving a game.
  */
 public class IOController {
     private final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
@@ -114,10 +114,12 @@ public class IOController {
     /**
      * Loads an existing game from a ".json" file using the JFileChooser mechanism. You are repeatedly asked for a
      * file until you either select a valid file, or if you decide to abandon selecting a valid file.
-     * ===
+     *
      * References:
      * https://www.tutorialspoint.com/get-the-path-of-the-file-selected-in-the-jfilechooser-component-with-java
      * https://www.geeksforgeeks.org/java-swing-jfilechooser/
+     *
+     * @return The file that contains the chosen game to continue playing.
      */
     private File loadExistingGame(){
         boolean validFileSelected = false;
