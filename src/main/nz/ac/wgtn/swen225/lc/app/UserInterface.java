@@ -1,13 +1,14 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
-import nz.ac.wgtn.swen225.lc.recorder.Recorder;
+import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
+import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
+import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
+import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
-import java.nio.file.Path;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
@@ -32,14 +33,6 @@ public class UserInterface extends JFrame{
     //To prevent more than one User Interface instance from being created.
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
-
-    /**
-     * The recorder that will record the current game the user is playing.
-     * Here, the recorder and file path is initially "null" in the case that the user does not want a game to be recorded!
-     * In addition, if the recorder is to be enabled, the user will need to select the folder to save the files!
-     */
-    private static Path recorderPath= null;
-    private static Recorder rec = null;
 
     /**
      * An empty constructor. This was placed here on purpose to prevent the initialisation of a new "UserInterface"
@@ -68,7 +61,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        JPanel buttons = UIButtons.startUIButtonPanel(
+        StartButtonsPanel buttons = new StartButtonsPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
         );
 
@@ -87,9 +80,9 @@ public class UserInterface extends JFrame{
      */
     private void createMainMenu(){
         //The wider "Game UI" that the user will be interacting with!
-        GameUI gameControls = new GameUI(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
+        GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        GraphicsPane pane = new GraphicsPane();
+        GameGraphicsPane pane = new GameGraphicsPane();
 
         removeGameUI = () -> {
             remove(gameControls); remove(pane);
@@ -103,25 +96,33 @@ public class UserInterface extends JFrame{
         this.requestFocus();
         pack();
 
-        //add(BorderLayout.CENTER, pane);
-        //timer = gameControls.createTimer(pane);
-        //timer.start();
+        add(BorderLayout.CENTER, pane);
+        timer = gameControls.createTimer(pane);
+        timer.start();
     }
 
-    /** Creates a new game and runs it. This can be done from an existing game file, if necessary. */
+    /**
+     * Creates a new game and runs it. This can be done from an existing game file, if necessary.
+     *
+     * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
+     *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
+     */
     public void startGame(File gameFile){
-        askToRecordGame();
+        Recorders.recs.askToRecordGame();
 
         //If a new game is being started, we will set the game file to be the first level.
-        if (gameFile == null){
-            gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
-        }
+        //if (gameFile == null){
+            gameFile = new File("src/resources/levels/level0.json");
+        //}
 
         //Might use: GameState.getGameState().loadState(....);
-        //GameState.getGameState().setLevel(gameFile.toPath());
+        boolean thing = GameState.getGameState().setLevel(gameFile.toPath());
+        System.out.println(thing);
+        GameState.getGameState().tickTimer.start();
+
         removeStartUI.run();
         createMainMenu();
-        rec.startLevel(gameFile.toPath());
+        Recorders.recs.startRecordingLevel(gameFile.toPath());
     }
 
     /**
@@ -131,10 +132,12 @@ public class UserInterface extends JFrame{
     public void goBetweenLevels(){
 
         /** TODO, figure out the path needed for the second level! */
+        /*
         if (rec != null){
             rec.endLevel();
-            /*rec.startLevel();*/
+            rec.startLevel(...);
         }
+        */
     }
 
     protected void saveGame(){
@@ -149,55 +152,8 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        if (rec != null) rec.endGame(); //The recorder will stop recording and save the game, if a recorder is selected.
+        Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
-    }
-
-    /**
-     * Passes a given player action to the recorder to allow for that action to be recorded.
-     *
-     * @param action The given player action
-     */
-    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
-
-    /**
-     * Asks the user whether they want the game to be recorded or not.
-     * If they ask for the game to be recorded, then they need to select where to store the files!
-     */
-    private void askToRecordGame(){
-        int recordGame = JOptionPane.showConfirmDialog(
-                null, "Do you want to record the game?",
-                "Record Game?", JOptionPane.YES_NO_OPTION
-        );
-
-        if (recordGame == JOptionPane.YES_OPTION){
-            recorderPath = selectRecorderFolder();
-            if (recorderPath == null) return;
-
-            rec = new Recorder(recorderPath);
-        }
-    }
-
-    /**
-     * Selects the folder that will store the recorded files.
-     *
-     * @return The path to the folder. "null" is returned when no folder is selected, such as when the user aborts
-     *         selecting a file.
-     */
-    private Path selectRecorderFolder(){
-        JFileChooser chooseFolder = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        chooseFolder.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //So we do not select a file by accident!
-        int result = chooseFolder.showOpenDialog(null);
-
-        //If you decide to cancel the operation, you will be told that the game will NOT be recorded!
-        if (result != JFileChooser.APPROVE_OPTION){
-            JOptionPane.showMessageDialog(
-                    null, "No folder path has been selected! Recorder will not be initiated.",
-                    "Info", JOptionPane.PLAIN_MESSAGE);
-            return null;
-        }
-
-        return chooseFolder.getSelectedFile().toPath();
     }
 }

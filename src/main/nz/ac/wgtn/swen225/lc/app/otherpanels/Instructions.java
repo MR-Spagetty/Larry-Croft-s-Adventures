@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.otherpanels;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,5 +29,13 @@ public class Instructions extends JPanel{
         returnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return returnLabel;
+    }
+
+    /**
+     * Creates the pop-up window that re-iterates the instructions that apply to the game.
+     * The method is stated here as it links up to the action of a button!
+     */
+    public void createHelpDialog(){
+        JOptionPane.showMessageDialog(null, instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
     }
 }

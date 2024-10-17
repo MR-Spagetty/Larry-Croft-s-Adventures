@@ -26,7 +26,7 @@ public class Ice extends MovementAffecterTile {
   }
 
   public static Ice fromJSON(JSONObject json) {
-    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+    if (!((JSONString) json.get("tile")).get().equals("Ice")) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + json.get("Tile"));
     }

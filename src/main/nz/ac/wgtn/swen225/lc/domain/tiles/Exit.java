@@ -26,7 +26,7 @@ public class Exit extends Empty {
   }
 
   public static Exit fromJSON(JSONObject json) {
-    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+    if (!((JSONString) json.get("tile")).get().equals("Exit")) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + json.get("Tile"));
     }

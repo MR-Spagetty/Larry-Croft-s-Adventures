@@ -21,7 +21,7 @@ public class Recorder {
   private Level currentLevel;
   private Path dirPath;
 
-  /*
+  /**
    * Constructor of recorder
    * 
    * @param dirPath The directory to save the recorded level files in
@@ -42,7 +42,7 @@ public class Recorder {
     currentLevel.actions(a);
   }
 
-  /*
+  /**
    * Starts a level by creating a new level object and set it to currentLevel
    * 
    * @param levelPath The path to the levelfile, not to be confused with the recorder file
@@ -53,7 +53,7 @@ public class Recorder {
     currentLevel = new Level(filename, new ArrayList<>(), dirPath, levelPath);
   }
 
-  /*
+  /**
    * Ends the recording of a level by storing the current level in allLevels and
    * set currentLevel to null. This is done so that the user doesn't forget to
    * re-initilize when a new level starts.
@@ -63,7 +63,7 @@ public class Recorder {
     currentLevel = null;
   }
 
-  /*
+  /**
    * Ends the game recording by linking the level files with the next then saving
    * all level in json files.
    */

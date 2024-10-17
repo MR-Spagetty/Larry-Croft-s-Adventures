@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
+import nz.ac.wgtn.swen225.lc.persistency.JSONList;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 import nz.ac.wgtn.swen225.lc.persistency.Persistency;
+import nz.ac.wgtn.swen225.lc.renderer.*;
 
 public final class GameState {
 
@@ -24,7 +30,7 @@ public final class GameState {
   private Path levelPath = null;
   private Maze levelMaze = null;
 
-  private Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
+  public Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
 
   {
     this.tickTimer.setRepeats(true);
@@ -119,6 +125,37 @@ public final class GameState {
       this.levelMaze = Maze.fromJSON(Persistency.loadFromFile(levelPath));
       this.levelID = this.levelMaze.ID;
       this.levelPath = levelPath;
+      this.tick = 0;
+    } catch (IOException e) {
+      return false;
+    }
+    return true;
+  }
+
+  public boolean loadGameState(Path savePath) {
+    try {
+      JSONType json = Persistency.loadFromFile(savePath);
+      if (!(json instanceof JSONObject)) {
+        throw new IllegalArgumentException("Expected JSONObject got " + json.getClass().getName());
+      }
+      JSONObject data = (JSONObject) json;
+    } catch (IOException e) {
+      return false;
+    }
+    return true;
+  }
+
+  public boolean saveGameState(Path savePath) {
+    JSONObject out = new JSONObject();
+    out.put("level", getLevelPath());
+    out.put("tick", getTick());
+    JSONList modifiableTiles = new JSONList();
+    this.levelMaze.getModifiableTiles().parallelStream().map(ModifiableTile::toJson).forEach(modifiableTiles::add);
+    JSONList entities = new JSONList();
+    this.levelMaze.getEntities().stream().map(Entity::toJson).forEach(entities::add);
+    try {
+      Persistency.saveToFile(out, savePath);
+      return true;
     } catch (IOException e) {
       return false;
     }

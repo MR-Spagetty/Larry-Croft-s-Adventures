@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
+
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.*;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
 public class Maze {
   private List<Tile> tiles = new ArrayList<>();
@@ -160,7 +166,8 @@ public class Maze {
   public static Maze fromJSON(JSONType json) {
 
     if (json instanceof JSONObject data) {
-      return fromJSON(data, basicMazeData(data), List.of(), List.of());
+      Player p = Player.fromJSON((JSONObject)data.get("player"));
+      return fromJSON(data, basicMazeData(data), List.of(), List.of(p));
 
     } else {
       throw new IllegalArgumentException("Expected JSONObject got " + json.getClass().getName());
@@ -191,11 +198,11 @@ public class Maze {
       throw new IllegalArgumentException(
           "Expect JSONList at \"tiles\" got " + tiles.getClass().getName());
     }
-    Stream<Point> tilesExistAt = changedTiles.stream().map(Tile::location);
+    List<Point> tilesExistAt = changedTiles.stream().map(Tile::location).toList();
     ((JSONList) tiles)
         .getElements().stream()
             .map(Tile::fromJSON)
-            .filter(t -> tilesExistAt.noneMatch(et -> et.equals(t.location())))
+            .filter(t -> tilesExistAt.stream().noneMatch(et -> et.equals(t.location())))
             .forEach(maze::addTile);
     JSONType entitiesJSON = json.get("entities");
     if (!(entitiesJSON instanceof JSONList)) {
@@ -209,5 +216,14 @@ public class Maze {
       entities.forEach(maze::addEntity);
     }
     return maze;
+  }
+
+  public List<ModifiableTile> getModifiableTiles() {
+    return this.tiles.stream()
+        .<ModifiableTile>mapMulti(
+            (t, cons) -> {
+              if (t instanceof ModifiableTile mt) cons.accept(mt);
+            })
+        .toList();
   }
 }
