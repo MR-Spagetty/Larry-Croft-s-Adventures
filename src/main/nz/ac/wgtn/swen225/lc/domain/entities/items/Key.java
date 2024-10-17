@@ -10,7 +10,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 public class Key extends Item {
 
-  private final Colour colour;
+  public final Colour colour;
 
   public Key(Point location, long individualID, Colour colour) {
     super(location, individualID);
