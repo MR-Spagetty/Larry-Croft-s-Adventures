@@ -97,9 +97,11 @@ public class KeyStrokes {
     public Map<String, PlayerAction> strokesToPlayerAction(){
         Map<String, PlayerAction> toReturn = new HashMap<>();
 
+        //Will rewrite into a Stream later
+        for (Map.Entry<Integer, PlayerAction> entry : strokeToPlayerAction.entrySet())
+            toReturn.put(strokeIDS.get(entry.getKey()), entry.getValue());
 
-
-        return Collections.unmodifiableMap(strokeToPlayerAction);
+        return Collections.unmodifiableMap(toReturn);
     }
 
     /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
