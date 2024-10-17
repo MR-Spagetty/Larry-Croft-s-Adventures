@@ -15,15 +15,6 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * @author Developer 1 <dev1@example.internal>
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
-    private static PlayerAction active = PlayerAction.None; //Current player action being executed in a tick.
-
-    /**
-     * If multiple keys are hit during a singular tick, rather than changing the direction the character is moving
-     * mid-tick, the key will be taken note of, and executed in the next tick.
-     * Take note that the first key pressed is only taken note of; the rest are discarded.
-     */
-    private final int INVALID_KEY_STROKE = -1;
-    private int pendingKeyStroke = INVALID_KEY_STROKE;
 
     /**
      * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes,
@@ -102,16 +93,6 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     }
 
     /**
-     * Helper method to "keyPressed" which sets the next keystroke (for the player action) that will be
-     * used in the next tick.
-     *
-     * @param keystroke The keystroke that is associated with a certain key on the keyboard.
-     */
-    public void setNextKeyStroke(int keystroke){
-        if (pendingKeyStroke == INVALID_KEY_STROKE) pendingKeyStroke = keystroke;
-    }
-
-    /**
      * By default, nothing will happen when a key is simply "typed".
      *
      * @param e The key that was typed in the form of a "KeyEvent".
@@ -124,28 +105,4 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * @param e The key that was released in the form of a "KeyEvent".
      */
     public void keyReleased(KeyEvent e){}
-
-    /**
-     * Every time a tick occurs, the action that is being performed or the direction in which the
-     * character is moving stops moving, and the next action/direction is performed.
-     * Also, the new Player Action will be passed to the recorder for recording.
-     */
-    public void setPlayerActionAtTick(){
-        /*
-         * We first check to see if there is a pending player action to execute. If there's none, we won't
-         * continue from here. (We will initialise the active direction to "None".)
-         */
-        if (pendingKeyStroke == INVALID_KEY_STROKE){
-            active = PlayerAction.None;
-            return;
-        }
-
-        active = getPlayerAction(pendingKeyStroke);
-        pendingKeyStroke = INVALID_KEY_STROKE;
-
-        Recorders.recs.forwardActionToRecorder(active);
-    }
-
-    /** @return The action that the player is currently carrying out in a tick. */
-    public PlayerAction getActivePlayerAction(){ return active; }
 }
