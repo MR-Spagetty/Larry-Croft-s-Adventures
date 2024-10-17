@@ -83,6 +83,8 @@ public interface Entity {
    */
   void maze(Maze maze);
 
+  JSONType toJson();
+
   public static Entity fromJSON(JSONType json) {
     return null;
   }

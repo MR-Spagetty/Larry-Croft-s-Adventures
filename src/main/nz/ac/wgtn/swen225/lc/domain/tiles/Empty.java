@@ -17,7 +17,7 @@ public class Empty extends AbstractTile {
   }
 
   public static Empty fromJSON(JSONObject json) {
-    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+    if (!((JSONString) json.get("tile")).get().equals("Empty")) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + json.get("Tile"));
     }
