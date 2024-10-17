@@ -52,8 +52,6 @@ public class UserInterface extends JFrame{
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         createStartMenu();
-
-        pack();
         setVisible(true);
     }
 
@@ -73,10 +71,11 @@ public class UserInterface extends JFrame{
             //SwingUtilities.updateComponentTreeUI(this);
         };
 
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
+
         add(BorderLayout.NORTH, instructions);
         add(BorderLayout.CENTER, buttons);
-
-        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
+        pack();
     }
 
     /**
@@ -96,19 +95,18 @@ public class UserInterface extends JFrame{
         };
 
         this.add(BorderLayout.EAST, gameControls);
+        this.add(BorderLayout.CENTER, pane);
         this.addKeyListener(IOController.ic.getKeyController());
-
-        this.setFocusable(true);
-        this.requestFocus();
-        pack();
-
-        add(BorderLayout.CENTER, pane);
 
         //The graphics pane will be refreshed every time a tick occurs.
         GameState.getGameState().tickTimer.addActionListener((unused) -> {
             assert SwingUtilities.isEventDispatchThread();
             pane.repaint();
         });
+
+        this.setFocusable(true);
+        this.requestFocus();
+        pack();
     }
 
     /**
