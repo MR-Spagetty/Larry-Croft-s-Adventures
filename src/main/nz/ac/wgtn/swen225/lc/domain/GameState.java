@@ -7,8 +7,10 @@ import javax.swing.Timer;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import nz.ac.wgtn.swen225.lc.persistency.JSONList;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 import nz.ac.wgtn.swen225.lc.persistency.Persistency;
 
@@ -121,10 +123,11 @@ public final class GameState {
     this.levelID = null;
     this.levelPath = null;
     try {
-      this.levelMaze = Maze.fromJSON(Persistency.loadFromFile(levelPath));
+      initLevel(Maze.fromJSON(Persistency.loadFromFile(levelPath)));
       this.levelID = this.levelMaze.ID;
       this.levelPath = levelPath;
       this.tick = 0;
+      return true;
     } catch (IOException e) {
       return false;
     }
@@ -137,6 +140,35 @@ public final class GameState {
         throw new IllegalArgumentException("Expected JSONObject got " + json.getClass().getName());
       }
       JSONObject data = (JSONObject) json;
+      JSONType levelPath = data.get("level");
+      if (!(levelPath instanceof JSONString)) {
+        throw new IllegalArgumentException(
+            "Expected JSONString at \"level\" but found " + levelPath.getClass().getName());
+      }
+      JSONType levelData = Persistency.loadFromFile(Path.of(((JSONString) levelPath).get()));
+      if (!(levelData instanceof JSONObject)) {
+        throw new IllegalArgumentException(
+            "Expected JSONObject but found " + levelData.getClass().getName());
+      }
+      JSONType modTileData = data.get("modTiles");
+      if (!(modTileData instanceof JSONList)) {
+        throw new IllegalArgumentException(
+            "Expected JSONList at \"modTiles\" but found " + modTileData.getClass().getName());
+      }
+      JSONType entityData = data.get("entities");
+      if (!(entityData instanceof JSONList)) {
+        throw new IllegalArgumentException(
+            "Expected JSONList at \"entities\" but found " + entityData.getClass().getName());
+      }
+      initLevel(
+          Maze.fromJSONState(
+              ((JSONList) modTileData).getElements().stream().map(Tile::fromJSON).toList(),
+              ((JSONList) entityData).getElements().stream().map(Entity::fromJSON).toList(),
+              (JSONObject) levelData));
+      this.levelID = this.levelMaze.ID;
+      this.levelPath = Path.of(((JSONString) levelPath).get());
+
+      return true;
     } catch (IOException e) {
       return false;
     }
@@ -147,9 +179,13 @@ public final class GameState {
     out.put("level", getLevelPath());
     out.put("tick", getTick());
     JSONList modifiableTiles = new JSONList();
-    this.levelMaze.getModifiableTiles().parallelStream().map(ModifiableTile::toJson).forEach(modifiableTiles::add);
+    this.levelMaze.getModifiableTiles().parallelStream()
+        .map(ModifiableTile::toJson)
+        .forEach(modifiableTiles::add);
+    out.put("modTiles", modifiableTiles);
     JSONList entities = new JSONList();
     this.levelMaze.getEntities().stream().map(Entity::toJson).forEach(entities::add);
+    out.put("entities", entities);
     try {
       Persistency.saveToFile(out, savePath);
       return true;
