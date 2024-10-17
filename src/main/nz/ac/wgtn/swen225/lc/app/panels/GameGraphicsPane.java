@@ -1,7 +1,9 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Dimension;
+import java.io.Serial;
 
 import nz.ac.wgtn.swen225.lc.renderer.*;
 import nz.ac.wgtn.swen225.lc.domain.Point;
@@ -10,6 +12,8 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
  * The part of the main screen (i.e: The Graphics Pane) which displays the game.
  */
 public class GameGraphicsPane extends JPanel {
+    @Serial private static final long serialVersionUID= 1L;
+
     private final int W; //The width of the Graphics pane
     private final int H; //The height of the Graphics pane
 

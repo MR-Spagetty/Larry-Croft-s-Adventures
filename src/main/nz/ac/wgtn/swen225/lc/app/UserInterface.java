@@ -10,6 +10,7 @@ import nz.ac.wgtn.swen225.lc.renderer.Sound;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.Serial;
 import java.nio.file.Path;
 
 /**
@@ -18,6 +19,8 @@ import java.nio.file.Path;
  * @author Developer 1 <dev1@example.internal>
  */
 public class UserInterface extends JFrame{
+    @Serial private static final long serialVersionUID= 1L;
+
     //Executed when the player ends a game and goes back to the start menu.
     Runnable removeGameUI = () -> {};
 
@@ -151,8 +154,6 @@ public class UserInterface extends JFrame{
     /**
      * Removes the content on the current JFrame that allows for playing the game, and puts back the content on the
      * Start Menu. This is executed when the user exits a current game.
-     *
-     * TODO: Recording file needs to be saved to the chosen directory. This is not happening ATM. Do ASAP!
      */
     protected void endGame(){
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
