@@ -37,4 +37,7 @@ public class GameInfo{
 
     /** @return The number of chips left to collect in the game. */
     public int getChipsRemaining(){ return chipsRemaining; }
+
+    /** @return The level we are on. (Currently returning its ID; this may change) */
+    public String getLevelID(){ return levelID; }
 }
