@@ -31,7 +31,7 @@ public class FuzzTesting {
       throw new RuntimeException("Fuzz Testing failure, movement caused error: " + e.getMessage());
     }
     finally {
-      assert false;                                                     //assert false if error happens
+      System.out.println("Fuzzing complete, ran for 5 minutes");
     }
 
     /*
