@@ -8,6 +8,11 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 /**
  * Path is a record for aid in calculating and assembling a* paths
  *
+ * @param prev Optional of the previous portion of the path if empty this portion is the first
+ *     portion
+ * @param newLoc the point reached at this point on the path
+ * @param weight the weight of this portion of the path
+ * @param goal the goal of the path
  * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
  */
 public record Path(Optional<Path> prev, Point newLoc, double weight, Point goal)
