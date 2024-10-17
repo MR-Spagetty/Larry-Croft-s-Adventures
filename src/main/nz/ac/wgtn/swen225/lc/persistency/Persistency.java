@@ -157,7 +157,7 @@ public class Persistency {
 
   // Main method for testing purposes
   public static void main(String[] args) {
-    try{
+    try {
       // Simple test loading JSON Object
       System.out.println("Testing Object load:");
       JSONType jsonObject = Persistency.loadFromFile("src/main/nz/ac/wgtn/swen225/lc/persistency/testObject.json");
