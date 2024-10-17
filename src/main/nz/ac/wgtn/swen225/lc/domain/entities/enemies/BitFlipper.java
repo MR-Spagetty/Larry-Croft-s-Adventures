@@ -4,17 +4,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.function.BiFunction;
-import java.util.stream.Stream;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
-import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
-public class BitFlipper extends Enemy {
+public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
 
   /**
    * creates a new BitFlipper enemy at the given location with the given individual id
@@ -72,13 +74,6 @@ public class BitFlipper extends Enemy {
 
   /** value for use in allowing the a* search to attempt to recover from a local minimum weight */
   private static final double CLOSEST_REP_THRESHOLD = 10;
-
-  /** the directions useable to create a path */
-  private static final List<Point> dirs =
-      Stream.of(PlayerAction.values())
-          .map(act -> act.offset)
-          .filter(p -> !p.mul(2l).equals(p))
-          .toList();
 
   /**
    * finds the shortest path to the closest possible point to the goal using slightly modified a*
@@ -147,5 +142,23 @@ public class BitFlipper extends Enemy {
       case Water w -> w.filled() ? 1 : 1.5;
       default -> 1;
     };
+  }
+
+  @Override
+  public BitFlipper fromJson(JSONType json) {
+    JSONObject data = (JSONObject) json;
+    String type = ((JSONString) data.get("type")).get();
+    if (!type.equals("BitFlipper")) {
+      throw new IllegalArgumentException("Incorrect data given expected BitFlipper got: " + type);
+    }
+    return new BitFlipper(Point.fromJSON(data.get("Position")), Entity.idFromJSON(data));
+  }
+
+  /**
+   * statically deserializes a BitFlipper enemy for documentation see {@link #fromJson(JSONType)}
+   */
+  public static BitFlipper fromJSON(JSONType json) {
+    final BitFlipper ref = new BitFlipper(Point.ORIGIN, 0);
+    return ref.fromJson(json);
   }
 }
