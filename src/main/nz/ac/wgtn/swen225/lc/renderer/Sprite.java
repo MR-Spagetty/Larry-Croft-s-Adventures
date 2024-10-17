@@ -123,13 +123,13 @@ public class Sprite {
         // Ice class image
         case Ice ice -> ImageIO.read(Path.of("src", "resources", "ice.png").toFile());
         // Fire class image
-        // case Fire fire ->
-        //     ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
+        case Fire fire ->
+            ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
         // Water class image
-        // case Water water ->
-        //     water.filled() == true
-        //         ? ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"))
-        //         : ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
+        case Water water ->
+            water.filled() == true
+                ? ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"))
+                : ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
         // Default Error image for when no individual case in place
         default -> ImageIO.read(Path.of("placeholder.png").toFile());
       };

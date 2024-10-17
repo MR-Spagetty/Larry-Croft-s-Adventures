@@ -3,6 +3,7 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
@@ -131,6 +132,10 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
     return this.dead;
   }
 
+  /**
+   * Deserialize a Player from JSON statically
+   * See {@link #fromJson(JSONType)} for further documentation
+   */
   public static Player fromJSON(JSONObject json) {
     final Player ref = new Player(Point.ORIGIN, 0);
     return ref.fromJson(json);
@@ -138,8 +143,7 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
 
   @Override
   public JSONType toJson() {
-    JSONObject out = new JSONObject();
-    out.put("position", this.location().toJson());
+    JSONObject out = (JSONObject)super.toJson();
     JSONList invOut = new JSONList();
     getInventory().stream().map(Item::toJson).forEach(invOut::add);
     out.put("Inventory", invOut);
@@ -153,15 +157,16 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + data.get("type"));
     }
+    Player out =  new Player(Point.fromJSON((data).get("position")), 0);
     JSONType invData = data.get("Inventory");
     if ( invData!= null){
       if (!(invData instanceof JSONList)) {
         throw new IllegalArgumentException(
             "Expected JSONList at \"Inventory\" got: " + invData.getClass().getName());
       }
-      this.inventory = ((JSONList) invData).getElements().stream().map(Entity::fromJSON).map(i -> (Item)i).toList();
+      out.inventory = ((JSONList) invData).getElements().stream().map(Entity::fromJSON).map(i -> (Item)i).toList();
     }
 
-    return new Player(Point.fromJSON((data).get("position")), Entity.idFromJSON(data));
+    return out;
   }
 }
