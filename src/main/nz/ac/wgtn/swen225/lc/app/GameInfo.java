@@ -31,4 +31,10 @@ public class GameInfo{
 
     /** @return The time remaining in the game. */
     public int getTimeRemaining(){ return timeRemaining; }
+
+    /** Decreases the amount of chips remaining by one. */
+    public void decreaseChipsRemaining(){ chipsRemaining--; }
+
+    /** @return The number of chips left to collect in the game. */
+    public int getChipsRemaining(){ return chipsRemaining; }
 }
