@@ -24,7 +24,7 @@ public class GameGraphicsPane extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        r.render();
+        r.render(g);
     }
 
     /** @return The center of the Graphics pane, in the form of a Point */
