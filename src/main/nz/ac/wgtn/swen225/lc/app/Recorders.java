@@ -58,6 +58,9 @@ public class Recorders{
      */
     public void startRecordingLevel(Path levelPath){ if (rec != null) rec.startLevel(levelPath); }
 
+    /** Sets the main recorder to stop recording the current level. */
+    public void stopRecordingCurrentLevel(){ if (rec != null) rec.endLevel(); }
+
     /** When the game is finished, the recorder is signalled to stop recording the game. */
     public void stopRecordingGame(){ if (rec != null) rec.endGame(); }
 

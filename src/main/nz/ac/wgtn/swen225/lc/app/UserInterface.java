@@ -136,15 +136,9 @@ public class UserInterface extends JFrame{
      * When a user finishes one level, they will be taken to the next level. This involves the recorder being
      * signalled to stop one level and begin the next.
      */
-    public void goBetweenLevels(){
-
-        /** TODO, figure out the path needed for the second level! */
-        /*
-        if (rec != null){
-            rec.endLevel();
-            rec.startLevel(...);
-        }
-        */
+    public void goBetweenLevels(File nextLevel){
+        Recorders.recs.stopRecordingCurrentLevel();
+        Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
     /** Saves the current game to a file. */
