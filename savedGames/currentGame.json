@@ -1,0 +1,14 @@
+{
+  "level": "src/resources/levels/level0.json",
+  "entities": [{
+    "indID": 0,
+    "position": [
+      0,
+      0
+    ],
+    "type": "nz.ac.wgtn.swen225.lc.domain.entities.Player",
+    "Inventory": []
+  }],
+  "modTiles": [],
+  "tick": 25
+}
