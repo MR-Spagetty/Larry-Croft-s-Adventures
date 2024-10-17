@@ -7,7 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
  * ItemChooser is a simple utility class to aid in the yoinking of items from the player by the
  * {@link BitFlipper} enemy
  */
-class ItemChooser implements Predicate<Item> {
+public class ItemChooser implements Predicate<Item> {
   private final int n;
   private int curr = 0;
 
@@ -17,6 +17,9 @@ class ItemChooser implements Predicate<Item> {
    * @param choice
    */
   public ItemChooser(int choice) {
+    if (choice < 0) {
+      throw new IllegalArgumentException("Choice must be non-negative");
+    }
     this.n = choice;
   }
 
