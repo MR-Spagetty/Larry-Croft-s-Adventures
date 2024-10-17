@@ -13,67 +13,93 @@ import java.util.*;
 import java.nio.file.Path;
 
 
+/**
+ * Persistency class is responsible for loading and saving JSON data.
+ * Supports both JSONObjects and JSONLists
+ */
+
 public class Persistency {
 
-  // Load JSONType from file
+  /**
+   * Load JSONType from file using Path input.
+   *
+   * @param filePath The path to the file.
+   * @return A custom JSONType object.
+   * @throws IOException If an error occurs while reading the file.
+   */
   public static JSONType loadFromFile(Path filePath) throws IOException {
-    // Read the JSON string from the file
     File file = filePath.toFile();
     if (!file.exists()) {
       throw new IOException("File not found: " + filePath.toString());  // Handle cases where file doesn't exist
     }
-
     String json = Files.readString(filePath);
-    //String json = FileUtils.readFileToString(new File(filePath), "UTF-8");
     return parseJSONString(json);
   }
 
-  // Load JSONType from file (String)
+
+  /**
+   * Load JSONType from file using String file path input.
+   *
+   * @param filePath The path to the file as a String.
+   * @return A custom JSONType object.
+   * @throws IOException If an error occurs while reading the file.
+   */
   public static JSONType loadFromFile(String filePath) throws IOException {
     return loadFromFile(Path.of(filePath)); // Delegate to the Path method
   }
 
-  // Save JSONType to a file (String)
+  /**
+   * Save JSONType to file using Path input.
+   *
+   * @param jsonType The JSONType object to save.
+   * @param filePath The path where the file will be saved.
+   * @throws IOException If an error occurs while writing the file.
+   */
   public static void saveToFile(JSONType jsonType, String filePath) throws IOException {
     saveToFile(jsonType, Path.of(filePath)); // Delegate to the Path method
   }
 
-  //Save JSONType to a file
+  /**
+   * Save JSONType to file using String file path input.
+   *
+   * @param jsonType The JSONType object to save.
+   * @param filePath The path where the file will be saved as a String.
+   * @throws IOException If an error occurs while writing the file.
+   */
   public static void saveToFile(JSONType jsonType, Path filePath) throws IOException {
     // Convert the custom JSONType back to a JSON string
     String jsonString = convertToJSONString(jsonType);
-
-    // Write the JSON string to the specified file
-    //FileUtils.writeStringToFile(new File(filePath), jsoString, "UTF-8");
     Files.writeString(filePath, jsonString);
   }
 
+  /**
+   * Convert a custom JSONType into a JSON string.
+   *
+   * @param jsonType The JSONType object to convert.
+   * @return A string representing the JSON data.
+   */
   private static String convertToJSONString(JSONType jsonType) {
-    if (jsonType instanceof JSONObject) {
-
-      // Convert custom JSONObject to string
+    if (jsonType instanceof JSONObject) { // Convert custom JSONObject to string
       return convertCustomJSONObjectToString((JSONObject) jsonType).toString(2);
-
-    } else if (jsonType instanceof JSONList) {
-
-      // Convert custom JSONList to string
+    } else if (jsonType instanceof JSONList) { // Convert custom JSONList to string
       return convertCustomJSONListToString((JSONList) jsonType).toString(2);
-
     } else {
-
       throw new IllegalArgumentException("Unsupported JSONType for saving");
-
     }
-
   }
 
+  /**
+   * Convert a custom JSONObject to a org.json.JSONObject.
+   *
+   * @param customObject The custom JSONObject.
+   * @return The converted org.json.JSONObject.
+   */
   private static org.json.JSONObject convertCustomJSONObjectToString(JSONObject customObject) {
     org.json.JSONObject jsonObject = new org.json.JSONObject();
-
     Set<String> keys = customObject.keySet();
 
     // Go over customObject keys and the vales and add them to JSONObject
-    for (String key : keys){ //org.json.JSONObject.getNames(customObject)) {
+    for (String key : keys){
       Object value = customObject.get(key);
 
       if (value instanceof JSONObject) {
@@ -95,11 +121,15 @@ public class Persistency {
     return jsonObject;
   }
 
-  // Convert custom JSONList to org.json.JSONArray
+  /**
+   * Convert a custom JSONList to an org.json.JSONArray.
+   *
+   * @param customList The custom JSONList.
+   * @return The converted org.json.JSONArray.
+   */
   private static JSONArray convertCustomJSONListToString(JSONList customList) {
     JSONArray jsonArray = new JSONArray();
 
-    // Iterate over the custom list and convert each item
     for (JSONType value : customList.getElements()) {
       if (value instanceof JSONObject) {
         jsonArray.put(convertCustomJSONObjectToString((JSONObject) value));
@@ -120,7 +150,12 @@ public class Persistency {
     return jsonArray;
   }
 
-  // Parse the raw JSON string to determine if it's an object or array
+  /**
+   * Parse the raw JSON string into a custom JSONType object.
+   *
+   * @param json The raw JSON string.
+   * @return A custom JSONType object.
+   */
   private static JSONType parseJSONString(String json) {
     // Use JSONTokener to determine the structure of the string
     JSONTokener tokener = new JSONTokener(json);
@@ -136,56 +171,10 @@ public class Persistency {
       return visitor.visit(parsedJson);  // Send the org.json.JSONArray to visitor
     }
 
-    // Throw an error if neither object nor array
     throw new IllegalArgumentException("Invalid JSON format");
   }
 
-  // Parse a string and convert it into a custom JSONObject
-  private static JSONObject parseJSONObject(String jsonString) {
-    org.json.JSONObject jsonObject = new org.json.JSONObject(jsonString);  // Parse string into JSONObject
-    JSONObject customObject = new JSONObject();  // Our custom JSONObject
-
-    for (String key : jsonObject.keySet()) {
-      Object value = jsonObject.get(key);
-      customObject.put(key, value);
-    }
-    return customObject; 
-  }
-
-  // Parse a string and convert it into a custom JSONList
-  static JSONList parseJSONArray(String jsonString) {
-    JSONArray jsonArray = new JSONArray(jsonString);  // Parse string into JSONArray
-    JSONList customList = new JSONList();  // Our custom JSONList
-
-    for (int i = 0; i < jsonArray.length(); i++) {
-      Object value = jsonArray.get(i);
-      //System.out.println("Value at index " + i + ": " + value + " (Type: " + value.getClass().getSimpleName() + ")");  // Debug line
-
-      // Recursively handle nested objects or arrays
-      if (value instanceof JSONList) {
-        customList.add(parseJSONObject(value.toString()));
-      } else if (value instanceof JSONArray) {
-        customList.add(parseJSONArray(value.toString()));
-      } else if (value instanceof String) {
-        customList.add((String) value);
-      } else if (value instanceof Integer) {
-        customList.add(new JSONLong(((Integer) value).longValue())); // Convertins integer to long
-      } else if (value instanceof Long) {
-        customList.add(new JSONLong((Long) value));  // Use JSONLong directly
-      } else if (value instanceof BigDecimal) {
-        customList.add(new JSONDouble(((BigDecimal) value).doubleValue()));  // Convert BigDecimal to JSONDouble
-      } else if (value instanceof Double) {
-        customList.add(new JSONDouble((Double) value));  // Use JSONDouble directly
-      } else if (value instanceof Boolean) {
-        customList.add((Boolean) value);
-      } else if (value == org.json.JSONObject.NULL){
-        customList.add(JSONNull.INSTANCE);  // Handle null values
-      }
-    }
-
-    return customList;
-  }
-
+  // Main method for testing purposes
   public static void main(String[] args) {
     try{
       // Simple test loading JSON Object
