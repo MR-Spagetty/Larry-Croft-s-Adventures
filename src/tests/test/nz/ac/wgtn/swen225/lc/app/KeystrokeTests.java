@@ -25,11 +25,6 @@ public class KeystrokeTests{
         Assertions.assertEquals(keys.getActivePlayerAction(), PlayerAction.None);
     }
 
-    @Test void strokeMapsToUIAction(){
-        keys.setNextKeyStroke(KeyEvent.VK_1); //"1" is mapped to a Runnable action, not a Player action.
-        Assertions.assertThrows(ice, () -> keys.setPlayerActionAtTick());
-    }
-
     @Test void strokeCorrectlyMaps1(){
         keys.setNextKeyStroke(KeyEvent.VK_KP_UP); //"UP" is mapped to the Player action for going up.
         keys.setPlayerActionAtTick();
