@@ -89,7 +89,8 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
             return;
         }
 
-        setNextKeyStroke(keystroke);
+        PlayerAction nextAction = getPlayerAction(keystroke);
+        GameState.getGameState().getPlayer().queueAction(nextAction);
     }
 
     /**
