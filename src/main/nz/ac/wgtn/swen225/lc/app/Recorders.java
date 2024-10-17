@@ -66,10 +66,11 @@ public class Recorders{
 
     /**
      * Passes a given player action to the recorder to allow for that action to be recorded.
+     * This only should happen if the game is being recorded.
      *
      * @param action The given player action
      */
-    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+    public void forwardActionToRecorder(PlayerAction action){ if (rec != null) rec.record(action); }
 
     /**
      * Asks the user whether they want the game to be recorded or not.

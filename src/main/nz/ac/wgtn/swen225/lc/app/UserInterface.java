@@ -143,7 +143,6 @@ public class UserInterface extends JFrame{
         if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
-
     /** Saves the current game to a file. */
     protected void saveGame(){
         GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
