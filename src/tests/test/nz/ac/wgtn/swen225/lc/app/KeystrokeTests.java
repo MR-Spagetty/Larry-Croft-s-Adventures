@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.KeyEvent;
-import java.util.Map;
 
 public class KeystrokeTests{
     ControlKeysTesting keys = new ControlKeysTesting();
@@ -100,8 +99,6 @@ class ControlKeysTesting extends ControlKeys{
 
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
-
-        Recorders.recs.forwardActionToRecorder(active);
     }
 
     /** @return The action that the player is currently carrying out in a tick. */
