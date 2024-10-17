@@ -5,6 +5,7 @@ import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.renderer.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +25,10 @@ public class UserInterface extends JFrame{
     Runnable removeStartUI = () -> {};
 
     /*
-     * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
-     * the Pause Screen can stop and start it to "technically" pause the game.
+     * The graphics pane that displays the game is stored globally, so Renderer can access it.
+     * However, it is not fully initialised until a game is in progress!
      */
-    static Timer timer;
+    private GameGraphicsPane pane = null;
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
@@ -61,6 +62,8 @@ public class UserInterface extends JFrame{
      * corresponding actions.
      */
     private void createStartMenu(){
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
+
         JPanel instructions = Instructions.instructionsPanel;
         StartButtonsPanel buttons = new StartButtonsPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
@@ -83,7 +86,7 @@ public class UserInterface extends JFrame{
         //The wider "Game UI" that the user will be interacting with!
         GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        GameGraphicsPane pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
 
         removeGameUI = () -> {
             remove(gameControls); remove(pane);
@@ -98,31 +101,34 @@ public class UserInterface extends JFrame{
         pack();
 
         add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
-        timer.start();
+
+        //The graphics pane will be refreshed every time a tick occurs.
+        GameState.getGameState().tickTimer.addActionListener((unused) -> {
+            assert SwingUtilities.isEventDispatchThread();
+            pane.repaint();
+        });
     }
 
     /**
-     * Creates a new game and runs it. This can be done from an existing game file, if necessary.
+     * Starts a new game or an existing game from the game file. If a new game is started, it should ask you whether the
+     * game is to be recorded.
      *
      * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
      *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
      */
     public void startGame(File gameFile){
-        Recorders.recs.askToRecordGame();
+        if (gameFile == null) Recorders.recs.askToRecordGame();
 
         //If a new game is being started, we will set the game file to be the first level.
-        //if (gameFile == null){
-            gameFile = new File("src/resources/levels/level0.json");
-        //}
+        gameFile = new File("src/resources/levels/level0.json");
 
-        //Might use: GameState.getGameState().loadState(....);
-        boolean thing = GameState.getGameState().setLevel(gameFile.toPath());
-        System.out.println(thing);
+        GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
 
         removeStartUI.run();
         createMainMenu();
+        new Sound().playSound("gameStart");
+
         Recorders.recs.startRecordingLevel(gameFile.toPath());
     }
 
@@ -141,11 +147,9 @@ public class UserInterface extends JFrame{
         */
     }
 
+    /** Saves the current game to a file. */
     protected void saveGame(){
-        /**
-         * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
-         */
-        GameState.getGameState().saveState(Path.of("testSave.json"));
+        GameState.getGameState().saveState(Path.of(Recorders.recs.getRecPath() + "/testSave.json"));
     }
 
     /**
@@ -156,5 +160,15 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
+
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
     }
+
+    /**
+     * Returns the graphics pane for use by the renderer.
+     *
+     * @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use.
+     */
+    public GameGraphicsPane getGraphicsPane(){ return pane; }
 }

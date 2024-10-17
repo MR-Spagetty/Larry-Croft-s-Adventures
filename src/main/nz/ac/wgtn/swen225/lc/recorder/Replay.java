@@ -1,5 +1,6 @@
 package nz.ac.wgtn.swen225.lc.recorder;
 
+import nz.ac.wgtn.swen225.lc.app.Recorders;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.app.App;
 
@@ -35,6 +36,7 @@ abstract class Replay {
    */
   protected void advanceTick(){
     App.forwardActionToDomain(actions.get(tick));
+    Recorders.recs.forwardActionToRecorder(actions.get(tick));
     App.tickOverride();
     tick++;
     checkLevelEnd();

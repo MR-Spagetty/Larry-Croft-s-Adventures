@@ -69,7 +69,7 @@ public class Level {
     JSONObject json = new JSONObject();
     json.put("actions", toJSONList());
     json.put("level", new JSONString(levelPath.toString()));
-    json.put("nextLevel", new JSONString(nextSavePath.toString()));
+    json.put("nextLevel", new JSONString(nextSavePath == null ? "null" : nextSavePath.toString()));
 
     try{
       Persistency.saveToFile(json, Paths.get(savePath.toString(), filename).toString());
