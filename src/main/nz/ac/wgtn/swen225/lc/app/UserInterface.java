@@ -5,6 +5,7 @@ import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.renderer.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -126,6 +127,7 @@ public class UserInterface extends JFrame{
 
         removeStartUI.run();
         createMainMenu();
+        new Sound().playSound("gameStart");
 
         Recorders.recs.startRecordingLevel(gameFile.toPath());
     }
@@ -158,6 +160,7 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
+
         GameState.getGameState().tickTimer.stop();
         GameInfo.info.countdownTimer.stop();
     }
