@@ -36,6 +36,15 @@ public class KeyStrokes {
     }
 
     /**
+     * Takes a keystroke and assigns it to its ID. This allows for the later creation of map pairs of
+     * "Map<String, PlayerAction>" and "Map<String, Runnable>" which will be used by the Fuzz module.
+     *
+     * @param id The ID that will be associated with the keystroke
+     * @param keyStroke The keystroke of the key
+     */
+    public void assignIDToKey(String id, int keyStroke){ strokeIDS.put(id, keyStroke); }
+
+    /**
      * Determines whether the KeyStroke goes to a UI Action. (If it doesn't it will be assumed as a Player Action.)
      *
      * @param keyStroke The keystroke of the key
