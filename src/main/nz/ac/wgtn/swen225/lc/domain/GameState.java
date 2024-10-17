@@ -14,7 +14,6 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 import nz.ac.wgtn.swen225.lc.persistency.Persistency;
-import nz.ac.wgtn.swen225.lc.renderer.*;
 
 public final class GameState {
 
