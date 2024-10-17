@@ -3,6 +3,7 @@ package nz.ac.wgtn.swen225.lc.domain.entities.enemies;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
+import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
@@ -18,7 +19,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  */
 public abstract class Enemy extends MoveableEntity {
 
-  protected final Random behaviourDecider;
+  protected Random behaviourDecider;
 
   /** the movements enemies are allowed to make */
   public static final List<Point> dirs =
@@ -36,6 +37,11 @@ public abstract class Enemy extends MoveableEntity {
    */
   public Enemy(Point location, long individualID) {
     super(location, individualID);
+  }
+
+  @Override
+  public final void maze(Maze maze) {
+    super.maze(maze);
     this.behaviourDecider = new Random(getUID());
   }
 

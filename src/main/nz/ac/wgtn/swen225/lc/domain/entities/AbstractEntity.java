@@ -1,7 +1,5 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
@@ -17,7 +15,7 @@ public abstract class AbstractEntity implements Entity {
 
   protected long lastTick = -1;
   private Point location;
-  private Maze maze;
+  private Maze maze = null;
   private final long individualID;
 
   /**
@@ -59,18 +57,18 @@ public abstract class AbstractEntity implements Entity {
     return maze;
   }
 
+  /**
+   * correct implementation of maze setter
+   *
+   * <p>should only be overridden to set fields that require the maze immediately after it has been
+   * set
+   */
   @Override
-  public final void maze(Maze maze) {
-    this.maze = maze;
-    try {
-      Field mazeField = this.getClass().getField("maze");
-      Field modifiersField = Field.class.getDeclaredField("modifiers");
-      modifiersField.setAccessible(true);
-      modifiersField.setInt(mazeField, mazeField.getModifiers() | Modifier.FINAL);
-    } catch (NoSuchFieldException NSF) {
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
+  public void maze(Maze maze) {
+    if (this.maze() != null) {
+      throw new IllegalStateException("Maze may only be set once");
     }
+    this.maze = maze;
   }
 
   @Override

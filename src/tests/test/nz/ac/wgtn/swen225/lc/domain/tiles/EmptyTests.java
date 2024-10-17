@@ -94,7 +94,7 @@ public class EmptyTests implements TileBaseTests {
     t.put(e);
     Entity e2 = e(0, 0);
     e2.maze(scenario);
-    assertThrows(ISE, () -> t.enter(e2));
+    assertThrows(IAE, () -> t.enter(e2));
   }
 
   @Test

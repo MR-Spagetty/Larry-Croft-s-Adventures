@@ -37,7 +37,7 @@ public abstract class AbstractTile implements Tile {
   @Override
   public void enter(Entity enteree) {
     if (!canEnter(enteree)) {
-      throw new IllegalStateException(
+      throw new IllegalArgumentException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
     put(enteree);
@@ -45,7 +45,7 @@ public abstract class AbstractTile implements Tile {
 
   @Override
   public final void put(Entity enteree) {
-    if (this.occupant.isPresent()) {
+    if (getOccupant().isPresent()) {
       throw new IllegalStateException(
           "The entity: %d may not be put in this tile as it is already occupied"
               .formatted(enteree.getUID()));
