@@ -22,7 +22,7 @@ public interface TileBaseTests {
   default void leaveNonCurrentTile() {
     Player p = new Player(West, 0);
     Tile t = tile();
-    new Maze(1, "NONE", List.of(t, et(West)), List.of(e(ORIGIN), p));
+    new Maze(1, "NONE", 0, List.of(t, et(West)), List.of(e(ORIGIN), p));
     t.leave(p);
   }
 
@@ -31,7 +31,7 @@ public interface TileBaseTests {
     assertThrows(
         ISE,
         () -> {
-          new Maze(0, "NONE", List.of(tile()), List.of(e(ORIGIN), e(ORIGIN)));
+          new Maze(0, "NONE", 0, List.of(tile()), List.of(e(ORIGIN), e(ORIGIN)));
         });
   }
 
@@ -39,7 +39,7 @@ public interface TileBaseTests {
   default void alreadyOccupiedEnter() {
     Player p = new Player(West, 0);
     Tile t = tile();
-    new Maze(1, "NONE", List.of(t, et(West)), List.of(e(ORIGIN), p));
+    new Maze(1, "NONE", 0, List.of(t, et(West)), List.of(e(ORIGIN), p));
     assertThrows(ISE, () -> t.enter(p));
   }
 }

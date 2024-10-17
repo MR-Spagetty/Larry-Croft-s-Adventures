@@ -6,6 +6,8 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.IceBoots;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
@@ -70,6 +72,10 @@ public class DirectionalIce extends Ice {
         && (moveToEffect.limit(1l).equals(this.type.a.offset.mul(-1l))
             || moveToEffect.limit(1l).equals(this.type.b.offset.mul(-1l)))) {
       throw new IllegalArgumentException("Entity may not move in that direction");
+    }
+    if (e instanceof Player p
+        && p.getInventory().parallelStream().anyMatch(i -> i instanceof IceBoots)) {
+      return moveToEffect;
     }
     if (ePreLoc.equals(atSideA)) {
       return this.type.b.offset;

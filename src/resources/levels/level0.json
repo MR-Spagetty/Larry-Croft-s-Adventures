@@ -87,7 +87,8 @@
     ],
     "player" : {
         "type": "Player",
-        "position" : [0, 0]
+        "position" : [0, 0],
+        "indID": 0
     },
     "maxTicks" : 200000
 }

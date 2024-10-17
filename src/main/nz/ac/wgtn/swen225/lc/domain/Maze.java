@@ -3,21 +3,18 @@ package nz.ac.wgtn.swen225.lc.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-
-
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
-
-import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.*;
-import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 
 public class Maze {
   private List<Tile> tiles = new ArrayList<>();
   public final long maxTicks;
   final String ID;
+  public final int requiredTreasures;
 
   /**
    * Creates a new empty maze with the given time limit
@@ -25,12 +22,17 @@ public class Maze {
    * @param maxTicks the time limit in ticks
    * @param ID the ID of the level
    */
-  public Maze(long maxTicks, String ID) {
+  public Maze(long maxTicks, String ID, int reqTreasures) {
     if (maxTicks < 0) {
       throw new IllegalArgumentException("maxTicks may not be negative");
     }
     this.maxTicks = maxTicks;
     this.ID = "";
+    this.requiredTreasures = reqTreasures;
+  }
+
+  public int requiredTreasures() {
+    return this.requiredTreasures;
   }
 
   /**
@@ -41,8 +43,8 @@ public class Maze {
    * @param tiles the tiles to fill teh maze with
    * @param entities the entities to populate the maze with
    */
-  public Maze(long maxTicks, String ID, List<Tile> tiles, List<Entity> entities) {
-    this(maxTicks, ID);
+  public Maze(long maxTicks, String ID, int reqTreasures, List<Tile> tiles, List<Entity> entities) {
+    this(maxTicks, ID, reqTreasures);
     tiles.forEach(this::addTile);
     this.tiles.sort(Tile::compareTo);
     entities.forEach(this::addEntity);
@@ -166,7 +168,7 @@ public class Maze {
   public static Maze fromJSON(JSONType json) {
 
     if (json instanceof JSONObject data) {
-      Player p = Player.fromJSON((JSONObject)data.get("player"));
+      Player p = Player.fromJSON((JSONObject) data.get("player"));
       return fromJSON(data, basicMazeData(data), List.of(), List.of(p));
 
     } else {
@@ -192,7 +194,20 @@ public class Maze {
           "Expect JSONLong at \"maxTicks\" got " + ID.getClass().getName());
     }
     String IDVal = ((JSONString) ID).get();
-    return new Maze(maxTicksVal, IDVal);
+
+    int reqTreasures =
+        Optional.ofNullable(data.get("requiredTreasures"))
+            .map(
+                t -> {
+                  if (!(t instanceof JSONLong)) {
+                    throw new IllegalArgumentException(
+                        "Expected JSONLong at \"requiredTreasures\" got: "
+                            + t.getClass().getName());
+                  }
+
+                  return Integer.parseInt("" + ((JSONLong) t).get());
+                }).orElse(0);
+    return new Maze(maxTicksVal, IDVal, reqTreasures);
   }
 
   private static Maze fromJSON(

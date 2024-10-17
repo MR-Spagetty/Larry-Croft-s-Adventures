@@ -5,8 +5,8 @@ import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
-import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.Treasure;
 import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import nz.ac.wgtn.swen225.lc.persistency.JSONList;
@@ -82,6 +82,7 @@ public final class GameState {
   }
 
   public Player getPlayer() {
+    getLevelID();
     return getMaze().getEntities().parallelStream()
         .<Player>mapMulti(
             (e, cons) -> {
@@ -92,6 +93,15 @@ public final class GameState {
               throw new IllegalStateException("Level contains more than one player");
             })
         .orElseThrow(() -> new IllegalStateException("Level does not contain a player"));
+  }
+
+  public int requiredTreasures() {
+    getLevelID();
+    return this.levelMaze.requiredTreasures();
+  }
+
+  public int collectedTreasures() {
+    return (int) getPlayer().getInventory().stream().filter(i -> i instanceof Treasure).count();
   }
 
   /**

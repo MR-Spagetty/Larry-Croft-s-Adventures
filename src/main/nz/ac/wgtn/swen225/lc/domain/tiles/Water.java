@@ -4,6 +4,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableBlock;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.Flippers;
 
 public class Water extends AbstractTile {
 
@@ -22,7 +23,9 @@ public class Water extends AbstractTile {
     if (!this.filled && (enteree instanceof MoveableBlock)) {
       this.filled = true;
       return;
-    } else if (!this.filled && (enteree instanceof Player p)) {
+    } else if (!this.filled
+        && (enteree instanceof Player p)
+        && p.getInventory().parallelStream().noneMatch(i -> i instanceof Flippers)) {
       p.die();
     }
     super.enter(enteree);

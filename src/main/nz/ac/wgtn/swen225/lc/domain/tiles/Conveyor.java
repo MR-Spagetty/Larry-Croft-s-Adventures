@@ -6,6 +6,8 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.SuctionBoots;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
@@ -29,6 +31,10 @@ public class Conveyor extends MovementAffecterTile {
    */
   @Override
   public Point affectMove(MoveableEntity e, Point moveToEffect) {
+    if (e instanceof Player p
+        && p.getInventory().parallelStream().anyMatch(i -> i instanceof SuctionBoots)) {
+      return moveToEffect;
+    }
     Point allowed;
     // Entity's "concious" movement may only be perpendicular to this conveyor
     if (this.targetDir == Up || this.targetDir == Down) {
@@ -59,6 +65,7 @@ public class Conveyor extends MovementAffecterTile {
           "Expected long type got: " + json.get("type").getClass().getName());
     }
     return new Conveyor(
-        Point.fromJSON(json.get("position")), Integer.parseInt(""+(((JSONLong) json.get("type")).get())));
+        Point.fromJSON(json.get("position")),
+        Integer.parseInt("" + (((JSONLong) json.get("type")).get())));
   }
 }

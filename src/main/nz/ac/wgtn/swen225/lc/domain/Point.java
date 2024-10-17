@@ -1,6 +1,8 @@
 package nz.ac.wgtn.swen225.lc.domain;
 
 import java.util.List;
+import java.util.Objects;
+
 import nz.ac.wgtn.swen225.lc.persistency.JSONList;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
@@ -132,6 +134,7 @@ public record Point(long x, long y) implements Comparable<Point>, JSONSerializab
 
   @Override
   public Point fromJson(JSONType json) {
+    Objects.requireNonNull(json, "Expected JSONList got nothing");
     if (json instanceof JSONList data) {
       List<JSONLong> coords =
           data.getElements().stream()

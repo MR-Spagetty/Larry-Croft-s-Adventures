@@ -50,7 +50,7 @@ public final class DirIceSETests implements DirectionalIceTests {
   public void alreadyOccupiedEnter() {
     Player p = new Player(West, 0);
     Tile t = tile();
-    new Maze(1, "NONE", List.of(t, et(West)), List.of(e(Point.ORIGIN), p));
+    new Maze(1, "NONE", 0, List.of(t, et(West)), List.of(e(Point.ORIGIN), p));
     assertThrows(ISE, () -> t.enter(p));
   }
 }
