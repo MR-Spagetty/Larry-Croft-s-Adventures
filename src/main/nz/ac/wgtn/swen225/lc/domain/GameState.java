@@ -83,16 +83,7 @@ public final class GameState {
 
   public Player getPlayer() {
     getLevelID();
-    return getMaze().getEntities().parallelStream()
-        .<Player>mapMulti(
-            (e, cons) -> {
-              if (e instanceof Player p) cons.accept(p);
-            })
-        .reduce(
-            (p1, p2) -> {
-              throw new IllegalStateException("Level contains more than one player");
-            })
-        .orElseThrow(() -> new IllegalStateException("Level does not contain a player"));
+    return getMaze().getPlayer();
   }
 
   public int requiredTreasures() {
