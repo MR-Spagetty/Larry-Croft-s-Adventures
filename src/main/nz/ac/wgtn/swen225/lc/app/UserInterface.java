@@ -48,8 +48,8 @@ public class UserInterface extends JFrame{
      */
     public void createMenu(){
         assert SwingUtilities.isEventDispatchThread();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         createStartMenu();
         setVisible(true);
@@ -68,14 +68,14 @@ public class UserInterface extends JFrame{
         switchUIs.run();
         switchUIs = () -> {
             remove(instructions); remove(buttons);
-            //SwingUtilities.updateComponentTreeUI(this);
+            SwingUtilities.updateComponentTreeUI(this);
         };
 
         pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
 
-        add(BorderLayout.NORTH, instructions);
-        add(BorderLayout.CENTER, buttons);
-        pack();
+        this.add(BorderLayout.NORTH, instructions);
+        this.add(BorderLayout.CENTER, buttons);
+        this.pack();
     }
 
     /**
@@ -91,12 +91,13 @@ public class UserInterface extends JFrame{
         switchUIs.run();
         switchUIs = () -> {
             remove(gameControls); remove(pane);
-            //SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
+            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
         };
 
         this.add(BorderLayout.EAST, gameControls);
         this.add(BorderLayout.CENTER, pane);
         this.addKeyListener(IOController.ic.getKeyController());
+        this.setFocusable(true);
 
         //The graphics pane will be refreshed every time a tick occurs.
         GameState.getGameState().tickTimer.addActionListener((unused) -> {
@@ -104,9 +105,8 @@ public class UserInterface extends JFrame{
             pane.repaint();
         });
 
-        this.setFocusable(true);
+        this.pack();
         this.requestFocus();
-        pack();
     }
 
     /**
