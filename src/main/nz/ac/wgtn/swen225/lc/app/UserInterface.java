@@ -9,6 +9,7 @@ import nz.ac.wgtn.swen225.lc.domain.GameState;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
@@ -144,7 +145,7 @@ public class UserInterface extends JFrame{
         /**
          * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
          */
-        //GameState.getGameState().saveState(....).
+        GameState.getGameState().saveState(Path.of("testSave.json"));
     }
 
     /**

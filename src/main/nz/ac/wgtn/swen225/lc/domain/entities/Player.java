@@ -11,6 +11,7 @@ import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffecterTile;
 import nz.ac.wgtn.swen225.lc.persistency.JSONList;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 public class Player extends MoveableEntity implements JSONSerializable<Player> {
@@ -147,6 +148,20 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
 
   @Override
   public Player fromJson(JSONType json) {
-    return new Player(Point.fromJSON(((JSONObject) json).get("position")), 0);
+    JSONObject data = (JSONObject) json;
+    if (!((JSONString) data.get("type")).get().equals("Player")) {
+      throw new IllegalArgumentException(
+          "Incorrect data given expected Conveyor got: " + data.get("type"));
+    }
+    JSONType invData = data.get("Inventory");
+    if ( invData!= null){
+      if (!(invData instanceof JSONList)) {
+        throw new IllegalArgumentException(
+            "Expected JSONList at \"Inventory\" got: " + invData.getClass().getName());
+      }
+      this.inventory = ((JSONList) invData).getElements().stream().map(Entity::fromJSON).map(i -> (Item)i).toList();
+    }
+
+    return new Player(Point.fromJSON((data).get("position")), 0);
   }
 }

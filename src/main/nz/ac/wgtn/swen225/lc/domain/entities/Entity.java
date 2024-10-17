@@ -2,6 +2,8 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 /**
@@ -86,6 +88,18 @@ public interface Entity {
   JSONType toJson();
 
   public static Entity fromJSON(JSONType json) {
+    if (!(json instanceof JSONObject)) {
+      throw new IllegalArgumentException(
+          "Expected JSONObject but got " + json.getClass().getName());
+    }
+    if (!(((JSONObject) json).get("type") instanceof JSONString)) {
+      throw new IllegalArgumentException(
+          "Expected JSONString at \"type\" but found "
+              + ((JSONObject) json).get("type").getClass().getName());
+    }
+    switch (((JSONString)((JSONObject) json).get("type")).get()) {
+      case "Player" -> Player.fromJSON((JSONObject)json);
+    }
     return null;
   }
 }
