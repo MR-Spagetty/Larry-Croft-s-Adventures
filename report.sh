@@ -1,2 +1,2 @@
 #! /usr/bin/sh
-mvn clean test jacoco:report site
+mvn test jacoco:report site
