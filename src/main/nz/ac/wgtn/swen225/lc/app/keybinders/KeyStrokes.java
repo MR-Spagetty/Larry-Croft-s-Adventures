@@ -13,10 +13,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
 public class KeyStrokes {
     private final Map<Integer, PlayerAction> strokeToPlayerAction = new HashMap<>();
     private final Map<Integer, Runnable> strokeToUIAction = new HashMap<>();
-
-    public boolean strokeGoesToAction(int keyStroke){
-        return strokeToUIAction.containsKey(keyStroke);
-    }
+    private final Map<String, Integer> strokeIDS = new HashMap<>();
 
     /**
      * Binds a keystroke to a direction in which the character can move.
@@ -37,6 +34,13 @@ public class KeyStrokes {
     public void assignKeyToAction(int keyStroke, Runnable action){
         strokeToUIAction.put(keyStroke, action);
     }
+
+    /**
+     * Determines whether the KeyStroke goes to a UI Action. (If it doesn't it will be assumed as a Player Action.)
+     *
+     * @param keyStroke The keystroke of the key
+     */
+    public boolean strokeGoesToAction(int keyStroke){ return strokeToUIAction.containsKey(keyStroke); }
 
     /**
      * Gets the direction that is associated with the given key code. No action will be performed if the given
@@ -82,6 +86,8 @@ public class KeyStrokes {
 
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
     public Map<Integer, PlayerAction> strokesToPlayerAction(){
+
+
         return Collections.unmodifiableMap(strokeToPlayerAction);
     }
 
