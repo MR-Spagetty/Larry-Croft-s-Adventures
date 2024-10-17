@@ -7,7 +7,7 @@ public class StepReplay extends Replay {
     super(p);
   }
 
-  /*
+  /**
    * Replay implementation of StepReplay.
    * 
    * Gets called whenever the player presses a defined key controlled by App.

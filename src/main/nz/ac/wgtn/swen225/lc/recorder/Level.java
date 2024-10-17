@@ -37,7 +37,7 @@ public class Level {
     this.levelPath = levelPath;
   }
 
-  /*
+  /**
    * Constructs a Level with only action and nextSavePath. This is meant to be
    * used for parser to return the data needed to replay a level. The package
    * public acess level is intentional.
@@ -59,6 +59,7 @@ public class Level {
   public Path savePath() { return savePath; }
   public Path nextSavePath() { return nextSavePath; }
   public Path levelPath(){ return levelPath; }
+  public String filename() { return filename; }
   public List<PlayerAction> actions() { return Collections.unmodifiableList(actions); }
 
   /**
@@ -77,7 +78,7 @@ public class Level {
     }
   }
 
-  /*
+  /**
    * Transforms the list of PlayerActions into a JsonList for saving
    */
   private JSONList toJSONList(){

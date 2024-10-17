@@ -1,9 +1,11 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.keybinders;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
 
+import nz.ac.wgtn.swen225.lc.app.Recorders;
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
@@ -27,10 +29,28 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * When you initialise the "ControlKeys" class, the actions will be bound to their specific keystrokes,
      * and the directions will also be bound to their keystrokes.
      * This is done in two separate methods to separate the two different stages of key assignments.
+     *
+     * @param uiActions A Map of the Actions that will need to be assigned to the certain keys on the keyboard.
      */
     public ControlKeys(Map<String, Runnable> uiActions){
+        assignIDsToKeys();
         assignKeysToDirections();
         assignKeysToActions(uiActions);
+    }
+
+    private void assignIDsToKeys(){
+        assignIDToKey(KeyEvent.VK_KP_UP, "P_UP");
+        assignIDToKey(KeyEvent.VK_KP_DOWN, "P_DOWN");
+        assignIDToKey(KeyEvent.VK_KP_LEFT, "P_LEFT");
+        assignIDToKey(KeyEvent.VK_KP_RIGHT, "P_RIGHT");
+
+        assignIDToKey(KeyEvent.VK_X, "EXIT");
+        assignIDToKey(KeyEvent.VK_S, "SAVE");
+        assignIDToKey(KeyEvent.VK_R, "RESUME");
+        assignIDToKey(KeyEvent.VK_1, "L1");
+        assignIDToKey(KeyEvent.VK_2, "L2");
+        assignIDToKey(KeyEvent.VK_SPACE, "PAUSE");
+        assignIDToKey(KeyEvent.VK_P, "S_REPLAY");
     }
 
     private void assignKeysToDirections(){
@@ -40,14 +60,14 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToPlayerAction(KeyEvent.VK_KP_RIGHT, PlayerAction.Right);
     }
 
-    private void assignKeysToActions(Map<String, Runnable> uiAction){
+    private void assignKeysToActions(Map<String, Runnable> uiAction) {
         assignKeyToAction(KeyEvent.VK_X, uiAction.get("EXIT"));
         assignKeyToAction(KeyEvent.VK_S, uiAction.get("SAVE"));
         assignKeyToAction(KeyEvent.VK_R, uiAction.get("RESUME"));
-        assignKeyToAction(KeyEvent.VK_1, () -> {});
-        assignKeyToAction(KeyEvent.VK_2, () -> {});
+        assignKeyToAction(KeyEvent.VK_1, () -> {}); //Currently doesn't map to anything.
+        assignKeyToAction(KeyEvent.VK_2, () -> {}); //Currently doesn't map to anything.
         assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
-        assignKeyToAction(KeyEvent.VK_S, uiAction.get("S_REPLAY")); //Hidden action
+        assignKeyToAction(KeyEvent.VK_S, uiAction.get("S_REPLAY")); //Hidden action.
     }
 
     /**
@@ -64,8 +84,6 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int keystroke = e.getKeyCode();
 
-        System.out.println(keystroke);
-
         if (((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) || strokeGoesToAction(keystroke)){
             performAction(keystroke);
             return;
@@ -75,8 +93,10 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     }
 
     /**
-     * Helper method to "keyPressed" which sets the next keystroke (for the player action )that will be
+     * Helper method to "keyPressed" which sets the next keystroke (for the player action) that will be
      * used in the next tick.
+     *
+     * @param keystroke The keystroke that is associated with a certain key on the keyboard.
      */
     public void setNextKeyStroke(int keystroke){
         if (pendingKeyStroke == INVALID_KEY_STROKE) pendingKeyStroke = keystroke;
@@ -114,11 +134,9 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         active = getPlayerAction(pendingKeyStroke);
         pendingKeyStroke = INVALID_KEY_STROKE;
 
-        UserInterface.ui.forwardActionToRecorder(active);
+        Recorders.recs.forwardActionToRecorder(active);
     }
 
-    /**
-     * Returns the action that is player is currently carrying out in a tick.
-     */
+    /** @return The action that the player is currently carrying out in a tick. */
     public PlayerAction getActivePlayerAction(){ return active; }
 }

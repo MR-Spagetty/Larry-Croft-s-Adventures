@@ -8,43 +8,20 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound {
-  private AudioInputStream sound;
-
   /**
-   * Description TODO
+   * Finds a sound file and plays it. Acceptable filenames are: gameStart gameWin gameDeath buttonPress
    *
-   * @param o
+   * @param filename used to identify sound file from resources
    */
-  public Sound(Object o) {
-    this.sound = resolveSound(o);
-  }
-
-  /**
-   * Description TODO
-   *
-   * @param o
-   * @return
-   */
-  private AudioInputStream resolveSound(Object o) {
+  public void playSound(String filename) {
     try {
-      return switch (o) {
-        case Sound s ->
-            AudioSystem.getAudioInputStream(
-                Sound.class.getClassLoader().getResource("placeholder.wav"));
-        default -> null;
-      };
-    } catch (UnsupportedAudioFileException | IOException e) {
-      System.err.println("Sound.resolveSound(Object):\n" + e);
-      return null;
-    }
-  }
-
-  /** Description TODO */
-  public void play() {
-    try {
+      // 
+      AudioInputStream sound =
+          AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource(filename + ".wav"));
+      // Convert to a clip and play
       Clip clip = AudioSystem.getClip();
       clip.open(sound);
-    } catch (LineUnavailableException | IOException e) {
+    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
       System.err.println("Sound.play():\n" + e);
     }
   }

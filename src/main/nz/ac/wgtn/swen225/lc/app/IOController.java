@@ -1,5 +1,10 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
+import nz.ac.wgtn.swen225.lc.app.buttons.MainUIButtons;
+import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
+import nz.ac.wgtn.swen225.lc.app.otherpanels.PauseScreen;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
@@ -10,7 +15,7 @@ import java.util.Map;
 /**
  * Controls the "Input" and "Output" from pressing a button or a key during main gameplay.
  * It also includes some basic commands that are executed from buttons or keys, such as the pausing of the
- * game and the displaying of the Game Instructions during gameplay.
+ * game and loading/saving a game.
  */
 public class IOController {
     private final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
@@ -26,14 +31,14 @@ public class IOController {
      * In the constructor, the buttons and the keystrokes are initialised to their actions.
      */
     private IOController(){
-        mainUIButtons = UIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
+        mainUIButtons = MainUIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
                 "SAVE", () -> endGame(true),
                 "RESUME", this::resumeExistingGameFromCurrentGame,
                 "PAUSE", this::pauseGame,
-                "S_REPLAY", App::callStepReplay
+                "S_REPLAY", () -> Recorders.recs.callStepReplay()
         ));
     }
 
@@ -83,14 +88,6 @@ public class IOController {
     }
 
     /**
-     * Creates the pop-up window that re-iterates the instructions that apply to the game.
-     * The method is stated here as it links up to the action of a button!
-     */
-    protected void createHelpDialog(){
-        JOptionPane.showMessageDialog(null, Instructions.instructionsPanel, "Help", JOptionPane.PLAIN_MESSAGE);
-    }
-
-    /**
      * Pauses the game currently in progress and creates a pop-up window which indicates that the game is paused.
      * When closed (either by hitting "ESC" or the "Return to Game" button), the game resumes.
      * ===
@@ -117,10 +114,12 @@ public class IOController {
     /**
      * Loads an existing game from a ".json" file using the JFileChooser mechanism. You are repeatedly asked for a
      * file until you either select a valid file, or if you decide to abandon selecting a valid file.
-     * ===
+     *
      * References:
      * https://www.tutorialspoint.com/get-the-path-of-the-file-selected-in-the-jfilechooser-component-with-java
      * https://www.geeksforgeeks.org/java-swing-jfilechooser/
+     *
+     * @return The file that contains the chosen game to continue playing.
      */
     private File loadExistingGame(){
         boolean validFileSelected = false;

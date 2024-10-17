@@ -1,4 +1,4 @@
-package nz.ac.wgtn.swen225.lc.app;
+package nz.ac.wgtn.swen225.lc.app.keybinders;
 
 import java.util.*;
 
@@ -13,10 +13,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
 public class KeyStrokes {
     private final Map<Integer, PlayerAction> strokeToPlayerAction = new HashMap<>();
     private final Map<Integer, Runnable> strokeToUIAction = new HashMap<>();
-
-    public boolean strokeGoesToAction(int keyStroke){
-        return strokeToUIAction.containsKey(keyStroke);
-    }
+    private final Map<Integer, String> strokeIDS = new HashMap<>();
 
     /**
      * Binds a keystroke to a direction in which the character can move.
@@ -37,6 +34,22 @@ public class KeyStrokes {
     public void assignKeyToAction(int keyStroke, Runnable action){
         strokeToUIAction.put(keyStroke, action);
     }
+
+    /**
+     * Takes a keystroke and assigns it to its ID. This allows for the later creation of map pairs of
+     * "Map<String, PlayerAction>" and "Map<String, Runnable>" which will be used by the Fuzz module.
+     *
+     * @param keyStroke The keystroke of the key
+     * @param id The ID that will be associated with the keystroke
+     */
+    public void assignIDToKey(int keyStroke, String id){ strokeIDS.put(keyStroke, id); }
+
+    /**
+     * Determines whether the KeyStroke goes to a UI Action. (If it doesn't it will be assumed as a Player Action.)
+     *
+     * @param keyStroke The keystroke of the key
+     */
+    public boolean strokeGoesToAction(int keyStroke){ return strokeToUIAction.containsKey(keyStroke); }
 
     /**
      * Gets the direction that is associated with the given key code. No action will be performed if the given
@@ -67,8 +80,8 @@ public class KeyStrokes {
     }
 
     /**
-     * Returns a COMBINED set of all the keystrokes that have been assigned to a Player Action or an
-     * action to the GUI in the game.
+     * @return A COMBINED set of all the keystrokes that have been assigned to a Player Action or an
+     *         action to the GUI in the game.
      */
     public Set<Integer> getKeyStrokes(){
         Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
@@ -80,13 +93,25 @@ public class KeyStrokes {
         }};
     }
 
-    /** Returns an unmodifiable map of the keystrokes mapped to their player actions. */
-    public Map<Integer, PlayerAction> strokesToPlayerAction(){
-        return Collections.unmodifiableMap(strokeToPlayerAction);
+    /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
+    public Map<String, PlayerAction> strokesToPlayerAction(){
+        Map<String, PlayerAction> toReturn = new HashMap<>();
+
+        //Will rewrite into a Stream later
+        for (Map.Entry<Integer, PlayerAction> entry : strokeToPlayerAction.entrySet())
+            toReturn.put(strokeIDS.get(entry.getKey()), entry.getValue());
+
+        return Collections.unmodifiableMap(toReturn);
     }
 
-    /** Returns an unmodifiable map of the keystrokes mapped to UI actions. */
-    public Map<Integer, Runnable> strokesToUIAction(){
-        return Collections.unmodifiableMap(strokeToUIAction);
+    /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
+    public Map<String, Runnable> strokesToUIAction(){
+        Map<String, Runnable> toReturn = new HashMap<>();
+
+        //Will rewrite into a Stream later
+        for (Map.Entry<Integer, Runnable> entry : strokeToUIAction.entrySet())
+            toReturn.put(strokeIDS.get(entry.getKey()), entry.getValue());
+
+        return Collections.unmodifiableMap(toReturn);
     }
 }

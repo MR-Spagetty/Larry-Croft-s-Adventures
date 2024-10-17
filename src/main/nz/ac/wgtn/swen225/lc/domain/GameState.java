@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.tiles.ModifiableTile;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
@@ -13,6 +14,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 import nz.ac.wgtn.swen225.lc.persistency.Persistency;
+import nz.ac.wgtn.swen225.lc.renderer.*;
 
 public final class GameState {
 
@@ -31,7 +33,7 @@ public final class GameState {
   private Path levelPath = null;
   private Maze levelMaze = null;
 
-  private Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
+  public Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
 
   {
     this.tickTimer.setRepeats(true);
