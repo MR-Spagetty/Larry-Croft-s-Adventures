@@ -142,10 +142,9 @@ public class UserInterface extends JFrame{
     }
 
     protected void saveGame(){
-        /**
-         * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
-         */
-        GameState.getGameState().saveState(Path.of("testSave.json"));
+        GameState.getGameState().saveState(
+                Path.of(Recorders.recs.getRecPath().toString() + "testSave.json")
+        );
     }
 
     /**
