@@ -27,7 +27,7 @@ public class UserInterface extends JFrame{
      * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
      * the Pause Screen can stop and start it to "technically" pause the game.
      */
-    static Timer timer;
+    static Timer drawTimer;
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
@@ -98,8 +98,8 @@ public class UserInterface extends JFrame{
         pack();
 
         add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
-        timer.start();
+        drawTimer = gameControls.createTimer(pane);
+        drawTimer.start();
     }
 
     /**

@@ -99,7 +99,7 @@ public class IOController {
         ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
 
         //The timer is stopped when the game is paused, if the timer has been initialised.
-        if (UserInterface.timer != null) UserInterface.timer.stop();
+        if (UserInterface.drawTimer != null) UserInterface.drawTimer.stop();
 
         /*
          * The program will not continue running as long as this Dialog box is on the screen.
@@ -108,7 +108,7 @@ public class IOController {
         JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
 
-        if (UserInterface.timer != null) UserInterface.timer.start();
+        if (UserInterface.drawTimer != null) UserInterface.drawTimer.start();
     }
 
     /**
