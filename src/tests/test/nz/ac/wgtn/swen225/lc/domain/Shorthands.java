@@ -46,11 +46,11 @@ public interface Shorthands {
   }
 
   static Wall w(long x, long y) {
-    return new Wall(p(0, 0));
+    return new Wall(p(x, y));
   }
 
   static Exit ex(long x, long y) {
-    return new Exit(p(0, 0));
+    return new Exit(p(x, y));
   }
 
   static Entity e(long x, long y) {

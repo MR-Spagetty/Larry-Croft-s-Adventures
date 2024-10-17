@@ -62,7 +62,8 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
   @Override
   public void touch(Entity touchee) {
     super.touch(touchee);
-    if (touchee instanceof Player p && !p.getInventory().isEmpty()) {
+    Player p = (Player)touchee;
+    if (!p.getInventory().isEmpty()) {
       int indexToYoink = behaviourDecider.nextInt(p.getInventory().size());
       Item expected = p.getInventory().get(indexToYoink);
       Optional<Item> yoinked = p.lose(new ItemChooser(indexToYoink));

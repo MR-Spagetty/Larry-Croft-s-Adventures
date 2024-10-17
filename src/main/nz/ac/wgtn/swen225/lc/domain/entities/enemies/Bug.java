@@ -37,9 +37,7 @@ public class Bug extends Enemy implements JSONSerializable<Bug> {
   @Override
   public void touch(Entity touchee) {
     super.touch(touchee);
-    if (touchee instanceof Player p) {
-      p.die();
-    }
+    ((Player) touchee).die();
   }
 
   @Override
