@@ -21,11 +21,8 @@ import java.nio.file.Path;
 public class UserInterface extends JFrame{
     @Serial private static final long serialVersionUID= 1L;
 
-    //Executed when the player ends a game and goes back to the start menu.
-    Runnable removeGameUI = () -> {};
-
-    //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
-    Runnable removeStartUI = () -> {};
+    //Executed when the player switches User Interfaces, notably when the player starts or ends a game.
+    Runnable switchUIs = () -> {};
 
     /*
      * The graphics pane that displays the game is stored globally, so Renderer can access it.
@@ -72,9 +69,10 @@ public class UserInterface extends JFrame{
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
         );
 
-        removeStartUI = () -> {
+        switchUIs.run();
+        switchUIs = () -> {
             remove(instructions); remove(buttons);
-            SwingUtilities.updateComponentTreeUI(this);
+            //SwingUtilities.updateComponentTreeUI(this);
         };
 
         add(BorderLayout.NORTH, instructions);
@@ -91,9 +89,10 @@ public class UserInterface extends JFrame{
 
         pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
 
-        removeGameUI = () -> {
+        switchUIs.run();
+        switchUIs = () -> {
             remove(gameControls); remove(pane);
-            SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
+            //SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
         };
 
         this.add(BorderLayout.EAST, gameControls);
@@ -127,10 +126,7 @@ public class UserInterface extends JFrame{
 
         GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
-
-        removeStartUI.run();
         createMainMenu();
-
         Recorders.recs.startRecordingLevel(gameFile.toPath());
 
         new Sound().playSound("gameStart");
@@ -158,7 +154,6 @@ public class UserInterface extends JFrame{
     protected void endGame(){
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
-        removeGameUI.run();
         createStartMenu();
 
         GameState.getGameState().tickTimer.stop();
