@@ -157,7 +157,7 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + data.get("type"));
     }
-    Player out =  new Player(Point.fromJSON((data).get("position")), 0);
+    Player out =  new Player(Point.fromJSON((data).get("position")), Entity.idFromJSON(data));
     JSONType invData = data.get("Inventory");
     if ( invData!= null){
       if (!(invData instanceof JSONList)) {
