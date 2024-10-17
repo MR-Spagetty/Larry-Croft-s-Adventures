@@ -13,7 +13,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
 public class KeyStrokes {
     private final Map<Integer, PlayerAction> strokeToPlayerAction = new HashMap<>();
     private final Map<Integer, Runnable> strokeToUIAction = new HashMap<>();
-    private final Map<String, Integer> strokeIDS = new HashMap<>();
+    private final Map<Integer, String> strokeIDS = new HashMap<>();
 
     /**
      * Binds a keystroke to a direction in which the character can move.
@@ -39,19 +39,10 @@ public class KeyStrokes {
      * Takes a keystroke and assigns it to its ID. This allows for the later creation of map pairs of
      * "Map<String, PlayerAction>" and "Map<String, Runnable>" which will be used by the Fuzz module.
      *
-     * @param id The ID that will be associated with the keystroke
      * @param keyStroke The keystroke of the key
+     * @param id The ID that will be associated with the keystroke
      */
-    public void assignIDToKey(String id, int keyStroke){ strokeIDS.put(id, keyStroke); }
-
-    /**
-     * Takes in a given ID and returns the keystroke associated with it. If no keystroke is found, an invalid keystroke
-     * (-1) is returned.
-     *
-     * @param id The ID associated with a keystroke
-     * @return The keystroke that is associated with the ID.
-     */
-    public int getKeyStroke(String id){ return strokeIDS.getOrDefault(id, -1); }
+    public void assignIDToKey(int keyStroke, String id){ strokeIDS.put(keyStroke, id); }
 
     /**
      * Determines whether the KeyStroke goes to a UI Action. (If it doesn't it will be assumed as a Player Action.)
@@ -103,7 +94,9 @@ public class KeyStrokes {
     }
 
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
-    public Map<Integer, PlayerAction> strokesToPlayerAction(){
+    public Map<String, PlayerAction> strokesToPlayerAction(){
+        Map<String, PlayerAction> toReturn = new HashMap<>();
+
 
 
         return Collections.unmodifiableMap(strokeToPlayerAction);
