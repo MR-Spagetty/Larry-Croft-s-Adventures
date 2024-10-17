@@ -174,6 +174,11 @@ public class Maze {
     }
   }
 
+  public static Maze fromJSONState(
+      List<Tile> changedTiles, List<Entity> entities, JSONObject levelJSON) {
+    return fromJSON(levelJSON, basicMazeData(levelJSON), changedTiles, entities);
+  }
+
   private static Maze basicMazeData(JSONObject data) {
     JSONType maxTicks = data.get("maxTicks");
     if (!(maxTicks instanceof JSONLong)) {
