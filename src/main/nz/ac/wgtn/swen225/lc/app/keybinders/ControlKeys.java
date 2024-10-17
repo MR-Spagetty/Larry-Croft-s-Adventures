@@ -33,6 +33,7 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * @param uiActions A Map of the Actions that will need to be assigned to the certain keys on the keyboard.
      */
     public ControlKeys(Map<String, Runnable> uiActions){
+        assignIDsToKeys();
         assignKeysToDirections();
         assignKeysToActions(uiActions);
     }
@@ -52,6 +53,21 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_2, () -> {});
         assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
         assignKeyToAction(KeyEvent.VK_S, uiAction.get("S_REPLAY")); //Hidden action
+    }
+
+    private void assignIDsToKeys(){
+        assignIDToKey("P_UP", KeyEvent.VK_KP_UP);
+        assignIDToKey("P_DOWN", KeyEvent.VK_KP_DOWN);
+        assignIDToKey("P_LEFT", KeyEvent.VK_KP_LEFT);
+        assignIDToKey("P_RIGHT", KeyEvent.VK_KP_RIGHT);
+
+        assignIDToKey("EXIT", KeyEvent.VK_X);
+        assignIDToKey("SAVE", KeyEvent.VK_S);
+        assignIDToKey("RESUME", KeyEvent.VK_R);
+        assignIDToKey("L1", KeyEvent.VK_1);
+        assignIDToKey("L2", KeyEvent.VK_1);
+        assignIDToKey("PAUSE", KeyEvent.VK_SPACE);
+        assignIDToKey("S_REPLAY", KeyEvent.VK_SPACE);
     }
 
     /**
