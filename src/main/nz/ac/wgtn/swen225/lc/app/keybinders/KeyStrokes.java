@@ -105,7 +105,13 @@ public class KeyStrokes {
     }
 
     /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
-    public Map<Integer, Runnable> strokesToUIAction(){
-        return Collections.unmodifiableMap(strokeToUIAction);
+    public Map<String, Runnable> strokesToUIAction(){
+        Map<String, Runnable> toReturn = new HashMap<>();
+
+        //Will rewrite into a Stream later
+        for (Map.Entry<Integer, Runnable> entry : strokeToUIAction.entrySet())
+            toReturn.put(strokeIDS.get(entry.getKey()), entry.getValue());
+
+        return Collections.unmodifiableMap(toReturn);
     }
 }
