@@ -135,11 +135,13 @@ public class UserInterface extends JFrame{
     /**
      * When a user finishes one level, they will be taken to the next level. This involves the recorder being
      * signalled to stop one level and begin the next.
+     * A "next" level will not begin recording if the path to the next level is "null".
      */
     public void goBetweenLevels(File nextLevel){
         Recorders.recs.stopRecordingCurrentLevel();
-        Recorders.recs.startRecordingLevel(nextLevel.toPath());
+        if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
+
 
     /** Saves the current game to a file. */
     protected void saveGame(){
@@ -149,8 +151,11 @@ public class UserInterface extends JFrame{
     /**
      * Removes the content on the current JFrame that allows for playing the game, and puts back the content on the
      * Start Menu. This is executed when the user exits a current game.
+     *
+     * TODO: Recording file needs to be saved to the chosen directory. This is not happening ATM. Do ASAP!
      */
     protected void endGame(){
+        goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();

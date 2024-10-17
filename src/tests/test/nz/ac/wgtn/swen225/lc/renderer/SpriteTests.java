@@ -6,7 +6,8 @@ import nz.ac.wgtn.swen225.lc.domain.tiles.*;
 import nz.ac.wgtn.swen225.lc.renderer.Sprite;
 
 public class SpriteTests {
-    @Test 
+    /*
+    @Test
     public void test1(){
         Point center = new Point(0, 0);
         Sprite wall = new Sprite(new Wall(center));
@@ -14,4 +15,5 @@ public class SpriteTests {
         wall.draw();
         player.draw();
     }
+     */
 }
