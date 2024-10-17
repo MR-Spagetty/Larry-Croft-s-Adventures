@@ -15,6 +15,9 @@ public abstract class Item extends AbstractEntity implements JSONSerializable<It
   }
 
   @Override
+  public void tick(long tick) {}
+
+  @Override
   public final boolean canTouch(Entity touchee) {
     return touchee instanceof Player;
   }

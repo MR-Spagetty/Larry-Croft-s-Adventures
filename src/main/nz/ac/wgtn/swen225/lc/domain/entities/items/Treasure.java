@@ -9,9 +9,6 @@ public class Treasure extends Item {
   }
 
   @Override
-  public void tick(long tick) {}
-
-  @Override
   protected Item item(Point location, long id) {
     return new Treasure(location, id);
   }
