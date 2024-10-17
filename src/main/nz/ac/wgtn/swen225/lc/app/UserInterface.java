@@ -62,8 +62,6 @@ public class UserInterface extends JFrame{
      * corresponding actions.
      */
     private void createStartMenu(){
-        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
-
         JPanel instructions = Instructions.instructionsPanel;
         StartButtonsPanel buttons = new StartButtonsPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
@@ -77,6 +75,8 @@ public class UserInterface extends JFrame{
 
         add(BorderLayout.NORTH, instructions);
         add(BorderLayout.CENTER, buttons);
+
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
     }
 
     /**
@@ -152,12 +152,12 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
+
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         createStartMenu();
-
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
     }
 
     /**
