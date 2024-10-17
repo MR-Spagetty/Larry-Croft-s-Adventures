@@ -4,11 +4,10 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 import nz.ac.wgtn.swen225.lc.renderer.*;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 
 /**
  * The part of the main screen which displays the game.
- *
- * TODO: add comments and check with Renderer that this is OK in terms of displaying the Rendered game on the UI.
  */
 public class GameGraphicsPane extends JPanel {
     Renderer r = new Renderer();
@@ -16,5 +15,10 @@ public class GameGraphicsPane extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         r.render();
+    }
+
+    /** @return The center of the Graphics pane, in the form of a Point */
+    public Point getMiddle(){
+        return new Point(0, 0);
     }
 }
