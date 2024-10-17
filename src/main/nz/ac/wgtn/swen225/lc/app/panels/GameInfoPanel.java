@@ -41,6 +41,8 @@ public class GameInfoPanel extends DefaultPanel {
         this.add(nothing);
 
         GameState.getGameState().tickTimer.addActionListener(unused -> updateInformation());
+
+        GameInfo.info.initialiseInformation("1", 60, 1); //temporary; for testing.
     }
 
     /**
@@ -65,12 +67,3 @@ public class GameInfoPanel extends DefaultPanel {
         }
     }
 }
-
-/*
-IGNORE AT THE MOMENT:
-
-System.out.println(GameInfo.info.getTimeRemaining());
-GameInfo.info.decreaseTimeRemaining();
-
-GameInfo.info.initialiseInformation("1", 60, 1); //temporary; for testing.
-*/
