@@ -10,7 +10,7 @@ import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
-import nz.ac.wgtn.swen225.lc.app.*;
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 
 /**
  * Stores graphical image data, as well as position.
@@ -48,7 +48,7 @@ public class Sprite {
    */
   private Sprite(BufferedImage image, Point position) {
     this.image = image;
-    this.position = GameState.getGameState().getPlayer().location().sub(position);
+    this.position = position.sub(GameState.getGameState().getPlayer().location()).add(UserInterface.ui.getGraphicsPane().getMiddle());
   }
 
   /**
@@ -123,13 +123,13 @@ public class Sprite {
         // Ice class image
         case Ice ice -> ImageIO.read(Path.of("src", "resources", "ice.png").toFile());
         // Fire class image
-        // case Fire fire ->
-        //     ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
+        case Fire fire ->
+            ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
         // Water class image
-        // case Water water ->
-        //     water.filled() == true
-        //         ? ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"))
-        //         : ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
+        case Water water ->
+            water.filled() == true
+                ? ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"))
+                : ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
         // Default Error image for when no individual case in place
         default -> ImageIO.read(Path.of("placeholder.png").toFile());
       };
