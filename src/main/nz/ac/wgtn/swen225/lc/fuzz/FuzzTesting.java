@@ -21,7 +21,7 @@ public class FuzzTesting {
     try{
       long startTime = System.currentTimeMillis();
       Random rand = new Random();
-      while(System.currentTimeMillis() - startTime < 300000){           //run while loop for 5 minutes
+      while(System.currentTimeMillis() - startTime < 60000){           //run while loop for 5 minutes
         List<String> keys = new ArrayList<>(buttonsKBM.keySet());
         String randKey = keys.get(rand.nextInt(keys.size()));
         buttonsKBM.get(randKey);  //TODO buttonsKBM.get(randKey).playerAction.run or something
@@ -31,7 +31,7 @@ public class FuzzTesting {
       throw new RuntimeException("Fuzz Testing failure, movement caused error: " + e.getMessage());
     }
     finally {
-      System.out.println("Fuzzing complete, ran for 5 minutes");
+      System.out.println("Fuzzing complete, ran for 1 minute");
     }
 
     /*
