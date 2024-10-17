@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 public abstract class AbstractEntity implements Entity {
 
@@ -62,6 +64,15 @@ public abstract class AbstractEntity implements Entity {
     } catch (IllegalAccessException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public JSONType toJson() {
+    JSONObject out = new JSONObject();
+    out.put("type", getClass().getName());
+    out.put("position", location().toJson());
+    out.put("indID", this.individualID);
+    return out;
   }
 
   @Override
