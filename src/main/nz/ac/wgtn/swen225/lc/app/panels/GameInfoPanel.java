@@ -61,8 +61,8 @@ public class GameInfoPanel extends DefaultPanel {
      */
     private class CustomJLabel extends JLabel{
         public CustomJLabel(String text){
-            super(text, SwingUtilities.CENTER);
-            this.setFont(new Font("Comic Sans", Font.BOLD, 18));
+            super(text, SwingConstants.CENTER);
+            this.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
             this.setForeground(Color.WHITE);
         }
     }
