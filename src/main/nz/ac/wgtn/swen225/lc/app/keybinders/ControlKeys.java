@@ -33,9 +33,17 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
      * @param uiActions A Map of the Actions that will need to be assigned to the certain keys on the keyboard.
      */
     public ControlKeys(Map<String, Runnable> uiActions){
+        this();
+        assignKeysToActions(uiActions);
+    }
+
+    /**
+     * It is possible to create an instance of "ControlKeys" without loading in the UI Actions; this constructor
+     * is only used on its own for the testing of the mappings of keyboard keys to Player Actions.
+     */
+    public ControlKeys(){
         assignIDsToKeys();
         assignKeysToDirections();
-        assignKeysToActions(uiActions);
     }
 
     private void assignIDsToKeys(){
