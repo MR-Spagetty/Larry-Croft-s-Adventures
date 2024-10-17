@@ -10,7 +10,7 @@ public class GameInfo{
     private int timeRemaining;
     private int chipsRemaining;
 
-    private Timer countdownTimer;
+    final Timer countdownTimer;
 
     /**
      * Initialises the fields to "default" values and sets up the "Countdown" timer mechanism.

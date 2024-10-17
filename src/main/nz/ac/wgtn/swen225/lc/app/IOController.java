@@ -101,6 +101,7 @@ public class IOController {
 
         //The timer is stopped when the game is paused, if the timer has been initialised.
         GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
 
         /*
          * The program will not continue running as long as this Dialog box is on the screen.
@@ -110,6 +111,7 @@ public class IOController {
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
 
         GameState.getGameState().tickTimer.start();
+        GameInfo.info.countdownTimer.start();
     }
 
     /**

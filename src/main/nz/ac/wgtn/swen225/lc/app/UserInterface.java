@@ -151,5 +151,6 @@ public class UserInterface extends JFrame{
         removeGameUI.run();
         createStartMenu();
         GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
     }
 }
