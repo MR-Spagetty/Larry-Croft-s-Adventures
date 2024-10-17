@@ -132,6 +132,10 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
     return this.dead;
   }
 
+  /**
+   * Deserialize a Player from JSON statically
+   * See {@link #fromJson(JSONType)} for further documentation
+   */
   public static Player fromJSON(JSONObject json) {
     final Player ref = new Player(Point.ORIGIN, 0);
     return ref.fromJson(json);

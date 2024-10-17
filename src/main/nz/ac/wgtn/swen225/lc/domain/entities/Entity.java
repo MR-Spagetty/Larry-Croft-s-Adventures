@@ -99,6 +99,7 @@ public interface Entity {
     }
     switch (((JSONString)((JSONObject) json).get("type")).get()) {
       case "Player" -> Player.fromJSON((JSONObject)json);
+      case "MoveableBlock" -> MoveableBlock.fromJSON((JSONObject)json);
     }
     return null;
   }

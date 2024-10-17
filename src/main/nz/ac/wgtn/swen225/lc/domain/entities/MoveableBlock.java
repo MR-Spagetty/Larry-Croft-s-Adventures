@@ -55,6 +55,10 @@ public class MoveableBlock extends MoveableEntity implements JSONSerializable<Mo
     return new MoveableBlock(pos, id);
   }
 
+  /**
+   * Deserialize a MoveableBlock from JSON statically
+   * See {@link #fromJson(JSONType)} for further documentation
+   */
   public static MoveableBlock fromJSON(JSONType json) {
     final MoveableBlock ref = new MoveableBlock(Point.ORIGIN, 0);
     return ref.fromJson(json);
