@@ -152,5 +152,6 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
+        drawTimer.stop();
     }
 }
