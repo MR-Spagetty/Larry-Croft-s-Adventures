@@ -39,7 +39,7 @@ public record Wall(Point location) implements Tile {
   }
 
   public static Wall fromJSON(JSONObject json) {
-    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+    if (!((JSONString) json.get("tile")).get().equals("Wall")) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + json.get("Tile"));
     }

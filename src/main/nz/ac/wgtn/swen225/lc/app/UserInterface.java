@@ -4,6 +4,7 @@ import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
 import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,9 +96,9 @@ public class UserInterface extends JFrame{
         this.requestFocus();
         pack();
 
-        //add(BorderLayout.CENTER, pane);
-        //timer = gameControls.createTimer(pane);
-        //timer.start();
+        add(BorderLayout.CENTER, pane);
+        timer = gameControls.createTimer(pane);
+        timer.start();
     }
 
     /**
@@ -110,12 +111,15 @@ public class UserInterface extends JFrame{
         Recorders.recs.askToRecordGame();
 
         //If a new game is being started, we will set the game file to be the first level.
-        if (gameFile == null){
-            gameFile = new File("src/main/nz/ac/wgtn/swen225/lc/persistency/examplelvl1.json");
-        }
+        //if (gameFile == null){
+            gameFile = new File("src/resources/levels/level0.json");
+        //}
 
         //Might use: GameState.getGameState().loadState(....);
-        //GameState.getGameState().setLevel(gameFile.toPath());
+        boolean thing = GameState.getGameState().setLevel(gameFile.toPath());
+        System.out.println(thing);
+        GameState.getGameState().tickTimer.start();
+
         removeStartUI.run();
         createMainMenu();
         Recorders.recs.startRecordingLevel(gameFile.toPath());

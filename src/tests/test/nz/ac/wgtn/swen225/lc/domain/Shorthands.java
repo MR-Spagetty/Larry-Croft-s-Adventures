@@ -4,6 +4,7 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 public interface Shorthands {
   Class<IllegalArgumentException> IAE = IllegalArgumentException.class;
@@ -58,6 +59,12 @@ public interface Shorthands {
 
       @Override
       public void touch(Entity touchee) {}
+
+      @Override
+      public JSONType toJson() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toJson'");
+      }
     };
   }
 }
