@@ -21,7 +21,6 @@ public final class GameState {
   /** default tick rate of the game in milliseconds */
   public static final int DEFAULT_TICK_RATE = 200;
 
-  // TODO extend whatever JSONable interface is created for persistency
   private long tick = 0;
   private static GameState inst = new GameState();
 

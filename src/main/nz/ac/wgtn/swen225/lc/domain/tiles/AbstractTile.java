@@ -33,7 +33,6 @@ public abstract class AbstractTile implements Tile {
    * @return {@code true} if the entity can enter this tile, {@code false} otherwise
    */
   public boolean canEnter(Entity enteree) {
-    // TODO handle more advanced occupants
     return getOccupant().isEmpty();
   }
 
