@@ -41,6 +41,7 @@ public abstract class MoveableEntity extends AbstractEntity {
             .getTile(location().add(by))
             .orElseThrow(
                 () -> new IllegalArgumentException("requested tile does not exist in maze"));
+    newLoc.getOccupant().filter(e -> e.canTouch(this)).ifPresent(e -> e.touch(this));
     if (!newLoc.canEnter(this)) {
       throw new IllegalArgumentException("Entity may not enter the requested tile");
     }
