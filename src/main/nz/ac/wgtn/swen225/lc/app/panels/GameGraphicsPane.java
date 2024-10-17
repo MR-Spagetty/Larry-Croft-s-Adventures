@@ -11,6 +11,14 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
  */
 public class GameGraphicsPane extends JPanel {
     Renderer r = new Renderer();
+    private final int W; //The width of the Graphics pane
+    private final int H; //The height of the Graphics pane
+
+    public GameGraphicsPane(int width, int height){
+        setPreferredSize(new Dimension(width, height));
+        this.W = width;
+        this.H = height;
+    }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -18,7 +26,5 @@ public class GameGraphicsPane extends JPanel {
     }
 
     /** @return The center of the Graphics pane, in the form of a Point */
-    public Point getMiddle(){
-        return new Point(0, 0);
-    }
+    public Point getMiddle(){ return new Point(W/2, H/2); }
 }
