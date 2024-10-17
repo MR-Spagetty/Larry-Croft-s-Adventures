@@ -5,6 +5,17 @@ public class GameInfo{
     protected int timeRemaining;
     protected int chipsRemaining;
 
+    /**
+     * Initialises the fields to "default" values. This is only done when the GameInfo class
+     * is first created. The constructor is private as we also don't want multiple "Information"
+     * instances to be created.
+     */
+    private GameInfo(){
+        this.levelID = "null";
+        this.timeRemaining = 0;
+        this.chipsRemaining = 0;
+    }
+
     /** Decreases the amount of time remaining by one. (Which will be one second in the game.) */
     public void decreaseTimeRemaining(){ timeRemaining--; }
 
