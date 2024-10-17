@@ -61,12 +61,12 @@ public class App{
     public static Set<Integer> getKeyStrokes(){ return IOController.ic.getKeyController().getKeyStrokes(); }
 
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
-    public static Map<Integer, PlayerAction> strokesToPlayerAction(){
+    public static Map<String, PlayerAction> strokesToPlayerAction(){
         return IOController.ic.getKeyController().strokesToPlayerAction();
     }
 
     /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
-    public static Map<Integer, Runnable> strokesToUIAction(){
+    public static Map<String, Runnable> strokesToUIAction(){
         return IOController.ic.getKeyController().strokesToUIAction();
     }
 }

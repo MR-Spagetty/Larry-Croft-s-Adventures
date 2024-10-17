@@ -101,4 +101,15 @@ public class Recorders{
 
         return chooseFolder.getSelectedFile().toPath();
     }
+
+    /**
+     * Initiates a Game replay from a recorded game.
+     *
+     * @param recordedGamePath The path that stores the recorded game file.
+     *
+     */
+    public void startGameReplay (Path recordedGamePath){
+
+        rec.startLevel(recordedGamePath);
+    }
 }
