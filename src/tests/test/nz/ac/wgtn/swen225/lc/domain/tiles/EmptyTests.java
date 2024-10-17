@@ -20,7 +20,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void finePut() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
@@ -29,7 +29,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void badPut() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
@@ -48,7 +48,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void getOccupied() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
@@ -65,7 +65,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void cantEnter() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
@@ -78,7 +78,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void enterGood() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.enter(e);
@@ -88,7 +88,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void enterBad() {
     Tile t = et(0, 0);
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
@@ -100,7 +100,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void leave1() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
@@ -111,7 +111,7 @@ public class EmptyTests implements TileBaseTests {
   @Test
   void leave2() {
     Tile t = tile();
-    Maze scenario = new Maze(0l, "NONE", List.of(t), List.of());
+    Maze scenario = new Maze(0l, "NONE", 0, List.of(t), List.of());
     Entity e = e(0, 0);
     e.maze(scenario);
     t.put(e);
