@@ -38,23 +38,6 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeysToActions(uiActions);
     }
 
-    private void assignKeysToDirections(){
-        assignKeyToPlayerAction(KeyEvent.VK_KP_UP, PlayerAction.Up);
-        assignKeyToPlayerAction(KeyEvent.VK_KP_DOWN, PlayerAction.Down);
-        assignKeyToPlayerAction(KeyEvent.VK_KP_LEFT, PlayerAction.Left);
-        assignKeyToPlayerAction(KeyEvent.VK_KP_RIGHT, PlayerAction.Right);
-    }
-
-    private void assignKeysToActions(Map<String, Runnable> uiAction){
-        assignKeyToAction(KeyEvent.VK_X, uiAction.get("EXIT"));
-        assignKeyToAction(KeyEvent.VK_S, uiAction.get("SAVE"));
-        assignKeyToAction(KeyEvent.VK_R, uiAction.get("RESUME"));
-        assignKeyToAction(KeyEvent.VK_1, () -> {});
-        assignKeyToAction(KeyEvent.VK_2, () -> {});
-        assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
-        assignKeyToAction(KeyEvent.VK_S, uiAction.get("S_REPLAY")); //Hidden action
-    }
-
     private void assignIDsToKeys(){
         assignIDToKey("P_UP", KeyEvent.VK_KP_UP);
         assignIDToKey("P_DOWN", KeyEvent.VK_KP_DOWN);
@@ -68,6 +51,23 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignIDToKey("L2", KeyEvent.VK_1);
         assignIDToKey("PAUSE", KeyEvent.VK_SPACE);
         assignIDToKey("S_REPLAY", KeyEvent.VK_SPACE);
+    }
+
+    private void assignKeysToDirections(){
+        assignKeyToPlayerAction(getKeyStroke("P_UP"), PlayerAction.Up);
+        assignKeyToPlayerAction(getKeyStroke("P_DOWN"), PlayerAction.Down);
+        assignKeyToPlayerAction(getKeyStroke("P_LEFT"), PlayerAction.Left);
+        assignKeyToPlayerAction(getKeyStroke("P_RIGHT"), PlayerAction.Right);
+    }
+
+    private void assignKeysToActions(Map<String, Runnable> uiAction) {
+        assignKeyToAction(getKeyStroke("EXIT"), uiAction.get("EXIT"));
+        assignKeyToAction(getKeyStroke("SAVE"), uiAction.get("SAVE"));
+        assignKeyToAction(getKeyStroke("RESUME"), uiAction.get("RESUME"));
+        assignKeyToAction(getKeyStroke("L1"), () -> {}); //Currently doesn't map to anything.
+        assignKeyToAction(getKeyStroke("L2"), () -> {}); //Currently doesn't map to anything.
+        assignKeyToAction(getKeyStroke("PAUSE"), uiAction.get("PAUSE"));
+        assignKeyToAction(getKeyStroke("S_REPLAY"), uiAction.get("S_REPLAY")); //Currently hidden action
     }
 
     /**
