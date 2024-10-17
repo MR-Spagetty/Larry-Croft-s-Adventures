@@ -1,9 +1,12 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 public class GameInfo{
-    protected String levelID;
-    protected int timeRemaining;
-    protected int chipsRemaining;
+    private static final GameInfo INFO = new GameInfo();
+    public static GameInfo info = INFO;
+
+    private String levelID;
+    private int timeRemaining;
+    private int chipsRemaining;
 
     /**
      * Initialises the fields to "default" values. This is only done when the GameInfo class
@@ -14,6 +17,13 @@ public class GameInfo{
         this.levelID = "null";
         this.timeRemaining = 0;
         this.chipsRemaining = 0;
+    }
+
+    /** When a new level begins, all the information about it can be loaded here. */
+    public void initialiseInformation(String levelID, int timeRemaining, int chipsRemaining){
+        this.levelID = levelID;
+        this.timeRemaining = timeRemaining;
+        this.chipsRemaining = chipsRemaining;
     }
 
     /** Decreases the amount of time remaining by one. (Which will be one second in the game.) */
