@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
+import nz.ac.wgtn.swen225.lc.app.GameInfo;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,9 +28,9 @@ public class GameInfoPanel extends DefaultPanel {
         //A JLabel which literally is just for spacing out this panel with the rest.
         JLabel nothing = new CustomJLabel(" ");
 
-        levelDisplay = new CustomJLabel("LEVEL: ");
-        timeDisplay = new CustomJLabel("TIME: ");
-        chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: ");
+        levelDisplay = new CustomJLabel("LEVEL: " +  GameInfo.info.getLevelID());
+        timeDisplay = new CustomJLabel("TIME: " +  GameInfo.info.getTimeRemaining());
+        chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: " + GameInfo.info.getChipsRemaining());
 
         this.add(levelDisplay);
         this.add(timeDisplay);
