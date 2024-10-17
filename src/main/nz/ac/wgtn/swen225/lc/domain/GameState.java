@@ -135,7 +135,7 @@ public final class GameState {
     }
   }
 
-  public boolean loadGameState(Path savePath) {
+  public boolean loadState(Path savePath) {
     try {
       JSONType json = Persistency.loadFromFile(savePath);
       if (!(json instanceof JSONObject)) {
@@ -176,9 +176,9 @@ public final class GameState {
     }
   }
 
-  public boolean saveGameState(Path savePath) {
+  public boolean saveState(Path savePath) {
     JSONObject out = new JSONObject();
-    out.put("level", getLevelPath());
+    out.put("level", getLevelPath().toString());
     out.put("tick", getTick());
     JSONList modifiableTiles = new JSONList();
     this.levelMaze.getModifiableTiles().parallelStream()
