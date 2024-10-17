@@ -1,7 +1,10 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
+import java.util.Optional;
+
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
@@ -101,5 +104,15 @@ public interface Entity {
       case "Player" -> Player.fromJSON((JSONObject)json);
     }
     return null;
+  }
+
+  static long idFromJSON(JSONObject data) {
+    return Optional.ofNullable(data.get("indID")).map(id -> {
+      if (!(id instanceof JSONLong)) {
+        throw new IllegalArgumentException(
+            "Expected JSONLong at \"indID\" but found " + id.getClass().getName());
+      }
+      return ((JSONLong) id).get();
+    }).orElseThrow(()-> new IllegalArgumentException("Expected element at key \"indID\""));
   }
 }

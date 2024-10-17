@@ -162,6 +162,6 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
       this.inventory = ((JSONList) invData).getElements().stream().map(Entity::fromJSON).map(i -> (Item)i).toList();
     }
 
-    return new Player(Point.fromJSON((data).get("position")), 0);
+    return new Player(Point.fromJSON((data).get("position")), Entity.idFromJSON(data));
   }
 }
