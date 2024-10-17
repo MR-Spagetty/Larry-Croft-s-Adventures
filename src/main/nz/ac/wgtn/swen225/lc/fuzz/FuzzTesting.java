@@ -1,9 +1,12 @@
 package nz.ac.wgtn.swen225.lc.fuzz;
 import nz.ac.wgtn.swen225.lc.app.*;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,7 +16,8 @@ public class FuzzTesting {
   public void fuzzingTest() {
     Main.main(new String[0]);  //initialize and run main
 
-    List<DefaultButton> buttonsKBM = new ArrayList<>(); //variable that will store all the user keyboard inputs
+    Map<String, PlayerAction> buttonsKBM = new HashMap<>(); //variable that will store all the user keyboard inputs
+    Map<String, Runnable> buttonsGUI = new HashMap<>();     //variable that will store all the user GUI inputs
     /*  TODO import the keyboard buttons into testing suite
     *   TODO call the buttons that start the game into level 1
     *   TODO strategically spam call keyboard direction buttons to test for out of bounds checking
