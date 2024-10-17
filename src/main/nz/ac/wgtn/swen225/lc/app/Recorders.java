@@ -33,6 +33,12 @@ public class Recorders{
 
     private Recorders(){}
 
+    /**
+     * @return A string representation of the path in which to save the recorded game.
+     *         This value can be "null" if the Recorder is not initialised.
+     */
+    public String getRecPath(){ return recorderPath.toString(); }
+
     /** Creates an instance of the "Auto Replay" */
     public void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
 

@@ -1,11 +1,9 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
-import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
  * Responsible for constructing parts of the Graphical User Interface used during gameplay. This
@@ -29,19 +27,5 @@ public class GamePanel extends DefaultPanel {
 
         GameButtonsPanel buttons = new GameButtonsPanel(backgroundColor, width, (height/10), 15f, mainUIButtons);
         add(BorderLayout.SOUTH, buttons);
-    }
-
-    /**
-     * Creates a timer which refreshes the Graphics pane every time a tick occurs.
-     * TODO: test setup to make sure it works as expected.
-     *
-     * @param gameDisplay The graphics display that will need to be refreshed by the timer.
-     * @return The timer that will refresh the graphics display every few seconds.
-     */
-    public Timer createTimer(GameGraphicsPane gameDisplay){
-        return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
-            assert SwingUtilities.isEventDispatchThread();
-            gameDisplay.repaint();
-        });
     }
 }

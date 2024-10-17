@@ -23,12 +23,6 @@ public class UserInterface extends JFrame{
     //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
     Runnable removeStartUI = () -> {};
 
-    /*
-     * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
-     * the Pause Screen can stop and start it to "technically" pause the game.
-     */
-    static Timer timer;
-
     private final int WIDTH = 1200, HEIGHT = 600;
 
     //To prevent more than one User Interface instance from being created.
@@ -98,31 +92,33 @@ public class UserInterface extends JFrame{
         pack();
 
         add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
-        timer.start();
+
+        //The graphics pane will be refreshed every time a tick occurs.
+        GameState.getGameState().tickTimer.addActionListener((unused) -> {
+            assert SwingUtilities.isEventDispatchThread();
+            pane.repaint();
+        });
     }
 
     /**
-     * Creates a new game and runs it. This can be done from an existing game file, if necessary.
+     * Starts a new game or an existing game from the game file. If a new game is started, it should ask you whether the
+     * game is to be recorded.
      *
      * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
      *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
      */
     public void startGame(File gameFile){
-        Recorders.recs.askToRecordGame();
+        if (gameFile == null) Recorders.recs.askToRecordGame();
 
         //If a new game is being started, we will set the game file to be the first level.
-        //if (gameFile == null){
-            gameFile = new File("src/resources/levels/level0.json");
-        //}
+        gameFile = new File("src/resources/levels/level0.json");
 
-        //Might use: GameState.getGameState().loadState(....);
-        boolean thing = GameState.getGameState().setLevel(gameFile.toPath());
-        System.out.println(thing);
+        GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
 
         removeStartUI.run();
         createMainMenu();
+
         Recorders.recs.startRecordingLevel(gameFile.toPath());
     }
 
@@ -141,11 +137,9 @@ public class UserInterface extends JFrame{
         */
     }
 
+    /** Saves the current game to a file. */
     protected void saveGame(){
-        /**
-         * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
-         */
-        GameState.getGameState().saveState(Path.of("testSave.json"));
+        GameState.getGameState().saveState(Path.of(Recorders.recs.getRecPath() + "/testSave.json"));
     }
 
     /**
@@ -156,5 +150,7 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
     }
 }
