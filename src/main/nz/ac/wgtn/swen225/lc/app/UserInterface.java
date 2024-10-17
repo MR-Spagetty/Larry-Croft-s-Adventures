@@ -30,6 +30,12 @@ public class UserInterface extends JFrame{
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
+    /*
+     * The graphics pane that displays the game is stored globally, so Renderer can access it.
+     * However, it is not fully initialised until a game is in progress!
+     */
+    private GameGraphicsPane pane = null;
+
     //To prevent more than one User Interface instance from being created.
     private static final UserInterface USER_INTERFACE = new UserInterface();
     public static UserInterface ui = USER_INTERFACE;
@@ -60,6 +66,8 @@ public class UserInterface extends JFrame{
      * corresponding actions.
      */
     private void createStartMenu(){
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set back to being "Null".
+
         JPanel instructions = Instructions.instructionsPanel;
         StartButtonsPanel buttons = new StartButtonsPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
@@ -82,7 +90,7 @@ public class UserInterface extends JFrame{
         //The wider "Game UI" that the user will be interacting with!
         GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        GameGraphicsPane pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
 
         removeGameUI = () -> {
             remove(gameControls); remove(pane);
@@ -154,4 +162,11 @@ public class UserInterface extends JFrame{
         removeGameUI.run();
         createStartMenu();
     }
+
+    /**
+     * Returns the graphics pane for use by the renderer.
+     *
+     * @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use.
+     */
+    public GameGraphicsPane getGraphicsPane(){ return pane; }
 }

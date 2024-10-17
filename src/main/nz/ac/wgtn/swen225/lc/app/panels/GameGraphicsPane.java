@@ -10,7 +10,9 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
  * The part of the main screen which displays the game.
  */
 public class GameGraphicsPane extends JPanel {
+    //The class that stores the content to "render" to the graphics pane.
     Renderer r = new Renderer();
+
     private final int W; //The width of the Graphics pane
     private final int H; //The height of the Graphics pane
 
