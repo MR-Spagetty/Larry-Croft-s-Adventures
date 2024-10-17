@@ -127,9 +127,10 @@ public class UserInterface extends JFrame{
 
         removeStartUI.run();
         createMainMenu();
-        new Sound().playSound("gameStart");
 
         Recorders.recs.startRecordingLevel(gameFile.toPath());
+
+        new Sound().playSound("gameStart");
     }
 
     /**
