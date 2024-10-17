@@ -45,6 +45,15 @@ public class KeyStrokes {
     public void assignIDToKey(String id, int keyStroke){ strokeIDS.put(id, keyStroke); }
 
     /**
+     * Takes in a given ID and returns the keystroke associated with it. If no keystroke is found, an invalid keystroke
+     * (-1) is returned.
+     *
+     * @param id The ID associated with a keystroke
+     * @return The keystroke that is associated with the ID.
+     */
+    public int getKeyStroke(String id){ return strokeIDS.getOrDefault(id, -1); }
+
+    /**
      * Determines whether the KeyStroke goes to a UI Action. (If it doesn't it will be assumed as a Player Action.)
      *
      * @param keyStroke The keystroke of the key
