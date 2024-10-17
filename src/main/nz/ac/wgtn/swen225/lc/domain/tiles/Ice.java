@@ -2,6 +2,8 @@ package nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
+import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.IceBoots;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
@@ -22,6 +24,10 @@ public class Ice extends MovementAffecterTile {
    */
   @Override
   public Point affectMove(MoveableEntity e, Point moveToEffect) {
+    if (e instanceof Player p
+        && p.getInventory().parallelStream().anyMatch(i -> i instanceof IceBoots)) {
+      return moveToEffect;
+    }
     return e.lastMove().equals(Point.ORIGIN) ? moveToEffect : e.lastMove();
   }
 
