@@ -10,7 +10,7 @@ import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
-import nz.ac.wgtn.swen225.lc.app.*;
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 
 /**
  * Stores graphical image data, as well as position.
@@ -48,7 +48,7 @@ public class Sprite {
    */
   private Sprite(BufferedImage image, Point position) {
     this.image = image;
-    this.position = GameState.getGameState().getPlayer().location().sub(position);
+    this.position = position.sub(GameState.getGameState().getPlayer().location()).add(UserInterface.ui.getGraphicsPane().getMiddle());
   }
 
   /**
