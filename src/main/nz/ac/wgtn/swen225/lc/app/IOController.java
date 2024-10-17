@@ -4,6 +4,7 @@ import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.app.buttons.MainUIButtons;
 import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
 import nz.ac.wgtn.swen225.lc.app.otherpanels.PauseScreen;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -99,7 +100,7 @@ public class IOController {
         ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
 
         //The timer is stopped when the game is paused, if the timer has been initialised.
-        if (UserInterface.drawTimer != null) UserInterface.drawTimer.stop();
+        GameState.getGameState().tickTimer.stop();
 
         /*
          * The program will not continue running as long as this Dialog box is on the screen.
@@ -108,7 +109,7 @@ public class IOController {
         JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
 
-        if (UserInterface.drawTimer != null) UserInterface.drawTimer.start();
+        GameState.getGameState().tickTimer.start();
     }
 
     /**

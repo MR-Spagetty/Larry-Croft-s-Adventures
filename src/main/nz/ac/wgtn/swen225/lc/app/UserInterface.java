@@ -23,12 +23,6 @@ public class UserInterface extends JFrame{
     //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
     Runnable removeStartUI = () -> {};
 
-    /*
-     * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
-     * the Pause Screen can stop and start it to "technically" pause the game.
-     */
-    static Timer drawTimer;
-
     private final int WIDTH = 1200, HEIGHT = 600;
 
     //To prevent more than one User Interface instance from being created.
@@ -98,8 +92,12 @@ public class UserInterface extends JFrame{
         pack();
 
         add(BorderLayout.CENTER, pane);
-        drawTimer = gameControls.createDrawTimer(pane);
-        drawTimer.start();
+
+        //The graphics pane will be refreshed every time a tick occurs.
+        GameState.getGameState().tickTimer.addActionListener((unused) -> {
+            assert SwingUtilities.isEventDispatchThread();
+            pane.repaint();
+        });
     }
 
     /**
@@ -152,6 +150,6 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
-        drawTimer.stop();
+        GameState.getGameState().tickTimer.stop();
     }
 }
