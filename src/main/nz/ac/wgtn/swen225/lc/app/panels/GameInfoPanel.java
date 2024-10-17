@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
 import nz.ac.wgtn.swen225.lc.app.GameInfo;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +39,18 @@ public class GameInfoPanel extends DefaultPanel {
         this.add(nothing);
         this.add(new GameInventoryPanel(width, 60));
         this.add(nothing);
+
+        GameState.getGameState().tickTimer.addActionListener(unused -> updateInformation());
+    }
+
+    /**
+     * Every time a tick occurs, the information in the panel will need to be updated, especially to show the
+     * decreasing time.
+     */
+    public void updateInformation(){
+        levelDisplay.setText("LEVEL: " +  GameInfo.info.getLevelID());
+        timeDisplay.setText("TIME: " +  GameInfo.info.getTimeRemaining());
+        chipsLeftDisplay.setText("CHIPS LEFT: " + GameInfo.info.getChipsRemaining());
     }
 
     /**
@@ -52,3 +65,12 @@ public class GameInfoPanel extends DefaultPanel {
         }
     }
 }
+
+/*
+IGNORE AT THE MOMENT:
+
+System.out.println(GameInfo.info.getTimeRemaining());
+GameInfo.info.decreaseTimeRemaining();
+
+GameInfo.info.initialiseInformation("1", 60, 1); //temporary; for testing.
+*/

@@ -98,7 +98,7 @@ public class UserInterface extends JFrame{
         pack();
 
         add(BorderLayout.CENTER, pane);
-        drawTimer = gameControls.createTimer(pane);
+        drawTimer = gameControls.createDrawTimer(pane);
         drawTimer.start();
     }
 

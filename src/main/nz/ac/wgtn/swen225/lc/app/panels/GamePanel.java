@@ -33,12 +33,11 @@ public class GamePanel extends DefaultPanel {
 
     /**
      * Creates a timer which refreshes the Graphics pane every time a tick occurs.
-     * TODO: test setup to make sure it works as expected.
      *
      * @param gameDisplay The graphics display that will need to be refreshed by the timer.
      * @return The timer that will refresh the graphics display every few seconds.
      */
-    public Timer createTimer(GameGraphicsPane gameDisplay){
+    public Timer createDrawTimer(GameGraphicsPane gameDisplay){
         return new Timer(GameState.DEFAULT_TICK_RATE, unused->{
             assert SwingUtilities.isEventDispatchThread();
             gameDisplay.repaint();
