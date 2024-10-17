@@ -5,6 +5,7 @@ import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.renderer.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,12 @@ public class UserInterface extends JFrame{
 
     //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
     Runnable removeStartUI = () -> {};
+
+    /*
+     * The graphics pane that displays the game is stored globally, so Renderer can access it.
+     * However, it is not fully initialised until a game is in progress!
+     */
+    private GameGraphicsPane pane = null;
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
@@ -55,6 +62,8 @@ public class UserInterface extends JFrame{
      * corresponding actions.
      */
     private void createStartMenu(){
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
+
         JPanel instructions = Instructions.instructionsPanel;
         StartButtonsPanel buttons = new StartButtonsPanel(
                 () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
@@ -77,7 +86,7 @@ public class UserInterface extends JFrame{
         //The wider "Game UI" that the user will be interacting with!
         GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        GameGraphicsPane pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
 
         removeGameUI = () -> {
             remove(gameControls); remove(pane);
@@ -118,6 +127,7 @@ public class UserInterface extends JFrame{
 
         removeStartUI.run();
         createMainMenu();
+        new Sound().playSound("gameStart");
 
         Recorders.recs.startRecordingLevel(gameFile.toPath());
     }
@@ -150,7 +160,15 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         removeGameUI.run();
         createStartMenu();
+
         GameState.getGameState().tickTimer.stop();
         GameInfo.info.countdownTimer.stop();
     }
+
+    /**
+     * Returns the graphics pane for use by the renderer.
+     *
+     * @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use.
+     */
+    public GameGraphicsPane getGraphicsPane(){ return pane; }
 }
