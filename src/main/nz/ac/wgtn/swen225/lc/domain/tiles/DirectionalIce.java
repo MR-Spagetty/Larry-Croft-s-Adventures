@@ -88,7 +88,7 @@ public class DirectionalIce extends Ice {
   }
 
   public static DirectionalIce fromJSON(JSONObject json) {
-    if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
+    if (!((JSONString) json.get("tile")).get().equals("DirectionalIce")) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + json.get("Tile"));
     }

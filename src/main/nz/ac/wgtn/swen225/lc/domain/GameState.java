@@ -11,6 +11,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONList;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 import nz.ac.wgtn.swen225.lc.persistency.Persistency;
+import nz.ac.wgtn.swen225.lc.renderer.*;
 
 public final class GameState {
 
@@ -29,7 +30,7 @@ public final class GameState {
   private Path levelPath = null;
   private Maze levelMaze = null;
 
-  private Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
+  public Timer tickTimer = new Timer(DEFAULT_TICK_RATE, a -> tick());
 
   {
     this.tickTimer.setRepeats(true);
@@ -128,6 +129,7 @@ public final class GameState {
     } catch (IOException e) {
       return false;
     }
+    return true;
   }
 
   public boolean loadGameState(Path savePath) {
@@ -140,6 +142,7 @@ public final class GameState {
     } catch (IOException e) {
       return false;
     }
+    return true;
   }
 
   public boolean saveGameState(Path savePath) {
