@@ -1,13 +1,9 @@
 package nz.ac.wgtn.swen225.lc.persistency;
 
-import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
-import nz.ac.wgtn.swen225.lc.persistency.*;
 import org.json.JSONTokener;
-
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.*;
 import java.nio.file.Path;
@@ -79,13 +75,11 @@ public class Persistency {
    * @return A string representing the JSON data.
    */
   private static String convertToJSONString(JSONType jsonType) {
-    if (jsonType instanceof JSONObject) { // Convert custom JSONObject to string
-      return convertCustomJSONObjectToString((JSONObject) jsonType).toString(2);
-    } else if (jsonType instanceof JSONList) { // Convert custom JSONList to string
-      return convertCustomJSONListToString((JSONList) jsonType).toString(2);
-    } else {
-      throw new IllegalArgumentException("Unsupported JSONType for saving");
-    }
+    return switch (jsonType) {
+      case JSONObject customObject -> convertCustomJSONObjectToString((JSONObject) jsonType).toString(2);
+      case JSONList customList -> convertCustomJSONListToString((JSONList) jsonType).toString(2);
+      default -> throw new IllegalArgumentException("Unsupported JSONType for saving");
+    };
   }
 
   /**
@@ -98,26 +92,20 @@ public class Persistency {
     org.json.JSONObject jsonObject = new org.json.JSONObject();
     Set<String> keys = customObject.keySet();
 
-    // Go over customObject keys and the vales and add them to JSONObject
-    for (String key : keys){
+    keys.forEach(key -> {
       Object value = customObject.get(key);
 
-      if (value instanceof JSONObject) {
-        jsonObject.put(key, convertCustomJSONObjectToString((JSONObject) value));
-      } else if (value instanceof JSONList) {
-        jsonObject.put(key, convertCustomJSONListToString((JSONList) value));
-      } else if (value instanceof JSONString) {
-        jsonObject.put(key, ((JSONString) value).get()); // Extract string value
-      } else if (value instanceof JSONLong) {
-        jsonObject.put(key, ((JSONLong) value).get()); // Extract long value
-      } else if (value instanceof JSONDouble) {
-        jsonObject.put(key, ((JSONDouble) value).get()); // Extract double value
-      } else if (value instanceof JSONBool) {
-        jsonObject.put(key, ((JSONBool) value).get()); // Extract boolean value
-      } else if (value == JSONNull.INSTANCE) {
-        jsonObject.put(key, org.json.JSONObject.NULL); // Handle null values
+      switch (value) {
+        case JSONObject nestedObject -> jsonObject.put(key, convertCustomJSONObjectToString((JSONObject) value));
+        case JSONList nestedList -> jsonObject.put(key, convertCustomJSONListToString((JSONList) value));
+        case JSONString jsonString -> jsonObject.put(key, jsonString.get());
+        case JSONLong jsonLong -> jsonObject.put(key, jsonLong.get());
+        case JSONDouble jsonDouble -> jsonObject.put(key, jsonDouble.get());
+        case JSONBool jsonBool -> jsonObject.put(key, jsonBool.get());
+        case JSONNull jsonNull -> jsonObject.put(key, org.json.JSONObject.NULL);
+        default -> throw new IllegalArgumentException("Unsupported value type for key: " + key);
       }
-    }
+    });
     return jsonObject;
   }
 
@@ -130,23 +118,18 @@ public class Persistency {
   private static JSONArray convertCustomJSONListToString(JSONList customList) {
     JSONArray jsonArray = new JSONArray();
 
-    for (JSONType value : customList.getElements()) {
-      if (value instanceof JSONObject) {
-        jsonArray.put(convertCustomJSONObjectToString((JSONObject) value));
-      } else if (value instanceof JSONList) {
-        jsonArray.put(convertCustomJSONListToString((JSONList) value));
-      } else if (value instanceof JSONString) {
-        jsonArray.put(((JSONString) value).get()); // Extract string value
-      } else if (value instanceof JSONLong) {
-        jsonArray.put(((JSONLong) value).get()); // Extract long value
-      } else if (value instanceof JSONDouble) {
-        jsonArray.put(((JSONDouble) value).get()); // Extract double value
-      } else if (value instanceof JSONBool) {
-        jsonArray.put(((JSONBool) value).get()); // Extract boolean value
-      } else if (value == JSONNull.INSTANCE) {
-        jsonArray.put(org.json.JSONObject.NULL); // Handle null values
+    customList.getElements().forEach(value -> {
+      switch (value) {
+        case JSONObject nestedObject -> jsonArray.put(convertCustomJSONObjectToString((JSONObject) value));
+        case JSONList nestedList -> jsonArray.put(convertCustomJSONListToString((JSONList) value));
+        case JSONString jsonString -> jsonArray.put(jsonString.get());
+        case JSONLong jsonLong -> jsonArray.put(jsonLong.get());
+        case JSONDouble jsonDouble -> jsonArray.put(jsonDouble.get());
+        case JSONBool jsonBool -> jsonArray.put(jsonBool.get());
+        case JSONNull jsonNull -> jsonArray.put(org.json.JSONObject.NULL);
+        default -> throw new IllegalArgumentException("Unsupported value type in list");
       }
-    }
+    });
     return jsonArray;
   }
 
@@ -165,13 +148,11 @@ public class Persistency {
     JSONParserVisitor visitor = new JSONParserVisitor();
 
     // If it's a JSON object, call the object parser
-    if (parsedJson instanceof org.json.JSONObject) {
-      return visitor.visit(parsedJson);  // Send the org.json.JSONObject to visitor
-    } else if (parsedJson instanceof JSONArray) {
-      return visitor.visit(parsedJson);  // Send the org.json.JSONArray to visitor
-    }
-
-    throw new IllegalArgumentException("Invalid JSON format");
+    return switch (parsedJson) {
+      case org.json.JSONObject jsonObject -> visitor.visit(jsonObject);
+      case JSONArray jsonArray -> visitor.visit(jsonArray);
+      default -> throw new IllegalArgumentException("Invalid JSON format");
+    };
   }
 
   // Main method for testing purposes
