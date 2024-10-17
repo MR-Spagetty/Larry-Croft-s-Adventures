@@ -142,9 +142,7 @@ public class UserInterface extends JFrame{
     }
 
     protected void saveGame(){
-        GameState.getGameState().saveState(
-                Path.of(Recorders.recs.getRecPath().toString() + "testSave.json")
-        );
+        GameState.getGameState().saveState(Path.of(Recorders.recs.getRecPath() + "/testSave.json"));
     }
 
     /**
