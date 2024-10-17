@@ -9,15 +9,17 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound {
   /**
-   * Finds a sound file and plays it. Acceptable filenames are: gameStart gameWin gameDeath buttonPress
+   * Finds a sound file and plays it. Acceptable filenames are: gameStart gameWin gameDeath
+   * buttonPress movement
    *
    * @param filename used to identify sound file from resources
    */
   public void playSound(String filename) {
     try {
-      // 
+      //
       AudioInputStream sound =
-          AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource(filename + ".wav"));
+          AudioSystem.getAudioInputStream(
+              Sound.class.getClassLoader().getResource(filename + ".wav"));
       // Convert to a clip and play
       Clip clip = AudioSystem.getClip();
       clip.open(sound);
