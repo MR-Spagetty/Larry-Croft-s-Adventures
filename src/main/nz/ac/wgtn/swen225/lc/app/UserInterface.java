@@ -149,7 +149,7 @@ public class UserInterface extends JFrame{
 
     /** Saves the current game to a file. */
     protected void saveGame(){
-        GameState.getGameState().saveState(Path.of(Recorders.recs.getRecPath() + "/testSave.json"));
+        GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
     }
 
     /**
