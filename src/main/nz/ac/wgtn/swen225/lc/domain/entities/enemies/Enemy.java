@@ -8,6 +8,9 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
+import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
+import nz.ac.wgtn.swen225.lc.persistency.JSONString;
+import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
 /**
  * Enemy is an abstract class that defines the common behaviour, methods, and constants used by all
@@ -78,5 +81,15 @@ public abstract class Enemy extends MoveableEntity {
       lastTick++;
       this.behaviourDecider.nextInt();
     }
+  }
+
+  public static Object fromJSON(JSONType json) {
+    JSONObject data = (JSONObject) json;
+    return switch (((JSONString) data.get("type")).get()) {
+      case "Bug" -> Bug.fromJSON(json);
+      case "BitFlipper" -> BitFlipper.fromJSON(json);
+      // will not be reached within normal program
+      default -> throw new IllegalArgumentException("Unknown Enemy type");
+    };
   }
 }

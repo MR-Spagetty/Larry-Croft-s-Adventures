@@ -7,6 +7,12 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * AbstractEntity is a abstract class implementing all the fields and methods that are common to all
+ * entities
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public abstract class AbstractEntity implements Entity {
 
   protected long lastTick = -1;
@@ -15,9 +21,10 @@ public abstract class AbstractEntity implements Entity {
   private final long individualID;
 
   /**
-   * @param location
-   * @param maze
-   * @param individualID
+   * creates a new entity at the given position with the given individual id
+   *
+   * @param location the position to create the entity at
+   * @param individualID the individual id of the entity
    */
   public AbstractEntity(Point location, long individualID) {
     this.location = location;

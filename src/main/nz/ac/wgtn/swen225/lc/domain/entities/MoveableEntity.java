@@ -2,17 +2,32 @@ package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
-import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffecterTile;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 
-/** MoveableEntity is a more advanced version of a {@link Entity} that is capable of moving */
+/**
+ * MoveableEntity is a more advanced version of a {@link Entity} that is capable of moving
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public abstract class MoveableEntity extends AbstractEntity {
+  /**
+   * creates a new Entity at the given position with the given individual id
+   *
+   * @param location the position to make the entity at
+   * @param individualID the individual id of the entity
+   */
   public MoveableEntity(Point location, long individualID) {
     super(location, individualID);
   }
 
   protected Point lastMove = Point.ORIGIN;
 
+  /**
+   * gets the last concious move the entity made
+   *
+   * @return the last concious move the entity made
+   */
   public final Point lastMove() {
     return this.lastMove;
   }
@@ -67,6 +82,7 @@ public abstract class MoveableEntity extends AbstractEntity {
     } else if (move.equals(new Point(0, -1))) {
       return PlayerAction.Down;
     } else {
+      // will not be reached within normal program
       throw new IllegalStateException("Unexpected last move encountered");
     }
   }
