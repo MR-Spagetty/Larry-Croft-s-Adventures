@@ -2,6 +2,11 @@ package nz.ac.wgtn.swen225.lc.app;
 
 import javax.swing.Timer;
 
+/**
+ * Stores all information that will be reported to the user about the current game. This includes the level
+ * that the player is on, how much time they have left to complete the level, and how many chips the player
+ * need to collect.
+ */
 public class GameInfo{
     private static final GameInfo INFO = new GameInfo();
     public static GameInfo info = INFO;
@@ -10,7 +15,7 @@ public class GameInfo{
     private int timeRemaining;
     private int chipsRemaining;
 
-    final Timer countdownTimer;
+    final Timer countdownTimer; //Controls the time the player has left to complete the level.
 
     /**
      * Initialises the fields to "default" values and sets up the "Countdown" timer mechanism.
