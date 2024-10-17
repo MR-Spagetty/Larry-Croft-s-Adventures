@@ -41,7 +41,7 @@ public class App{
      */
 
     /**
-     * Takes a given player action and forwards it to the Domain class.
+     * Takes a given player action and forwards it to Domain.
      *
      * @param action The given player action
      */
