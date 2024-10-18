@@ -32,12 +32,17 @@ public class IOController {
      * In the constructor, the buttons and the keystrokes are initialised to their actions.
      */
     private IOController(){
+        File l1 = null; /** TODO: Change to file that goes to L1. */
+        File l2 = null; /** TODO: Change to file that goes to L2. */
+
         mainUIButtons = MainUIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
                 "SAVE", () -> endGame(true),
                 "RESUME", this::resumeExistingGameFromCurrentGame,
+                "L1", () -> UserInterface.ui.startNewGame(l1),
+                "L2", () -> UserInterface.ui.startNewGame(l2),
                 "PAUSE", this::pauseGame,
                 "S_REPLAY", () -> Recorders.recs.callStepReplay()
         ));
