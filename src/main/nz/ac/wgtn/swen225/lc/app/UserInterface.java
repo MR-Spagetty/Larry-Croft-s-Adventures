@@ -115,25 +115,15 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Starts a new game or an existing game from the game file. If a new game is started, it should ask you whether the
-     * game is to be recorded.
+     * Starts a new game from a specific level.
      *
-     * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
-     *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
+     * @param levelFile The file containing the level to start the game from.
      */
-    public void startGame(File gameFile){
-        if (gameFile == null) Recorders.recs.askToRecordGame();
-
-        //If a new game is being started, we will set the game file to be the first level.
-        gameFile = new File("src/resources/levels/level0.json");
-
-        GameState.getGameState().setLevel(gameFile.toPath());
-        GameState.getGameState().tickTimer.start();
-        Recorders.recs.startRecordingLevel(gameFile.toPath());
-        createMainMenu();
-        initLevelInfo();
-
-        new Sound().playSound("gameStart");
+    public void startNewGame(File levelFile){
+        IOController.ic.stopTimers();
+        Recorders.recs.askToRecordGame();
+        initLevel(levelFile);
+        startGame();
     }
 
     /**
@@ -142,7 +132,8 @@ public class UserInterface extends JFrame{
      * @param levelFile The file containing the level to be initialized.
      */
     public void initLevel(File levelFile){
-
+        GameState.getGameState().setLevel(levelFile.toPath());
+        Recorders.recs.startRecordingLevel(levelFile.toPath());
     }
 
     /**
@@ -158,6 +149,18 @@ public class UserInterface extends JFrame{
         int remainingTreasures = Math.max(0, gs.requiredTreasures() - gs.collectedTreasures());
 
         GameInfo.info.initialiseInformation(levelID, (int)timeRemaining, remainingTreasures);
+    }
+
+    /**
+     * Starts a game (new or existing), after loading in a level from a file. This involves setting up the
+     * main UI that the player will interact with, and load in information about the level into the display.
+     */
+    public void startGame(){
+        GameState.getGameState().tickTimer.start();
+        createMainMenu();
+        initLevelInfo();
+
+        new Sound().playSound("gameStart");
     }
 
     /**
@@ -180,19 +183,27 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
-
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         createStartMenu();
     }
 
     /**
-     * Starts the playback of a recorded game.
+     * Starts the playback of a recorded game by initialising a recorder object.
      * TODO if time allows: Finish it
      */
     public void startGamePlayback(){}
+
+    /**
+     * Similar to starting a new game, but for use by the Recorder.
+     *
+     * @param levelPath The path to a specific level
+     */
+    public void initRecorderGame(Path levelPath){
+        GameState.getGameState().setLevel(levelPath);
+        createMainMenu();
+        initLevelInfo();
+    }
 
     /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
