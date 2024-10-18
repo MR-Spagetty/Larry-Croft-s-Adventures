@@ -164,6 +164,18 @@ public class Maze {
         .flatMap(Optional::stream)
         .toList();
   }
+  public Player getPlayer() {
+    return getEntities().parallelStream()
+        .<Player>mapMulti(
+            (e, cons) -> {
+              if (e instanceof Player p) cons.accept(p);
+            })
+        .reduce(
+            (p1, p2) -> {
+              throw new IllegalStateException("Level contains more than one player");
+            })
+        .orElseThrow(() -> new IllegalStateException("Level does not contain a player"));
+  }
 
   public static Maze fromJSON(JSONType json) {
 
