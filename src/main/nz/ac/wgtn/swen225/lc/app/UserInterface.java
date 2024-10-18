@@ -61,7 +61,7 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        StartButtonsPanel buttons = new StartButtonsPanel();
+        StartButtonsPanel buttons = StartButtonsPanel.sbp;
 
         switchUIs.run();
         switchUIs = () -> {

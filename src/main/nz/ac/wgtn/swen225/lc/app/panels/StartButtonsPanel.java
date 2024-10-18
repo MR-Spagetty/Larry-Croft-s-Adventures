@@ -16,7 +16,10 @@ public class StartButtonsPanel extends JPanel {
     //The list of buttons that will be on the Start menu.
     private List<DefaultButton> startButtons = new ArrayList<>();
 
-    public StartButtonsPanel(){
+    private static final StartButtonsPanel START_BUTTONS_PANEL = new StartButtonsPanel();
+    public static StartButtonsPanel sbp = START_BUTTONS_PANEL;
+
+    private StartButtonsPanel(){
         add(new DefaultButton(unused -> UserInterface.ui.startGame(null), "Start new game!"));
         add(new DefaultButton(unused -> IOController.ic.resumeExistingGame(), "Resume existing game!"));
         add(new DefaultButton(unused -> {}, "Replay a game!")); //Didn't get around to this feature :(
