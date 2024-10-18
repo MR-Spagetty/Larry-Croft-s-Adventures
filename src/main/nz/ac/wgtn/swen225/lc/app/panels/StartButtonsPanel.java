@@ -22,7 +22,7 @@ public class StartButtonsPanel extends JPanel {
     private StartButtonsPanel(){
         startButtons.add(new DefaultButton(
                 unused -> UserInterface.ui.startNewGame(
-                    new File("src/resources/levels/level0.json") /** TODO: Change to L1 file */
+                    new File("src/resources/levels/level0.json")
                 ),
                 "Start new game!"
         ));
