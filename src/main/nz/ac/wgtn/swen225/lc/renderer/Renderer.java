@@ -8,7 +8,11 @@ import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
-/** Handles the getting of level data and then rendering all components */
+/**
+ * Handles the getting of level data and then rendering all components. Occurs every frame.
+ *
+ * @author Developer 2 <dev2@example.internal> 300651343
+ */
 public class Renderer {
   private static int renderDistance = 10;
 
@@ -47,11 +51,7 @@ public class Renderer {
     // renders all inventory
     player.getInventory().stream()
         .filter(i -> i != null)
-        .map(i -> new Sprite(i, 
-        GameInventoryPanel.getTopLeft().add(
-          new Point(slot[0]++, 0)
-          ))
-        )
+        .map(i -> new Sprite(i, GameInventoryPanel.getTopLeft().add(new Point(slot[0]++, 0))))
         .forEach(i -> i.draw(g));
   }
 }
