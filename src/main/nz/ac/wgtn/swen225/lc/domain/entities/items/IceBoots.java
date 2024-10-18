@@ -5,7 +5,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 /**
  * IceBoots allow the player to walk freely on ice disobeying the laws of ice
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class IceBoots extends Item {
 

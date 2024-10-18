@@ -7,7 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 /**
  * AbstractTile is a abstract class that implements the fields and methods used by all nonWall tiles
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public abstract class AbstractTile implements Tile {
 

@@ -15,7 +15,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 /**
  * more advanced Ice tile that redirects the entity
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class DirectionalIce extends Ice {
   /**

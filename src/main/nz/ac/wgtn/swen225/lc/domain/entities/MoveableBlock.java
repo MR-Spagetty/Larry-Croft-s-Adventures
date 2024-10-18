@@ -11,7 +11,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 /**
  * MoveableBlock is a simplistic entity that can be pushed by a player and can fill water tiles
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class MoveableBlock extends MoveableEntity implements JSONSerializable<MoveableBlock> {
   /**

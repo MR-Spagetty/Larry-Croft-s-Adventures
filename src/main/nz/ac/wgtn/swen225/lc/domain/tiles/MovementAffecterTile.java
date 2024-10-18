@@ -6,7 +6,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.MoveableEntity;
 /**
  * Interface for use by tiles that affect the movement of an entity
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public abstract class MovementAffecterTile extends AbstractTile {
 

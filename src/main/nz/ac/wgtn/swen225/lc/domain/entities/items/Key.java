@@ -12,7 +12,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  * Key is an item for use in unlocking doors a key with a given colour can unlock any door of teh
  * same colour
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class Key extends Item {
 

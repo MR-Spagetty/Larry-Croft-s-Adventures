@@ -11,7 +11,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 /**
  * Bug is a basic enemy that moves around the map randomly
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class Bug extends Enemy implements JSONSerializable<Bug> {
 

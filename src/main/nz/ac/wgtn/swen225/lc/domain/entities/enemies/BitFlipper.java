@@ -21,7 +21,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  * steals an item from their inventory and returns it as close as it can to where the Player picked
  * the item up, it is capable of stealing treasures
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
 

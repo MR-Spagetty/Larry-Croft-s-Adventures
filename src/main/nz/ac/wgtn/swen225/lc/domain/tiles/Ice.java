@@ -12,7 +12,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONString;
  * last consciously moved until no longer possible or the entity is no longer on an ice tile to
  * prevent soft locking if an entity is stopped on ice it may conciously move in any direction
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class Ice extends MovementAffecterTile {
 

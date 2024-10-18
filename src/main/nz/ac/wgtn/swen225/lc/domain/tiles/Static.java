@@ -7,7 +7,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
 /**
  * the Static tile is a basic tile that Enemies can't enter
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class Static extends Empty {
   /**

@@ -5,7 +5,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 /**
  * Fire boots allow the player to walk on fire tiles without dying
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class FireBoots extends Item {
 

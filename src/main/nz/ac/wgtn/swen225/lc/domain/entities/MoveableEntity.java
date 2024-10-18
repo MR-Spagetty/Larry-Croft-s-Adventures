@@ -8,7 +8,7 @@ import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 /**
  * MoveableEntity is a more advanced version of a {@link Entity} that is capable of moving
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public abstract class MoveableEntity extends AbstractEntity {
   /**
