@@ -23,21 +23,13 @@ public class DirectionalIce extends Ice {
    * and from
    */
   public enum TYPE {
-    /**
-     *Signifies a tile where the Northern and Eastern faces are open
-     */
+    /** Signifies a tile where the Northern and Eastern faces are open */
     NorthEast(Up, Right),
-    /**
-     *Signifies a tile where the Southern and Eastern faces are open
-     */
+    /** Signifies a tile where the Southern and Eastern faces are open */
     SouthEast(Down, Right),
-    /**
-     *Signifies a tile where the Southern and Western faces are open
-     */
+    /** Signifies a tile where the Southern and Western faces are open */
     SouthWest(Down, Left),
-    /**
-     *Signifies a tile where the Northern and Western faces are open
-     */
+    /** Signifies a tile where the Northern and Western faces are open */
     NorthWest(Up, Left);
 
     /** the first side of the tile that is open */
@@ -52,6 +44,11 @@ public class DirectionalIce extends Ice {
     }
   }
 
+  /**
+   * the type if directional ice this DirectionalIce tile is
+   *
+   * @see TYPE
+   */
   public final TYPE type;
 
   /**
