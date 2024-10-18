@@ -1,5 +1,6 @@
 package nz.ac.wgtn.swen225.lc.app;
 
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.recorder.AutoReplay;
 import nz.ac.wgtn.swen225.lc.recorder.Recorder;
@@ -113,13 +114,23 @@ public class Recorders{
     }
 
     /**
+     * Similar to starting a new game, but for use by the Recorder.
+     *
+     * @param levelPath The path to a specific level
+     */
+    public void initRecorderGame(Path levelPath){
+        GameState.getGameState().setLevel(levelPath);
+        UserInterface.ui.createMainMenu();
+        UserInterface.ui.initLevelInfo();
+    }
+
+    /**
      * Initiates a Game replay from a recorded game.
+     * TODO if time allows: Finish it
      *
      * @param recordedGamePath The path that stores the recorded game file.
-     *
      */
     public void startGameReplay (Path recordedGamePath){
-
         rec.startLevel(recordedGamePath);
     }
 }
