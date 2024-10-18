@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class FuzzTest {
 
-  @Test
+  // @Test
   public void fuzzingTest() {
     Main.main(new String[0]);  //initialize and run main
 

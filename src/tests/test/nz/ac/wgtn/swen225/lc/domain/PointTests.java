@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * record. The tests cover various scenarios, including positive, negative, and mixed coordinates
  * where required.
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 
  */
 public class PointTests {
   @Test
