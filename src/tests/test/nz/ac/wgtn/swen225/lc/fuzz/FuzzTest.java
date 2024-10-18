@@ -12,6 +12,7 @@ import java.util.*;
  * <p>  The fuzz testing class is responsible for finding bugs within gameplay.
  * </p>
  *
+ */
 public class FuzzTest {
 
   @Test
