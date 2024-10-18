@@ -130,6 +130,15 @@ public class UserInterface extends JFrame{
     }
 
     /**
+     * Initialises a level in the game.
+     *
+     * @param levelFile The file containing the level to be initialized.
+     */
+    public void initLevel(File levelFile){
+
+    }
+
+    /**
      * Initialises the level in the game by retrieving all key information from the Game State, and then writing it to
      * the Information board.
      *
@@ -171,6 +180,12 @@ public class UserInterface extends JFrame{
         Recorders.recs.stopRecordingGame();
         createStartMenu();
     }
+
+    /**
+     * Starts the playback of a recorded game.
+     * TODO if time allows: Finish it
+     */
+    public void startGamePlayback(){}
 
     /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
