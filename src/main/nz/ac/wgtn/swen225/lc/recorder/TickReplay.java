@@ -24,7 +24,11 @@ public class TickReplay extends Replay {
    */
   @Override
   public void replay() {
-    timer = new Timer(tickSpeed, a -> advanceTick());
+    timer = new Timer(tickSpeed, a -> advanceTick(
+      () -> {
+        timer.stop();
+        new TickReplay(nextLevelPath, tickSpeed);
+      }));
     timer.setRepeats(true);
     timer.start();
   }

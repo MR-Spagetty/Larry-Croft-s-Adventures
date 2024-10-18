@@ -81,10 +81,17 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        //The wider "Game UI" that the user will be interacting with!
-        GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
+        int offsetWidth = (WIDTH * 3/4);
 
-        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        //This value was guessed, as the height difference is determined by the height of the text!
+        int offsetHeight = 40;
+
+        //The wider "Game UI" that the user will be interacting with!
+        GamePanel gameControls = new GamePanel(
+                Color.DARK_GRAY, offsetWidth, offsetHeight, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons()
+        );
+
+        pane = new GameGraphicsPane(offsetWidth, HEIGHT);
 
         switchUIs.run();
         switchUIs = () -> {
@@ -122,10 +129,35 @@ public class UserInterface extends JFrame{
 
         GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
-        createMainMenu();
         Recorders.recs.startRecordingLevel(gameFile.toPath());
+        createMainMenu();
+        initLevelInfo();
 
         new Sound().playSound("gameStart");
+    }
+
+    /**
+     * Initialises a level in the game.
+     *
+     * @param levelFile The file containing the level to be initialized.
+     */
+    public void initLevel(File levelFile){
+
+    }
+
+    /**
+     * Initialises the level in the game by retrieving all key information from the Game State, and then writing it to
+     * the Information board.
+     *
+     * TODO: Test the written code once all other issues in the game (none of those are related to "App") are fixed.
+     */
+    public void initLevelInfo(){
+        GameState gs = GameState.getGameState();
+        long levelID = GameState.getGameState().getMaze().longID();
+        long timeRemaining = gs.getMaze().maxTicks * GameState.DEFAULT_TICK_RATE;
+        int remainingTreasures = Math.max(0, gs.requiredTreasures() - gs.collectedTreasures());
+
+        GameInfo.info.initialiseInformation(levelID, (int)timeRemaining, remainingTreasures);
     }
 
     /**
@@ -138,7 +170,7 @@ public class UserInterface extends JFrame{
         if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
-    /** Saves the current game to a file. */
+    /** Saves the current game to a file. (NB: This is not the recorded game file). */
     protected void saveGame(){
         GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
     }
@@ -157,9 +189,11 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Returns the graphics pane for use by the renderer.
-     *
-     * @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use.
+     * Starts the playback of a recorded game.
+     * TODO if time allows: Finish it
      */
+    public void startGamePlayback(){}
+
+    /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
 }

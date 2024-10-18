@@ -12,17 +12,21 @@ import java.awt.*;
 public class GameInfoPanel extends DefaultPanel {
     JLabel levelDisplay;
     JLabel timeDisplay;
-    JLabel chipsLeftDisplay;
+    JLabel treasuresLeftDisplay;
 
     /**
      * Constructor used to initialise the Game Information panel.
      *
      * @param backgroundColor The background colour of the JPanel. Can be "null" if no
      *                         background is to be set.
+     * @param offsetWidth The distance between the left of the screen and the left this panel.
+     *                    For use by the Renderer for determining the top-left corner of the Inventory panel.
+     * @param offsetHeight The distance between the top of the screen and the top of this panel.
+     *                     Also for use by the Renderer for determining the top-left corner of the Inventory panel.
      * @param width The preferred width of the JPanel.
      * @param height The preferred height of the JPanel.
      */
-    public GameInfoPanel(Color backgroundColor, int width, int height){
+    public GameInfoPanel(Color backgroundColor, int offsetWidth, int offsetHeight, int width, int height){
         super(backgroundColor, width, height);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -31,18 +35,16 @@ public class GameInfoPanel extends DefaultPanel {
 
         levelDisplay = new CustomJLabel("LEVEL: " +  GameInfo.info.getLevelID());
         timeDisplay = new CustomJLabel("TIME: " +  GameInfo.info.getTimeRemaining());
-        chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: " + GameInfo.info.getChipsRemaining());
+        treasuresLeftDisplay = new CustomJLabel("CHIPS LEFT: " + GameInfo.info.getTreasuresRemaining());
 
         this.add(levelDisplay);
         this.add(timeDisplay);
-        this.add(chipsLeftDisplay);
+        this.add(treasuresLeftDisplay);
         this.add(nothing);
-        this.add(new GameInventoryPanel(width, 60));
+        this.add(new GameInventoryPanel(offsetWidth, offsetHeight, width, 60));
         this.add(nothing);
 
         GameState.getGameState().tickTimer.addActionListener(unused -> updateInformation());
-
-        GameInfo.info.initialiseInformation("1", 60, 1); //temporary; for testing.
     }
 
     /**
@@ -52,7 +54,7 @@ public class GameInfoPanel extends DefaultPanel {
     public void updateInformation(){
         levelDisplay.setText("LEVEL: " +  GameInfo.info.getLevelID());
         timeDisplay.setText("TIME: " +  GameInfo.info.getTimeRemaining());
-        chipsLeftDisplay.setText("CHIPS LEFT: " + GameInfo.info.getChipsRemaining());
+        treasuresLeftDisplay.setText("CHIPS LEFT: " + GameInfo.info.getTreasuresRemaining());
     }
 
     /**
