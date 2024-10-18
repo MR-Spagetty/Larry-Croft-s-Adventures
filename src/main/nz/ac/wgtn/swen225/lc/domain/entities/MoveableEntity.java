@@ -21,6 +21,7 @@ public abstract class MoveableEntity extends AbstractEntity {
     super(location, individualID);
   }
 
+  /** the ast concious move the entity made */
   protected Point lastMove = Point.ORIGIN;
 
   /**

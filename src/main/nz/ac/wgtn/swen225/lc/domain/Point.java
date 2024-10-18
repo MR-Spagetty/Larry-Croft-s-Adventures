@@ -2,7 +2,6 @@ package nz.ac.wgtn.swen225.lc.domain;
 
 import java.util.List;
 import java.util.Objects;
-
 import nz.ac.wgtn.swen225.lc.persistency.JSONList;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
@@ -154,6 +153,10 @@ public record Point(long x, long y) implements Comparable<Point>, JSONSerializab
     throw new IllegalArgumentException("Expected a JSONList, got: " + json.getClass().getName());
   }
 
+  /**
+   * Statically deserializes a Point from the given json data see {@link #fromJson(JSONType)} for
+   * further documentation
+   */
   public static Point fromJSON(JSONType json) {
     return Point.ORIGIN.fromJson(json);
   }

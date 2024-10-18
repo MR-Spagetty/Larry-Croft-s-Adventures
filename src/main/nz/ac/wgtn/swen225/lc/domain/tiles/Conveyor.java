@@ -12,12 +12,28 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
+/**
+ * Conveyor tiles are tiles that push the entity occupying them in the direction the tile is facing,
+ * while on the tile entities may only consciously move perpendicularly with the tile any other
+ * attempted concious movement will be nullified
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class Conveyor extends MovementAffecterTile {
-  public static final PlayerAction[] DIRS = new PlayerAction[] {Up, Right, Down, Left};
+  /**
+   * the possible facing directions for the conveyor tile by index: 0 = Up, 1 = Right, 2 = Down, 3=
+   * Left
+   */
+  public static final PlayerAction[] DIRS = {Up, Right, Down, Left};
+
   private final PlayerAction targetDir;
 
   /**
-   * @param targetDir
+   * creates a new Conveyor tile at the given position facing in the given direction
+   *
+   * @param location the position to make the tile at
+   * @param type the direction for it to be facing see {@link Conveyor#DIRS} for numbers to use for
+   *     what direction
    */
   public Conveyor(Point location, int type) {
     super(location);
@@ -51,10 +67,22 @@ public class Conveyor extends MovementAffecterTile {
         && !enteree.location().equals(location().add(this.targetDir.offset));
   }
 
+  /**
+   * gets the direction this tile is facing
+   *
+   * @return the direction this tile is facing as a PlayerAction
+   */
   public PlayerAction getFacing() {
     return this.targetDir;
   }
 
+  /**
+   * Deserializes a Conveyor tile from the given JSON data
+   *
+   * @param json the data to use
+   * @return the deserialized tile
+   * @throws IllegalArgumentException if the given data is not correct for a conveyor tile
+   */
   public static Conveyor fromJSON(JSONObject json) {
     if (!((JSONString) json.get("tile")).get().equals("Conveyor")) {
       throw new IllegalArgumentException(

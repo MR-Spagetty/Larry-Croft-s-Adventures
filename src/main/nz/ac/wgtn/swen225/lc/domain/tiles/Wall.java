@@ -9,6 +9,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 /**
  * Walls are basic tiles that may not be occupied
  *
+ * @param location the location to create the wall tile at
  * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
  */
 public record Wall(Point location) implements Tile {
@@ -38,6 +39,13 @@ public record Wall(Point location) implements Tile {
     return Optional.empty();
   }
 
+  /**
+   * deserializes a Wall tile from the given json data
+   *
+   * @param json the data to use
+   * @return the deserialized tile
+   * @throws IllegalArgumentException if the given data is incorrect for a wall
+   */
   public static Wall fromJSON(JSONObject json) {
     if (!((JSONString) json.get("tile")).get().equals("Wall")) {
       throw new IllegalArgumentException(
