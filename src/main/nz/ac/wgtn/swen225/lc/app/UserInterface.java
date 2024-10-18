@@ -154,7 +154,7 @@ public class UserInterface extends JFrame{
         if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
-    /** Saves the current game to a file. */
+    /** Saves the current game to a file. (NB: This is not the recorded game file). */
     protected void saveGame(){
         GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
     }
@@ -172,10 +172,6 @@ public class UserInterface extends JFrame{
         createStartMenu();
     }
 
-    /**
-     * Returns the graphics pane for use by the renderer.
-     *
-     * @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use.
-     */
+    /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
 }
