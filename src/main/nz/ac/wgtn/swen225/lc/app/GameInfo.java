@@ -13,9 +13,12 @@ public class GameInfo{
     private static final GameInfo INFO = new GameInfo();
     public static GameInfo info = INFO;
 
-    private String levelID;
+    private long levelID;
+    private int timeToFinish;
+    private int treasuresNeeded;
+
     private int timeRemaining;
-    private int chipsRemaining;
+    private int treasuresRemaining;
 
     final Timer countdownTimer; //Controls the time the player has left to complete the level.
 
@@ -25,54 +28,71 @@ public class GameInfo{
      * private as we also don't want multiple "Information" instances to be created.
      */
     private GameInfo(){
-        this.levelID = "null";
-        this.timeRemaining = 0;
-        this.chipsRemaining = 0;
+        this.levelID = 0;
+        this.timeToFinish = 0;
+        this.treasuresNeeded = 0;
+
+        setTimeAndTreasuresCounts();
 
         countdownTimer = new Timer(1000, (unused) -> decreaseTimeRemaining());
         countdownTimer.setRepeats(true);
     }
 
     /** When a new level begins, all the information about it can be loaded here. */
-    public void initialiseInformation(String levelID, int timeRemaining, int chipsRemaining){
+    public void initialiseInformation(long levelID, int timeToFinish, int treasuresNeeded){
         countdownTimer.stop(); //Done in the case of a timer already running.
 
         this.levelID = levelID;
-        this.timeRemaining = timeRemaining;
-        this.chipsRemaining = chipsRemaining;
+        this.timeToFinish = timeToFinish;
+        this.treasuresNeeded = treasuresNeeded;
 
+        /** TODO: Add any other code needed to restart a level. */
+
+        setTimeAndTreasuresCounts();
         countdownTimer.restart();
     }
 
     /**
-     * Decreases the amount of time remaining by one. (Which will be one second in the game.)
-     * Once the time remaining gets to zero, the timer will stop and a pop-up window will appear
-     * telling you that you have run out of time. From there, you can restart the current level.
+     * Sets the time remaining and the number of treasures remaining to their loaded-in values.
+     * This is done when you first initialise the level information, and when you're restarting the level.
      */
+    private void setTimeAndTreasuresCounts(){
+        this.timeRemaining = timeToFinish;
+        this.treasuresRemaining = treasuresNeeded;
+    }
+
+    /** Decreases the amount of time remaining by one. (Which will be one second in the game. */
     public void decreaseTimeRemaining(){
         timeRemaining--;
-
-        if (timeRemaining <= 0){
-            countdownTimer.stop(); //Done in the case of a timer already running.
-            GameState.getGameState().tickTimer.stop();
-
-            JOptionPane.showMessageDialog(null,
-                    "You have run out of time! Please close this window to restart the level!",
-                    "Out of time", JOptionPane.PLAIN_MESSAGE);
-
-            /** TODO: Add infrastructure to restart a level. */
-        }
+        if (timeRemaining <= 0) stopAndRestartLevel();
     }
+
+    /** Decreases the amount of treasures remaining by one. */
+    public void decreaseTreasuresRemaining(){ treasuresRemaining--; }
 
     /** @return The time remaining in the game. */
     public int getTimeRemaining(){ return timeRemaining; }
 
-    /** Decreases the amount of chips remaining by one. */
-    public void decreaseChipsRemaining(){ chipsRemaining--; }
+    /** @return The number of treasures left to collect in the game. */
+    public int getTreasuresRemaining(){ return treasuresRemaining; }
 
-    /** @return The number of chips left to collect in the game. */
-    public int getChipsRemaining(){ return chipsRemaining; }
+    /** @return The level we are on. */
+    public long getLevelID(){ return levelID; }
 
-    /** @return The level we are on. (Currently returning its ID; this may change) */
-    public String getLevelID(){ return levelID; }
+    /**
+     * Once the time remaining gets to zero, the timer will stop and a pop-up window will appear
+     * telling you that you have run out of time. From there, you can restart the current level.
+     */
+    private void stopAndRestartLevel(){
+        countdownTimer.stop();
+        GameState.getGameState().tickTimer.stop();
+
+        JOptionPane.showMessageDialog(null,
+                "You have run out of time! Please close this window to restart the level!",
+                "Out of time", JOptionPane.PLAIN_MESSAGE);
+
+        setTimeAndTreasuresCounts();
+        GameState.getGameState().tickTimer.restart();
+        countdownTimer.restart();
+    }
 }

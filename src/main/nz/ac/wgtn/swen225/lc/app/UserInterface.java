@@ -122,10 +122,26 @@ public class UserInterface extends JFrame{
 
         GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
-        createMainMenu();
         Recorders.recs.startRecordingLevel(gameFile.toPath());
+        createMainMenu();
+        initLevelInfo();
 
         new Sound().playSound("gameStart");
+    }
+
+    /**
+     * Initialises the level in the game by retrieving all key information from the Game State, and then writing it to
+     * the Information board.
+     *
+     * TODO: Test the written code once all other issues in the game (none of those are related to "App") are fixed.
+     */
+    public void initLevelInfo(){
+        GameState gs = GameState.getGameState();
+        long levelID = GameState.getGameState().getMaze().longID();
+        long timeRemaining = gs.getMaze().maxTicks * GameState.DEFAULT_TICK_RATE;
+        int remainingTreasures = Math.max(0, gs.requiredTreasures() - gs.collectedTreasures());
+
+        GameInfo.info.initialiseInformation(levelID, (int)timeRemaining, remainingTreasures);
     }
 
     /**
@@ -138,7 +154,7 @@ public class UserInterface extends JFrame{
         if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
-    /** Saves the current game to a file. */
+    /** Saves the current game to a file. (NB: This is not the recorded game file). */
     protected void saveGame(){
         GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
     }
@@ -156,10 +172,6 @@ public class UserInterface extends JFrame{
         createStartMenu();
     }
 
-    /**
-     * Returns the graphics pane for use by the renderer.
-     *
-     * @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use.
-     */
+    /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
 }
