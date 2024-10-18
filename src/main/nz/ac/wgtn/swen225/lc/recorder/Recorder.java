@@ -15,6 +15,8 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
  * 2.json.
  * When saving, the current level has a link to the next level for ease of
  * reading and the final level will have a null.
+ *
+ * @author Developer 4 <dev4@example.internal> 300655226
  */
 public class Recorder {
   private List<Level> allLevels = new ArrayList<>();
