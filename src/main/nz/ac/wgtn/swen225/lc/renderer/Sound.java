@@ -1,6 +1,8 @@
 package nz.ac.wgtn.swen225.lc.renderer;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -19,7 +21,7 @@ public class Sound {
       //
       AudioInputStream sound =
           AudioSystem.getAudioInputStream(
-              Sound.class.getClassLoader().getResource(filename + ".wav"));
+              new File(Path.of("src", "resources", filename + ".wav").toString()));
       // Convert to a clip and play
       Clip clip = AudioSystem.getClip();
       clip.open(sound);
