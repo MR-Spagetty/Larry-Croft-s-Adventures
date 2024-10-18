@@ -134,15 +134,11 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
       dirs.parallelStream()
           .<Point>map(
               d -> {
-                try {
-                  return maze.getTile(ref.location()).orElseThrow()
-                              instanceof MovementAffecterTile mat
-                          && ref instanceof MoveableEntity me
-                      ? mat.affectMove(me, d)
-                      : d;
-                } catch (IllegalArgumentException iae) {
-                  return Point.ORIGIN;
-                }
+                return maze.getTile(ref.location()).orElseThrow()
+                            instanceof MovementAffecterTile mat
+                        && ref instanceof MoveableEntity me
+                    ? mat.affectMove(me, d)
+                    : d;
               })
           .filter(d -> !d.equals(Point.ORIGIN))
           .map(d -> ref.location().add(d))

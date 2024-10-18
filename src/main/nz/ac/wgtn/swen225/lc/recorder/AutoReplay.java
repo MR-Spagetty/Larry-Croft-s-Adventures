@@ -7,6 +7,8 @@ import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 /**
  * Autamatically replays the file using the default tick speed
+ * 
+ * @author Developer 4 <dev4@example.internal> 300655226
  */
 public class AutoReplay extends Replay {
   private Timer timer;

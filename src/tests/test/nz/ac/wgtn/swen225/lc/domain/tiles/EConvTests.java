@@ -1,9 +1,8 @@
 package test.nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.East;
-import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.IAE;
 
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
@@ -20,7 +19,9 @@ public final class EConvTests implements ConveyorBaseTests {
     Player p = getPlayer(East);
     scenario.addEntity(p);
     p.queueAction(Left);
-    assertThrows(IAE, () -> p.tick(0));
+    Point before = p.location();
+    p.tick(0);
+    assertEquals(before, p.location());
   }
 
   @Override

@@ -21,11 +21,16 @@ public interface Shorthands {
 
   static List<Tile> area3x3(Function<Point, Tile> tile, long cX, long cY) {
     Point cPoint = new Point(cX, cY);
-    return Stream.<Long>of(-1l, 0l, 1l)
+    return Stream.concat(Stream.<Long>of(-1l, 0l, 1l)
         .<Tile>mapMulti(
             (x, cons) ->
                 Stream.<Long>of(-1l, 0l, 1l)
-                    .forEach(y -> cons.accept(tile.apply(cPoint.add(p(x, y))))))
+                    .forEach(y -> cons.accept(tile.apply(cPoint.add(p(x, y)))))), Stream.<Long>of(-1l, 0l, 1l).<Tile>mapMulti((i , cons)-> {
+                      cons.accept(new Wall(p(cX +2, cY+i)));
+                      cons.accept(new Wall(p(cX +i, cY+2)));
+                      cons.accept(new Wall(p(cX -2, cY+i)));
+                      cons.accept(new Wall(p(cX +i, cY-2)));
+                    }))
         .toList();
   }
 
