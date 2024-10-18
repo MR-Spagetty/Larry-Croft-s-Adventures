@@ -5,7 +5,6 @@ import java.awt.event.KeyListener;
 import java.util.Map;
 
 import nz.ac.wgtn.swen225.lc.app.Recorders;
-import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.domain.*;
 
 /**
