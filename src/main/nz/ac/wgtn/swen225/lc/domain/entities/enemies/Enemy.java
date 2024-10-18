@@ -19,6 +19,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  */
 public abstract class Enemy extends MoveableEntity {
 
+  /** the Random to use when perforDeveloper 4 <dev4@example.internal> behaviour */
   protected Random behaviourDecider;
 
   /** the movements enemies are allowed to make */
@@ -84,11 +85,21 @@ public abstract class Enemy extends MoveableEntity {
    */
   protected final void randUpToSpeed(Long toTick) {
     while (lastTicked() < toTick) {
-      lastTick++;
+      this.lastTick++;
       this.behaviourDecider.nextInt();
+      this.lastRand = lastTick;
     }
   }
 
+  protected long lastRand = -1;
+
+  /**
+   * deserializes an Enemy from the given json data
+   *
+   * @param json the data to use
+   * @return the deserialized Enemy
+   * @throws IllegalArgumentException if the data is for an unknown enemy type
+   */
   public static Enemy fromJSON(JSONType json) {
     JSONObject data = (JSONObject) json;
     return switch (((JSONString) data.get("type")).get()) {

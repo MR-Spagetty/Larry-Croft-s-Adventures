@@ -32,6 +32,8 @@ public class Bug extends Enemy implements JSONSerializable<Bug> {
     } catch (IllegalArgumentException iae) {
     } catch (UnsupportedOperationException uoe) {
     }
+    this.lastRand ++;
+    assert lastRand == tick;
   }
 
   @Override

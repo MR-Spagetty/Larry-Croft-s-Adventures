@@ -35,9 +35,16 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
     super(location, individualID);
   }
 
+  private boolean touched;
+
   @Override
   protected void doBehaviour(long tick) {
+  this.touched = false;
     move(toPlayer().stream().findFirst().orElse(location()).sub(location()));
+    if (this.touched){
+      assert this.lastRand == tick;
+      this.touched = false;
+    }
   }
 
   private List<Point> toPlayer() {
@@ -71,7 +78,13 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
     super.touch(touchee);
     Player p = (Player) touchee;
     if (!p.getInventory().isEmpty()) {
+      this.touched = true;
+      while (this.lastRand < lastTicked()) {
+        this.lastRand++;
+        behaviourDecider.nextInt();
+      }
       int indexToYoink = behaviourDecider.nextInt(p.getInventory().size());
+      this.lastRand ++;
       Item expected = p.getInventory().get(indexToYoink);
       Optional<Item> yoinked = p.lose(new ItemChooser(indexToYoink));
       assert yoinked.isPresent();
