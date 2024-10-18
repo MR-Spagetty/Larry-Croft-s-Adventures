@@ -133,7 +133,7 @@ public class Sprite {
         // Water class image
         case Water water ->
             water.filled() == true
-                ? ImageIO.read(Path.of("src", "resources", "water.png").toFile())
+                ? ImageIO.read(Path.of("src", "resources", "tile.png").toFile())
                 : ImageIO.read(Path.of("src", "resources", "water.png").toFile());
         case FireBoots fireboots -> ImageIO.read(Path.of("src", "resources", "fireBoots.png").toFile());
         case Flippers flippers -> ImageIO.read(Path.of("src", "resources", "flippersObject.png").toFile());
@@ -141,6 +141,7 @@ public class Sprite {
         case Key key -> ImageIO.read(Path.of("src", "resources", "key.png").toFile());
         case SuctionBoots suctionboots -> ImageIO.read(Path.of("src", "resources", "suctionBoots.png").toFile());
         case Treasure treasure -> ImageIO.read(Path.of("src", "resources", "treasureIC.png").toFile());
+        case MoveableBlock moveableblock -> ImageIO.read(Path.of("src", "resources", "moveableBox.png").toFile());
         // Default Error image for when no individual case in place
         default -> ImageIO.read(Path.of("placeholder.png").toFile());
       };

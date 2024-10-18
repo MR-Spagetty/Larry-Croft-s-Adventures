@@ -10,7 +10,7 @@
             "position" : [1, 0]
         },
         {
-            "tile" : "Empty",
+            "tile" : "Ice",
             "position" : [2, 0]
         },
         {
@@ -26,46 +26,6 @@
             "position" : [3, 2]
         },
         {
-            "tile" : "Conveyor",
-            "position" : [5, 5],
-            "type" : 0
-        },
-        {
-            "tile" : "Conveyor",
-            "position" : [5, 6],
-            "type" : 1
-        },
-        {
-            "tile" : "Conveyor",
-            "position" : [5, 7],
-            "type" : 2
-        },
-        {
-            "tile" : "Conveyor",
-            "position" : [5, 8],
-            "type" : 3
-        },
-        {
-            "tile" : "DirectionalIce",
-            "position" : [6, 5],
-            "type" : 0
-        },
-        {
-            "tile" : "DirectionalIce",
-            "position" : [6, 6],
-            "type" : 1
-        },
-        {
-            "tile" : "DirectionalIce",
-            "position" : [6, 7],
-            "type" : 2
-        },
-        {
-            "tile" : "DirectionalIce",
-            "position" : [6, 8],
-            "type" : 3
-        },
-        {
             "tile" : "Wall",
             "position" : [0, 1]
         },
@@ -76,6 +36,46 @@
         {
             "tile" : "Wall",
             "position" : [2, 1]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [0, -1]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [1, -1]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [2, -1]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [-1, 0]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [3, -1]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [4, 1]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [4, 2]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [4, 0]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [3, 3]
+        },
+        {
+            "tile" : "Wall",
+            "position" : [2, 2]
         },
         {
             "tile" : "Ice",
