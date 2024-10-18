@@ -7,10 +7,19 @@ import nz.ac.wgtn.swen225.lc.domain.entities.items.IceBoots;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
+/**
+ * Ice is a MovementAffecterTile that causes the occupant to continue moving in the direction is
+ * last consciously moved until no longer possible or the entity is no longer on an ice tile to
+ * prevent soft locking if an entity is stopped on ice it may conciously move in any direction
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class Ice extends MovementAffecterTile {
 
   /**
-   * @param location
+   * creates a new Ice tile at the given position
+   *
+   * @param location the position to create the tile at
    */
   public Ice(Point location) {
     super(location);
@@ -31,6 +40,13 @@ public class Ice extends MovementAffecterTile {
     return e.lastMove().equals(Point.ORIGIN) ? moveToEffect : e.lastMove();
   }
 
+  /**
+   * Deserializes an Ice tile from the given json data
+   *
+   * @param json the data to use
+   * @return the deserialized tile
+   * @throws IllegalArgumentException if the data is incorrect for an ice tile
+   */
   public static Ice fromJSON(JSONObject json) {
     if (!((JSONString) json.get("tile")).get().equals("Ice")) {
       throw new IllegalArgumentException(

@@ -8,9 +8,21 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONBool;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * door tiles are a tile that initially functions similar to a wall but once an entity attempts to
+ * enter it when its unlock requirements are satisfied it will unlock and act like an {@link Empty}
+ * tile
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public abstract sealed class Door extends AbstractTile implements ModifiableTile
     permits TreasureDoor, KeyDoor {
 
+  /**
+   * Creates a new wall tile at the given position
+   *
+   * @param location the position to create the door at
+   */
   public Door(Point location) {
     super(location);
   }
@@ -18,6 +30,8 @@ public abstract sealed class Door extends AbstractTile implements ModifiableTile
   private boolean locked = false;
 
   /**
+   * get the locked state of the door
+   *
    * @return the locked state of the door
    */
   public boolean locked() {
