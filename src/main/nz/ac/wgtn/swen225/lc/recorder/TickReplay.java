@@ -4,6 +4,11 @@ import java.nio.file.Path;
 import java.util.Objects;
 import javax.swing.Timer;
 
+/**
+ * This class Replays a recordered game and each tick is advanced when the user presses a key.
+ * 
+ * @author Developer 4 <dev4@example.internal> 300655226
+ */
 public class TickReplay extends Replay {
   private int tickSpeed;
   private Timer timer;
