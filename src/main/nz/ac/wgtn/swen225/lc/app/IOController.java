@@ -71,14 +71,19 @@ public class IOController {
      * the current game before asking you to select a game file.
      */
     private void resumeExistingGameFromCurrentGame(){
+        stopTimers();
+
         int result = JOptionPane.showConfirmDialog(
                 null, "Are you sure want to exit without saving?",
                 "Confirm", JOptionPane.YES_NO_OPTION
         );
 
-        if (result == JOptionPane.NO_OPTION) return;
+        if (result == JOptionPane.YES_OPTION){
+            resumeExistingGame();
+            return;
+        }
 
-        resumeExistingGame();
+        startTimers(); //If the player aborts resuDeveloper 4 <dev4@example.internal> an existing game, the current game will continue running.
     }
 
     /**

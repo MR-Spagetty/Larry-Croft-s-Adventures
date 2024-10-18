@@ -120,6 +120,7 @@ public class UserInterface extends JFrame{
      * @param levelFile The file containing the level to start the game from.
      */
     public void startNewGame(File levelFile){
+        IOController.ic.stopTimers();
         Recorders.recs.askToRecordGame();
         initLevel(levelFile);
         startGame();
