@@ -4,13 +4,12 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import javax.imageio.ImageIO;
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
-import nz.ac.wgtn.swen225.lc.app.UserInterface;
 
 /**
  * Stores graphical image data, as well as position.
@@ -48,7 +47,30 @@ public class Sprite {
    */
   private Sprite(BufferedImage image, Point position) {
     this.image = image;
-    this.position = position.sub(GameState.getGameState().getPlayer().location()).add(UserInterface.ui.getGraphicsPane().getMiddle());
+    this.position =
+        position
+            .sub(GameState.getGameState().getPlayer().location())
+            .add(UserInterface.ui.getGraphicsPane().getMiddle());
+  }
+
+  /** 
+   * Renders the image at its given position with a fixed size 
+   * 
+   * @return 
+   */
+  public void draw(Graphics g) {
+    g.drawImage(
+        image,
+        (int) (position.x() * size + offset().x()),
+        (int) (position.y() * size + offset().y()),
+        size,
+        size,
+        null);
+  }
+
+
+  private Point offset() {
+    return new Point(0, 0);
   }
 
   /**
@@ -74,14 +96,11 @@ public class Sprite {
               // Facing Up
               case Up -> ImageIO.read(Path.of("src", "resources", "playerUp.png").toFile());
               // Facing Left
-              case Left ->
-                  ImageIO.read(Path.of("src", "resources", "playerLeft.png").toFile());
+              case Left -> ImageIO.read(Path.of("src", "resources", "playerLeft.png").toFile());
               // Facing Down
-              case Down ->
-                  ImageIO.read(Path.of("src", "resources", "playerDown.png").toFile());
+              case Down -> ImageIO.read(Path.of("src", "resources", "playerDown.png").toFile());
               // Facing Right
-              case Right ->
-                  ImageIO.read(Path.of("src", "resources", "playerRight.png").toFile());
+              case Right -> ImageIO.read(Path.of("src", "resources", "playerRight.png").toFile());
               // Default player image
               default -> ImageIO.read(Path.of("src", "resources", "playerDown.png").toFile());
             };
@@ -91,14 +110,11 @@ public class Sprite {
               // Upwards orientation
               case Up -> ImageIO.read(Path.of("src", "resources", "conveyorUp.png").toFile());
               // Upwards orientation
-              case Left ->
-                  ImageIO.read(Path.of("src", "resources", "conveyorLeft.png").toFile());
+              case Left -> ImageIO.read(Path.of("src", "resources", "conveyorLeft.png").toFile());
               // Upwards orientation
-              case Down ->
-                  ImageIO.read(Path.of("src", "resources", "conveyorDown.png").toFile());
+              case Down -> ImageIO.read(Path.of("src", "resources", "conveyorDown.png").toFile());
               // Upwards orientation
-              case Right ->
-                  ImageIO.read(Path.of("src", "resources", "conveyorRight.png").toFile());
+              case Right -> ImageIO.read(Path.of("src", "resources", "conveyorRight.png").toFile());
               // Default is Error image
               default -> ImageIO.read(Path.of("src", "resources", "placeholder.png").toFile());
             };
@@ -137,11 +153,5 @@ public class Sprite {
       System.err.println("Sprite.resolveImage(Object), Failed to read file:\n" + e);
       return null;
     }
-  }
-
-  /** Renders the image at its given position with a fixed size */
-  public boolean draw(Graphics g) {
-    return g.drawImage(
-        image, (int) position.x() * size, (int) position.y() * size, size, size, null);
   }
 }
