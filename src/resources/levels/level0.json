@@ -25,6 +25,7 @@
             "tile" : "Exit",
             "position" : [3, 2]
         },
+
         {
             "tile" : "Wall",
             "position" : [0, 1]
