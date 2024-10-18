@@ -3,7 +3,7 @@ package nz.ac.wgtn.swen225.lc.recorder;
 import nz.ac.wgtn.swen225.lc.app.Recorders;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.app.App;
-import nz.ac.wgtn.swen225.lc.app.UserInterface;
+import nz.ac.wgtn.swen225.lc.app.Recorders;
 
 import java.lang.Runnable;
 import java.nio.file.Path;
@@ -35,7 +35,7 @@ abstract class Replay {
    * Initilizes a level with App and give it the path to the level file.
    */
   private void initLevel(Path levelPath){
-    initRecorderGame(levelPath);
+    Recorders.recs.initRecorderGame(levelPath);
   }
 
   /**
