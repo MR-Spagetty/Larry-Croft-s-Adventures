@@ -82,18 +82,21 @@ public class IOController {
      * @param save Whether the current game will be saved to a file or not!
      */
     public void endGame(boolean save){
+        stopTimers();
+
         if (save){
             UserInterface.ui.saveGame();
-        } else {
-            int result = JOptionPane.showConfirmDialog(
-                    null, "Are you sure want to exit without saving?",
-                    "Confirm", JOptionPane.YES_NO_OPTION
-            );
-
-            if (result == JOptionPane.NO_OPTION) return;
+            return;
         }
 
-        UserInterface.ui.endGame();
+        int result = JOptionPane.showConfirmDialog(
+                null, "Are you sure want to exit without saving?",
+                "Confirm", JOptionPane.YES_NO_OPTION
+        );
+
+        if (result == JOptionPane.YES_OPTION) UserInterface.ui.endGame();
+
+        startTimers();
     }
 
     /**
