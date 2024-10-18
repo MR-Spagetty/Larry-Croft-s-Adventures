@@ -96,10 +96,7 @@ public class KeyStrokes {
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
     public Map<String, PlayerAction> strokesToPlayerAction(){
         Map<String, PlayerAction> toReturn = new HashMap<>();
-
-        //Will rewrite into a Stream later
-        for (Map.Entry<Integer, PlayerAction> entry : strokeToPlayerAction.entrySet())
-            toReturn.put(strokeIDS.get(entry.getKey()), entry.getValue());
+        strokeToPlayerAction.forEach((key, value) -> toReturn.put(strokeIDS.get(key), value));
 
         return Collections.unmodifiableMap(toReturn);
     }
@@ -107,10 +104,7 @@ public class KeyStrokes {
     /** @return An unmodifiable map of the keystrokes mapped to UI actions. */
     public Map<String, Runnable> strokesToUIAction(){
         Map<String, Runnable> toReturn = new HashMap<>();
-
-        //Will rewrite into a Stream later
-        for (Map.Entry<Integer, Runnable> entry : strokeToUIAction.entrySet())
-            toReturn.put(strokeIDS.get(entry.getKey()), entry.getValue());
+        strokeToUIAction.forEach((key, value) -> toReturn.put(strokeIDS.get(key), value));
 
         return Collections.unmodifiableMap(toReturn);
     }

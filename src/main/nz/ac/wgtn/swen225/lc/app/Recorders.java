@@ -58,15 +58,19 @@ public class Recorders{
      */
     public void startRecordingLevel(Path levelPath){ if (rec != null) rec.startLevel(levelPath); }
 
+    /** Sets the main recorder to stop recording the current level. */
+    public void stopRecordingCurrentLevel(){ if (rec != null) rec.endLevel(); }
+
     /** When the game is finished, the recorder is signalled to stop recording the game. */
     public void stopRecordingGame(){ if (rec != null) rec.endGame(); }
 
     /**
      * Passes a given player action to the recorder to allow for that action to be recorded.
+     * This only should happen if the game is being recorded.
      *
      * @param action The given player action
      */
-    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+    public void forwardActionToRecorder(PlayerAction action){ if (rec != null) rec.record(action); }
 
     /**
      * Asks the user whether they want the game to be recorded or not.

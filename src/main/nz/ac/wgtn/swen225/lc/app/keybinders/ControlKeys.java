@@ -38,10 +38,15 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     }
 
     private void assignIDsToKeys(){
-        assignIDToKey(KeyEvent.VK_KP_UP, "P_UP");
-        assignIDToKey(KeyEvent.VK_KP_DOWN, "P_DOWN");
-        assignIDToKey(KeyEvent.VK_KP_LEFT, "P_LEFT");
-        assignIDToKey(KeyEvent.VK_KP_RIGHT, "P_RIGHT");
+        assignIDToKey(KeyEvent.VK_UP, "P_UP");
+        assignIDToKey(KeyEvent.VK_DOWN, "P_DOWN");
+        assignIDToKey(KeyEvent.VK_LEFT, "P_LEFT");
+        assignIDToKey(KeyEvent.VK_RIGHT, "P_RIGHT");
+
+        assignIDToKey(KeyEvent.VK_KP_UP, "P_KP_UP");
+        assignIDToKey(KeyEvent.VK_KP_DOWN, "P_KP_DOWN");
+        assignIDToKey(KeyEvent.VK_KP_LEFT, "P_KP_LEFT");
+        assignIDToKey(KeyEvent.VK_KP_RIGHT, "P_KP_RIGHT");
 
         assignIDToKey(KeyEvent.VK_X, "EXIT");
         assignIDToKey(KeyEvent.VK_S, "SAVE");
@@ -53,6 +58,11 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
     }
 
     private void assignKeysToDirections(){
+        assignKeyToPlayerAction(KeyEvent.VK_UP, PlayerAction.Up);
+        assignKeyToPlayerAction(KeyEvent.VK_DOWN, PlayerAction.Down);
+        assignKeyToPlayerAction(KeyEvent.VK_LEFT, PlayerAction.Left);
+        assignKeyToPlayerAction(KeyEvent.VK_RIGHT, PlayerAction.Right);
+
         assignKeyToPlayerAction(KeyEvent.VK_KP_UP, PlayerAction.Up);
         assignKeyToPlayerAction(KeyEvent.VK_KP_DOWN, PlayerAction.Down);
         assignKeyToPlayerAction(KeyEvent.VK_KP_LEFT, PlayerAction.Left);

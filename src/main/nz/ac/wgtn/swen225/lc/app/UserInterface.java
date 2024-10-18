@@ -10,6 +10,7 @@ import nz.ac.wgtn.swen225.lc.renderer.Sound;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.Serial;
 import java.nio.file.Path;
 
 /**
@@ -18,11 +19,10 @@ import java.nio.file.Path;
  * @author Developer 1 <dev1@example.internal>
  */
 public class UserInterface extends JFrame{
-    //Executed when the player ends a game and goes back to the start menu.
-    Runnable removeGameUI = () -> {};
+    @Serial private static final long serialVersionUID= 1L;
 
-    //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
-    Runnable removeStartUI = () -> {};
+    //Executed when the player switches User Interfaces, notably when the player starts or ends a game.
+    Runnable switchUIs = () -> {};
 
     /*
      * The graphics pane that displays the game is stored globally, so Renderer can access it.
@@ -48,12 +48,10 @@ public class UserInterface extends JFrame{
      */
     public void createMenu(){
         assert SwingUtilities.isEventDispatchThread();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         createStartMenu();
-
-        pack();
         setVisible(true);
     }
 
@@ -62,20 +60,20 @@ public class UserInterface extends JFrame{
      * corresponding actions.
      */
     private void createStartMenu(){
-        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
-
         JPanel instructions = Instructions.instructionsPanel;
-        StartButtonsPanel buttons = new StartButtonsPanel(
-                () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
-        );
+        StartButtonsPanel buttons = StartButtonsPanel.sbp;
 
-        removeStartUI = () -> {
+        switchUIs.run();
+        switchUIs = () -> {
             remove(instructions); remove(buttons);
             SwingUtilities.updateComponentTreeUI(this);
         };
 
-        add(BorderLayout.NORTH, instructions);
-        add(BorderLayout.CENTER, buttons);
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
+
+        this.add(BorderLayout.NORTH, instructions);
+        this.add(BorderLayout.CENTER, buttons);
+        this.pack();
     }
 
     /**
@@ -88,25 +86,25 @@ public class UserInterface extends JFrame{
 
         pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
 
-        removeGameUI = () -> {
+        switchUIs.run();
+        switchUIs = () -> {
             remove(gameControls); remove(pane);
             SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
         };
 
         this.add(BorderLayout.EAST, gameControls);
+        this.add(BorderLayout.CENTER, pane);
         this.addKeyListener(IOController.ic.getKeyController());
-
         this.setFocusable(true);
-        this.requestFocus();
-        pack();
-
-        add(BorderLayout.CENTER, pane);
 
         //The graphics pane will be refreshed every time a tick occurs.
         GameState.getGameState().tickTimer.addActionListener((unused) -> {
             assert SwingUtilities.isEventDispatchThread();
             pane.repaint();
         });
+
+        this.pack();
+        this.requestFocus();
     }
 
     /**
@@ -124,32 +122,25 @@ public class UserInterface extends JFrame{
 
         GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
-
-        removeStartUI.run();
         createMainMenu();
-        new Sound().playSound("gameStart");
-
         Recorders.recs.startRecordingLevel(gameFile.toPath());
+
+        new Sound().playSound("gameStart");
     }
 
     /**
      * When a user finishes one level, they will be taken to the next level. This involves the recorder being
      * signalled to stop one level and begin the next.
+     * A "next" level will not begin recording if the path to the next level is "null".
      */
-    public void goBetweenLevels(){
-
-        /** TODO, figure out the path needed for the second level! */
-        /*
-        if (rec != null){
-            rec.endLevel();
-            rec.startLevel(...);
-        }
-        */
+    public void goBetweenLevels(File nextLevel){
+        Recorders.recs.stopRecordingCurrentLevel();
+        if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
     /** Saves the current game to a file. */
     protected void saveGame(){
-        GameState.getGameState().saveState(Path.of(Recorders.recs.getRecPath() + "/testSave.json"));
+        GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
     }
 
     /**
@@ -157,12 +148,12 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        Recorders.recs.stopRecordingGame();
-        removeGameUI.run();
-        createStartMenu();
-
         GameState.getGameState().tickTimer.stop();
         GameInfo.info.countdownTimer.stop();
+
+        goBetweenLevels(null); //No file path is provided, as we are ending the game.
+        Recorders.recs.stopRecordingGame();
+        createStartMenu();
     }
 
     /**
