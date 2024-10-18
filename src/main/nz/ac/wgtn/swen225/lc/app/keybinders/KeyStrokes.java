@@ -79,20 +79,6 @@ public class KeyStrokes {
         runAction.run();
     }
 
-    /**
-     * @return A COMBINED set of all the keystrokes that have been assigned to a Player Action or an
-     *         action to the GUI in the game.
-     */
-    public Set<Integer> getKeyStrokes(){
-        Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
-        Set<Integer> keyStrokesToUIAction = strokeToUIAction.keySet();
-
-        return new HashSet<>(){{
-            addAll(keyStrokesToPlayerAction);
-            addAll(keyStrokesToUIAction);
-        }};
-    }
-
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
     public Map<String, PlayerAction> strokesToPlayerAction(){
         Map<String, PlayerAction> toReturn = new HashMap<>();
