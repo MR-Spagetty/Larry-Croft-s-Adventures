@@ -10,6 +10,8 @@ import java.util.*;
 
 /**
  * <p>  The fuzz testing class is responsible for finding bugs within gameplay.
+ *      Only minor human intervention is required when running Fuzz test, which is to answer the prompt
+ *      about if the player wants to enable recorder or not.
  * </p>
  *
  */
@@ -27,24 +29,23 @@ public class FuzzTest {
     if(startButtons.isEmpty()){throw new IllegalArgumentException("no start button detected, cant start the game");}
 
     try{
-      DefaultButton start = startButtons.get(0);
+      DefaultButton start = startButtons.get(0);                        //first button in the startButtons list is the game start button
       start.doClick();
-      long startTime = System.currentTimeMillis();
+      long startTime = System.currentTimeMillis();                      //takes in the current system time
       Random rand = new Random();
-      while(System.currentTimeMillis() - startTime < 60000){           //run while loop for 1 minute
+      while(System.currentTimeMillis() - startTime < 60000){            //run while loop for 1 minute
         List<String> keys = new ArrayList<>(buttonsKBM.keySet());
         String randKey = keys.get(rand.nextInt(keys.size()));
         PlayerAction nextAct = buttonsKBM.get(randKey);
-        GameState.getGameState().getPlayer().queueAction(nextAct);
+        GameState.getGameState().getPlayer().queueAction(nextAct);      //queue the next action to be done
       }
-      assert true;                                                      //assert true if there are no errors during fuzzing
+      assert true;                                                      //assert true if there are no errors found during fuzzing
     }catch(Exception e) {
       throw new RuntimeException("Fuzz Testing failure, movement caused error: " + e.getMessage());
     }
     finally {
       System.out.println("Fuzzing complete, ran and closed");
     }
-
     /*
     *   TODO call the buttons that start the game into level 2
     */
