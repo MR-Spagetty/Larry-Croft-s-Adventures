@@ -41,11 +41,10 @@ public class FuzzTesting {
       throw new RuntimeException("Fuzz Testing failure, movement caused error: " + e.getMessage());
     }
     finally {
-      System.out.println("Fuzzing complete, ran for 1 minute");
+      System.out.println("Fuzzing complete, ran and closed");
     }
 
     /*
-    *   TODO call the buttons that start the game into level 1
     *   TODO call the buttons that start the game into level 2
     *   TODO strategically spam call game buttons such as pause to test for any glitches
     */
