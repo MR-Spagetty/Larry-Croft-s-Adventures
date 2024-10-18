@@ -1,9 +1,12 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import java.util.Optional;
+
+import nz.ac.wgtn.swen225.lc.domain.Colour;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.*;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
@@ -117,6 +120,12 @@ public interface Entity {
       case "Player" -> Player.fromJSON((JSONObject) json);
       case "MoveableBlock" -> MoveableBlock.fromJSON((JSONObject) json);
       case "Bug", "BitFlipper" -> Enemy.fromJSON(json);
+      case "FireBoots" -> new FireBoots(Point.ORIGIN, 0).fromJson(json);
+      case "Flippers" -> new Flippers(Point.ORIGIN, 0).fromJson(json);
+      case "IceBoots" -> new IceBoots(Point.ORIGIN, 0).fromJson(json);
+      case "Key" -> new Key(Point.ORIGIN, 0, Colour.fromJSON(new JSONString("#000000"))).fromJson(json);
+      case "SuctionBoots" -> new SuctionBoots(Point.ORIGIN, 0).fromJson(json);
+      case "Treasure" -> new Treasure(Point.ORIGIN, 0).fromJson(json);
       default -> throw new IllegalArgumentException("Unknown entity type: " + type);
     };
   }
