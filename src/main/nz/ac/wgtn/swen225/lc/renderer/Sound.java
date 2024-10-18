@@ -9,6 +9,11 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * Plays audio files from resources.
+ *
+ * @author Developer 2 <dev2@example.internal> 300651343
+ */
 public class Sound {
   /**
    * Finds a sound file and plays it. Acceptable filenames are: gameStart gameWin gameDeath
@@ -21,10 +26,6 @@ public class Sound {
       // Get audio file as stream
       File file = Path.of("src", "resources", filename + ".wav").toFile();
       AudioInputStream sound = AudioSystem.getAudioInputStream(file);
-      // Get format
-      // AudioFormat format = sound.getFormat();
-      // Setup Dataline
-      // DataLine.Info info = new DataLine.Info(Clip.class, format);
       // Convert to a clip
       Clip clip = AudioSystem.getClip();
       clip.open(sound);
