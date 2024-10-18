@@ -1,5 +1,6 @@
 package nz.ac.wgtn.swen225.lc.fuzz;
 import nz.ac.wgtn.swen225.lc.app.*;
+import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import org.testng.annotations.Test;
@@ -17,14 +18,16 @@ public class FuzzTesting {
   public void fuzzingTest() {
     Main.main(new String[0]);  //initialize and run main
 
-    Map<String, PlayerAction> buttonsKBM = App.strokesToPlayerAction(); //variable that will store all the user keyboard inputs
+    Map<String, PlayerAction> buttonsKBM = App.strokesToPlayerAction(); //list of objects that will store all the user keyboard inputs
     if (buttonsKBM.isEmpty()) {throw new IllegalArgumentException("no key binds detected");}
-    Map<String, Runnable> buttonsGUI = App.strokesToUIAction();         //variable that will store all the user GUI inputs
+    Map<String, Runnable> buttonsGUI = App.strokesToUIAction();         //list of objects that will store all the user GUI inputs
     if(buttonsGUI.isEmpty()) {throw new IllegalArgumentException("no GUI buttons detected");}
+    List<DefaultButton> startButtons = App.startMenuButtons();          //start button
+    if(startButtons.isEmpty()){throw new IllegalArgumentException("no start button detected, cant start the game");}
 
-    //TODO press the start button to get into the game level
     try{
-      
+      DefaultButton start = startButtons.get(0);
+      start.doClick();
       long startTime = System.currentTimeMillis();
       Random rand = new Random();
       while(System.currentTimeMillis() - startTime < 60000){           //run while loop for 1 minute
