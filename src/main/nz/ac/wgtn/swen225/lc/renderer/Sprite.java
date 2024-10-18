@@ -68,9 +68,14 @@ public class Sprite {
         null);
   }
 
-
-  private Point offset() {
-    return new Point(0, 0);
+  /** 
+   * Renders the image at its given position with a fixed size 
+   * 
+   * @return A point that will be used to offset the sprites draw location
+   */
+  private Point offset(){
+    // Expected to be initialised when constructed
+    throw null;
   }
 
   /**
