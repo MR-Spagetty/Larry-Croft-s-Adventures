@@ -89,7 +89,7 @@ public abstract class Enemy extends MoveableEntity {
     }
   }
 
-  public static Object fromJSON(JSONType json) {
+  public static Enemy fromJSON(JSONType json) {
     JSONObject data = (JSONObject) json;
     return switch (((JSONString) data.get("type")).get()) {
       case "Bug" -> Bug.fromJSON(json);

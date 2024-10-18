@@ -47,7 +47,7 @@ public class Bug extends Enemy implements JSONSerializable<Bug> {
     if (!type.equals("Bug")) {
       throw new IllegalArgumentException("Incorrect data given expected Bug got: " + type);
     }
-    return new Bug(Point.fromJSON(data.get("Position")), Entity.idFromJSON(data));
+    return new Bug(Point.fromJSON(data.get("position")), Entity.idFromJSON(data));
   }
 
   /** statically deserializes a Bug enemy for documentation see {@link #fromJson(JSONType)} */

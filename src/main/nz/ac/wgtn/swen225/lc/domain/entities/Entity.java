@@ -111,12 +111,13 @@ public interface Entity {
           "Expected JSONString at \"type\" but found "
               + ((JSONObject) json).get("type").getClass().getName());
     }
-    switch (((JSONString) ((JSONObject) json).get("type")).get()) {
+    String type = ((JSONString) ((JSONObject) json).get("type")).get();
+    return switch (type) {
       case "Player" -> Player.fromJSON((JSONObject) json);
       case "MoveableBlock" -> MoveableBlock.fromJSON((JSONObject) json);
       case "Bug", "BitFlipper" -> Enemy.fromJSON(json);
-    }
-    return null;
+      default -> throw new IllegalArgumentException("Unknown entity type: " + type);
+    };
   }
 
   static long idFromJSON(JSONObject data) {

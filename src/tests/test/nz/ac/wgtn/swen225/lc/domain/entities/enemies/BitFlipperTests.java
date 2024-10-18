@@ -1,6 +1,7 @@
 package test.nz.ac.wgtn.swen225.lc.domain.entities.enemies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
 import java.util.stream.IntStream;
@@ -11,6 +12,7 @@ import nz.ac.wgtn.swen225.lc.domain.entities.enemies.BitFlipper;
 import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
 import org.junit.jupiter.api.Test;
 import test.nz.ac.wgtn.swen225.lc.domain.Shorthands;
+import test.nz.ac.wgtn.swen225.lc.domain.entities.EntityBaseTests;
 
 public class BitFlipperTests implements EnemyBaseTests {
 
@@ -36,5 +38,10 @@ public class BitFlipperTests implements EnemyBaseTests {
                   20,
                   (a, b) -> assertEquals(a.location(), b.location()));
             });
+  }
+
+  @Test
+  public void badDeserializeData() {
+    assertThrows(IAE, () -> BitFlipper.fromJSON(EntityBaseTests.badData()));
   }
 }

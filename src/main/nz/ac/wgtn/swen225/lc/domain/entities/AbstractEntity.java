@@ -74,7 +74,8 @@ public abstract class AbstractEntity implements Entity {
   @Override
   public JSONType toJson() {
     JSONObject out = new JSONObject();
-    out.put("type", getClass().getName());
+    String type = getClass().getName();
+    out.put("type", type.substring(type.lastIndexOf('.')+1));
     out.put("position", location().toJson());
     out.put("indID", this.individualID);
     return out;
