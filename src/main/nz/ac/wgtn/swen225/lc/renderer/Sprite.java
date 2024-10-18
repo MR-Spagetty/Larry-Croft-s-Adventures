@@ -7,12 +7,13 @@ import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
 
 /**
- * Stores graphical image data, as well as position.
+ * Stores graphical image data, as well as position. Can use stored data to render onto screen.
  *
- * <p>Can use stored data to render onto screen.
+ * @author Developer 2 <dev2@example.internal> 300651343
  */
 public class Sprite {
   private BufferedImage image;
@@ -50,11 +51,7 @@ public class Sprite {
     this.offset = offset;
   }
 
-  /** 
-   * Renders the image at its given position with a fixed size 
-   * 
-   * @return 
-   */
+  /** Renders the image at its given position with a fixed size */
   public void draw(Graphics g) {
     g.drawImage(
         image,
@@ -132,12 +129,18 @@ public class Sprite {
         case Ice ice -> ImageIO.read(Path.of("src", "resources", "ice.png").toFile());
         // Fire class image
         case Fire fire ->
-            ImageIO.read(Sprite.class.getClassLoader().getResource("fireTexture.png"));
+            ImageIO.read(Path.of("src", "resources", "fireTexture.png").toFile());
         // Water class image
         case Water water ->
             water.filled() == true
-                ? ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"))
-                : ImageIO.read(Sprite.class.getClassLoader().getResource("water.png"));
+                ? ImageIO.read(Path.of("src", "resources", "water.png").toFile())
+                : ImageIO.read(Path.of("src", "resources", "water.png").toFile());
+        case FireBoots fireboots -> ImageIO.read(Path.of("src", "resources", "fireBoots.png").toFile());
+        case Flippers flippers -> ImageIO.read(Path.of("src", "resources", "flippersObject.png").toFile());
+        case IceBoots iceboots -> ImageIO.read(Path.of("src", "resources", "placeholder.png").toFile());
+        case Key key -> ImageIO.read(Path.of("src", "resources", "key.png").toFile());
+        case SuctionBoots suctionboots -> ImageIO.read(Path.of("src", "resources", "suctionBoots.png").toFile());
+        case Treasure treasure -> ImageIO.read(Path.of("src", "resources", "treasureIC.png").toFile());
         // Default Error image for when no individual case in place
         default -> ImageIO.read(Path.of("placeholder.png").toFile());
       };
