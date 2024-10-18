@@ -1,11 +1,16 @@
 package nz.ac.wgtn.swen225.lc.fuzz;
 import nz.ac.wgtn.swen225.lc.app.*;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import org.testng.annotations.Test;
 
 import java.util.*;
 
-
+/**
+ * <p>  The fuzz testing class is responsible for finding bugs within gameplay.
+ * </p>
+ *
+ */
 public class FuzzTesting {
 
   @Test
@@ -19,12 +24,14 @@ public class FuzzTesting {
 
     //TODO press the start button to get into the game level
     try{
+      
       long startTime = System.currentTimeMillis();
       Random rand = new Random();
-      while(System.currentTimeMillis() - startTime < 60000){           //run while loop for 5 minutes
+      while(System.currentTimeMillis() - startTime < 60000){           //run while loop for 1 minute
         List<String> keys = new ArrayList<>(buttonsKBM.keySet());
         String randKey = keys.get(rand.nextInt(keys.size()));
-        buttonsKBM.get(randKey);  //TODO buttonsKBM.get(randKey).playerAction.run or something
+        PlayerAction nextAct = buttonsKBM.get(randKey);
+        GameState.getGameState().getPlayer().queueAction(nextAct);
       }
       assert true;                                                      //assert true if there are no errors during fuzzing
     }catch(Exception e) {
@@ -36,6 +43,7 @@ public class FuzzTesting {
 
     /*
     *   TODO call the buttons that start the game into level 1
+    *   TODO call the buttons that start the game into level 2
     *   TODO strategically spam call game buttons such as pause to test for any glitches
     */
 
