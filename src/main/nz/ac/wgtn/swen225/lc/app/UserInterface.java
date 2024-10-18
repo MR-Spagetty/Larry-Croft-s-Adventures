@@ -14,7 +14,8 @@ import java.io.Serial;
 import java.nio.file.Path;
 
 /**
- * Class which is responsible for handling the "Graphical User Interface" of the game.
+ * Class which is responsible for handling the "Graphical User Interface" of the game. It also includes
+ * functions about checking whether you have won the game and starting/ending a game.
  *
  * @author Developer 1 <dev1@example.internal> - 300652265
  */
@@ -146,8 +147,6 @@ public class UserInterface extends JFrame{
     /**
      * Initialises the level in the game by retrieving all key information from the Game State, and then writing it to
      * the Information board.
-     *
-     * TODO: Test the written code once all other issues in the game (none of those are related to "App") are fixed.
      */
     public void initLevelInfo(){
         GameState gs = GameState.getGameState();

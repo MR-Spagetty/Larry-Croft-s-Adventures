@@ -8,12 +8,11 @@ import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import javax.swing.*;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Main Class responsible for all other functions of the App Interface, that are not tied to the GUI, the Keystrokes
  * or the Recorders. When you initialise the constructor for this class, you also will initialise the constructor for
- * the GUI so a start menu can be created.
+ * the User Interface so a start menu can be created.
  *
  * @author Developer 1 <dev1@example.internal> - 300652265
  */
@@ -25,23 +24,6 @@ public class App{
      * All this method will do is advance a tick in the current game!
      */
     public static void tickOverride(){ GameState.getGameState().tick(); }
-
-    /*
-     * TODO: Add in further integration with Domain, Recorder, Renderer, and Persistency.
-     *
-     * INTEGRATION DONE:
-     * - A way to advance a tick.
-     * - Pass PlayerAction to Recorder each tick.
-     * - A way to forward a player action to Domain.
-     * - For AutoReplay, you just need to call it once.
-     * - For TickReplay, you need to ask user for tick speed then pass it to the constructor.
-     * - For StepReplay, you need to call the replay method each time the player presses a key.
-     *
-     * NB: The replay is a bit more complicated, I have a replay interface and three classes that extend that interface.
-     *
-     * INTEGRATION NEEDED:
-     * - A method that can end a game file, while skipping any "confirmation".
-     */
 
     /**
      * Takes a given player action and forwards it to Domain.
@@ -59,9 +41,6 @@ public class App{
      * @return The list of buttons that will be displayed in the UI during gameplay.
      */
     public static List<DefaultButton> getButtons(){ return IOController.ic.getMainUIButtons(); }
-
-    /** @return The list of keystrokes associated with an action. */
-    public static Set<Integer> getKeyStrokes(){ return IOController.ic.getKeyController().getKeyStrokes(); }
 
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */
     public static Map<String, PlayerAction> strokesToPlayerAction(){
