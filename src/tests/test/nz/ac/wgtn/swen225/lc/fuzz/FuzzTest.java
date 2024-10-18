@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 /**
- * <p>  The fuzz testing class is responsible for finding bugs within gameplay.
- *      Only minor human intervention is required when running Fuzz test, which is to answer the prompt
- *      about if the player wants to enable recorder or not.
- * </p>
+ * The fuzz testing class is responsible for finding bugs within gameplay.
+ * Only minor human intervention is required when running Fuzz test, which is to answer the prompt
+ * about if the player wants to enable recorder or not.
  *
+ * @author <Developer 3> 300651596
  */
 public class FuzzTest {
 
