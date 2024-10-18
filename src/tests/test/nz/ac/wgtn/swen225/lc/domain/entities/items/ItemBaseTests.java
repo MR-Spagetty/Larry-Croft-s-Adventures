@@ -9,6 +9,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Bug;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
 import org.junit.jupiter.api.Test;
 import test.nz.ac.wgtn.swen225.lc.domain.Shorthands;
 import test.nz.ac.wgtn.swen225.lc.domain.entities.EntityBaseTests;
@@ -19,7 +20,7 @@ public interface ItemBaseTests extends EntityBaseTests {
     Maze scene = new Maze(0, " ", 0);
     Entity a = entity();
     a.maze(scene);
-    Entity b = Entity.fromJSON(a.toJson());
+    Entity b = ((Item) entity()).fromJson(a.toJson());
     b.maze(scene);
     assertEquals(a.location(), b.location());
     assertEquals(a.getUID(), b.getUID());
@@ -54,5 +55,15 @@ public interface ItemBaseTests extends EntityBaseTests {
   default void mayNotAttemptTouch() {
     Entity e = new Bug(East, 0);
     assertThrows(IAE, () -> entity().touch(e));
+  }
+
+  @Test
+  default void coverTick() {
+    entity().tick(0);
+  }
+
+  @Test
+  default void badDeserializeData() {
+    assertThrows(IAE, () -> ((Item) entity()).fromJson(EntityBaseTests.badData()));
   }
 }

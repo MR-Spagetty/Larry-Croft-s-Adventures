@@ -41,7 +41,7 @@ public class Key extends Item {
   }
 
   @Override
-  protected Item item(Point location, long id) {
+  protected final Item item(Point location, long id) {
     throw new UnsupportedOperationException("Key requires additional data");
   }
 
@@ -56,9 +56,11 @@ public class Key extends Item {
   public Item fromJson(JSONType json) {
 
     JSONObject data = (JSONObject) json;
-    if (!((JSONString) data.get("type")).get().equals(getClass().getName())) {
-      throw new IllegalArgumentException(
-          "Incorrect data given expected Conveyor got: " + data.get("type"));
+    String expected = getClass().getName();
+    if (!((JSONString) data.get("type"))
+        .get()
+        .equals(expected.substring(expected.lastIndexOf('.') + 1))) {
+      throw new IllegalArgumentException("Incorrect data given expected  got: " + data.get("type"));
     }
     return new Key(
         Point.fromJSON(data.get("position")),
