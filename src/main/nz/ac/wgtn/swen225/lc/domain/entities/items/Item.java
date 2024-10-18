@@ -12,7 +12,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 /**
  * Item is a an abstract class that impliments everything common to all items
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public abstract class Item extends AbstractEntity implements JSONSerializable<Item> {
   /**
@@ -38,8 +38,9 @@ public abstract class Item extends AbstractEntity implements JSONSerializable<It
     if (touchee instanceof Player p) {
       maze().getTile(location()).ifPresent(t -> t.leave(this));
       p.pickUp(this);
+    } else {
+      throw new IllegalArgumentException("Given entity may not touch items");
     }
-    throw new IllegalArgumentException("Given entity may not touch items");
   }
 
   protected abstract Item item(Point location, long id);
@@ -50,9 +51,9 @@ public abstract class Item extends AbstractEntity implements JSONSerializable<It
     String expectedType = getClass().getName();
     if (!((JSONString) data.get("type"))
         .get()
-        .equals(expectedType.substring(expectedType.lastIndexOf(',') + 1))) {
+        .equals(expectedType.substring(expectedType.lastIndexOf('.') + 1))) {
       throw new IllegalArgumentException(
-          "Incorrect data given expected Conveyor got: " + data.get("type"));
+          "Incorrect data given expected "+expectedType+" got: " + data.get("type"));
     }
     return item(Point.fromJSON(data.get("position")), Entity.idFromJSON(data));
   }

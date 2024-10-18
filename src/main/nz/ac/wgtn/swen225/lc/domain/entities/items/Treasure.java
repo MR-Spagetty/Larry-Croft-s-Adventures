@@ -6,7 +6,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
  * Treasures are the item that needs to be collected in all levels to open the exit door to have
  * access to teh exit
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public class Treasure extends Item {
 

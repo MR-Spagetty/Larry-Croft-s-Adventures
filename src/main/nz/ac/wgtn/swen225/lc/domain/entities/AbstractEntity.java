@@ -9,7 +9,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  * AbstractEntity is a abstract class implementing all the fields and methods that are common to all
  * entities
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public abstract class AbstractEntity implements Entity {
 

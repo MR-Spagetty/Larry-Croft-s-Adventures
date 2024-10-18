@@ -13,7 +13,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  * enter it when its unlock requirements are satisfied it will unlock and act like an {@link Empty}
  * tile
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public abstract sealed class Door extends AbstractTile implements ModifiableTile
     permits TreasureDoor, KeyDoor {

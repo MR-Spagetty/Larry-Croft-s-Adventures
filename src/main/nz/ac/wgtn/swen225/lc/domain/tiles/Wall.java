@@ -10,7 +10,7 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONString;
  * Walls are basic tiles that may not be occupied
  *
  * @param location the location to create the wall tile at
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public record Wall(Point location) implements Tile {
 

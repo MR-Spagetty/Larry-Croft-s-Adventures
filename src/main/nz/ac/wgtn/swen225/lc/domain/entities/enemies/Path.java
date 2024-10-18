@@ -13,7 +13,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
  * @param newLoc the point reached at this point on the path
  * @param weight the weight of this portion of the path
  * @param goal the goal of the path
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 300651923
  */
 public record Path(Optional<Path> prev, Point newLoc, double weight, Point goal)
     implements Comparable<Path> {
