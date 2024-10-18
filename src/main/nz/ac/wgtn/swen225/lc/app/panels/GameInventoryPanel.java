@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
-import java.awt.*;
+import java.awt.Color;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 
 /**
  * Class responsible for containing a special part of the Panel, which contains the list of items the player has in
