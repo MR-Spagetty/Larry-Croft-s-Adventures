@@ -182,9 +182,7 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
-
+        IOController.ic.stopTimers();
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         createStartMenu();

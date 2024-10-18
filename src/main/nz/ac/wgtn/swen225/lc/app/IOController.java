@@ -159,8 +159,8 @@ public class IOController {
 
     /** Starts or resumes both timers, which is usually done to start or resume a game. */
     public void startTimers(){
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
+        GameState.getGameState().tickTimer.start();
+        GameInfo.info.countdownTimer.start();
     }
 
     /** Getters for retrieving the UI Buttons and the Key Controller. */
