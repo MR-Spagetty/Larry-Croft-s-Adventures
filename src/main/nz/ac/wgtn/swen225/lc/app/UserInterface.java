@@ -80,7 +80,7 @@ public class UserInterface extends JFrame{
      * Helper method which creates the components present in the Main menu. This also sets up the keys to be used
      * in the game.
      */
-    private void createMainMenu(){
+    protected void createMainMenu(){
         int offsetWidth = (WIDTH * 3/4);
 
         //This value was guessed, as the height difference is determined by the height of the text!
@@ -145,7 +145,7 @@ public class UserInterface extends JFrame{
     public void initLevelInfo(){
         GameState gs = GameState.getGameState();
         long levelID = GameState.getGameState().getMaze().longID();
-        long timeRemaining = gs.getMaze().maxTicks * GameState.DEFAULT_TICK_RATE;
+        long timeRemaining = (gs.getMaze().maxTicks / GameState.DEFAULT_TICK_RATE);
         int remainingTreasures = Math.max(0, gs.requiredTreasures() - gs.collectedTreasures());
 
         GameInfo.info.initialiseInformation(levelID, (int)timeRemaining, remainingTreasures);
@@ -193,17 +193,6 @@ public class UserInterface extends JFrame{
      * TODO if time allows: Finish it
      */
     public void startGamePlayback(){}
-
-    /**
-     * Similar to starting a new game, but for use by the Recorder.
-     *
-     * @param levelPath The path to a specific level
-     */
-    public void initRecorderGame(Path levelPath){
-        GameState.getGameState().setLevel(levelPath);
-        createMainMenu();
-        initLevelInfo();
-    }
 
     /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
