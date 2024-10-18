@@ -51,6 +51,22 @@ public class UserInterface extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
+        this.addKeyListener(IOController.ic.getKeyController());
+
+        /*
+         * The graphics pane will be refreshed every time a tick occurs, and will check to see if the player
+         * has won or lost the game.
+         */
+        GameState.getGameState().tickTimer.addActionListener((unused) -> {
+            assert SwingUtilities.isEventDispatchThread();
+
+            //In case "pane.repaint()" throws an error before being initialised properly.
+            try { pane.repaint(); }
+            catch (Exception e){ System.out.println(e); }
+
+            this.checkGameState();
+        });
+
         createStartMenu();
         setVisible(true);
     }
@@ -99,18 +115,7 @@ public class UserInterface extends JFrame{
 
         this.add(BorderLayout.EAST, gameControls);
         this.add(BorderLayout.CENTER, pane);
-        this.addKeyListener(IOController.ic.getKeyController());
         this.setFocusable(true);
-
-        /*
-         * The graphics pane will be refreshed every time a tick occurs, and will check to see if the player
-         * has won or lost the game.
-         */
-        GameState.getGameState().tickTimer.addActionListener((unused) -> {
-            assert SwingUtilities.isEventDispatchThread();
-            pane.repaint();
-            this.checkGameState();
-        });
 
         this.pack();
         this.requestFocus();
