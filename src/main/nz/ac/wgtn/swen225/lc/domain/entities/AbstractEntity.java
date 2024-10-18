@@ -13,6 +13,9 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  */
 public abstract class AbstractEntity implements Entity {
 
+  /**
+   * the lastTick this entity was ticked (-1 being never ticked)
+   */
   protected long lastTick = -1;
   private Point location;
   private Maze maze = null;
