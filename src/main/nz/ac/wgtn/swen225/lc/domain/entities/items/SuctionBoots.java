@@ -5,7 +5,7 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 /**
  * Suction boots allow the player to ignore conveyor tiles
  *
- * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com> 
  */
 public class SuctionBoots extends Item {
 
