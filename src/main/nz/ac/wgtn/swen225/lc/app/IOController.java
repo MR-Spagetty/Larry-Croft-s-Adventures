@@ -1,14 +1,15 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
-import nz.ac.wgtn.swen225.lc.app.buttons.MainUIButtons;
 import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
+import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
 import nz.ac.wgtn.swen225.lc.app.otherpanels.PauseScreen;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,12 @@ public class IOController {
         File l1 = null; /** TODO: Change to file that goes to L1. */
         File l2 = null; /** TODO: Change to file that goes to L2. */
 
-        mainUIButtons = MainUIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
+        mainUIButtons = new ArrayList<>(List.of(
+                new DefaultButton(unused -> pauseGame(), "PAUSE"),
+                new DefaultButton(unused -> Instructions.instructionsPanel.createHelpDialog(), "HELP"),
+                new DefaultButton(unused -> endGame(true), "SAVE & EXIT"),
+                new DefaultButton(unused -> endGame(true), "EXIT")
+        ));
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
@@ -96,7 +102,7 @@ public class IOController {
 
         if (result == JOptionPane.YES_OPTION) UserInterface.ui.endGame();
 
-        startTimers();
+        startTimers(); //Game will resume if the player doesn't want to exit without saving.
     }
 
     /**

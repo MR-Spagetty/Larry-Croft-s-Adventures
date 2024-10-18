@@ -23,7 +23,7 @@ public class MainUIButtons{
      */
     public static List<DefaultButton> mainUIButtons(Runnable save, Runnable exit){
         List<DefaultButton> pauseAndHelp = pauseAndHelpButtons();
-        List<DefaultButton> saveAndRec = saveAndExitButtons(save, exit);
+        List<DefaultButton> saveAndRec = saveAndExitButtons();
 
         return new ArrayList<>(){{
             addAll(pauseAndHelp);
@@ -39,9 +39,9 @@ public class MainUIButtons{
      * @param exit The action that will be executed when the user hits the "Exit" button.
      * @return A list consisting of the "Pause" and "Help" buttons, each wired up to their appropriate action.
      */
-    private static List<DefaultButton> saveAndExitButtons(Runnable save, Runnable exit){
-        DefaultButton saveGame = new DefaultButton(unused -> save.run(), "SAVE & EXIT");
-        DefaultButton exitGame = new DefaultButton(unused -> exit.run(), "EXIT");
+    private static List<DefaultButton> saveAndExitButtons(){
+        DefaultButton saveGame = new DefaultButton(unused -> IOController.ic.endGame(true), "SAVE & EXIT");
+        DefaultButton exitGame = new DefaultButton(unused -> IOController.ic.endGame(true), "EXIT");
 
         return List.of(saveGame, exitGame);
     }
