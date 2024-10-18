@@ -23,6 +23,7 @@ public class Renderer {
         .map(
             t ->
                 new Sprite(t) {
+                  @SuppressWarnings("unused")
                   Point offset() {
                     return UserInterface.ui
                         .getGraphicsPane()
@@ -37,6 +38,7 @@ public class Renderer {
         .map(
             s ->
                 new Sprite(s) {
+                  @SuppressWarnings("unused")
                   Point offset() {
                     return UserInterface.ui
                         .getGraphicsPane()
