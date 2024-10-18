@@ -96,19 +96,21 @@ public class IOController {
     public void endGame(boolean save){
         stopTimers();
 
-        if (save){
+        if (!save){
+            int result = JOptionPane.showConfirmDialog(
+                    null, "Are you sure want to exit without saving?",
+                    "Confirm", JOptionPane.YES_NO_OPTION
+            );
+
+            if (result == JOptionPane.NO_OPTION){
+                startTimers(); //Game will resume if the player doesn't want to exit without saving.
+                return;
+            }
+        } else {
             UserInterface.ui.saveGame();
-            return;
         }
 
-        int result = JOptionPane.showConfirmDialog(
-                null, "Are you sure want to exit without saving?",
-                "Confirm", JOptionPane.YES_NO_OPTION
-        );
-
-        if (result == JOptionPane.YES_OPTION) UserInterface.ui.endGame();
-
-        startTimers(); //Game will resume if the player doesn't want to exit without saving.
+        UserInterface.ui.endGame();
     }
 
     /**
