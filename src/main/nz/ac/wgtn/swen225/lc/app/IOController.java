@@ -107,9 +107,7 @@ public class IOController {
         String[] option = {"Return to Game"};
         ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
 
-        //The timer is stopped when the game is paused, if the timer has been initialised.
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
+        stopTimers();
 
         /*
          * The program will not continue running as long as this Dialog box is on the screen.
@@ -118,8 +116,7 @@ public class IOController {
         JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
 
-        GameState.getGameState().tickTimer.start();
-        GameInfo.info.countdownTimer.start();
+        startTimers();
     }
 
     /**
@@ -152,6 +149,18 @@ public class IOController {
         }
 
         return chosenFile;
+    }
+
+    /** To pause the game, we need to stop these timers so the game doesn't continue running in the background. */
+    public void stopTimers(){
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
+    }
+
+    /** Starts or resumes both timers, which is usually done to start or resume a game. */
+    public void startTimers(){
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
     }
 
     /** Getters for retrieving the UI Buttons and the Key Controller. */
