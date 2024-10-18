@@ -1,9 +1,10 @@
-package nz.ac.wgtn.swen225.lc.fuzz;
+package test.nz.ac.wgtn.swen225.lc.fuzz;
 import nz.ac.wgtn.swen225.lc.app.*;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
-import org.testng.annotations.Test;
+
+import org.junit.Test;
 
 import java.util.*;
 
@@ -12,7 +13,7 @@ import java.util.*;
  * </p>
  *
  */
-public class FuzzTesting {
+public class FuzzTest {
 
   @Test
   public void fuzzingTest() {
