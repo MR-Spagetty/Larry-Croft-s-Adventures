@@ -1,13 +1,13 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import nz.ac.wgtn.swen225.lc.domain.GameState;
-
 import javax.swing.*;
 
 /**
  * Stores all information that will be reported to the user about the current game. This includes the level
  * that the player is on, how much time they have left to complete the level, and how many chips the player
  * need to collect.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GameInfo{
     private static final GameInfo INFO = new GameInfo();

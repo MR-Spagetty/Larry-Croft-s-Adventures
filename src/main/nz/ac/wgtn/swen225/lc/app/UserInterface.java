@@ -16,7 +16,7 @@ import java.nio.file.Path;
 /**
  * Class which is responsible for handling the "Graphical User Interface" of the game.
  *
- * @author Developer 1 <dev1@example.internal>
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class UserInterface extends JFrame{
     @Serial private static final long serialVersionUID= 1L;
