@@ -1,9 +1,9 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import java.util.Optional;
-
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
@@ -17,7 +17,6 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
  */
 public interface Entity {
-  // TODO extend whatever JSONable interface is created for persistency
 
   /**
    * Gets the unique id of the entity for use in identification of the entity
@@ -88,8 +87,20 @@ public interface Entity {
    */
   void maze(Maze maze);
 
+  /**
+   * returns a JSON representation of this entity
+   *
+   * @return a JSON representation of this entity
+   */
   JSONType toJson();
 
+  /**
+   * deserializes the given json data into the entity it represents
+   *
+   * @param json the json data
+   * @return the entity represented by the given data
+   * @throws IllegalArgumentException if the data is incorrectly formatted
+   */
   public static Entity fromJSON(JSONType json) {
     if (!(json instanceof JSONObject)) {
       throw new IllegalArgumentException(
@@ -100,20 +111,24 @@ public interface Entity {
           "Expected JSONString at \"type\" but found "
               + ((JSONObject) json).get("type").getClass().getName());
     }
-    switch (((JSONString)((JSONObject) json).get("type")).get()) {
-      case "Player" -> Player.fromJSON((JSONObject)json);
-      case "MoveableBlock" -> MoveableBlock.fromJSON((JSONObject)json);
+    switch (((JSONString) ((JSONObject) json).get("type")).get()) {
+      case "Player" -> Player.fromJSON((JSONObject) json);
+      case "MoveableBlock" -> MoveableBlock.fromJSON((JSONObject) json);
+      case "Bug", "BitFlipper" -> Enemy.fromJSON(json);
     }
     return null;
   }
 
   static long idFromJSON(JSONObject data) {
-    return Optional.ofNullable(data.get("indID")).map(id -> {
-      if (!(id instanceof JSONLong)) {
-        throw new IllegalArgumentException(
-            "Expected JSONLong at \"indID\" but found " + id.getClass().getName());
-      }
-      return ((JSONLong) id).get();
-    }).orElseThrow(()-> new IllegalArgumentException("Expected element at key \"indID\""));
+    return Optional.ofNullable(data.get("indID"))
+        .map(
+            id -> {
+              if (!(id instanceof JSONLong)) {
+                throw new IllegalArgumentException(
+                    "Expected JSONLong at \"indID\" but found " + id.getClass().getName());
+              }
+              return ((JSONLong) id).get();
+            })
+        .orElseThrow(() -> new IllegalArgumentException("Expected element at key \"indID\""));
   }
 }

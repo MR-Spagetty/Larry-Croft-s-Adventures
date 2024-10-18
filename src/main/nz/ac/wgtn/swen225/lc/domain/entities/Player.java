@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
+import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
 import nz.ac.wgtn.swen225.lc.domain.entities.items.Item;
 import nz.ac.wgtn.swen225.lc.domain.tiles.MovementAffecterTile;
 import nz.ac.wgtn.swen225.lc.persistency.JSONList;
@@ -66,8 +67,11 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
 
   @Override
   public void touch(Entity touchee) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'touch'");
+    if (!canTouch(touchee)) {
+      throw new IllegalArgumentException(
+          "Entity %d may not touch this Player".formatted(touchee.getUID()));
+    }
+    touchee.touch(this);
   }
 
   /**

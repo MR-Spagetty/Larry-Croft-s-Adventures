@@ -40,6 +40,6 @@ public interface TileBaseTests {
     Player p = new Player(West, 0);
     Tile t = tile();
     new Maze(1, "NONE", 0, List.of(t, et(West)), List.of(e(ORIGIN), p));
-    assertThrows(ISE, () -> t.enter(p));
+    assertThrows(IAE, () -> t.enter(p));
   }
 }

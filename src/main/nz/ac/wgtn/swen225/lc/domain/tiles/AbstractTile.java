@@ -4,12 +4,19 @@ import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 
-/** Represents a tile in the game world. */
+/**
+ * AbstractTile is a abstract class that implements the fields and methods used by all nonWall tiles
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public abstract class AbstractTile implements Tile {
 
   private final Point location;
+
   /**
-   * @param location
+   * creates a new tile at the given position
+   *
+   * @param location the position to create the tile at
    */
   public AbstractTile(Point location) {
     this.location = location;
@@ -17,50 +24,28 @@ public abstract class AbstractTile implements Tile {
 
   private Optional<Entity> occupant = Optional.empty();
 
-  /**
-   * Returns the location of this tile in the game world.
-   *
-   * @return the location of this tile
-   */
+  @Override
   public final Point location() {
     return this.location;
   }
 
-  /**
-   * Determines whether the specified entity can enter this tile.
-   *
-   * @param enteree the entity to check for entrance
-   * @return {@code true} if the entity can enter this tile, {@code false} otherwise
-   */
+  @Override
   public boolean canEnter(Entity enteree) {
-    // TODO handle more advanced occupants
     return getOccupant().isEmpty();
   }
 
-  /**
-   * Allows the specified entity to enter this tile.
-   *
-   * @param enteree the entity to enter this tile
-   * @throws IllegalStateException if the tile may not be occupied by the entity
-   * @throws UnsupportedOperationException if the tile may never be occupied
-   */
+  @Override
   public void enter(Entity enteree) {
     if (!canEnter(enteree)) {
-      throw new IllegalStateException(
+      throw new IllegalArgumentException(
           "The entity: %d may not enter this tile".formatted(enteree.getUID()));
     }
     put(enteree);
   }
 
-  /**
-   * similar to {@link #enter(Entity)} but does not execute any additional actions
-   *
-   * @param enteree the entity to put in this tiles
-   * @throws IllegalStateException if the tile may not be occupied by the entity
-   * @throws UnsupportedOperationException if the tile may never be occupied
-   */
+  @Override
   public final void put(Entity enteree) {
-    if (this.occupant.isPresent()) {
+    if (getOccupant().isPresent()) {
       throw new IllegalStateException(
           "The entity: %d may not be put in this tile as it is already occupied"
               .formatted(enteree.getUID()));
@@ -69,25 +54,12 @@ public abstract class AbstractTile implements Tile {
     enteree.location(location());
   }
 
-  /**
-   * Returns the entity currently occupying this tile, if any.
-   *
-   * @return an {@link Optional} containing the entity currently occupying this tile, or an empty
-   *     {@link Optional} if the tile is empty
-   */
+  @Override
   public final Optional<Entity> getOccupant() {
     return this.occupant;
   }
 
-  /**
-   * Allows the specified entity to leave this tile.
-   *
-   * <p>This method removes the entity from the tile if the entity was the occupant of this tile,
-   * indicating that the entity has moved to another tile in the game world. If the entity is not
-   * currently occupying this tile, this method does nothing.
-   *
-   * @param exitee the entity to leave this tile
-   */
+  @Override
   public final void leave(Entity exitee) {
     if (getOccupant().map(e -> e == exitee).orElse(false)) {
       this.occupant = Optional.empty();

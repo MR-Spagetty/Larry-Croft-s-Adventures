@@ -14,14 +14,12 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 import nz.ac.wgtn.swen225.lc.persistency.Persistency;
-import nz.ac.wgtn.swen225.lc.renderer.*;
 
 public final class GameState {
 
   /** default tick rate of the game in milliseconds */
   public static final int DEFAULT_TICK_RATE = 200;
 
-  // TODO extend whatever JSONable interface is created for persistency
   private long tick = 0;
   private static GameState inst = new GameState();
 
@@ -83,16 +81,7 @@ public final class GameState {
 
   public Player getPlayer() {
     getLevelID();
-    return getMaze().getEntities().parallelStream()
-        .<Player>mapMulti(
-            (e, cons) -> {
-              if (e instanceof Player p) cons.accept(p);
-            })
-        .reduce(
-            (p1, p2) -> {
-              throw new IllegalStateException("Level contains more than one player");
-            })
-        .orElseThrow(() -> new IllegalStateException("Level does not contain a player"));
+    return getMaze().getPlayer();
   }
 
   public int requiredTreasures() {

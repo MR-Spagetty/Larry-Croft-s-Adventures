@@ -1,5 +1,9 @@
 package test.nz.ac.wgtn.swen225.lc.domain;
 
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
+import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
@@ -15,6 +19,20 @@ public interface Shorthands {
   Point East = PlayerAction.Right.offset;
   Point West = PlayerAction.Left.offset;
 
+  static List<Tile> area3x3(Function<Point, Tile> tile, long cX, long cY) {
+    Point cPoint = new Point(cX, cY);
+    return Stream.<Long>of(-1l, 0l, 1l)
+        .<Tile>mapMulti(
+            (x, cons) ->
+                Stream.<Long>of(-1l, 0l, 1l)
+                    .forEach(y -> cons.accept(tile.apply(cPoint.add(p(x, y))))))
+        .toList();
+  }
+
+  static void area3x3(Maze m, Function<Point, Tile> tile, long cX, long cY) {
+    area3x3(tile, cX, cY).forEach(m::addTile);
+  }
+
   static Point p(long x, long y) {
     return new Point(x, y);
   }
@@ -28,11 +46,11 @@ public interface Shorthands {
   }
 
   static Wall w(long x, long y) {
-    return new Wall(p(0, 0));
+    return new Wall(p(x, y));
   }
 
   static Exit ex(long x, long y) {
-    return new Exit(p(0, 0));
+    return new Exit(p(x, y));
   }
 
   static Entity e(long x, long y) {
