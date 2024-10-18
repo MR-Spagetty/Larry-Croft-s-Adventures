@@ -16,16 +16,18 @@ public class GamePanel extends DefaultPanel {
      *
      * @param backgroundColor The background colour of the JPanel. Can be "null" if no
      *                         background is to be set.
+     * @param offsetWidth The distance between the left of the screen and the left this panel.
+     *                    For use by the Renderer for determining the top-left corner of the Inventory panel.
+     * @param offsetHeight The distance between the top of the screen and the top of this panel.
+     *                     Also for use by the Renderer for determining the top-left corner of the Inventory panel.
      * @param width The preferred width of the JPanel.
      * @param height The preferred height of the JPanel.
      * @param mainUIButtons The buttons that are to be added into the panel that stores the buttons.
      */
-    public GamePanel(Color backgroundColor, int width, int height, List<DefaultButton> mainUIButtons){
+    public GamePanel(Color backgroundColor, int offsetWidth, int offsetHeight, int width, int height, List<DefaultButton> mainUIButtons){
         super(backgroundColor, width, height);
 
-        add(BorderLayout.NORTH, new GameInfoPanel(backgroundColor, width, (height/3)));
-
-        GameButtonsPanel buttons = new GameButtonsPanel(backgroundColor, width, (height/10), 15f, mainUIButtons);
-        add(BorderLayout.SOUTH, buttons);
+        add(BorderLayout.NORTH, new GameInfoPanel(backgroundColor, offsetWidth, offsetHeight, width, (height/3)));
+        add(BorderLayout.SOUTH, new GameButtonsPanel(backgroundColor, width, (height/10), 15f, mainUIButtons));
     }
 }
