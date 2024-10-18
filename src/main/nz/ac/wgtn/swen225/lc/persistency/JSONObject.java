@@ -11,7 +11,11 @@ import java.util.*;
  */
 public class JSONObject implements JSONType { // Not record as JSONObject is dynamic
   // Internal map to store JSON key-value pairs
-  private Map<String, JSONType> data = new HashMap<>();
+  private static Map<String, JSONType> data = new HashMap<>();
+
+  public void clear(){
+    data.clear(); // clear the interal map
+  }
 
   /**
    * Adds or updates a key-value pair in the JSON object. Automatically wraps the value
@@ -21,13 +25,9 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
    * @param value the value to store, which may be a primitive or custom object.
    * @throws IllegalArgumentException if the value type is not supported.
    */
-  public void put(String key, Object value) throws IllegalArgumentException {
+  public static void put(String key, Object value) throws IllegalArgumentException {
     if (value == null) {
       data.put(key, JSONNull.INSTANCE);  // Handle null values
-    } else if (value instanceof Long) {
-      data.put(key, new JSONLong((Long) value));
-    } else if (value instanceof Double) {
-      data.put(key, new JSONDouble((Double) value));
     } else if (value instanceof Integer) {
       data.put(key, new JSONLong(((Integer) value).longValue()));  // Convert Integer to JSONLong
     } else if (value instanceof BigDecimal) {
@@ -40,8 +40,8 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
       data.put(key, (JSONType) value);
     } else if (value instanceof List) {  // Handle List as JSONList
       data.put(key, new JSONList((List<JSONType>) value));
-    } else if (value.getClass().getSimpleName().equals("JSONArray")) {  // Check for JSONArray
-      data.put(key, new JSONList(convertJSONArrayToList((JSONArray) value))); // Implement this method
+      //} else if (value.getClass().getSimpleName().equals("JSONArray")) {  // Check for JSONArray
+      //data.put(key, new JSONList(convertJSONArrayToList((JSONArray) value))); // Implement this method
     } else if (value instanceof JSONType) {
       data.put(key, (JSONType) value);
     } else {
@@ -56,16 +56,12 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
    * @param jsonArray the external JSON array to convert.
    * @return the converted list of {@code JSONType} objects.
    */
-  private List<JSONType> convertJSONArrayToList(JSONArray jsonArray) {
+  public static List<JSONType> convertJSONArrayToList(JSONArray jsonArray) {
     List<JSONType> list = new ArrayList<>();
     for (Object item : jsonArray) {
       // You need to check the type of each item and wrap it as needed
       if (item instanceof String) {
         list.add(new JSONString((String) item));
-      } else if (item instanceof Long) {
-        list.add(new JSONLong((Long) item));
-      } else if (item instanceof Double) {
-        list.add(new JSONDouble((Double) item));
       } else if (item instanceof Integer) {
         list.add(new JSONLong(((Integer) item).longValue())); // Convert Integer to JSONLong
       } else if (item instanceof BigDecimal) {
