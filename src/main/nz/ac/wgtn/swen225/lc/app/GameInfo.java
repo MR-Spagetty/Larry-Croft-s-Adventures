@@ -56,16 +56,13 @@ public class GameInfo{
      * Sets the time remaining and the number of treasures remaining to their loaded-in values.
      * This is done when you first initialise the level information, and when you're restarting the level.
      */
-    private void setTimeAndTreasuresCounts(){
+    protected void setTimeAndTreasuresCounts(){
         this.timeRemaining = timeToFinish;
         this.treasuresRemaining = treasuresNeeded;
     }
 
     /** Decreases the amount of time remaining by one. (Which will be one second in the game. */
-    public void decreaseTimeRemaining(){
-        timeRemaining--;
-        if (timeRemaining <= 0) stopAndRestartLevel();
-    }
+    public void decreaseTimeRemaining(){ timeRemaining--; }
 
     /** Decreases the amount of treasures remaining by one. */
     public void decreaseTreasuresRemaining(){ treasuresRemaining--; }
@@ -78,21 +75,4 @@ public class GameInfo{
 
     /** @return The level we are on. */
     public long getLevelID(){ return levelID; }
-
-    /**
-     * Once the time remaining gets to zero, the timer will stop and a pop-up window will appear
-     * telling you that you have run out of time. From there, you can restart the current level.
-     */
-    private void stopAndRestartLevel(){
-        countdownTimer.stop();
-        GameState.getGameState().tickTimer.stop();
-
-        JOptionPane.showMessageDialog(null,
-                "You have run out of time! Please close this window to restart the level!",
-                "Out of time", JOptionPane.PLAIN_MESSAGE);
-
-        setTimeAndTreasuresCounts();
-        GameState.getGameState().tickTimer.restart();
-        countdownTimer.restart();
-    }
 }

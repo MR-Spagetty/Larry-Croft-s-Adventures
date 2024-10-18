@@ -179,6 +179,12 @@ public class IOController {
         GameInfo.info.countdownTimer.start();
     }
 
+    /** Restarts both timers, which is usually done to start or resume a game. */
+    public void restartTimers(){
+        GameState.getGameState().tickTimer.start();
+        GameInfo.info.countdownTimer.start();
+    }
+
     /** Getters for retrieving the UI Buttons and the Key Controller. */
     public List<DefaultButton> getMainUIButtons(){ return Collections.unmodifiableList(mainUIButtons); }
     public ControlKeys getKeyController(){ return keyController; }
