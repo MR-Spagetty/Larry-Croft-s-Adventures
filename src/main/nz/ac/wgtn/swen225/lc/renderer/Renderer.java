@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
-import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
 /** Handles the getting of level data and then rendering all components */
@@ -22,30 +21,37 @@ public class Renderer {
         .filter(t -> t != null)
         .map(
             t ->
-                new Sprite(t) {
-                  @SuppressWarnings("unused")
-                  Point offset() {
-                    return UserInterface.ui
+                new Sprite(
+                    t,
+                    UserInterface.ui
                         .getGraphicsPane()
                         .getMiddle()
-                        .sub(GameState.getGameState().getPlayer().location());
-                  }
-                })
+                        .sub(GameState.getGameState().getPlayer().location())))
         .forEach(t -> t.draw(g));
     // renders all entities
     maze.getEntities(player.location(), renderDistance).stream()
         .filter(e -> e != null)
         .map(
-            s ->
-                new Sprite(s) {
-                  @SuppressWarnings("unused")
-                  Point offset() {
-                    return UserInterface.ui
+            e ->
+                new Sprite(
+                    e,
+                    UserInterface.ui
                         .getGraphicsPane()
                         .getMiddle()
-                        .sub(GameState.getGameState().getPlayer().location());
+                        .sub(GameState.getGameState().getPlayer().location())))
+        .forEach(e -> e.draw(g));
+    // renders all inventory
+    /*int[] slot = {0};
+    player.getInventory().stream()
+        .filter(i -> i != null)
+        .map(
+            i ->
+                new Sprite(i) {
+                  @SuppressWarnings("unused")
+                  Point offset() {
+                    return new Point(0, 0).add(new Point(slot[0]++, 0));
                   }
                 })
-        .forEach(s -> s.draw(g));
+        .forEach(i -> i.draw(g));*/
   }
 }
