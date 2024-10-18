@@ -1,24 +1,31 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
+import nz.ac.wgtn.swen225.lc.app.IOController;
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Another custom JPanel that holds the Buttons to be displayed at the start of the game.
  */
 public class StartButtonsPanel extends JPanel {
+    private static final StartButtonsPanel START_BUTTONS_PANEL = new StartButtonsPanel();
+    public static StartButtonsPanel sbp = START_BUTTONS_PANEL;
 
-    /**
-     * Constructor used when constructing the custom JPanel.
-     *
-     * @param startGame The action to be executed when the user starts a new game.
-     * @param resumeGame The action to be executed when the user resumes an existing game.
-     * @param replayGame The action to be executed when the user replays an already played game that has been recorded.
-     */
-    public StartButtonsPanel(Runnable startGame, Runnable resumeGame, Runnable replayGame){
-        add(new DefaultButton(unused -> startGame.run(), "Start new game!"));
-        add(new DefaultButton(unused -> resumeGame.run(), "Resume existing game!"));
-        add(new DefaultButton(unused -> replayGame.run(), "Replay a game!"));
+    //The list of buttons that will be on the Start menu.
+    private final List<DefaultButton> startButtons = new ArrayList<>();
+
+    private StartButtonsPanel(){
+        startButtons.add(new DefaultButton(unused -> UserInterface.ui.startGame(null), "Start new game!"));
+        startButtons.add(new DefaultButton(unused -> IOController.ic.resumeExistingGame(), "Resume existing game!"));
+        startButtons.add(new DefaultButton(unused -> {}, "Replay a game!")); //Didn't get around to this feature :(
+
+        startButtons.forEach(this::add);
     }
+
+    /** @return The list of buttons on the Start menu. Mainly for use by Fuzz. */
+    public List<DefaultButton> getStartButtons(){ return startButtons; }
 }

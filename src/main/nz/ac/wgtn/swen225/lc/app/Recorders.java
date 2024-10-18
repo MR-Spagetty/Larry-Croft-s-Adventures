@@ -33,6 +33,12 @@ public class Recorders{
 
     private Recorders(){}
 
+    /**
+     * @return A string representation of the path in which to save the recorded game.
+     *         This value can be "null" if the Recorder is not initialised.
+     */
+    public String getRecPath(){ return recorderPath.toString(); }
+
     /** Creates an instance of the "Auto Replay" */
     public void autoReplay(){ aReplay = new AutoReplay(recorderPath); }
 
@@ -52,15 +58,19 @@ public class Recorders{
      */
     public void startRecordingLevel(Path levelPath){ if (rec != null) rec.startLevel(levelPath); }
 
+    /** Sets the main recorder to stop recording the current level. */
+    public void stopRecordingCurrentLevel(){ if (rec != null) rec.endLevel(); }
+
     /** When the game is finished, the recorder is signalled to stop recording the game. */
     public void stopRecordingGame(){ if (rec != null) rec.endGame(); }
 
     /**
      * Passes a given player action to the recorder to allow for that action to be recorded.
+     * This only should happen if the game is being recorded.
      *
      * @param action The given player action
      */
-    public void forwardActionToRecorder(PlayerAction action){ rec.record(action); }
+    public void forwardActionToRecorder(PlayerAction action){ if (rec != null) rec.record(action); }
 
     /**
      * Asks the user whether they want the game to be recorded or not.

@@ -1,5 +1,8 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
+import nz.ac.wgtn.swen225.lc.app.GameInfo;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +12,7 @@ import java.awt.*;
 public class GameInfoPanel extends DefaultPanel {
     JLabel levelDisplay;
     JLabel timeDisplay;
-    JLabel chipsLeftDisplay;
+    JLabel treasuresLeftDisplay;
 
     /**
      * Constructor used to initialise the Game Information panel.
@@ -26,16 +29,28 @@ public class GameInfoPanel extends DefaultPanel {
         //A JLabel which literally is just for spacing out this panel with the rest.
         JLabel nothing = new CustomJLabel(" ");
 
-        levelDisplay = new CustomJLabel("LEVEL: ");
-        timeDisplay = new CustomJLabel("TIME: ");
-        chipsLeftDisplay = new CustomJLabel("CHIPS LEFT: ");
+        levelDisplay = new CustomJLabel("LEVEL: " +  GameInfo.info.getLevelID());
+        timeDisplay = new CustomJLabel("TIME: " +  GameInfo.info.getTimeRemaining());
+        treasuresLeftDisplay = new CustomJLabel("CHIPS LEFT: " + GameInfo.info.getTreasuresRemaining());
 
         this.add(levelDisplay);
         this.add(timeDisplay);
-        this.add(chipsLeftDisplay);
+        this.add(treasuresLeftDisplay);
         this.add(nothing);
         this.add(new GameInventoryPanel(width, 60));
         this.add(nothing);
+
+        GameState.getGameState().tickTimer.addActionListener(unused -> updateInformation());
+    }
+
+    /**
+     * Every time a tick occurs, the information in the panel will need to be updated, especially to show the
+     * decreasing time.
+     */
+    public void updateInformation(){
+        levelDisplay.setText("LEVEL: " +  GameInfo.info.getLevelID());
+        timeDisplay.setText("TIME: " +  GameInfo.info.getTimeRemaining());
+        treasuresLeftDisplay.setText("CHIPS LEFT: " + GameInfo.info.getTreasuresRemaining());
     }
 
     /**
@@ -44,8 +59,8 @@ public class GameInfoPanel extends DefaultPanel {
      */
     private class CustomJLabel extends JLabel{
         public CustomJLabel(String text){
-            super(text, SwingUtilities.CENTER);
-            this.setFont(new Font("Comic Sans", Font.BOLD, 18));
+            super(text, SwingConstants.CENTER);
+            this.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
             this.setForeground(Color.WHITE);
         }
     }

@@ -5,10 +5,12 @@ import nz.ac.wgtn.swen225.lc.app.panels.GameGraphicsPane;
 import nz.ac.wgtn.swen225.lc.app.panels.GamePanel;
 import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
+import nz.ac.wgtn.swen225.lc.renderer.Sound;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.Serial;
 import java.nio.file.Path;
 
 /**
@@ -17,17 +19,16 @@ import java.nio.file.Path;
  * @author Developer 1 <dev1@example.internal>
  */
 public class UserInterface extends JFrame{
-    //Executed when the player ends a game and goes back to the start menu.
-    Runnable removeGameUI = () -> {};
+    @Serial private static final long serialVersionUID= 1L;
 
-    //Executed when the player wants to start a game. It basically removes all the Start UI components from the frame.
-    Runnable removeStartUI = () -> {};
+    //Executed when the player switches User Interfaces, notably when the player starts or ends a game.
+    Runnable switchUIs = () -> {};
 
     /*
-     * Timer mainly for determining when to trigger the "draw" mechanism in the Renderer. This timer is static, so
-     * the Pause Screen can stop and start it to "technically" pause the game.
+     * The graphics pane that displays the game is stored globally, so Renderer can access it.
+     * However, it is not fully initialised until a game is in progress!
      */
-    static Timer timer;
+    private GameGraphicsPane pane = null;
 
     private final int WIDTH = 1200, HEIGHT = 600;
 
@@ -47,12 +48,10 @@ public class UserInterface extends JFrame{
      */
     public void createMenu(){
         assert SwingUtilities.isEventDispatchThread();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         createStartMenu();
-
-        pack();
         setVisible(true);
     }
 
@@ -62,17 +61,19 @@ public class UserInterface extends JFrame{
      */
     private void createStartMenu(){
         JPanel instructions = Instructions.instructionsPanel;
-        StartButtonsPanel buttons = new StartButtonsPanel(
-                () -> startGame(null), () -> IOController.ic.resumeExistingGame(), () -> {}
-        );
+        StartButtonsPanel buttons = StartButtonsPanel.sbp;
 
-        removeStartUI = () -> {
+        switchUIs.run();
+        switchUIs = () -> {
             remove(instructions); remove(buttons);
             SwingUtilities.updateComponentTreeUI(this);
         };
 
-        add(BorderLayout.NORTH, instructions);
-        add(BorderLayout.CENTER, buttons);
+        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
+
+        this.add(BorderLayout.NORTH, instructions);
+        this.add(BorderLayout.CENTER, buttons);
+        this.pack();
     }
 
     /**
@@ -83,69 +84,79 @@ public class UserInterface extends JFrame{
         //The wider "Game UI" that the user will be interacting with!
         GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
 
-        GameGraphicsPane pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
 
-        removeGameUI = () -> {
+        switchUIs.run();
+        switchUIs = () -> {
             remove(gameControls); remove(pane);
             SwingUtilities.updateComponentTreeUI(this); //Refreshes the JFrame after the objects are removed!
         };
 
         this.add(BorderLayout.EAST, gameControls);
+        this.add(BorderLayout.CENTER, pane);
         this.addKeyListener(IOController.ic.getKeyController());
-
         this.setFocusable(true);
-        this.requestFocus();
-        pack();
 
-        add(BorderLayout.CENTER, pane);
-        timer = gameControls.createTimer(pane);
-        timer.start();
+        //The graphics pane will be refreshed every time a tick occurs.
+        GameState.getGameState().tickTimer.addActionListener((unused) -> {
+            assert SwingUtilities.isEventDispatchThread();
+            pane.repaint();
+        });
+
+        this.pack();
+        this.requestFocus();
     }
 
     /**
-     * Creates a new game and runs it. This can be done from an existing game file, if necessary.
+     * Starts a new game or an existing game from the game file. If a new game is started, it should ask you whether the
+     * game is to be recorded.
      *
      * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
      *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
      */
     public void startGame(File gameFile){
-        Recorders.recs.askToRecordGame();
+        if (gameFile == null) Recorders.recs.askToRecordGame();
 
         //If a new game is being started, we will set the game file to be the first level.
-        //if (gameFile == null){
-            gameFile = new File("src/resources/levels/level0.json");
-        //}
+        gameFile = new File("src/resources/levels/level0.json");
 
-        //Might use: GameState.getGameState().loadState(....);
-        boolean thing = GameState.getGameState().setLevel(gameFile.toPath());
-        System.out.println(thing);
+        GameState.getGameState().setLevel(gameFile.toPath());
         GameState.getGameState().tickTimer.start();
-
-        removeStartUI.run();
-        createMainMenu();
         Recorders.recs.startRecordingLevel(gameFile.toPath());
+        createMainMenu();
+        initLevelInfo();
+
+        new Sound().playSound("gameStart");
+    }
+
+    /**
+     * Initialises the level in the game by retrieving all key information from the Game State, and then writing it to
+     * the Information board.
+     *
+     * TODO: Test the written code once all other issues in the game (none of those are related to "App") are fixed.
+     */
+    public void initLevelInfo(){
+        GameState gs = GameState.getGameState();
+        long levelID = GameState.getGameState().getMaze().longID();
+        long timeRemaining = gs.getMaze().maxTicks * GameState.DEFAULT_TICK_RATE;
+        int remainingTreasures = Math.max(0, gs.requiredTreasures() - gs.collectedTreasures());
+
+        GameInfo.info.initialiseInformation(levelID, (int)timeRemaining, remainingTreasures);
     }
 
     /**
      * When a user finishes one level, they will be taken to the next level. This involves the recorder being
      * signalled to stop one level and begin the next.
+     * A "next" level will not begin recording if the path to the next level is "null".
      */
-    public void goBetweenLevels(){
-
-        /** TODO, figure out the path needed for the second level! */
-        /*
-        if (rec != null){
-            rec.endLevel();
-            rec.startLevel(...);
-        }
-        */
+    public void goBetweenLevels(File nextLevel){
+        Recorders.recs.stopRecordingCurrentLevel();
+        if (nextLevel != null) Recorders.recs.startRecordingLevel(nextLevel.toPath());
     }
 
+    /** Saves the current game to a file. (NB: This is not the recorded game file). */
     protected void saveGame(){
-        /**
-         * TODO Possibly call a method from Domain that will SAVE the game state! (i.e: saveState(...)"
-         */
-        GameState.getGameState().saveState(Path.of("testSave.json"));
+        GameState.getGameState().saveState(Path.of("savedGames/currentGame.json"));
     }
 
     /**
@@ -153,8 +164,14 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
+
+        goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
-        removeGameUI.run();
         createStartMenu();
     }
+
+    /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
+    public GameGraphicsPane getGraphicsPane(){ return pane; }
 }

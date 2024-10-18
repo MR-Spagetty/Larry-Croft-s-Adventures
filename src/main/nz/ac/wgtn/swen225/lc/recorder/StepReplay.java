@@ -8,13 +8,13 @@ public class StepReplay extends Replay {
   }
 
   /**
-   * Replay implementation of StepReplay.
+   * StepReply implementation of Replay.
    * 
    * Gets called whenever the player presses a defined key controlled by App.
    * Advanced tick.
    */
   @Override
   public void replay() {
-    advanceTick();
+    advanceTick(() -> new StepReplay(nextLevelPath));
   }
 }

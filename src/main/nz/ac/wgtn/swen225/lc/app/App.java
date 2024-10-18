@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
+import nz.ac.wgtn.swen225.lc.app.panels.StartButtonsPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
@@ -41,7 +42,7 @@ public class App{
      */
 
     /**
-     * Takes a given player action and forwards it to the Domain class.
+     * Takes a given player action and forwards it to Domain.
      *
      * @param action The given player action
      */
@@ -69,4 +70,7 @@ public class App{
     public static Map<String, Runnable> strokesToUIAction(){
         return IOController.ic.getKeyController().strokesToUIAction();
     }
+
+    /** @return The buttons used in the Start Menu. */
+    public static List<DefaultButton> startMenuButtons(){ return StartButtonsPanel.sbp.getStartButtons(); }
 }

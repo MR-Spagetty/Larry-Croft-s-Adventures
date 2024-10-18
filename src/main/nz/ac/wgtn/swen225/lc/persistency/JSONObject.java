@@ -1,18 +1,27 @@
 package nz.ac.wgtn.swen225.lc.persistency;
 
 import org.json.JSONArray;
-
 import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * A class representing a JSON object that stores key-value pairs where keys are strings,
+ * and values are of type {@code JSONType}. This class dynamically handles various JSON
+ * data types such as strings, numbers, booleans, nulls, objects, and arrays.
+ */
 public class JSONObject implements JSONType { // Not record as JSONObject is dynamic
-
-  // Map to hold key value pairs
+  // Internal map to store JSON key-value pairs
   private Map<String, JSONType> data = new HashMap<>();
 
-  // Add key-value pairs to the JSON object by wrapping them in JSONType
-
-  public void put(String key, Object value) {
+  /**
+   * Adds or updates a key-value pair in the JSON object. Automatically wraps the value
+   * in the appropriate {@code JSONType}.
+   *
+   * @param key   the key under which the value is stored.
+   * @param value the value to store, which may be a primitive or custom object.
+   * @throws IllegalArgumentException if the value type is not supported.
+   */
+  public void put(String key, Object value) throws IllegalArgumentException {
     if (value == null) {
       data.put(key, JSONNull.INSTANCE);  // Handle null values
     } else if (value instanceof Long) {
@@ -40,8 +49,13 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
     }
   }
 
-
-  // Method to convert JSONArray to List
+  /**
+   * Converts a {@code JSONArray} into a {@code List<JSONType>}, wrapping elements
+   * appropriately based on their types.
+   *
+   * @param jsonArray the external JSON array to convert.
+   * @return the converted list of {@code JSONType} objects.
+   */
   private List<JSONType> convertJSONArrayToList(JSONArray jsonArray) {
     List<JSONType> list = new ArrayList<>();
     for (Object item : jsonArray) {
@@ -67,17 +81,32 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
     return list;
   }
 
-  // Method to return the set of keys
+  /**
+   * Returns the set of keys in this JSON object.
+   *
+   * @return a set of keys present in this object.
+   */
   public Set<String> keySet() {
     return data.keySet();
   }
 
-  // Get a value by key
-  public JSONType get(String key) { return data.get(key); }
+  /**
+   * Retrieves the value associated with the given key.
+   *
+   * @param key the key for which the value is to be retrieved.
+   * @return the value stored under the given key, or {@code null} if no such key exists.
+   */
+  public JSONType get(String key) {
+    return data.get(key);
+  }
 
+  /**
+   * Returns a string representation of the JSON object.
+   *
+   * @return a string in the format {@code JSONObject: {key=value, ...}}.
+   */
   @Override
   public String toString() {
     return "JSONObject: " + data.toString();
   }
-
 }

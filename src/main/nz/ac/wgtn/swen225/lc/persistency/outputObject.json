@@ -1,1 +1,12 @@
-{"hasKey":"True","score":"JSONDouble[value=1.98]","level":"JSONLong[value=372]","name":"JSONString[value=Chap]","list":["JSONString[value=Chap]","JSONLong[value=69420]","True","JSONDouble[value=1.92]"]}
+{
+  "hasKey": true,
+  "score": 1.98,
+  "level": 372,
+  "name": "Chap",
+  "list": [
+    "Chap",
+    69420,
+    true,
+    1.92
+  ]
+}
