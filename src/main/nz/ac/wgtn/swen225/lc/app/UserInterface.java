@@ -69,8 +69,6 @@ public class UserInterface extends JFrame{
             SwingUtilities.updateComponentTreeUI(this);
         };
 
-        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
-
         this.add(BorderLayout.NORTH, instructions);
         this.add(BorderLayout.CENTER, buttons);
         this.pack();
