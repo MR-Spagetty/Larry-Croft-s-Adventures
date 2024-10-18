@@ -4,7 +4,7 @@ import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.PlayerAction;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
@@ -47,9 +47,6 @@ public class FuzzTest {
 
     /*
     *   TODO call the buttons that start the game into level 2
-    *   TODO strategically spam call game buttons such as pause to test for any glitches
     */
-
   }
-
 }

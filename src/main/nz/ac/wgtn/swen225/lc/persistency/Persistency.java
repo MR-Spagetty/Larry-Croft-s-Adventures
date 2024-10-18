@@ -122,7 +122,7 @@ public class Persistency {
    * @param customList The custom JSONList.
    * @return The converted org.json.JSONArray.
    */
-  private static JSONArray convertCustomJSONListToString(JSONList customList) {
+  public static JSONArray convertCustomJSONListToString(JSONList customList) {
     JSONArray jsonArray = new JSONArray();
 
     customList.getElements().forEach(value -> {
