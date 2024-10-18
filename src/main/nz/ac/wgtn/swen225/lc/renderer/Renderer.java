@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.renderer;
 
 import java.awt.Graphics;
 import nz.ac.wgtn.swen225.lc.app.UserInterface;
+import nz.ac.wgtn.swen225.lc.app.panels.GameInventoryPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
@@ -46,7 +47,11 @@ public class Renderer {
     // renders all inventory
     player.getInventory().stream()
         .filter(i -> i != null)
-        .map(i -> new Sprite(i, new Point(slot[0]++, 0)))
+        .map(i -> new Sprite(i, 
+        GameInventoryPanel.getTopLeft().add(
+          new Point(slot[0]++, 0)
+          ))
+        )
         .forEach(i -> i.draw(g));
   }
 }
