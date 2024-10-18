@@ -1,6 +1,8 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-import javax.swing.Timer;
+import nz.ac.wgtn.swen225.lc.domain.GameState;
+
+import javax.swing.*;
 
 /**
  * Stores all information that will be reported to the user about the current game. This includes the level
@@ -42,8 +44,25 @@ public class GameInfo{
         countdownTimer.restart();
     }
 
-    /** Decreases the amount of time remaining by one. (Which will be one second in the game.) */
-    public void decreaseTimeRemaining(){ timeRemaining--; }
+    /**
+     * Decreases the amount of time remaining by one. (Which will be one second in the game.)
+     * Once the time remaining gets to zero, the timer will stop and a pop-up window will appear
+     * telling you that you have run out of time. From there, you can restart the current level.
+     */
+    public void decreaseTimeRemaining(){
+        timeRemaining--;
+
+        if (timeRemaining <= 0){
+            countdownTimer.stop(); //Done in the case of a timer already running.
+            GameState.getGameState().tickTimer.stop();
+
+            JOptionPane.showMessageDialog(null,
+                    "You have run out of time! Please close this window to restart the level!",
+                    "Out of time", JOptionPane.PLAIN_MESSAGE);
+
+            /** TODO: Add infrastructure to restart a level. */
+        }
+    }
 
     /** @return The time remaining in the game. */
     public int getTimeRemaining(){ return timeRemaining; }
