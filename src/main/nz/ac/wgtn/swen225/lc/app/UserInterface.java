@@ -197,7 +197,13 @@ public class UserInterface extends JFrame{
         if (GameState.getGameState().hasLost()){
             stopAndRestartLevel();
         } else if (GameState.getGameState().hasWon()){
+            /** TODO: Make a second level of the game and add code to transition into it. */
 
+            JOptionPane.showMessageDialog(null,
+                    "You did it! Close this window to return to the start menu!",
+                    "Game Won!", JOptionPane.PLAIN_MESSAGE);
+
+            endGame();
         }
     }
 
