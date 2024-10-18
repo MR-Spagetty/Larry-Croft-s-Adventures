@@ -80,11 +80,18 @@ public class UserInterface extends JFrame{
      * Helper method which creates the components present in the Main menu. This also sets up the keys to be used
      * in the game.
      */
-    private void createMainMenu(){
-        //The wider "Game UI" that the user will be interacting with!
-        GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
+    protected void createMainMenu(){
+        int offsetWidth = (WIDTH * 3/4);
 
-        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        //This value was guessed, as the height difference is determined by the height of the text!
+        int offsetHeight = 40;
+
+        //The wider "Game UI" that the user will be interacting with!
+        GamePanel gameControls = new GamePanel(
+                Color.DARK_GRAY, offsetWidth, offsetHeight, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons()
+        );
+
+        pane = new GameGraphicsPane(offsetWidth, HEIGHT);
 
         switchUIs.run();
         switchUIs = () -> {
@@ -108,25 +115,25 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Starts a new game or an existing game from the game file. If a new game is started, it should ask you whether the
-     * game is to be recorded.
+     * Starts a new game from a specific level.
      *
-     * @param gameFile The file containing the game to be resumed, if the player is resuDeveloper 4 <dev4@example.internal> a game.
-     *                 In other cases, such as when the player wants to start a new game, this file is "NULL".
+     * @param levelFile The file containing the level to start the game from.
      */
-    public void startGame(File gameFile){
-        if (gameFile == null) Recorders.recs.askToRecordGame();
+    public void startNewGame(File levelFile){
+        IOController.ic.stopTimers();
+        Recorders.recs.askToRecordGame();
+        initLevel(levelFile);
+        startGame();
+    }
 
-        //If a new game is being started, we will set the game file to be the first level.
-        gameFile = new File("src/resources/levels/level0.json");
-
-        GameState.getGameState().setLevel(gameFile.toPath());
-        GameState.getGameState().tickTimer.start();
-        Recorders.recs.startRecordingLevel(gameFile.toPath());
-        createMainMenu();
-        initLevelInfo();
-
-        new Sound().playSound("gameStart");
+    /**
+     * Initialises a level in the game.
+     *
+     * @param levelFile The file containing the level to be initialized.
+     */
+    public void initLevel(File levelFile){
+        GameState.getGameState().setLevel(levelFile.toPath());
+        Recorders.recs.startRecordingLevel(levelFile.toPath());
     }
 
     /**
@@ -138,10 +145,22 @@ public class UserInterface extends JFrame{
     public void initLevelInfo(){
         GameState gs = GameState.getGameState();
         long levelID = GameState.getGameState().getMaze().longID();
-        long timeRemaining = gs.getMaze().maxTicks * GameState.DEFAULT_TICK_RATE;
+        long timeRemaining = (gs.getMaze().maxTicks / GameState.DEFAULT_TICK_RATE);
         int remainingTreasures = Math.max(0, gs.requiredTreasures() - gs.collectedTreasures());
 
         GameInfo.info.initialiseInformation(levelID, (int)timeRemaining, remainingTreasures);
+    }
+
+    /**
+     * Starts a game (new or existing), after loading in a level from a file. This involves setting up the
+     * main UI that the player will interact with, and load in information about the level into the display.
+     */
+    public void startGame(){
+        GameState.getGameState().tickTimer.start();
+        createMainMenu();
+        initLevelInfo();
+
+        new Sound().playSound("gameStart");
     }
 
     /**
@@ -164,13 +183,16 @@ public class UserInterface extends JFrame{
      * Start Menu. This is executed when the user exits a current game.
      */
     protected void endGame(){
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
-
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         createStartMenu();
     }
+
+    /**
+     * Starts the playback of a recorded game by initialising a recorder object.
+     * TODO if time allows: Finish it
+     */
+    public void startGamePlayback(){}
 
     /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }

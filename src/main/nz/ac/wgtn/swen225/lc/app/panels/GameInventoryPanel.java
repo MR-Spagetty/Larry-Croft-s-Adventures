@@ -1,40 +1,30 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.file.Path;
+import java.awt.Color;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 
 /**
  * Class responsible for containing a special part of the Panel, which contains the list of items the player has in
  * the inventory.
  */
 public class GameInventoryPanel extends GridPanel {
+    private static Point topLeft = null;
 
     /**
      * Constructor of the Inventory Panel, where the content of the Panel is loaded in.
-     * TODO: Investigate how the "Inventory icons" will be loaded.
      *
+     * @param offsetWidth The distance between the left of the screen and the left this panel.
+     *                    For use by the Renderer for determining the top-left corner of the Inventory panel.
+     * @param offsetHeight The distance between the top of the screen and the top of this panel.
+     *                     Also for use by the Renderer for determining the top-left corner of the Inventory panel.
      * @param width The width of the Inventory Panel.
      * @param height The preferred height of the Inventory Panel.
      */
-    public GameInventoryPanel(int width, int height){
+    public GameInventoryPanel(int offsetWidth, int offsetHeight, int width, int height){
         super(Color.LIGHT_GRAY, width, height, 2, 3);
-        insertItem(); //TEMPORARY; for testing
-        insertItem(); //TEMPORARY; for testing
+        topLeft = new Point(offsetWidth, offsetHeight);
     }
 
-    /**
-     * TODO review and if it will be kept, add comments.
-     */
-    public void insertItem(){
-        try {
-            BufferedImage img = ImageIO.read(Path.of("src/resources/fireBoots.png").toFile());
-            JLabel imgLabel = new JLabel(new ImageIcon(img));
-            this.add(imgLabel);
-        } catch (Exception e){
-            System.out.println("Failed to read in image:\n" + e);
-        }
-    }
+    /** @return The top-left position of the Inventory panel. */
+    public static Point getTopLeft(){ return topLeft; }
 }

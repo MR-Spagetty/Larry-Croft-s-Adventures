@@ -2,6 +2,7 @@ package nz.ac.wgtn.swen225.lc.renderer;
 
 import java.awt.Graphics;
 import nz.ac.wgtn.swen225.lc.app.UserInterface;
+import nz.ac.wgtn.swen225.lc.app.panels.GameInventoryPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
@@ -22,30 +23,35 @@ public class Renderer {
         .filter(t -> t != null)
         .map(
             t ->
-                new Sprite(t) {
-                  @SuppressWarnings("unused")
-                  Point offset() {
-                    return UserInterface.ui
+                new Sprite(
+                    t,
+                    UserInterface.ui
                         .getGraphicsPane()
                         .getMiddle()
-                        .sub(GameState.getGameState().getPlayer().location());
-                  }
-                })
+                        .sub(GameState.getGameState().getPlayer().location())))
         .forEach(t -> t.draw(g));
     // renders all entities
     maze.getEntities(player.location(), renderDistance).stream()
         .filter(e -> e != null)
         .map(
-            s ->
-                new Sprite(s) {
-                  @SuppressWarnings("unused")
-                  Point offset() {
-                    return UserInterface.ui
+            e ->
+                new Sprite(
+                    e,
+                    UserInterface.ui
                         .getGraphicsPane()
                         .getMiddle()
-                        .sub(GameState.getGameState().getPlayer().location());
-                  }
-                })
-        .forEach(s -> s.draw(g));
+                        .sub(GameState.getGameState().getPlayer().location())))
+        .forEach(e -> e.draw(g));
+    // used to increment item location in inventory
+    int[] slot = {0};
+    // renders all inventory
+    player.getInventory().stream()
+        .filter(i -> i != null)
+        .map(i -> new Sprite(i, 
+        GameInventoryPanel.getTopLeft().add(
+          new Point(slot[0]++, 0)
+          ))
+        )
+        .forEach(i -> i.draw(g));
   }
 }

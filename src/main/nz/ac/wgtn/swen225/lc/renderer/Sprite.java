@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
-import nz.ac.wgtn.swen225.lc.app.UserInterface;
-import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.*;
 import nz.ac.wgtn.swen225.lc.domain.tiles.*;
@@ -19,6 +17,7 @@ import nz.ac.wgtn.swen225.lc.domain.tiles.*;
 public class Sprite {
   private BufferedImage image;
   private Point position;
+  private Point offset;
   private static int size = 32;
 
   /**
@@ -26,8 +25,8 @@ public class Sprite {
    *
    * @param tile
    */
-  public Sprite(Tile tile) {
-    this(resolveImage(tile), tile.location());
+  public Sprite(Tile tile, Point offset) {
+    this(resolveImage(tile), tile.location(), offset);
   }
 
   /**
@@ -35,8 +34,8 @@ public class Sprite {
    *
    * @param entity
    */
-  public Sprite(Entity entity) {
-    this(resolveImage(entity), entity.location());
+  public Sprite(Entity entity, Point offset) {
+    this(resolveImage(entity), entity.location(), offset);
   }
 
   /**
@@ -45,12 +44,10 @@ public class Sprite {
    * @param image
    * @param position A Point representing
    */
-  private Sprite(BufferedImage image, Point position) {
+  private Sprite(BufferedImage image, Point position, Point offset) {
     this.image = image;
-    this.position =
-        position
-            .sub(GameState.getGameState().getPlayer().location())
-            .add(UserInterface.ui.getGraphicsPane().getMiddle());
+    this.position = position;
+    this.offset = offset;
   }
 
   /** 
@@ -61,21 +58,11 @@ public class Sprite {
   public void draw(Graphics g) {
     g.drawImage(
         image,
-        (int) (position.x() * size + offset().x()),
-        (int) (position.y() * size + offset().y()),
+        (int) (position.x() * size + offset.x()),
+        (int) (-position.y() * size + offset.y()),
         size,
         size,
         null);
-  }
-
-  /** 
-   * Renders the image at its given position with a fixed size 
-   * 
-   * @return A point that will be used to offset the sprites draw location
-   */
-  private Point offset(){
-    // Expected to be initialised when constructed
-    throw null;
   }
 
   /**
