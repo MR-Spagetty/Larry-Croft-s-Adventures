@@ -71,7 +71,7 @@ public class DirectionalIce extends Ice {
     if (ePreLoc.equals(location())
         && (moveToEffect.limit(1l).equals(this.type.a.offset.mul(-1l))
             || moveToEffect.limit(1l).equals(this.type.b.offset.mul(-1l)))) {
-      throw new IllegalArgumentException("Entity may not move in that direction");
+      return Point.ORIGIN;
     }
     if (e instanceof Player p
         && p.getInventory().parallelStream().anyMatch(i -> i instanceof IceBoots)) {
