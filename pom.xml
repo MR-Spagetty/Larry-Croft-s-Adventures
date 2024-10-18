@@ -113,6 +113,16 @@
           </docletArtifact>
         </configuration>
       </plugin>
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.2.0</version>
+          <configuration>
+              <mainClass>nz.ac.wgtn.swen225.lc.app.Main</mainClass>
+              <arguments>
+              </arguments>
+          </configuration>
+      </plugin>
     </plugins>
   </build>
 

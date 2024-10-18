@@ -9,7 +9,18 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * Item is a an abstract class that impliments everything common to all items
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public abstract class Item extends AbstractEntity implements JSONSerializable<Item> {
+  /**
+   * creates a new item at the given position
+   *
+   * @param location
+   * @param individualID
+   */
   public Item(Point location, long individualID) {
     super(location, individualID);
   }
@@ -36,7 +47,10 @@ public abstract class Item extends AbstractEntity implements JSONSerializable<It
   @Override
   public Item fromJson(JSONType json) {
     JSONObject data = (JSONObject) json;
-    if (!((JSONString) data.get("type")).get().equals(getClass().getName())) {
+    String expectedType = getClass().getName();
+    if (!((JSONString) data.get("type"))
+        .get()
+        .equals(expectedType.substring(expectedType.lastIndexOf(',') + 1))) {
       throw new IllegalArgumentException(
           "Incorrect data given expected Conveyor got: " + data.get("type"));
     }

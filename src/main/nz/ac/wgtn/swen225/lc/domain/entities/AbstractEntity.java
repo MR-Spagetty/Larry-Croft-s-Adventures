@@ -13,6 +13,9 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONType;
  */
 public abstract class AbstractEntity implements Entity {
 
+  /**
+   * the lastTick this entity was ticked (-1 being never ticked)
+   */
   protected long lastTick = -1;
   private Point location;
   private Maze maze = null;
@@ -74,7 +77,8 @@ public abstract class AbstractEntity implements Entity {
   @Override
   public JSONType toJson() {
     JSONObject out = new JSONObject();
-    out.put("type", getClass().getName());
+    String type = getClass().getName();
+    out.put("type", type.substring(type.lastIndexOf('.')+1));
     out.put("position", location().toJson());
     out.put("indID", this.individualID);
     return out;

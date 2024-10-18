@@ -16,6 +16,13 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * the BitFlipper Enemy is a custom enemy of my own design which when it touches the player it
+ * steals an item from their inventory and returns it as close as it can to where the Player picked
+ * the item up, it is capable of stealing treasures
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
 
   /**
@@ -28,9 +35,16 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
     super(location, individualID);
   }
 
+  private boolean touched;
+
   @Override
   protected void doBehaviour(long tick) {
+  this.touched = false;
     move(toPlayer().stream().findFirst().orElse(location()).sub(location()));
+    if (this.touched){
+      assert this.lastRand == tick;
+      this.touched = false;
+    }
   }
 
   private List<Point> toPlayer() {
@@ -64,7 +78,13 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
     super.touch(touchee);
     Player p = (Player) touchee;
     if (!p.getInventory().isEmpty()) {
+      this.touched = true;
+      while (this.lastRand < lastTicked()) {
+        this.lastRand++;
+        behaviourDecider.nextInt();
+      }
       int indexToYoink = behaviourDecider.nextInt(p.getInventory().size());
+      this.lastRand ++;
       Item expected = p.getInventory().get(indexToYoink);
       Optional<Item> yoinked = p.lose(new ItemChooser(indexToYoink));
       assert yoinked.isPresent();

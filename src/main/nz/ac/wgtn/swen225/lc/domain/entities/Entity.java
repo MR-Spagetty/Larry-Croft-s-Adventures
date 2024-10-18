@@ -1,9 +1,12 @@
 package nz.ac.wgtn.swen225.lc.domain.entities;
 
 import java.util.Optional;
+
+import nz.ac.wgtn.swen225.lc.domain.Colour;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
+import nz.ac.wgtn.swen225.lc.domain.entities.items.*;
 import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
@@ -99,7 +102,8 @@ public interface Entity {
    *
    * @param json the json data
    * @return the entity represented by the given data
-   * @throws IllegalArgumentException if the data is incorrectly formatted
+   * @throws IllegalArgumentException if the data is incorrectly formatted or is for an unknown
+   *     entity type
    */
   public static Entity fromJSON(JSONType json) {
     if (!(json instanceof JSONObject)) {
@@ -111,14 +115,28 @@ public interface Entity {
           "Expected JSONString at \"type\" but found "
               + ((JSONObject) json).get("type").getClass().getName());
     }
-    switch (((JSONString) ((JSONObject) json).get("type")).get()) {
+    String type = ((JSONString) ((JSONObject) json).get("type")).get();
+    return switch (type) {
       case "Player" -> Player.fromJSON((JSONObject) json);
       case "MoveableBlock" -> MoveableBlock.fromJSON((JSONObject) json);
       case "Bug", "BitFlipper" -> Enemy.fromJSON(json);
-    }
-    return null;
+      case "FireBoots" -> new FireBoots(Point.ORIGIN, 0).fromJson(json);
+      case "Flippers" -> new Flippers(Point.ORIGIN, 0).fromJson(json);
+      case "IceBoots" -> new IceBoots(Point.ORIGIN, 0).fromJson(json);
+      case "Key" -> new Key(Point.ORIGIN, 0, Colour.fromJSON(new JSONString("#000000"))).fromJson(json);
+      case "SuctionBoots" -> new SuctionBoots(Point.ORIGIN, 0).fromJson(json);
+      case "Treasure" -> new Treasure(Point.ORIGIN, 0).fromJson(json);
+      default -> throw new IllegalArgumentException("Unknown entity type: " + type);
+    };
   }
 
+  /**
+   * extracts the individual id for an entity from the given data
+   *
+   * @param data the data to extract from
+   * @return the extracted id
+   * @throws IllegalArgumentException if the id could not be found
+   */
   static long idFromJSON(JSONObject data) {
     return Optional.ofNullable(data.get("indID"))
         .map(
