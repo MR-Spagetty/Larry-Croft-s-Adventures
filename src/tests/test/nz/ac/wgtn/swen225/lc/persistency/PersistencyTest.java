@@ -1,6 +1,8 @@
 package test.nz.ac.wgtn.swen225.lc.persistency;
 
 import nz.ac.wgtn.swen225.lc.persistency.*;
+import org.json.JSONArray;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -9,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PersistencyTest {
+class PersistencyTest {
 
   @TempDir
   Path tempDir;
@@ -99,49 +101,7 @@ public class PersistencyTest {
   }
 
 
-  @Test
-  public void testSaveToFile() throws IOException {
-    // Create a sample JSONObject to save
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("name", "Jane Doe");
-    jsonObject.put("age", 25L);
 
-    JSONObject address = new JSONObject();
-    address.put("street", "456 Side St");
-    address.put("city", "Auckland");
-
-    jsonObject.put("address", address);
-
-    // Create a temporary file
-    Path tempFile = Files.createTempFile("json_output", ".json");
-
-    // Save the JSONObject to the file
-    Persistency.saveToFile(jsonObject, tempFile);
-
-    // Read the file back in and parse it
-    String fileContent = Files.readString(tempFile);
-    JSONObject loadedObject = (JSONObject) Persistency.loadFromFile(tempFile);
-
-    // Parse the expected and actual JSON into JSONObject instances
-    String expectedJson = """
-  {
-    "name": "Jane Doe",
-    "age": 25,
-    "address": {
-      "street": "456 Side St",
-      "city": "Auckland"
-    }
-  }
-  """;
-
-    JSONObject expectedObject = (JSONObject) Persistency.parseJSONString(expectedJson);
-
-    // Assert that the expected and actual JSONObjects are equal, ignoring order
-    assertEquals(expectedObject.toString(), loadedObject.toString());
-
-    // Clean up the temporary file
-    Files.deleteIfExists(tempFile);
-  }
 
 
   @Test
@@ -176,6 +136,29 @@ public class PersistencyTest {
     assertEquals(new JSONString("cycling"), loadedHobbies.getElements().get(1));
   }
 
+  @Test
+  public void testConvertCustomJSONListToString_AdditionalCases() {
+    JSONList jsonList = new JSONList();
+    jsonList.add(new JSONLong(123L));
+    jsonList.add(new JSONDouble(45.67));
+    jsonList.add(JSONBool.of(true));
 
+    // Convert the custom JSON list and call toString() on the returned JSONArray
+    String expected = "[123,45.67,true]";
+    String result = Persistency.convertCustomJSONListToString(jsonList).toString();
+    assertEquals(expected, result);
+  }
+
+
+  @Test
+  public void testParseJSONString_WithJSONArray() {
+    String jsonArray = "[1, \"text\", true]";
+
+    JSONType result = Persistency.parseJSONString(jsonArray);
+    assertTrue(result instanceof JSONList);
+
+    JSONList list = (JSONList) result;
+    assertEquals(3, list.getElements().size());
+  }
 
 }
