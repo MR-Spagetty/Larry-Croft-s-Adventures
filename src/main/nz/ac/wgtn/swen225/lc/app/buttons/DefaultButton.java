@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
  * A custom "Default Button" class which allows for a Toggle Button to be created and have it be
  * automatically assigned with an Action Listener and have it be enabled by default.
  *
- * @author Developer 1 <dev1@example.internal>
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class DefaultButton extends JToggleButton{
 
