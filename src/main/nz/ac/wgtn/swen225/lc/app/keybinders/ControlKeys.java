@@ -12,7 +12,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * An extension of the class "KeyStrokes", which is responsible for actually controlling key events, rather than
  * mapping and storing them.
  *
- * @author Developer 1 <dev1@example.internal>
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class ControlKeys extends KeyStrokes implements KeyListener{
 
