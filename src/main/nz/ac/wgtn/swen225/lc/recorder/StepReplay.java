@@ -15,6 +15,6 @@ public class StepReplay extends Replay {
    */
   @Override
   public void replay() {
-    advanceTick();
+    advanceTick(() -> new StepReplay(nextLevelPath));
   }
 }
