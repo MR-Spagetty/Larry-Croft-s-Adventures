@@ -1,17 +1,13 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.file.Path;
 
 /**
  * Class responsible for containing a special part of the Panel, which contains the list of items the player has in
  * the inventory.
  */
 public class GameInventoryPanel extends GridPanel {
-    private final Point topLeft;
+    private static Point topLeft = null;
 
     /**
      * Constructor of the Inventory Panel, where the content of the Panel is loaded in.
@@ -29,5 +25,5 @@ public class GameInventoryPanel extends GridPanel {
     }
 
     /** @return The top-left position of the Inventory panel. */
-    public Point getTopLeft(){ return topLeft; }
+    public static Point getTopLeft(){ return topLeft; }
 }
