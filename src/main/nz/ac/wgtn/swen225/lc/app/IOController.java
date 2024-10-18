@@ -49,7 +49,10 @@ public class IOController {
      */
     public void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
-        if (fileToLoad != null) UserInterface.ui.startGame(fileToLoad);
+        if (fileToLoad == null) return;
+
+        UserInterface.ui.initLevel(fileToLoad);
+        UserInterface.ui.startGame();
     }
 
     /**
