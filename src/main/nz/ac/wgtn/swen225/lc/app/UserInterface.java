@@ -189,10 +189,21 @@ public class UserInterface extends JFrame{
     }
 
     /**
-     * Starts the playback of a recorded game.
+     * Starts the playback of a recorded game by initialising a recorder object.
      * TODO if time allows: Finish it
      */
     public void startGamePlayback(){}
+
+    /**
+     * Similar to starting a new game, but for use by the Recorder.
+     *
+     * @param levelPath The path to a specific level
+     */
+    public void initRecorderGame(Path levelPath){
+        GameState.getGameState().setLevel(levelPath);
+        createMainMenu();
+        initLevelInfo();
+    }
 
     /** @return The Graphics Pane where the content is being rendered. This can be "Null" if not in use. */
     public GameGraphicsPane getGraphicsPane(){ return pane; }
