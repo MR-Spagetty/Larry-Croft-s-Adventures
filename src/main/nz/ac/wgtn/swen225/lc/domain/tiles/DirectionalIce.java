@@ -12,7 +12,11 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONLong;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 
-/** more advanced Ice tile that redirects the entity */
+/**
+ * more advanced Ice tile that redirects the entity
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class DirectionalIce extends Ice {
   /**
    * Enum for representing the type of DirectionalIce to create and the directions it redirects to
@@ -24,7 +28,10 @@ public class DirectionalIce extends Ice {
     SouthWest(Down, Left),
     NorthWest(Up, Left);
 
+    /** the first side of the tile that is open */
     public final PlayerAction a;
+
+    /** the second side of the tile that is open */
     public final PlayerAction b;
 
     TYPE(PlayerAction sideA, PlayerAction sideB) {
@@ -50,7 +57,7 @@ public class DirectionalIce extends Ice {
    * creates a new Directional ice tile with the given type ID
    *
    * @param location where to create the tile
-   * @param typeID the type ID to use
+   * @param typeID the type ID to use see {@link TYPE} for number ot use for which variant
    */
   public DirectionalIce(Point location, int typeID) {
     this(location, TYPE.values()[typeID]);
@@ -93,10 +100,17 @@ public class DirectionalIce extends Ice {
             || enteree.location().equals(location().add(this.type.b.offset)));
   }
 
+  /**
+   * Deserializes a directional ice tile from the given data
+   *
+   * @param json the json data to use
+   * @return the deserialized tile
+   * @throws IllegalArgumentException if the json data is incorrect for a DirectionalIce tile
+   */
   public static DirectionalIce fromJSON(JSONObject json) {
     if (!((JSONString) json.get("tile")).get().equals("DirectionalIce")) {
       throw new IllegalArgumentException(
-          "Incorrect data given expected Conveyor got: " + json.get("Tile"));
+          "Incorrect data given expected DirectionalIce got: " + json.get("Tile"));
     }
     if (!(json.get("type") instanceof JSONLong)) {
       throw new IllegalArgumentException(
