@@ -14,9 +14,10 @@ import java.io.Serial;
 import java.nio.file.Path;
 
 /**
- * Class which is responsible for handling the "Graphical User Interface" of the game.
+ * Class which is responsible for handling the "Graphical User Interface" of the game. It also includes
+ * functions about checking whether you have won the game and starting/ending a game.
  *
- * @author Developer 1 <dev1@example.internal>
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class UserInterface extends JFrame{
     @Serial private static final long serialVersionUID= 1L;
@@ -51,6 +52,22 @@ public class UserInterface extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
+        this.addKeyListener(IOController.ic.getKeyController());
+
+        /*
+         * The graphics pane will be refreshed every time a tick occurs, and will check to see if the player
+         * has won or lost the game.
+         */
+        GameState.getGameState().tickTimer.addActionListener((unused) -> {
+            assert SwingUtilities.isEventDispatchThread();
+
+            //In case "pane.repaint()" throws an error before being initialised properly.
+            try { pane.repaint(); }
+            catch (Exception e){ System.out.println(e); }
+
+            this.checkGameState();
+        });
+
         createStartMenu();
         setVisible(true);
     }
@@ -68,8 +85,6 @@ public class UserInterface extends JFrame{
             remove(instructions); remove(buttons);
             SwingUtilities.updateComponentTreeUI(this);
         };
-
-        pane = null; //The graphics pane is not needed for the Start Menu, so this will be set to being "null".
 
         this.add(BorderLayout.NORTH, instructions);
         this.add(BorderLayout.CENTER, buttons);
@@ -101,14 +116,7 @@ public class UserInterface extends JFrame{
 
         this.add(BorderLayout.EAST, gameControls);
         this.add(BorderLayout.CENTER, pane);
-        this.addKeyListener(IOController.ic.getKeyController());
         this.setFocusable(true);
-
-        //The graphics pane will be refreshed every time a tick occurs.
-        GameState.getGameState().tickTimer.addActionListener((unused) -> {
-            assert SwingUtilities.isEventDispatchThread();
-            pane.repaint();
-        });
 
         this.pack();
         this.requestFocus();
@@ -139,8 +147,6 @@ public class UserInterface extends JFrame{
     /**
      * Initialises the level in the game by retrieving all key information from the Game State, and then writing it to
      * the Information board.
-     *
-     * TODO: Test the written code once all other issues in the game (none of those are related to "App") are fixed.
      */
     public void initLevelInfo(){
         GameState gs = GameState.getGameState();
@@ -186,6 +192,38 @@ public class UserInterface extends JFrame{
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         createStartMenu();
+    }
+
+    /** Checks to see if the player has won or lost the game. */
+    private void checkGameState(){
+        if (GameState.getGameState().hasLost()) stopAndRestartLevel();
+        else if (GameState.getGameState().hasWon()) notifyYouWon();
+    }
+
+    /** Once you lose the game, you will be told you lost. From there, you can restart the current level. */
+    private void stopAndRestartLevel(){
+        IOController.ic.stopTimers();
+
+        JOptionPane.showMessageDialog(null,
+                "Game Lost! Please close this window to restart the level!",
+                "Game Lost!", JOptionPane.PLAIN_MESSAGE);
+
+        GameInfo.info.setTimeAndTreasuresCounts();
+        IOController.ic.restartTimers();
+    }
+
+    /**
+     * Code executed when the player gets to the end of the level!
+     * TODO: Make a second level of the game and add code to transition into it.
+     */
+    private void notifyYouWon(){
+        IOController.ic.stopTimers();
+
+        JOptionPane.showMessageDialog(null,
+                "You did it! Close this window to return to the start menu!",
+                "Game Won!", JOptionPane.PLAIN_MESSAGE);
+
+        endGame();
     }
 
     /**

@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Another custom JPanel that holds the Buttons to be displayed at the start of the game.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class StartButtonsPanel extends JPanel {
     private static final StartButtonsPanel START_BUTTONS_PANEL = new StartButtonsPanel();
@@ -22,7 +24,7 @@ public class StartButtonsPanel extends JPanel {
     private StartButtonsPanel(){
         startButtons.add(new DefaultButton(
                 unused -> UserInterface.ui.startNewGame(
-                    new File("src/resources/levels/level0.json") /** TODO: Change to L1 file */
+                    new File("src/resources/levels/level0.json")
                 ),
                 "Start new game!"
         ));

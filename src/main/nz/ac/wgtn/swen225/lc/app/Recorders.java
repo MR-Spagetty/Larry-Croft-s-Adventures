@@ -14,6 +14,8 @@ import java.nio.file.Path;
 /**
  * Class which contains the Recorders that will be recording the game. The player has the option to decide whether to
  * record a game or not, so when the instance of the "Recorders" class is created, no recorders are initially created.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class Recorders{
     private static final Recorders RECORDERS = new Recorders();

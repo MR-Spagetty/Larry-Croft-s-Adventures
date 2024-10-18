@@ -6,6 +6,8 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 /**
  * Class responsible for containing a special part of the Panel, which contains the list of items the player has in
  * the inventory.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GameInventoryPanel extends GridPanel {
     private static Point topLeft = null;

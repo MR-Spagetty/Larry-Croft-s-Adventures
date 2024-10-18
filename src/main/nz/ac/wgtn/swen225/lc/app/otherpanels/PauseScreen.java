@@ -6,6 +6,8 @@ import java.awt.*;
 /**
  * Class which controls the "Pause Screen" Panel, which is a simple pop-up that shows that the game is paused.
  * This will be stored in a "JOptionPanel".
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class PauseScreen extends JPanel{
     private static final PauseScreen PAUSE_SCREEN = new PauseScreen();

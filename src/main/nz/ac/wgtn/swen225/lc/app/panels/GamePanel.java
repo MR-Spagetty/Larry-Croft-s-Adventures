@@ -9,6 +9,8 @@ import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
  * Responsible for constructing parts of the Graphical User Interface used during gameplay. This
  * class also performs the updating of statistics related to the game, including the level of the game,
  * the number of chips left to collect, and the time remaining.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GamePanel extends DefaultPanel {
     /**

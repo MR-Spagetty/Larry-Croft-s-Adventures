@@ -8,7 +8,7 @@ import nz.ac.wgtn.swen225.lc.domain.*;
  * Stores the keystrokes that associate with an action that is executed, and a direction that is set
  * when a key is pressed.
  *
- * @author Developer 1 <dev1@example.internal>
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class KeyStrokes {
     private final Map<Integer, PlayerAction> strokeToPlayerAction = new HashMap<>();
@@ -77,20 +77,6 @@ public class KeyStrokes {
 
         Runnable runAction = strokeToUIAction.getOrDefault(keyStroke, () -> {});
         runAction.run();
-    }
-
-    /**
-     * @return A COMBINED set of all the keystrokes that have been assigned to a Player Action or an
-     *         action to the GUI in the game.
-     */
-    public Set<Integer> getKeyStrokes(){
-        Set<Integer> keyStrokesToPlayerAction = strokeToPlayerAction.keySet();
-        Set<Integer> keyStrokesToUIAction = strokeToUIAction.keySet();
-
-        return new HashSet<>(){{
-            addAll(keyStrokesToPlayerAction);
-            addAll(keyStrokesToUIAction);
-        }};
     }
 
     /** @return An unmodifiable map of the keystrokes mapped to their player actions. */

@@ -1,9 +1,8 @@
 package nz.ac.wgtn.swen225.lc.app;
 
-/**
- * @author Developer 1 <dev1@example.internal>
- */
+/** @author Developer 1 <dev1@example.internal> - 300652265 */
 public class Main {
+
     /**
      * Method which starts up the "Chip's Challenge" game.
      *

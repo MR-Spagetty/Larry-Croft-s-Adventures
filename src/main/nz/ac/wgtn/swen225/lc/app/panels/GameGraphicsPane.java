@@ -10,6 +10,8 @@ import nz.ac.wgtn.swen225.lc.domain.Point;
 
 /**
  * The part of the main screen (i.e: The Graphics Pane) which displays the game.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GameGraphicsPane extends JPanel {
     @Serial private static final long serialVersionUID= 1L;

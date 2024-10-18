@@ -8,6 +8,8 @@ import java.awt.*;
 
 /**
  * A JPanel where information like the current level and the number of chips remaining is displayed.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GameInfoPanel extends DefaultPanel {
     JLabel levelDisplay;

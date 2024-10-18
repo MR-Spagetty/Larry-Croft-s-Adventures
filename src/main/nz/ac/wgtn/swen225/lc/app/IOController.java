@@ -18,6 +18,8 @@ import java.util.Map;
  * Controls the "Input" and "Output" from pressing a button or a key during main gameplay.
  * It also includes some basic commands that are executed from buttons or keys, such as the pausing of the
  * game and loading/saving a game.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class IOController {
     private final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
@@ -33,14 +35,13 @@ public class IOController {
      * In the constructor, the buttons and the keystrokes are initialised to their actions.
      */
     private IOController(){
-        File l1 = null; /** TODO: Change to file that goes to L1. */
-        File l2 = null; /** TODO: Change to file that goes to L2. */
+        File l1 = new File("src/resources/levels/level0.json");
 
         mainUIButtons = new ArrayList<>(List.of(
                 new DefaultButton(unused -> pauseGame(), "PAUSE"),
                 new DefaultButton(unused -> Instructions.instructionsPanel.createHelpDialog(), "HELP"),
                 new DefaultButton(unused -> endGame(true), "SAVE & EXIT"),
-                new DefaultButton(unused -> endGame(true), "EXIT")
+                new DefaultButton(unused -> endGame(false), "EXIT")
         ));
 
         keyController= new ControlKeys(Map.of(
@@ -48,7 +49,7 @@ public class IOController {
                 "SAVE", () -> endGame(true),
                 "RESUME", this::resumeExistingGameFromCurrentGame,
                 "L1", () -> UserInterface.ui.startNewGame(l1),
-                "L2", () -> UserInterface.ui.startNewGame(l2),
+                "L2", () -> {},
                 "PAUSE", this::pauseGame,
                 "S_REPLAY", () -> Recorders.recs.callStepReplay()
         ));
@@ -95,19 +96,21 @@ public class IOController {
     public void endGame(boolean save){
         stopTimers();
 
-        if (save){
+        if (!save){
+            int result = JOptionPane.showConfirmDialog(
+                    null, "Are you sure want to exit without saving?",
+                    "Confirm", JOptionPane.YES_NO_OPTION
+            );
+
+            if (result == JOptionPane.NO_OPTION){
+                startTimers(); //Game will resume if the player doesn't want to exit without saving.
+                return;
+            }
+        } else {
             UserInterface.ui.saveGame();
-            return;
         }
 
-        int result = JOptionPane.showConfirmDialog(
-                null, "Are you sure want to exit without saving?",
-                "Confirm", JOptionPane.YES_NO_OPTION
-        );
-
-        if (result == JOptionPane.YES_OPTION) UserInterface.ui.endGame();
-
-        startTimers(); //Game will resume if the player doesn't want to exit without saving.
+        UserInterface.ui.endGame();
     }
 
     /**
@@ -173,6 +176,12 @@ public class IOController {
 
     /** Starts or resumes both timers, which is usually done to start or resume a game. */
     public void startTimers(){
+        GameState.getGameState().tickTimer.start();
+        GameInfo.info.countdownTimer.start();
+    }
+
+    /** Restarts both timers, which is usually done to start or resume a game. */
+    public void restartTimers(){
         GameState.getGameState().tickTimer.start();
         GameInfo.info.countdownTimer.start();
     }

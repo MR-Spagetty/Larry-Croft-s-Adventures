@@ -1,14 +1,14 @@
 {
-  "level": "src\\resources\\levels\\level0.json",
+  "level": "src/resources/levels/level0.json",
   "entities": [{
     "indID": 0,
     "position": [
-      0,
+      3,
       0
     ],
     "type": "Player",
     "Inventory": []
   }],
   "modTiles": [],
-  "tick": 44
+  "tick": 47
 }
