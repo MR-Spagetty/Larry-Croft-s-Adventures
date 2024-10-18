@@ -18,7 +18,7 @@ public enum JSONBool implements JSONType {
    * @param b the boolean value
    * @return {@code True} if the boolean is true, otherwise {@code False}.
    */
-  static JSONBool of (Boolean b){
+  public static JSONBool of(Boolean b){
     return b ? True : False;
   }
 
