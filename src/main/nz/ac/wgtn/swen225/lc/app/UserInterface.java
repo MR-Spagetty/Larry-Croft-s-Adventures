@@ -104,10 +104,14 @@ public class UserInterface extends JFrame{
         this.addKeyListener(IOController.ic.getKeyController());
         this.setFocusable(true);
 
-        //The graphics pane will be refreshed every time a tick occurs.
+        /*
+         * The graphics pane will be refreshed every time a tick occurs, and will check to see if the player
+         * has won or lost the game.
+         */
         GameState.getGameState().tickTimer.addActionListener((unused) -> {
             assert SwingUtilities.isEventDispatchThread();
             pane.repaint();
+            this.checkGameState();
         });
 
         this.pack();
@@ -186,6 +190,27 @@ public class UserInterface extends JFrame{
         goBetweenLevels(null); //No file path is provided, as we are ending the game.
         Recorders.recs.stopRecordingGame();
         createStartMenu();
+    }
+
+    /** Checks to see if the player has won or lost the game. */
+    private void checkGameState(){
+        if (GameState.getGameState().hasLost()){
+            stopAndRestartLevel();
+        } else if (GameState.getGameState().hasWon()){
+
+        }
+    }
+
+    /** Once you lose the game, you will be told you lost. From there, you can restart the current level. */
+    private void stopAndRestartLevel(){
+        IOController.ic.stopTimers();
+
+        JOptionPane.showMessageDialog(null,
+                "Game Lost! Please close this window to restart the level!",
+                "Game Lost!", JOptionPane.PLAIN_MESSAGE);
+
+        GameInfo.info.setTimeAndTreasuresCounts();
+        IOController.ic.restartTimers();
     }
 
     /**
