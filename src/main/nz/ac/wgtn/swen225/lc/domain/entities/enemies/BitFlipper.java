@@ -16,6 +16,13 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * the BitFlipper Enemy is a custom enemy of my own design which when it touches the player it
+ * steals an item from their inventory and returns it as close as it can to where the Player picked
+ * the item up, it is capable of stealing treasures
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
 
   /**
@@ -62,7 +69,7 @@ public class BitFlipper extends Enemy implements JSONSerializable<BitFlipper> {
   @Override
   public void touch(Entity touchee) {
     super.touch(touchee);
-    Player p = (Player)touchee;
+    Player p = (Player) touchee;
     if (!p.getInventory().isEmpty()) {
       int indexToYoink = behaviourDecider.nextInt(p.getInventory().size());
       Item expected = p.getInventory().get(indexToYoink);
