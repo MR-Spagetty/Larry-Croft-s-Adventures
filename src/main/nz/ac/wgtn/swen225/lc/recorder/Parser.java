@@ -12,6 +12,8 @@ import nz.ac.wgtn.swen225.lc.persistency.*;
 /**
  * The Parser class provides methods for parsing game levels from a JSON file.
  * It handles extracting player actions, next level path, and level data from the JSON content.
+ * 
+ * @author Developer 4 <dev4@example.internal> 300655226
  */
 public class Parser {
   private static Map<String, PlayerAction> mapper = Map.of(

@@ -12,9 +12,9 @@ import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Bug;
 import nz.ac.wgtn.swen225.lc.domain.entities.enemies.Enemy;
-import nz.ac.wgtn.swen225.lc.domain.entities.items.IceBoots;
 import org.junit.jupiter.api.Test;
 import test.nz.ac.wgtn.swen225.lc.domain.Shorthands;
+import test.nz.ac.wgtn.swen225.lc.domain.entities.EntityBaseTests;
 
 public class BugTests implements EnemyBaseTests {
 
@@ -66,5 +66,37 @@ public class BugTests implements EnemyBaseTests {
     Entity e = entity();
     e.maze(scene);
     assertThrows(IAE, () -> e.touch(e));
+  }
+
+  @Test
+  void deserializedEqual() {
+    Maze scene = new Maze(40, " ", 0);
+    area3x3(scene, Shorthands::et, 0, 0);
+    Entity e = entity();
+    scene.addEntity(e);
+    e.tick(0);
+    Maze sceneRep = new Maze(40, " ", 0);
+    area3x3(sceneRep, Shorthands::et, 0, 0);
+    Entity e2 = Entity.fromJSON(e.toJson());
+    sceneRep.addEntity(e2);
+    assert e2 instanceof Bug;
+    assertEquals(e.location(), e2.location());
+    assertEquals(e.getUID(), e2.getUID());
+    IntStream.range(1, 20)
+        .forEach(
+            i -> {
+              e.tick(i);
+              e2.tick(i);
+              assertEquals(
+                  e.location(),
+                  e2.location(),
+                  "Replicated and original differ at tick: %d by %s"
+                      .formatted(i, e2.location().sub(e.location())));
+            });
+  }
+
+  @Test
+  public void badDeserializeData() {
+    assertThrows(IAE, () -> Bug.fromJSON(EntityBaseTests.badData()));
   }
 }
