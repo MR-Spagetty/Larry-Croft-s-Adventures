@@ -81,10 +81,17 @@ public class UserInterface extends JFrame{
      * in the game.
      */
     private void createMainMenu(){
-        //The wider "Game UI" that the user will be interacting with!
-        GamePanel gameControls = new GamePanel(Color.DARK_GRAY, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons());
+        int offsetWidth = (WIDTH * 3/4);
 
-        pane = new GameGraphicsPane((WIDTH * 3/4), HEIGHT);
+        //This value was guessed, as the height difference is determined by the height of the text!
+        int offsetHeight = 40;
+
+        //The wider "Game UI" that the user will be interacting with!
+        GamePanel gameControls = new GamePanel(
+                Color.DARK_GRAY, offsetWidth, offsetHeight, WIDTH/4, HEIGHT, IOController.ic.getMainUIButtons()
+        );
+
+        pane = new GameGraphicsPane(offsetWidth, HEIGHT);
 
         switchUIs.run();
         switchUIs = () -> {
