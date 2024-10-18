@@ -18,6 +18,8 @@ import java.util.Map;
  * Controls the "Input" and "Output" from pressing a button or a key during main gameplay.
  * It also includes some basic commands that are executed from buttons or keys, such as the pausing of the
  * game and loading/saving a game.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class IOController {
     private final String IMG_URL = "src/main/nz/ac/wgtn/swen225/lc/app/assets/";
@@ -40,7 +42,7 @@ public class IOController {
                 new DefaultButton(unused -> pauseGame(), "PAUSE"),
                 new DefaultButton(unused -> Instructions.instructionsPanel.createHelpDialog(), "HELP"),
                 new DefaultButton(unused -> endGame(true), "SAVE & EXIT"),
-                new DefaultButton(unused -> endGame(true), "EXIT")
+                new DefaultButton(unused -> endGame(false), "EXIT")
         ));
 
         keyController= new ControlKeys(Map.of(
