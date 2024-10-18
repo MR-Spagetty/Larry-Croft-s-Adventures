@@ -194,17 +194,8 @@ public class UserInterface extends JFrame{
 
     /** Checks to see if the player has won or lost the game. */
     private void checkGameState(){
-        if (GameState.getGameState().hasLost()){
-            stopAndRestartLevel();
-        } else if (GameState.getGameState().hasWon()){
-            /** TODO: Make a second level of the game and add code to transition into it. */
-
-            JOptionPane.showMessageDialog(null,
-                    "You did it! Close this window to return to the start menu!",
-                    "Game Won!", JOptionPane.PLAIN_MESSAGE);
-
-            endGame();
-        }
+        if (GameState.getGameState().hasLost()) stopAndRestartLevel();
+        else if (GameState.getGameState().hasWon()) notifyYouWon();
     }
 
     /** Once you lose the game, you will be told you lost. From there, you can restart the current level. */
@@ -217,6 +208,20 @@ public class UserInterface extends JFrame{
 
         GameInfo.info.setTimeAndTreasuresCounts();
         IOController.ic.restartTimers();
+    }
+
+    /**
+     * Code executed when the player gets to the end of the level!
+     * TODO: Make a second level of the game and add code to transition into it.
+     */
+    private void notifyYouWon(){
+        IOController.ic.stopTimers();
+
+        JOptionPane.showMessageDialog(null,
+                "You did it! Close this window to return to the start menu!",
+                "Game Won!", JOptionPane.PLAIN_MESSAGE);
+
+        endGame();
     }
 
     /**
