@@ -1,14 +1,15 @@
 package nz.ac.wgtn.swen225.lc.app;
 
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
-import nz.ac.wgtn.swen225.lc.app.buttons.MainUIButtons;
 import nz.ac.wgtn.swen225.lc.app.keybinders.ControlKeys;
+import nz.ac.wgtn.swen225.lc.app.otherpanels.Instructions;
 import nz.ac.wgtn.swen225.lc.app.otherpanels.PauseScreen;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +33,22 @@ public class IOController {
      * In the constructor, the buttons and the keystrokes are initialised to their actions.
      */
     private IOController(){
-        mainUIButtons = MainUIButtons.mainUIButtons(() -> endGame(true), () -> endGame(false));
+        File l1 = null; /** TODO: Change to file that goes to L1. */
+        File l2 = null; /** TODO: Change to file that goes to L2. */
+
+        mainUIButtons = new ArrayList<>(List.of(
+                new DefaultButton(unused -> pauseGame(), "PAUSE"),
+                new DefaultButton(unused -> Instructions.instructionsPanel.createHelpDialog(), "HELP"),
+                new DefaultButton(unused -> endGame(true), "SAVE & EXIT"),
+                new DefaultButton(unused -> endGame(true), "EXIT")
+        ));
 
         keyController= new ControlKeys(Map.of(
                 "EXIT", () -> endGame(false),
                 "SAVE", () -> endGame(true),
                 "RESUME", this::resumeExistingGameFromCurrentGame,
+                "L1", () -> UserInterface.ui.startNewGame(l1),
+                "L2", () -> UserInterface.ui.startNewGame(l2),
                 "PAUSE", this::pauseGame,
                 "S_REPLAY", () -> Recorders.recs.callStepReplay()
         ));
@@ -49,7 +60,10 @@ public class IOController {
      */
     public void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
-        if (fileToLoad != null) UserInterface.ui.startGame(fileToLoad);
+        if (fileToLoad == null) return;
+
+        UserInterface.ui.initLevel(fileToLoad);
+        UserInterface.ui.startGame();
     }
 
     /**
@@ -57,14 +71,19 @@ public class IOController {
      * the current game before asking you to select a game file.
      */
     private void resumeExistingGameFromCurrentGame(){
+        stopTimers();
+
         int result = JOptionPane.showConfirmDialog(
                 null, "Are you sure want to exit without saving?",
                 "Confirm", JOptionPane.YES_NO_OPTION
         );
 
-        if (result == JOptionPane.NO_OPTION) return;
+        if (result == JOptionPane.YES_OPTION){
+            resumeExistingGame();
+            return;
+        }
 
-        resumeExistingGame();
+        startTimers(); //If the player aborts resuDeveloper 4 <dev4@example.internal> an existing game, the current game will continue running.
     }
 
     /**
@@ -74,18 +93,21 @@ public class IOController {
      * @param save Whether the current game will be saved to a file or not!
      */
     public void endGame(boolean save){
+        stopTimers();
+
         if (save){
             UserInterface.ui.saveGame();
-        } else {
-            int result = JOptionPane.showConfirmDialog(
-                    null, "Are you sure want to exit without saving?",
-                    "Confirm", JOptionPane.YES_NO_OPTION
-            );
-
-            if (result == JOptionPane.NO_OPTION) return;
+            return;
         }
 
-        UserInterface.ui.endGame();
+        int result = JOptionPane.showConfirmDialog(
+                null, "Are you sure want to exit without saving?",
+                "Confirm", JOptionPane.YES_NO_OPTION
+        );
+
+        if (result == JOptionPane.YES_OPTION) UserInterface.ui.endGame();
+
+        startTimers(); //Game will resume if the player doesn't want to exit without saving.
     }
 
     /**
@@ -99,9 +121,7 @@ public class IOController {
         String[] option = {"Return to Game"};
         ImageIcon icon = new ImageIcon(IMG_URL + "pause.png");
 
-        //The timer is stopped when the game is paused, if the timer has been initialised.
-        GameState.getGameState().tickTimer.stop();
-        GameInfo.info.countdownTimer.stop();
+        stopTimers();
 
         /*
          * The program will not continue running as long as this Dialog box is on the screen.
@@ -110,8 +130,7 @@ public class IOController {
         JOptionPane.showOptionDialog(null, PauseScreen.pause, "PAUSED",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, option, option[0]);
 
-        GameState.getGameState().tickTimer.start();
-        GameInfo.info.countdownTimer.start();
+        startTimers();
     }
 
     /**
@@ -144,6 +163,18 @@ public class IOController {
         }
 
         return chosenFile;
+    }
+
+    /** To pause the game, we need to stop these timers so the game doesn't continue running in the background. */
+    public void stopTimers(){
+        GameState.getGameState().tickTimer.stop();
+        GameInfo.info.countdownTimer.stop();
+    }
+
+    /** Starts or resumes both timers, which is usually done to start or resume a game. */
+    public void startTimers(){
+        GameState.getGameState().tickTimer.start();
+        GameInfo.info.countdownTimer.start();
     }
 
     /** Getters for retrieving the UI Buttons and the Key Controller. */

@@ -21,6 +21,7 @@ public abstract class MoveableEntity extends AbstractEntity {
     super(location, individualID);
   }
 
+  /** the ast concious move the entity made */
   protected Point lastMove = Point.ORIGIN;
 
   /**
@@ -57,6 +58,7 @@ public abstract class MoveableEntity extends AbstractEntity {
             .orElseThrow(
                 () -> new IllegalArgumentException("requested tile does not exist in maze"));
     newLoc.getOccupant().filter(e -> e.canTouch(this)).ifPresent(e -> e.touch(this));
+    if (!newLoc.canEnter(this)){return;}
     newLoc.enter(this);
     oldLoc.leave(this);
   }

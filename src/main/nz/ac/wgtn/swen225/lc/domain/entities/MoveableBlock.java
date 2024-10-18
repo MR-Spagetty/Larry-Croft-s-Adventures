@@ -8,7 +8,18 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * MoveableBlock is a simplistic entity that can be pushed by a player and can fill water tiles
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class MoveableBlock extends MoveableEntity implements JSONSerializable<MoveableBlock> {
+  /**
+   * creates a new MoveableBLock at the given position with the given individual id
+   *
+   * @param location the position to create the entity at
+   * @param individualID
+   */
 
   public MoveableBlock(Point location, long individualID) {
     super(location, individualID);
@@ -19,7 +30,11 @@ public class MoveableBlock extends MoveableEntity implements JSONSerializable<Mo
 
   @Override
   public boolean canTouch(Entity touchee) {
-    return touchee instanceof Player;
+    return touchee instanceof Player
+        && maze()
+            .getTile(location().add(location().add(touchee.location())))
+            .map(t -> t.canEnter(this))
+            .orElse(false);
   }
 
   @Override
@@ -56,8 +71,8 @@ public class MoveableBlock extends MoveableEntity implements JSONSerializable<Mo
   }
 
   /**
-   * Deserialize a MoveableBlock from JSON statically
-   * See {@link #fromJson(JSONType)} for further documentation
+   * Deserialize a MoveableBlock from JSON statically See {@link #fromJson(JSONType)} for further
+   * documentation
    */
   public static MoveableBlock fromJSON(JSONType json) {
     final MoveableBlock ref = new MoveableBlock(Point.ORIGIN, 0);

@@ -1,6 +1,5 @@
 package nz.ac.wgtn.swen225.lc.domain.tiles;
 
-
 import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.persistency.JSONObject;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
@@ -16,6 +15,13 @@ public class Empty extends AbstractTile {
     super(location);
   }
 
+  /**
+   * deserializes an empty tile from the given JSON data
+   *
+   * @param json the JSON data
+   * @return the deserialized tile
+   * @throws IllegalArgumentException if the data is not correct for an Empty tile
+   */
   public static Empty fromJSON(JSONObject json) {
     if (!((JSONString) json.get("tile")).get().equals("Empty")) {
       throw new IllegalArgumentException(

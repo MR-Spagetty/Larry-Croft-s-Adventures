@@ -59,7 +59,7 @@ public class Sprite {
     g.drawImage(
         image,
         (int) (position.x() * size + offset.x()),
-        (int) (position.y() * size + offset.y()),
+        (int) (-position.y() * size + offset.y()),
         size,
         size,
         null);
