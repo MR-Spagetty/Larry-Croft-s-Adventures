@@ -1,5 +1,7 @@
 package nz.ac.wgtn.swen225.lc.app.panels;
 
+import nz.ac.wgtn.swen225.lc.app.IOController;
+import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 
 import javax.swing.*;
@@ -14,17 +16,10 @@ public class StartButtonsPanel extends JPanel {
     //The list of buttons that will be on the Start menu.
     private List<DefaultButton> startButtons = new ArrayList<>();
 
-    /**
-     * Constructor used when constructing the custom JPanel.
-     *
-     * @param startGame The action to be executed when the user starts a new game.
-     * @param resumeGame The action to be executed when the user resumes an existing game.
-     * @param replayGame The action to be executed when the user replays an already played game that has been recorded.
-     */
-    public StartButtonsPanel(Runnable startGame, Runnable resumeGame, Runnable replayGame){
-        add(new DefaultButton(unused -> startGame.run(), "Start new game!"));
-        add(new DefaultButton(unused -> resumeGame.run(), "Resume existing game!"));
-        add(new DefaultButton(unused -> replayGame.run(), "Replay a game!"));
+    public StartButtonsPanel(){
+        add(new DefaultButton(unused -> UserInterface.ui.startGame(null), "Start new game!"));
+        add(new DefaultButton(unused -> IOController.ic.resumeExistingGame(), "Resume existing game!"));
+        add(new DefaultButton(unused -> {}, "Replay a game!")); //Didn't get around to this feature :(
     }
 
     /** @return The list of buttons on the Start menu. Mainly for use by Fuzz. */

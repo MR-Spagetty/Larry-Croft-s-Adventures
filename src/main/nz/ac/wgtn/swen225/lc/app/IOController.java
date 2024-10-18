@@ -47,7 +47,7 @@ public class IOController {
      * Loads and automatically resumes an existing game from a ".json" file. This process is cancelled if the user
      * terminates the loading of a file.
      */
-    protected void resumeExistingGame(){
+    public void resumeExistingGame(){
         File fileToLoad = loadExistingGame();
         if (fileToLoad != null) UserInterface.ui.startGame(fileToLoad);
     }
