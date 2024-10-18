@@ -11,6 +11,8 @@ import nz.ac.wgtn.swen225.lc.persistency.*;
 
 /**
  * Represents the actions that the player makes in a level.
+ * 
+ * @author Developer 4 <dev4@example.internal> 
  */
 public class Level {
   private String filename;
