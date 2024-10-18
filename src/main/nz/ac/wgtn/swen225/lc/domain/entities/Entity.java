@@ -99,7 +99,8 @@ public interface Entity {
    *
    * @param json the json data
    * @return the entity represented by the given data
-   * @throws IllegalArgumentException if the data is incorrectly formatted
+   * @throws IllegalArgumentException if the data is incorrectly formatted or is for an unknown
+   *     entity type
    */
   public static Entity fromJSON(JSONType json) {
     if (!(json instanceof JSONObject)) {
@@ -120,6 +121,13 @@ public interface Entity {
     };
   }
 
+  /**
+   * extracts the individual id for an entity from the given data
+   *
+   * @param data the data to extract from
+   * @return the extracted id
+   * @throws IllegalArgumentException if the id could not be found
+   */
   static long idFromJSON(JSONObject data) {
     return Optional.ofNullable(data.get("indID"))
         .map(
