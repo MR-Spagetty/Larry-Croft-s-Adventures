@@ -3,8 +3,6 @@ package test.nz.ac.wgtn.swen225.lc.domain.tiles;
 import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.None;
 import static nz.ac.wgtn.swen225.lc.domain.Point.ORIGIN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.IAE;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -43,7 +41,9 @@ public sealed interface DirectionalIceTests extends IceBaseTests
               Player p = getPlayer(ORIGIN);
               scenario.addEntity(p);
               p.queueAction(act);
-              assertThrows(IAE, () -> p.tick(0));
+              Point before = p.location();
+              p.tick(0);
+              assertEquals(before, p.location());
             });
   }
 

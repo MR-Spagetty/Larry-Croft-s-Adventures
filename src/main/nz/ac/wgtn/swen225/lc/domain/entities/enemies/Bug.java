@@ -27,11 +27,7 @@ public class Bug extends Enemy implements JSONSerializable<Bug> {
 
   @Override
   protected void doBehaviour(long tick) {
-    try {
-      move(dirs.get(behaviourDecider.nextInt(Enemy.dirs.size())));
-    } catch (IllegalArgumentException iae) {
-    } catch (UnsupportedOperationException uoe) {
-    }
+    move(dirs.get(behaviourDecider.nextInt(Enemy.dirs.size())));
   }
 
   @Override

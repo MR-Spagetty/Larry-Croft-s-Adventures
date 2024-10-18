@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
 import nz.ac.wgtn.swen225.lc.domain.entities.Entity;
+import nz.ac.wgtn.swen225.lc.domain.tiles.Empty;
 import nz.ac.wgtn.swen225.lc.domain.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
@@ -92,7 +93,7 @@ public class MazeTests {
   void getTiles1() {
     List<Tile> exp = area3x3(Shorthands::et, 0, 0);
     Maze maze = new Maze(0, "", 0, exp, List.of());
-    assertEquals(exp, maze.getTiles(p(0, 0), 1));
+    assertEquals(exp.stream().filter(t -> t instanceof Empty).toList(), maze.getTiles(p(0, 0), 1));
   }
 
   @Test
@@ -112,7 +113,7 @@ public class MazeTests {
     Tile exp = in.get(0);
     Maze maze = new Maze(0, "", 0, in, List.of());
     assertEquals(exp, maze.getTile(p(-1, -1)).get());
-    List<Tile> found = maze.getTiles(p(-2, -2), 1);
+    List<Tile> found = maze.getTiles(p(-2, -2), 1).stream().filter(t -> t instanceof Empty).toList();
     assertEquals(1, found.size());
     assertEquals(exp, found.getFirst());
   }
@@ -120,7 +121,7 @@ public class MazeTests {
   @Test
   void getTiles4() {
     Maze maze = new Maze(0, "", 0, area3x3(Shorthands::et, 0, 0), List.of());
-    assertEquals(0, maze.getTiles(p(-3, 0), 1).size());
+    assertEquals(0, maze.getTiles(p(-3, 0), 1).stream().filter(t -> t instanceof Empty).toList().size());
   }
 
   @Test
@@ -160,7 +161,7 @@ public class MazeTests {
   @Test
   void getEntities1() {
     List<Entity> expected =
-        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
+        area3x3(Shorthands::et, 0, 0).stream().filter(t -> t instanceof Empty).map(t -> e(t.location())).toList();
     Maze maze = new Maze(0, "", 0, area3x3(Shorthands::et, 0, 0), expected);
     List<Entity> out = maze.getEntities(p(0, 0), 1);
     assertEquals(expected, out);
@@ -169,7 +170,7 @@ public class MazeTests {
   @Test
   void getEntities2() {
     List<Entity> expected =
-        area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
+        area3x3(Shorthands::et, 0, 0).stream().filter(t -> t instanceof Empty).map(t -> e(t.location())).toList();
     Maze maze = new Maze(0, "", 0, area3x3(Shorthands::et, 0, 0), expected);
     List<Entity> out = maze.getEntities(p(0, 0), 1);
     assertEquals(expected, out);
@@ -177,7 +178,7 @@ public class MazeTests {
 
   @Test
   void getEntities3() {
-    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
+    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().filter(t -> t instanceof Empty).map(t -> e(t.location())).toList();
     Entity expected = in.get(4);
     Maze maze = new Maze(0, "", 0, area3x3(Shorthands::et, 0, 0), in);
     List<Entity> out = maze.getEntities(p(0, 0), 0);
@@ -188,7 +189,7 @@ public class MazeTests {
 
   @Test
   void getEntities4() {
-    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().map(t -> e(t.location())).toList();
+    List<Entity> in = area3x3(Shorthands::et, 0, 0).stream().filter(t -> t instanceof Empty).map(t -> e(t.location())).toList();
     Entity expected = in.get(0);
     Maze maze = new Maze(0, "", 0, area3x3(Shorthands::et, 0, 0), in);
     List<Entity> out = maze.getEntities(p(-2, -2), 1);
