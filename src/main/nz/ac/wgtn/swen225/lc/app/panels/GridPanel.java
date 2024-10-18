@@ -6,6 +6,8 @@ import java.awt.*;
 /**
  * Similar to the "Default Panel" class, but you're creating a panel arranged in a Grid-like fashion, rather
  * than in a normal fashion.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GridPanel extends JPanel{
 

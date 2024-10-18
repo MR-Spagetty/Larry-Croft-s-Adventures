@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Another custom JPanel that holds the Buttons to be displayed at the start of the game.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class StartButtonsPanel extends JPanel {
     private static final StartButtonsPanel START_BUTTONS_PANEL = new StartButtonsPanel();

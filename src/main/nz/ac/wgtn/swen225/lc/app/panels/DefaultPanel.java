@@ -7,7 +7,7 @@ import java.awt.*;
  * A custom "Default Panel" class which allows for a Panel to created with custom dimensions
  * and a set background colour.
  *
- * @author Developer 1 <dev1@example.internal>
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class DefaultPanel extends JPanel {
 

@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Holds the buttons that perform specific actions in relation to the game and the GUI.
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class GameButtonsPanel extends GridPanel {
 
