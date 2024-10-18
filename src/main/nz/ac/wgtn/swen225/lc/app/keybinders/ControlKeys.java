@@ -73,8 +73,8 @@ public class ControlKeys extends KeyStrokes implements KeyListener{
         assignKeyToAction(KeyEvent.VK_X, uiAction.get("EXIT"));
         assignKeyToAction(KeyEvent.VK_S, uiAction.get("SAVE"));
         assignKeyToAction(KeyEvent.VK_R, uiAction.get("RESUME"));
-        assignKeyToAction(KeyEvent.VK_1, () -> {}); //Currently doesn't map to anything.
-        assignKeyToAction(KeyEvent.VK_2, () -> {}); //Currently doesn't map to anything.
+        assignKeyToAction(KeyEvent.VK_1, uiAction.get("L1"));
+        assignKeyToAction(KeyEvent.VK_2, uiAction.get("L2"));
         assignKeyToAction(KeyEvent.VK_SPACE, uiAction.get("PAUSE"));
         assignKeyToAction(KeyEvent.VK_S, uiAction.get("S_REPLAY")); //Hidden action.
     }

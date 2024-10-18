@@ -17,6 +17,11 @@ import nz.ac.wgtn.swen225.lc.persistency.JSONSerializable;
 import nz.ac.wgtn.swen225.lc.persistency.JSONString;
 import nz.ac.wgtn.swen225.lc.persistency.JSONType;
 
+/**
+ * Player is a moveable entity for use by the player as their character
+ *
+ * @author MR-Spagetty <54694556+MR-Spagetty@users.noreply.github.com>
+ */
 public class Player extends MoveableEntity implements JSONSerializable<Player> {
 
   private Point actionQueue = Point.ORIGIN;
@@ -27,10 +32,23 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
   private boolean dead = false;
   private boolean won = false;
 
+  /**
+   * creates a new player at the given location with the given individual id
+   *
+   * @param start hte position to create the player at
+   * @param indID the individual id of the player
+   */
   public Player(Point start, long indID) {
     super(start, indID);
   }
 
+  /**
+   * creates a new player at the given location with the given individual id and with a logger
+   *
+   * @param start hte position to create the player at
+   * @param indID the individual id of the player
+   * @param logger the logger to use to record its motion
+   */
   public Player(Point start, long indID, Consumer<Point> logger) {
     super(start, indID);
     this.logger = logger;
@@ -101,6 +119,12 @@ public class Player extends MoveableEntity implements JSONSerializable<Player> {
     this.inventory.clear();
   }
 
+  /**
+   * causes the player to lose the first item that matches the given predicate
+   *
+   * @param itemSelector the predicate to use to select the item to be lost
+   * @return the item the player lost
+   */
   public Optional<Item> lose(Predicate<Item> itemSelector) {
     Optional<Item> lost = this.inventory.stream().filter(itemSelector).findFirst();
     lost.ifPresent(i -> this.inventory.remove(i));

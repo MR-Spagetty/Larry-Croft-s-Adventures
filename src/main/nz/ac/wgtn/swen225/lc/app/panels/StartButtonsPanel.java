@@ -5,6 +5,7 @@ import nz.ac.wgtn.swen225.lc.app.UserInterface;
 import nz.ac.wgtn.swen225.lc.app.buttons.DefaultButton;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,13 @@ public class StartButtonsPanel extends JPanel {
     private final List<DefaultButton> startButtons = new ArrayList<>();
 
     private StartButtonsPanel(){
-        startButtons.add(new DefaultButton(unused -> UserInterface.ui.startGame(null), "Start new game!"));
+        startButtons.add(new DefaultButton(
+                unused -> UserInterface.ui.startNewGame(
+                    new File("src/resources/levels/level0.json") /** TODO: Change to L1 file */
+                ),
+                "Start new game!"
+        ));
+
         startButtons.add(new DefaultButton(unused -> IOController.ic.resumeExistingGame(), "Resume existing game!"));
         startButtons.add(new DefaultButton(unused -> {}, "Replay a game!")); //Didn't get around to this feature :(
 

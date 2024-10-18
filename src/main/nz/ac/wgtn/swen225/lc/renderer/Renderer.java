@@ -2,8 +2,10 @@ package nz.ac.wgtn.swen225.lc.renderer;
 
 import java.awt.Graphics;
 import nz.ac.wgtn.swen225.lc.app.UserInterface;
+import nz.ac.wgtn.swen225.lc.app.panels.GameInventoryPanel;
 import nz.ac.wgtn.swen225.lc.domain.GameState;
 import nz.ac.wgtn.swen225.lc.domain.Maze;
+import nz.ac.wgtn.swen225.lc.domain.Point;
 import nz.ac.wgtn.swen225.lc.domain.entities.Player;
 
 /** Handles the getting of level data and then rendering all components */
@@ -40,18 +42,16 @@ public class Renderer {
                         .getMiddle()
                         .sub(GameState.getGameState().getPlayer().location())))
         .forEach(e -> e.draw(g));
+    // used to increment item location in inventory
+    int[] slot = {0};
     // renders all inventory
-    /*int[] slot = {0};
     player.getInventory().stream()
         .filter(i -> i != null)
-        .map(
-            i ->
-                new Sprite(i) {
-                  @SuppressWarnings("unused")
-                  Point offset() {
-                    return new Point(0, 0).add(new Point(slot[0]++, 0));
-                  }
-                })
-        .forEach(i -> i.draw(g));*/
+        .map(i -> new Sprite(i, 
+        GameInventoryPanel.getTopLeft().add(
+          new Point(slot[0]++, 0)
+          ))
+        )
+        .forEach(i -> i.draw(g));
   }
 }

@@ -22,14 +22,21 @@ public class Persistency {
    * @param filePath The path to the file.
    * @return A custom JSONType object.
    * @throws IOException If an error occurs while reading the file.
+   * @throws IllegalArgumentException if an error from the GSON library occurs
    */
   public static JSONType loadFromFile(Path filePath) throws IOException {
     File file = filePath.toFile();
     if (!file.exists()) {
       throw new IOException("File not found: " + filePath.toString());  // Handle cases where file doesn't exist
     }
-    String json = Files.readString(filePath);
-    return parseJSONString(json);
+
+    // Handle Exception and convert
+    try {
+      String json = Files.readString(filePath);
+      return parseJSONString(json);
+    } catch (org.json.JSONException e) {
+      throw new IllegalArgumentException("Malformed JSON file: " + filePath.toString(), e);
+    }
   }
 
 
@@ -139,7 +146,7 @@ public class Persistency {
    * @param json The raw JSON string.
    * @return A custom JSONType object.
    */
-  private static JSONType parseJSONString(String json) {
+  public static JSONType parseJSONString(String json) {
     // Use JSONTokener to determine the structure of the string
     JSONTokener tokener = new JSONTokener(json);
     Object parsedJson = tokener.nextValue();
@@ -155,29 +162,4 @@ public class Persistency {
     };
   }
 
-  // Main method for testing purposes
-  public static void main(String[] args) {
-    try {
-      // Simple test loading JSON Object
-      System.out.println("Testing Object load:");
-      JSONType jsonObject = Persistency.loadFromFile("src/main/nz/ac/wgtn/swen225/lc/persistency/testObject.json");
-      System.out.println(jsonObject); //
-
-      // Save the modified object back to a new file
-      Persistency.saveToFile(jsonObject, "src/main/nz/ac/wgtn/swen225/lc/persistency/putputObject.json");
-      System.out.println("Modified object saved to 'outputObject.json'.");
-
-      // Simple test loading a JSON Array
-      System.out.println("\nTesting Array load:");
-      JSONType jsonArray = Persistency.loadFromFile("src/main/nz/ac/wgtn/swen225/lc/persistency/testArray.json");
-      System.out.println(jsonArray); //
-
-      // Save the modified array back to a new file
-      Persistency.saveToFile(jsonArray, "src/main/nz/ac/wgtn/swen225/lc/persistency/putputArray.json");
-      System.out.println("Modified array saved to 'outputArray.json'.");
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
 }

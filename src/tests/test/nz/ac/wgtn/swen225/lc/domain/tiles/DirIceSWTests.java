@@ -1,6 +1,7 @@
 package test.nz.ac.wgtn.swen225.lc.domain.tiles;
 
 import static nz.ac.wgtn.swen225.lc.domain.PlayerAction.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static test.nz.ac.wgtn.swen225.lc.domain.Shorthands.*;
 
@@ -24,7 +25,9 @@ public final class DirIceSWTests implements DirectionalIceTests {
     Player player = getPlayer(North);
     scene.addEntity(player);
     player.queueAction(Down);
-    assertThrows(IAE, () -> player.tick(0));
+    Point before = player.location();
+    player.tick(0);
+    assertEquals(before, player.location());
   }
 
   @Test
@@ -38,7 +41,9 @@ public final class DirIceSWTests implements DirectionalIceTests {
     Player player = getPlayer(East);
     scene.addEntity(player);
     player.queueAction(Left);
-    assertThrows(IAE, () -> player.tick(0));
+    Point before = player.location();
+    player.tick(0);
+    assertEquals(before, player.location());
   }
 
   @Test
