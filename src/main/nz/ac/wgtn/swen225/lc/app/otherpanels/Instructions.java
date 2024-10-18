@@ -6,6 +6,8 @@ import java.awt.*;
 /**
  * Another Custom panel which holds the Instructions of the game. It basically is just a "wall of text"
  * all contained in a single panel, so the instructions of the game can be used in multiple places!
+ *
+ * @author Developer 1 <dev1@example.internal> - 300652265
  */
 public class Instructions extends JPanel{
     private static final Instructions INSTRUCTIONS_PANEL = new Instructions();
