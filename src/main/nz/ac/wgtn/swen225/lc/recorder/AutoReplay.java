@@ -23,7 +23,11 @@ public class AutoReplay extends Replay {
    */
   @Override
   public void replay() {
-    timer = new Timer(GameState.DEFAULT_TICK_RATE, a -> advanceTick());
+    timer = new Timer(GameState.DEFAULT_TICK_RATE, a -> advanceTick(
+      () -> {
+        timer.stop();
+        new AutoReplay(nextLevelPath);
+      }));
     timer.setRepeats(true);
     timer.start();
   }
