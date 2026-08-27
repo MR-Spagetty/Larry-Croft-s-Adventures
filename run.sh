@@ -1,2 +1,2 @@
 #! /usr/bin/sh
-mvn exec:java
+mvn compile exec:java
