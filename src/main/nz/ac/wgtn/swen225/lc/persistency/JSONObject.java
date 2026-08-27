@@ -64,7 +64,7 @@ public class JSONObject implements JSONType { // Not record as JSONObject is dyn
    * @param jsonArray the external JSON array to convert.
    * @return the converted list of {@code JSONType} objects.
    */
-  public List<JSONType> convertJSONArrayToList(JSONArray jsonArray) {
+  public static List<JSONType> convertJSONArrayToList(JSONArray jsonArray) {
     List<JSONType> list = new ArrayList<>();
     for (Object item : jsonArray) {
       // You need to check the type of each item and wrap it as needed
